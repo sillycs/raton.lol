@@ -11,12 +11,12 @@
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="Raton Giveaways"/>
 <meta property="og:title" content="🎁 Free Giveaway — Raton"/>
-<meta property="og:description" content="A free giveaway is live! Click to enter and check your win chances."/>
+<meta property="og:description" content="A free giveaway is here! Click to enter and check your win chances."/>
 <meta property="og:image" content="https://steep-sun-85c4.sillykuadro.workers.dev/og-image"/>
 <meta property="og:url" content=""/>
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:title" content="🎁 Free Giveaway — Raton"/>
-<meta name="twitter:description" content="A free giveaway is live! Click to enter and check your win chances."/>
+<meta name="twitter:description" content="A free giveaway is here! Click to enter and check your win chances."/>
 
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&family=Figtree:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <style>
@@ -512,9 +512,9 @@ const ID=new URLSearchParams(location.search).get('id');
 const JOINED_KEY=`raton_joined_${ID}`;
 
 function patchOG(g,ended,hasWon){
-  const titleText=`${g.emoji} ${g.title} Giveaway — Raton`;
+  const titleText=`(${g.emoji}) - ${g.title} Giveaway`;
   const descParts=[
-    g.description||'A free giveaway is live!',
+    g.description||'A free giveaway is here',
     `${g.entryCount} participant${g.entryCount!==1?'s':''}.`,
     hasWon?`Winner: ${g.winner}`:ended?'Giveaway closed.':(fmtRelative(g.endsAt)||'Ends soon.')
   ];
@@ -547,7 +547,7 @@ async function render(){
       <div class="sheen"></div>
       <div class="body">
 
-        <div class="kicker"><span class="dot-live"></span>Raton Giveaway<span style="color:rgba(244,240,255,.14)"> // live</span></div>
+        <div class="kicker"><span class="dot-live"></span>Raton Giveaway<span style="color:rgba(244,240,255,.14)"> live</span></div>
 
         <div class="title">
           <span class="grad">Free</span>
@@ -573,7 +573,7 @@ async function render(){
         <div class="cd-wrap">
           <div class="cd-lbl">${ended?'⬛ ended':'⬤ ends in'}</div>
           ${ended
-            ?`<div class="cd-ended">// giveaway_closed</div>`
+            ?`<div class="cd-ended">giveaway_closed</div>`
             :`<div class="cd-units">
               <div class="cd-unit"><div class="cd-num-wrap"><div class="cd-num" id="cdd">00</div></div><div class="cd-sub">days</div></div>
               <div class="cd-sep">:</div>
@@ -601,7 +601,7 @@ async function render(){
         </button>
         <div class="status" id="st"></div>
         `:`<div class="status ok" style="margin-top:10px;">
-          ${hasWon?'// congrats to the winner :3':'// giveaway_closed — better luck next time'}
+          ${hasWon?'congrats to the winner :3':'giveaway_closed — better luck next time'}
         </div>`}
 
       </div>
@@ -623,26 +623,26 @@ async function render(){
     jb.addEventListener('click',async(e)=>{
       ripple(jb,e);
       const un=document.getElementById('un').value.trim();
-      if(!un){setStatus('// enter your discord username','err');return;}
-      if(un.length<2){setStatus('// username too short...','err');return;}
+      if(!un){setStatus('enter your discord username','err');return;}
+      if(un.length<2){setStatus('username too short...','err');return;}
       jb.disabled=true;jb.textContent='⏳ joining…';setStatus('');
       try{
         const r=await fetch(`${WORKER}/join`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({giveawayId:ID,username:un})});
         const d=await r.json();
         if(d.ok){
           jb.textContent='✓ joined';jb.classList.add('joined');
-          setStatus("// you're in! good luck :3",'ok');
+          setStatus("you're in! good luck :3",'ok');
           localStorage.setItem(JOINED_KEY,'1');
           document.getElementById('ec').textContent=d.count;
           document.getElementById('ech').textContent=((1/d.count)*100).toFixed(1)+'% win chance';
           confetti();floats();
         } else {
           jb.disabled=false;jb.textContent='join giveaway →';
-          setStatus('// '+(d.error||'something went wrong...'),'err');
+          setStatus(''+(d.error||'something went wrong...'),'err');
         }
       } catch{
         jb.disabled=false;jb.textContent='join giveaway →';
-        setStatus('// network error. try again.','err');
+        setStatus('network error. try again.','err');
       }
     });
   }
