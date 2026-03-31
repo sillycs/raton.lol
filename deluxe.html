@@ -1,0 +1,600 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Raton — Buy Deluxe</title>
+    <link rel="icon" href="RATA.png">
+    <meta name="theme-color" content="#AE7FE2" />
+    <meta name="color-scheme" content="dark" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Raton — Buy Deluxe" />
+    <meta property="og:description" content="Upgrade your Raton experience. Choose your tier." />
+    <meta property="og:image" content="RATA.png" />
+    <meta property="og:site_name" content="Raton" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --p1: #AE7FE2;
+            --p2: #D59DFF;
+            --bg0: #080A10;
+            --bg1: #0B0D14;
+            --bg2: #101323;
+            --text: #F2F0FF;
+            --muted: rgba(242,240,255,.72);
+            --dim: rgba(242,240,255,.28);
+            --r: 16px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: Inter, system-ui, -apple-system, sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(1100px 700px at 18% 12%, rgba(174,127,226,.16) 0%, transparent 60%),
+                radial-gradient(1000px 680px at 82% 18%, rgba(213,157,255,.14) 0%, transparent 62%),
+                radial-gradient(900px 650px at 50% 100%, rgba(125,75,214,.12) 0%, transparent 60%),
+                linear-gradient(180deg, var(--bg0) 0%, var(--bg1) 40%, var(--bg2) 100%);
+            background-attachment: fixed;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: "";
+            position: fixed; inset: 0;
+            pointer-events: none; z-index: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'width='300'height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise'baseFrequency='.6'numOctaves='2'stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300'height='300'filter='url(%23n)'opacity='.18'/%3E%3C/svg%3E");
+            mix-blend-mode: overlay; opacity: .12;
+        }
+
+        .blob {
+            position: fixed; pointer-events: none; z-index: 0;
+            filter: blur(40px); opacity: .24;
+            animation: drift 16s ease-in-out infinite;
+        }
+        .b1 { width:520px;height:520px; left:-160px;top:-160px; background:radial-gradient(circle at 30% 35%,rgba(174,127,226,.9),transparent 64%); }
+        .b2 { width:620px;height:620px; right:-180px;top:30px; opacity:.20; background:radial-gradient(circle at 40% 40%,rgba(213,157,255,.9),transparent 62%); animation-duration:18s; }
+        .b3 { width:720px;height:720px; left:50%;bottom:-260px; opacity:.18; transform:translateX(-50%); background:radial-gradient(circle at 50% 45%,rgba(125,75,214,.85),transparent 66%); animation-duration:20s; }
+
+        @keyframes drift {
+            0%,100% { transform:translate3d(0,0,0) scale(1); }
+            50%      { transform:translate3d(22px,-18px,0) scale(1.03); }
+        }
+        @keyframes rainbow-shift {
+            0%   { background-position:0% 50%; }
+            50%  { background-position:100% 50%; }
+            100% { background-position:0% 50%; }
+        }
+        @keyframes spin { to { transform:rotate(360deg); } }
+        @keyframes fall { to { transform:translateY(120vh) rotate(360deg); } }
+        @keyframes fadeUp {
+            from { opacity:0; transform:translateY(22px); }
+            to   { opacity:1; transform:translateY(0); }
+        }
+
+        .announcement-banner {
+            position:relative; z-index:100; width:100%;
+            background:linear-gradient(90deg,rgba(174,127,226,.07),rgba(213,157,255,.13),rgba(174,127,226,.07));
+            border-bottom:1px solid rgba(213,157,255,.20);
+            height:42px; display:flex; align-items:center; justify-content:center; overflow:hidden;
+        }
+        .announcement-banner::before {
+            content:""; position:absolute; inset:0; pointer-events:none;
+            background:repeating-linear-gradient(90deg,rgba(174,127,226,.03) 0px,rgba(174,127,226,.03) 1px,transparent 1px,transparent 80px);
+        }
+        .anni-inner { display:flex; align-items:center; gap:14px; position:relative; z-index:1; }
+        .anni-text {
+            font-size:12px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+            background:linear-gradient(90deg,var(--p1),var(--p2));
+            -webkit-background-clip:text; background-clip:text; color:transparent;
+        }
+        .anni-divider { width:1px; height:16px; background:rgba(213,157,255,.22); flex-shrink:0; }
+        .anni-discord {
+            display:inline-flex; align-items:center; gap:7px; text-decoration:none;
+            font-size:11.5px; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+            color:rgba(242,240,255,.65); padding:5px 13px;
+            border:1px solid rgba(213,157,255,.18); border-radius:999px;
+            background:rgba(174,127,226,.08);
+            transition:background .2s,border-color .2s,color .2s,transform .18s;
+            position:relative; overflow:hidden;
+        }
+        .anni-discord::before {
+            content:""; position:absolute; inset:0; border-radius:inherit;
+            background:linear-gradient(90deg,rgba(174,127,226,.18),rgba(213,157,255,.18));
+            opacity:0; transition:opacity .2s;
+        }
+        .anni-discord:hover { border-color:rgba(213,157,255,.5); color:var(--p2); transform:translateY(-1px); }
+        .anni-discord:hover::before { opacity:1; }
+        .anni-discord svg { width:13px;height:13px; fill:currentColor; flex-shrink:0; position:relative; z-index:1; }
+        .anni-discord span { position:relative; z-index:1; }
+        .anni-pill {
+            font-size:10px; font-weight:900; letter-spacing:.1em; text-transform:uppercase;
+            color:#ffd37a; background:rgba(255,200,90,.12); border:1px solid rgba(255,200,90,.28);
+            border-radius:999px; padding:2px 8px; white-space:nowrap; position:relative; z-index:1;
+        }
+        @media(max-width:600px){ .anni-text,.anni-divider { display:none; } }
+
+        .page {
+            position:relative; z-index:1;
+            padding:60px 18px 90px;
+            max-width:1020px; margin:0 auto;
+        }
+
+        .hero-section {
+            text-align:center; margin-bottom:56px;
+            animation:fadeUp .55s cubic-bezier(.22,1,.36,1) both;
+        }
+        .hero-kicker {
+            display:inline-flex; align-items:center; gap:10px;
+            color:var(--muted); font-weight:600; letter-spacing:.08em;
+            text-transform:uppercase; font-size:12px; margin-bottom:18px;
+        }
+        .dot {
+            width:10px;height:10px; border-radius:999px;
+            background:linear-gradient(135deg,var(--p1),var(--p2));
+            box-shadow:0 0 0 6px rgba(174,127,226,.12);
+        }
+        .hero-section h1 {
+            font-size:clamp(32px,5vw,56px);
+            font-weight:900; letter-spacing:-.04em; line-height:1.02; margin-bottom:16px;
+        }
+        .grad {
+            background:linear-gradient(90deg,var(--p1),var(--p2));
+            -webkit-background-clip:text; background-clip:text; color:transparent;
+        }
+        .rainbow-text {
+            background:linear-gradient(90deg,#ff4d4d,#ff9a4d,#ffd37a,#6dffb1,#7cc4ff,#b07cff,#ff6ad5,#ff4d4d);
+            background-size:300% 100%;
+            -webkit-background-clip:text; background-clip:text; color:transparent;
+            animation:rainbow-shift 5s linear infinite;
+        }
+        .hero-section .lead {
+            color:var(--muted); font-size:15.5px; line-height:1.65;
+            max-width:54ch; margin:0 auto 28px;
+        }
+        .contact-chips { display:inline-flex; gap:10px; flex-wrap:wrap; justify-content:center; }
+        .chip {
+            display:inline-flex; align-items:center; gap:8px;
+            padding:9px 18px; border-radius:999px;
+            font-size:13px; font-weight:700; color:var(--muted); text-decoration:none;
+            backdrop-filter:blur(8px);
+            transition:border-color .18s,background .18s,color .18s,transform .18s;
+        }
+        .chip svg { width:15px;height:15px; fill:currentColor; flex-shrink:0; }
+        .chip.tg { border:1px solid rgba(38,177,232,.28); background:rgba(38,177,232,.05); }
+        .chip.tg:hover { border-color:rgba(38,177,232,.65); background:rgba(38,177,232,.12); color:#57c5f7; transform:translateY(-2px); }
+        .chip.dc { border:1px solid rgba(88,101,242,.28); background:rgba(88,101,242,.05); }
+        .chip.dc:hover { border-color:rgba(88,101,242,.65); background:rgba(88,101,242,.12); color:#818cf8; transform:translateY(-2px); }
+
+        .cards-grid {
+            display:grid;
+            grid-template-columns:repeat(3,1fr);
+            gap:16px; align-items:start;
+        }
+        @media(max-width:860px){ .cards-grid { grid-template-columns:1fr; } }
+
+        .plan-card {
+            isolation:isolate;
+            border:1px solid rgba(255,255,255,.10);
+            background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));
+            backdrop-filter:blur(14px);
+            border-radius:var(--r);
+            overflow:hidden;
+            position:relative; display:flex; flex-direction:column;
+            animation:fadeUp .55s cubic-bezier(.22,1,.36,1) both;
+            transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease;
+        }
+        .plan-card:hover {
+            transform:translateY(-4px);
+            box-shadow:0 32px 80px rgba(0,0,0,.65);
+        }
+        .plan-card:nth-child(1){ animation-delay:.05s; }
+        .plan-card:nth-child(2){ animation-delay:.12s; }
+        .plan-card:nth-child(3){ animation-delay:.19s; }
+
+        .plan-card.recommended {
+            border-color:rgba(174,127,226,.32);
+            box-shadow:0 0 0 1px rgba(174,127,226,.16),0 28px 72px rgba(0,0,0,.60);
+        }
+        .plan-card.recommended:hover { border-color:rgba(174,127,226,.50); }
+
+        .rec-badge {
+            position:absolute; top:14px; right:14px; z-index:2; pointer-events:none;
+            font-size:10px; font-weight:900; letter-spacing:.1em; text-transform:uppercase;
+            color:var(--p2);
+            background:rgba(174,127,226,.14);
+            border:1px solid rgba(174,127,226,.28);
+            border-radius:999px; padding:3px 10px;
+        }
+
+        .plan-card.gold {
+            border-color:rgba(255,215,0,.20);
+            box-shadow:0 0 0 1px rgba(255,215,0,.07),0 28px 72px rgba(0,0,0,.60);
+        }
+        .plan-card.gold:hover { border-color:rgba(255,215,0,.42); }
+
+        .card-stripe { height:3px; width:100%; flex-shrink:0; display:block; }
+        .stripe-purple { background:linear-gradient(90deg,var(--p1),var(--p2)); }
+        .stripe-rainbow {
+            background:linear-gradient(90deg,#ff4d4d,#ff9a4d,#ffd37a,#6dffb1,#7cc4ff,#b07cff,#ff6ad5,#ff4d4d);
+            background-size:300% 100%; animation:rainbow-shift 5s linear infinite;
+        }
+        .stripe-gold {
+            background:linear-gradient(90deg,#b8860b,#ffd700,#daa520,#ffd700,#b8860b);
+            background-size:300% 100%; animation:rainbow-shift 8s linear infinite;
+        }
+
+        .card-body { padding:24px; flex:1; display:flex; flex-direction:column; gap:20px; }
+
+        .plan-name { font-size:17px; font-weight:900; letter-spacing:-.01em; margin-bottom:6px; }
+        .plan-price { display:flex; align-items:baseline; gap:8px; }
+        .plan-price .amount { font-size:36px; font-weight:900; letter-spacing:-.04em; line-height:1; }
+        .plan-price .old { font-size:14px; font-weight:600; color:var(--dim); text-decoration:line-through; }
+        .plan-price .usd { font-size:13px; color:var(--dim); font-weight:600; }
+
+        .plan-features { list-style:none; display:flex; flex-direction:column; gap:8px; }
+
+        .plan-features li {
+            display:flex; align-items:flex-start; gap:10px;
+            font-size:13.5px; line-height:1.45;
+            transition:opacity .15s;
+        }
+
+        .plan-features li.has {
+            color:var(--muted);
+        }
+
+        .plan-features li.no {
+            color:var(--dim);
+            text-decoration:line-through;
+            text-decoration-color:rgba(242,240,255,.18);
+            opacity:.45;
+        }
+
+        .chk {
+            flex-shrink:0; margin-top:1px; width:16px; height:16px; border-radius:50%;
+            display:flex; align-items:center; justify-content:center;
+            font-size:9px; font-weight:900;
+        }
+        .chk-g  { background:rgba(80,220,140,.18);  color:#6dffb1; border:1px solid rgba(80,220,140,.35); }
+        .chk-p  { background:rgba(174,127,226,.20);  color:var(--p2); border:1px solid rgba(174,127,226,.35); }
+        .chk-au { background:rgba(255,215,0,.15);    color:#ffd700;  border:1px solid rgba(255,215,0,.30); }
+        .chk-no { background:rgba(255,255,255,.04);  color:rgba(242,240,255,.20); border:1px solid rgba(255,255,255,.08); }
+
+        .plan-cta {
+            display:inline-flex; align-items:center; justify-content:center; gap:10px;
+            padding:13px 20px; width:100%; border-radius:10px;
+            font-size:13px; font-weight:900; letter-spacing:.05em; text-transform:uppercase;
+            text-decoration:none; cursor:pointer; border:none;
+            transition:opacity .18s,transform .18s; margin-top:auto;
+        }
+        .cta-purple {
+            background:linear-gradient(135deg,rgba(174,127,226,.28),rgba(213,157,255,.20));
+            border:1px solid rgba(213,157,255,.35); color:var(--p2);
+        }
+        .cta-rainbow {
+            background:linear-gradient(90deg,#ff4d4d,#ff9a4d,#ffd37a,#6dffb1,#7cc4ff,#b07cff,#ff6ad5,#ff4d4d);
+            background-size:300% 100%; animation:rainbow-shift 5s linear infinite;
+            color:#080A10; border:none;
+        }
+        .cta-gold {
+            background:linear-gradient(135deg,rgba(255,215,0,.20),rgba(218,165,32,.14));
+            border:1px solid rgba(255,215,0,.28); color:#ffd700;
+        }
+        .plan-cta:hover { opacity:.85; transform:translateY(-1px); }
+        .cta-arrow { transition:transform .18s; }
+        .plan-cta:hover .cta-arrow { transform:translateX(3px); }
+
+        .how-section { margin-top:60px; animation:fadeUp .55s cubic-bezier(.22,1,.36,1) .3s both; }
+        .how-title { text-align:center; font-size:22px; font-weight:900; letter-spacing:-.02em; margin-bottom:28px; }
+        .how-steps { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:14px; }
+        .how-step {
+            border:1px solid rgba(255,255,255,.08);
+            background:rgba(255,255,255,.03);
+            backdrop-filter:blur(14px); border-radius:14px; padding:20px;
+            display:flex; gap:14px; align-items:flex-start;
+        }
+        .step-num {
+            flex-shrink:0; width:30px;height:30px; border-radius:8px;
+            background:linear-gradient(135deg,rgba(174,127,226,.25),rgba(213,157,255,.15));
+            border:1px solid rgba(174,127,226,.28);
+            display:flex; align-items:center; justify-content:center;
+            font-size:13px; font-weight:900; color:var(--p2);
+        }
+        .step-text { display:flex; flex-direction:column; gap:4px; }
+        .step-text strong { font-size:13.5px; font-weight:800; }
+        .step-text span { font-size:12.5px; color:var(--muted); line-height:1.5; }
+        .step-text a { color:var(--p2); text-decoration:none; font-weight:700; }
+        .step-text a:hover { text-decoration:underline; }
+
+        .rata-layer { position:fixed; inset:0; overflow:hidden; pointer-events:none; z-index:0; }
+        .rata-wrap { position:absolute; top:-40px; animation:fall linear infinite; }
+        .rata { opacity:.85; filter:drop-shadow(0 4px 10px rgba(0,0,0,.35)); animation:spin 1s linear infinite; }
+
+        .toast {
+            position:fixed; left:50%; bottom:22px;
+            transform:translateX(-50%) translateY(20px); opacity:0; pointer-events:none;
+            padding:10px 16px; background:rgba(12,14,26,.82);
+            border:1px solid rgba(213,157,255,.22); color:rgba(242,240,255,.92);
+            box-shadow:0 22px 65px rgba(0,0,0,.55); backdrop-filter:blur(14px);
+            border-radius:10px; transition:.25s ease; z-index:200;
+            font-size:13px; font-weight:600;
+        }
+        .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+        .particle { position:fixed; left:0;top:0; pointer-events:none; will-change:transform; z-index:9999; }
+    </style>
+</head>
+<body>
+
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+    <div class="blob b3"></div>
+    <div class="rata-layer" id="rataLayer"></div>
+
+    <div class="announcement-banner">
+        <div class="anni-inner">
+            <span class="anni-text">Thanks for using Raton in these two years</span>
+            <div class="anni-divider"></div>
+            <a class="anni-discord" href="https://discord.gg/EuQG3J6Zhr" target="_blank">
+                <svg viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.013.043.031.053a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
+                <span>discord.gg/EuQG3J6Zhr</span>
+                <span class="anni-pill">giveaways</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="page">
+
+        <div class="hero-section">
+            <div class="hero-kicker"><span class="dot"></span>Upgrade your experience</div>
+            <h1><span class="grad">Raton</span> <span class="rainbow-text">Deluxe</span></h1>
+            <p class="lead">Pick the tier that fits you. All plans include a Discord role, new UI, and +120 commands over the free version.</p>
+            <div class="contact-chips">
+                <a class="chip tg" href="https://t.me/sillycs" target="_blank">
+                    <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                    t.me/sillycs
+                </a>
+                <a class="chip dc" href="https://discord.gg/EuQG3J6Zhr" target="_blank">
+                    <svg viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.013.043.031.053a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
+                    @sillyok — Discord
+                </a>
+            </div>
+        </div>
+
+        <div class="cards-grid" id="cards"></div>
+
+        <div class="how-section">
+            <h2 class="how-title">How to <span class="grad">buy</span></h2>
+            <div class="how-steps">
+                <div class="how-step">
+                    <div class="step-num">1</div>
+                    <div class="step-text"><strong>Choose your plan</strong><span>Pick the tier above that best fits your needs.</span></div>
+                </div>
+                <div class="how-step">
+                    <div class="step-num">2</div>
+                    <div class="step-text"><strong>Contact the seller</strong><span>Via <a href="https://t.me/sillycs" target="_blank">t.me/sillycs</a> on Telegram or <strong>@sillyok</strong> on Discord.</span></div>
+                </div>
+                <div class="how-step">
+                    <div class="step-num">3</div>
+                    <div class="step-text"><strong>Make the payment</strong><span>Accepted methods discussed directly in chat.</span></div>
+                </div>
+                <div class="how-step">
+                    <div class="step-num">4</div>
+                    <div class="step-text"><strong>Get your copy</strong><span>Receive access, your Discord role, and full setup if applicable.</span></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        const ALL_FEATURES = [
+            "New UI",
+            "Better design",
+            "Bug fixes",
+            "+120 commands",
+            "Share clients v2",
+            "Fake password prompt",
+            "Updated tools",
+            "Role in the Discord",
+            "Documentation",
+            "Favorite commands",
+            "Plugin system (load, export & share)",
+            "Requested plugin by buyer",
+            "Listed in Credits for everyone",
+            "Bat crypt",
+            "Full support on DMs",
+            "More stealers & tools",
+            "Encrypted traffic",
+            "Full setup",
+            "Early access to every tier",
+        ];
+
+        const PLANS = [
+            {
+                name: "Raton Deluxe",
+                nameClass: "grad",
+                price: "$15",
+                oldPrice: null,
+                cardClass: "",
+                stripeClass: "stripe-purple",
+                chkClass: "chk-g",
+                ctaClass: "cta-purple",
+                rec: false,
+                has: new Set([
+                    "New UI","Better design","Bug fixes","+120 commands",
+                    "Share clients v2","Fake password prompt","Updated tools","Role in the Discord",
+                ]),
+            },
+            {
+                name: "Deluxe Plugins",
+                nameClass: "rainbow-text",
+                price: "$30",
+                oldPrice: null,
+                cardClass: "recommended",
+                stripeClass: "stripe-rainbow",
+                chkClass: "chk-p",
+                ctaClass: "cta-rainbow",
+                rec: true,
+                has: new Set([
+                    "New UI","Better design","Bug fixes","+120 commands",
+                    "Share clients v2","Fake password prompt","Updated tools","Role in the Discord",
+                    "Documentation","Favorite commands","Plugin system (load, export & share)",
+                ]),
+            },
+            {
+                name: "Raton Professional",
+                nameClass: "gold-text",
+                price: "$80",
+                oldPrice: "$90",
+                cardClass: "gold",
+                stripeClass: "stripe-gold",
+                chkClass: "chk-au",
+                ctaClass: "cta-gold",
+                rec: false,
+                has: new Set(ALL_FEATURES),
+            },
+        ];
+
+        const container = document.getElementById('cards');
+
+        PLANS.forEach(plan => {
+            const card = document.createElement('div');
+            card.className = 'plan-card' + (plan.cardClass ? ' ' + plan.cardClass : '');
+
+            const stripe = document.createElement('div');
+            stripe.className = 'card-stripe ' + plan.stripeClass;
+            card.appendChild(stripe);
+
+            if (plan.rec) {
+                const badge = document.createElement('span');
+                badge.className = 'rec-badge';
+                badge.textContent = '✦ Recommended';
+                card.appendChild(badge);
+            }
+
+            const body = document.createElement('div');
+            body.className = 'card-body';
+
+            const header = document.createElement('div');
+
+            const nameEl = document.createElement('div');
+            nameEl.className = 'plan-name';
+            const nameSpan = document.createElement('span');
+            if (plan.nameClass === 'gold-text') {
+                nameSpan.style.color = '#ffd700';
+            } else {
+                nameSpan.className = plan.nameClass;
+            }
+            nameSpan.textContent = plan.name;
+            nameEl.appendChild(nameSpan);
+
+            const priceRow = document.createElement('div');
+            priceRow.className = 'plan-price';
+            const amountSpan = document.createElement('span');
+            amountSpan.className = 'amount';
+            if (plan.nameClass === 'gold-text') amountSpan.style.color = '#ffd700';
+            if (plan.nameClass === 'rainbow-text') amountSpan.className = 'amount rainbow-text';
+            amountSpan.textContent = plan.price;
+            priceRow.appendChild(amountSpan);
+            if (plan.oldPrice) {
+                const oldSpan = document.createElement('span');
+                oldSpan.className = 'old';
+                oldSpan.textContent = plan.oldPrice;
+                priceRow.appendChild(oldSpan);
+            }
+            const usdSpan = document.createElement('span');
+            usdSpan.className = 'usd';
+            usdSpan.textContent = 'USD';
+            priceRow.appendChild(usdSpan);
+
+            header.appendChild(nameEl);
+            header.appendChild(priceRow);
+            body.appendChild(header);
+
+            const ul = document.createElement('ul');
+            ul.className = 'plan-features';
+            ALL_FEATURES.forEach(f => {
+                const li = document.createElement('li');
+                const has = plan.has.has(f);
+                li.className = has ? 'has' : 'no';
+                const chk = document.createElement('span');
+                chk.className = 'chk ' + (has ? plan.chkClass : 'chk-no');
+                chk.textContent = has ? '✓' : '✕';
+                li.appendChild(chk);
+                li.appendChild(document.createTextNode(f));
+                ul.appendChild(li);
+            });
+            body.appendChild(ul);
+
+            const cta = document.createElement('a');
+            cta.className = 'plan-cta ' + plan.ctaClass;
+            cta.href = 'https://t.me/sillycs';
+            cta.target = '_blank';
+            cta.dataset.name = plan.name;
+            cta.innerHTML = 'Buy now <span class="cta-arrow">→</span>';
+            body.appendChild(cta);
+
+            card.appendChild(body);
+            container.appendChild(card);
+        });
+
+        const layer = document.getElementById('rataLayer');
+        setInterval(() => {
+            const wrap = document.createElement('div');
+            wrap.className = 'rata-wrap';
+            wrap.style.left = Math.random() * 100 + '%';
+            wrap.style.animationDuration = (3.5 + Math.random() * 3.5) + 's';
+            const img = document.createElement('img');
+            img.src = 'RATA.png'; img.className = 'rata';
+            img.style.width = img.style.height = (12 + Math.random() * 14) + 'px';
+            img.style.animationDuration = (0.6 + Math.random() * 0.8) + 's';
+            wrap.appendChild(img); layer.appendChild(wrap);
+            setTimeout(() => wrap.remove(), 30000);
+        }, 240);
+
+        const toast = document.getElementById('toast');
+        function showToast(t) {
+            toast.textContent = t; toast.classList.add('show');
+            clearTimeout(showToast._t);
+            showToast._t = setTimeout(() => toast.classList.remove('show'), 1800);
+        }
+
+        const parts = []; let running = false;
+        function explode(x, y) {
+            for (let i = 0; i < 18; i++) {
+                const p = document.createElement('img');
+                p.src = 'RATA.png'; p.className = 'particle';
+                p.style.cssText = `width:48px;height:48px;transform:translate(${x}px,${y}px)`;
+                document.body.appendChild(p);
+                const a = Math.random() * Math.PI * 2, sp = 3 + Math.random() * 4;
+                parts.push({ el:p, x, y, vx:Math.cos(a)*sp, vy:Math.sin(a)*sp, life:100 });
+            }
+            if (!running) { running = true; requestAnimationFrame(tick); }
+        }
+        function tick() {
+            for (let i = parts.length - 1; i >= 0; i--) {
+                const p = parts[i];
+                p.vy += 0.18; p.vx *= 0.995; p.vy *= 0.995;
+                p.x += p.vx; p.y += p.vy; p.life--;
+                p.el.style.transform = `translate(${p.x}px,${p.y}px)`;
+                if (p.life <= 0) { p.el.remove(); parts.splice(i, 1); }
+            }
+            if (parts.length) requestAnimationFrame(tick); else running = false;
+        }
+
+        document.addEventListener('click', e => {
+            const el = e.target.closest('.plan-cta, .chip');
+            if (!el) return;
+            explode(e.clientX, e.clientY);
+            if (el.dataset.name) showToast('Opening contact — ' + el.dataset.name);
+        });
+    </script>
+</body>
+</html>
