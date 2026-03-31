@@ -1,0 +1,212 @@
+<!doctype html><html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Admin</title>
+<meta name="color-scheme" content="dark"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--p1:#AE7FE2;--p2:#D59DFF;--bg:#080A10;--bg1:#0D0F1A;--text:#F2F0FF;--muted:rgba(242,240,255,.72);--dim:rgba(242,240,255,.28);}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:Inter,sans-serif;color:var(--text);background:linear-gradient(180deg,var(--bg) 0%,var(--bg1) 100%);min-height:100vh;padding:36px 16px 60px;}
+.page{max-width:580px;margin:0 auto;}
+h1{font-size:26px;font-weight:900;letter-spacing:-.04em;margin-bottom:4px;}
+.grad{background:linear-gradient(90deg,var(--p1),var(--p2));-webkit-background-clip:text;background-clip:text;color:transparent;}
+.sub{font-size:13px;color:var(--muted);margin-bottom:28px;}
+.card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:14px;padding:22px;margin-bottom:16px;}
+.card-title{font-size:13px;font-weight:800;color:var(--p2);margin-bottom:16px;}
+.field{display:flex;flex-direction:column;gap:5px;margin-bottom:12px;}
+.field label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);}
+.field input,.field textarea{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:8px;padding:10px 12px;font-family:Inter,sans-serif;font-size:13.5px;color:var(--text);outline:none;transition:border-color .18s;}
+.field input:focus,.field textarea:focus{border-color:rgba(174,127,226,.45);}
+.field textarea{resize:vertical;min-height:56px;}
+.row{display:flex;gap:10px;}
+.row .field{flex:1;}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border-radius:9px;font-family:Inter,sans-serif;font-size:12.5px;font-weight:900;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;border:none;transition:opacity .18s,transform .18s;}
+.btn:hover:not(:disabled){opacity:.82;transform:translateY(-1px);}
+.btn:disabled{opacity:.38;cursor:not-allowed;}
+.btn-p{background:rgba(174,127,226,.16);border:1px solid rgba(213,157,255,.30);color:var(--p2);}
+.btn-g{background:rgba(255,215,0,.10);border:1px solid rgba(255,215,0,.25);color:#ffd700;}
+.btn-r{background:rgba(255,75,75,.09);border:1px solid rgba(255,75,75,.22);color:#ff6b6b;}
+.msg{margin-top:10px;padding:9px 13px;border-radius:8px;font-size:12.5px;font-weight:600;}
+.msg.ok{background:rgba(109,255,177,.07);border:1px solid rgba(109,255,177,.18);color:#6dffb1;}
+.msg.err{background:rgba(255,107,107,.07);border:1px solid rgba(255,107,107,.18);color:#ff6b6b;}
+.gw-item{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:14px 16px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.06);border-radius:10px;margin-bottom:8px;}
+.gw-info{flex:1;min-width:0;}
+.gw-title{font-size:14px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.gw-meta{font-size:11px;color:var(--dim);margin-top:2px;font-family:monospace;}
+.gw-acts{display:flex;gap:7px;flex-shrink:0;}
+.sdot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:5px;vertical-align:middle;}
+.sdot.on{background:#6dffb1;}.sdot.off{background:#ff6b6b;}
+</style>
+</head>
+<body>
+<div class="page" id="root">
+  <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:70vh;gap:16px;text-align:center;">
+    <h1><span class="grad">Raton</span> Admin</h1>
+    <p style="color:var(--muted);font-size:13px">Panel privado de giveaways</p>
+    <div class="card" style="width:100%;max-width:340px">
+      <div class="field"><label>Admin Key</label><input type="password" id="keyIn" placeholder="tu clave secreta" onkeydown="if(event.key==='Enter')unlock()"/></div>
+      <button class="btn btn-p" onclick="unlock()">Entrar →</button>
+      <div id="lockMsg"></div>
+    </div>
+  </div>
+</div>
+<script>
+const WORKER   = 'https://steep-sun-85c4.sillykuadro.workers.dev';
+const BASE_URL = 'https://raton.lol/giveaway';
+let KEY = '';
+
+function unlock(){
+  const k = document.getElementById('keyIn').value.trim();
+  if(!k){ showMsg('lockMsg','Escribe tu clave','err'); return; }
+  
+  KEY = k;
+  renderAdmin();
+}
+
+function renderAdmin(){
+  document.getElementById('root').innerHTML=`
+  <h1><span class="grad">Raton</span> Admin</h1>
+  <p class="sub">Panel privado 🔒</p>
+  <div class="card">
+    <div class="card-title">➕ Crear giveaway</div>
+    <div class="row">
+      <div class="field"><label>ID</label><input id="nId"/></div>
+      <div class="field"><label>Emoji</label><input id="nEmoji"/></div>
+    </div>
+    <div class="field"><label>Título</label><input id="nTitle"/></div>
+    <div class="field"><label>Descripción</label><textarea id="nDesc"></textarea></div>
+    <div class="field"><label>Horas</label><input id="nHours" type="number" value="24"/></div>
+    <button class="btn btn-p" onclick="createGW()">Crear →</button>
+    <div id="createMsg"></div>
+  </div>
+  <div class="card">
+    <div class="card-title">🎁 Giveaways</div>
+    <div id="gwList">Cargando…</div>
+  </div>`;
+  loadList();
+}
+
+async function createGW(){
+  const id    = document.getElementById('nId').value.trim().replace(/[^a-zA-Z0-9_-]/g,'');
+  const title = document.getElementById('nTitle').value.trim();
+  const desc  = document.getElementById('nDesc').value.trim();
+  const emoji = document.getElementById('nEmoji').value.trim()||'🎁';
+  const hours = Number(document.getElementById('nHours').value);
+
+  if(!id||!title){ showMsg('createMsg','ID y título requeridos','err'); return; }
+
+  try{
+    const r = await post('/admin/create',{
+      adminKey:KEY,
+      id,
+      title,
+      description:desc,
+      emoji,
+      hours
+    });
+
+    if(r.ok){
+      const ids = JSON.parse(localStorage.getItem('gw_ids')||'[]');
+      if(!ids.includes(id)){ ids.push(id); localStorage.setItem('gw_ids',JSON.stringify(ids)); }
+
+      showMsg('createMsg',`✓ Creado → <a href="${BASE_URL}?id=${id}" target="_blank">${BASE_URL}?id=${id}</a>`,'ok');
+      loadList();
+    } else showMsg('createMsg',r.error,'err');
+
+  } catch(e){
+    showMsg('createMsg',e.message,'err');
+  }
+}
+
+async function loadList(){
+  const ids = JSON.parse(localStorage.getItem('gw_ids')||'[]');
+  const el  = document.getElementById('gwList');
+
+  if(!ids.length){
+    el.innerHTML='No hay giveaways aún';
+    return;
+  }
+
+  el.innerHTML='';
+
+  for(const id of [...ids].reverse()){
+    try{
+const res = await fetch(`${WORKER}/giveaway?id=${id}`);
+const data = await res.json();
+
+if (!data.ok) continue;
+
+const g = data.giveaway;
+
+const ended = !g.active || Date.now() > g.endsAt;
+
+const div = document.createElement('div');
+div.className = 'gw-item';
+
+div.innerHTML = `
+<div class="gw-info">
+  <div class="gw-title">
+    <span class="sdot ${ended ? 'off' : 'on'}"></span>
+    ${g.emoji ?? '🎁'} ${g.title}
+  </div>
+  <div class="gw-meta">
+    ${id} · ${g.entryCount} entries
+    ${g.winner ? ' · 🏆 ' + g.winner : ''}
+  </div>
+</div>
+
+<div class="gw-acts">
+  <button class="btn btn-g" onclick="pickWinner('${id}')">🎲</button>
+  <button class="btn btn-r" onclick="endGW('${id}')" ${ended?'disabled':''}>🔒</button>
+  <a class="btn btn-p" href="${BASE_URL}?id=${id}" target="_blank">🔗</a>
+</div>
+`;
+
+      el.appendChild(div);
+
+    } catch(e){}
+  }
+}
+
+async function pickWinner(id){
+  if(!confirm(`Sortear ganador para ${id}?`)) return;
+
+  const r = await post('/admin/winner',{
+    adminKey:KEY,
+    giveawayId:id
+  });
+
+  if(r.ok) alert("Ganador: " + r.winner);
+  else alert("Error: " + r.error);
+
+  loadList();
+}
+
+async function endGW(id){
+  if(!confirm(`Cerrar ${id}?`)) return;
+
+  await post('/admin/end',{
+    adminKey:KEY,
+    giveawayId:id
+  });
+
+  loadList();
+}
+
+function post(path,body){
+  return fetch(WORKER+path,{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(body)
+  }).then(r=>r.json());
+}
+
+function showMsg(id,txt,t){
+  const e=document.getElementById(id);
+  if(e) e.innerHTML=`<div class="msg ${t}">${txt}</div>`;
+}
+</script>
+</body>
+</html>
