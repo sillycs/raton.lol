@@ -79,6 +79,10 @@
             50%  { transform: scale(1.4); }
             100% { transform: scale(1); }
         }
+        @keyframes modalIn {
+            from { opacity:0; transform:translateY(30px) scale(.97); }
+            to   { opacity:1; transform:translateY(0) scale(1); }
+        }
         .grad {
             background: linear-gradient(90deg, var(--p1), var(--p2));
             -webkit-background-clip: text; background-clip: text; color: transparent;
@@ -132,8 +136,15 @@
         }
         .blog-title { font-size: clamp(28px,4vw,42px); font-weight: 900; letter-spacing: -.04em; margin-bottom: 8px; }
         .blog-subtitle { color: var(--muted); font-size: 14px; line-height: 1.65; max-width: 48ch; }
-        .posts-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
-        @media(max-width: 640px) { .posts-grid { grid-template-columns: 1fr; } }
+
+        .posts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(min(100%, 380px), 1fr));
+            gap: 16px;
+            justify-content: center;
+        }
+        .posts-grid.single-card { grid-template-columns: minmax(0, 460px); }
+
         .post-card {
             isolation: isolate;
             border: 1px solid rgba(255,255,255,.09);
@@ -224,7 +235,7 @@
             font-size: 12px; font-weight: 700; color: var(--p2); text-decoration: none;
             letter-spacing: .04em; display: inline-flex; align-items: center; gap: 4px;
             margin-top: 4px; align-self: flex-start;
-            transition: gap .18s, opacity .18s;
+            transition: gap .18s, opacity .18s; cursor: pointer; background: none; border: none;
         }
         .read-more:hover { gap: 8px; opacity: .8; }
         .post-tags { display: flex; gap: 6px; flex-wrap: wrap; }
@@ -235,7 +246,54 @@
             color: var(--dim);
         }
         .post-card.pinned { border-color: rgba(174,127,226,.22); box-shadow: 0 0 0 1px rgba(174,127,226,.10); }
-        .post-views { font-size: 11px; color: var(--dim); font-weight: 600; display: flex; align-items: center; gap: 4px; }
+
+        #postPage { display: none; }
+        #postPage.active { display: block; animation: fadeUp .45s cubic-bezier(.22,1,.36,1) both; }
+        .back-btn {
+            display: inline-flex; align-items: center; gap: 7px;
+            font-size: 13px; font-weight: 700; color: var(--p2);
+            background: none; border: none; cursor: pointer;
+            padding: 0; margin-bottom: 32px; letter-spacing: .03em;
+            transition: gap .18s, opacity .18s;
+        }
+        .back-btn:hover { gap: 12px; opacity: .75; }
+        .article-hero {
+            width: 100%; border-radius: var(--r); overflow: hidden;
+            margin-bottom: 32px;
+            border: 1px solid rgba(255,255,255,.08);
+            box-shadow: 0 32px 90px rgba(0,0,0,.6);
+        }
+        .article-hero img {
+            width: 100%; display: block;
+            aspect-ratio: 16/7; object-fit: cover;
+        }
+        .article-hero-placeholder {
+            width: 100%; aspect-ratio: 16/7;
+            background: linear-gradient(135deg, rgba(174,127,226,.12), rgba(125,75,214,.07));
+            display: flex; align-items: center; justify-content: center;
+        }
+        .article-hero-placeholder svg { opacity: .18; width: 56px; height: 56px; }
+        .article-top { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+        .article-title {
+            font-size: clamp(24px, 4vw, 38px); font-weight: 900; letter-spacing: -.03em;
+            line-height: 1.2; margin-bottom: 16px;
+        }
+        .article-meta-row {
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: 12px;
+            padding-bottom: 20px; margin-bottom: 28px;
+            border-bottom: 1px solid rgba(255,255,255,.07);
+        }
+        .article-meta-left { display: flex; flex-direction: column; gap: 4px; }
+        .article-date { font-size: 12px; color: var(--dim); font-weight: 600; }
+        .article-read-time { font-size: 12px; color: var(--dim); font-weight: 600; display: flex; align-items: center; gap: 4px; }
+        .article-body {
+            font-size: 15px; color: var(--muted); line-height: 1.8;
+            max-width: 68ch;
+        }
+        .article-body p { margin-bottom: 18px; }
+        .article-body p:last-child { margin-bottom: 0; }
+        .article-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 28px; }
     </style>
 </head>
 <body>
@@ -245,21 +303,30 @@
     <div class="blob b3"></div>
 
     <div class="page">
-        <div class="blog-header">
-            <img class="author-avatar" src="pfp.jpg" alt="@Silly"
-                onerror="this.style.background='linear-gradient(135deg,rgba(174,127,226,.3),rgba(125,75,214,.2))';this.removeAttribute('src')">
-            <div class="author-name"><span class="grad">@Silly</span></div>
-            <div class="author-tags">
-                <span class="tag-developer">Developer</span>
-                <span class="tag-professional">Professional</span>
-                <span class="tag-larp">Larp</span>
+
+        <div id="blogList">
+            <div class="blog-header">
+                <img class="author-avatar" src="pfp.jpg" alt="@Silly"
+                    onerror="this.style.background='linear-gradient(135deg,rgba(174,127,226,.3),rgba(125,75,214,.2))';this.removeAttribute('src')">
+                <div class="author-name"><span class="grad">@Silly</span></div>
+                <div class="author-tags">
+                    <span class="tag-developer">Developer</span>
+                    <span class="tag-professional">Professional</span>
+                    <span class="tag-larp">Larp</span>
+                </div>
+                <h1 class="blog-title">The <span class="rainbow-text">Raton</span> Blog</h1>
+                <p class="blog-subtitle">You will learn new stuff, leaks, tips and more :)</p>
             </div>
-            <h1 class="blog-title">The <span class="rainbow-text">Raton</span> Blog</h1>
-            <p class="blog-subtitle">You will learn new stuff, leaks, tips and more :)</p>
+
+            <div class="stats-bar" id="statsBar"></div>
+            <div class="posts-grid" id="postsGrid"></div>
         </div>
 
-        <div class="stats-bar" id="statsBar"></div>
-        <div class="posts-grid" id="postsGrid"></div>
+        <div id="postPage">
+            <button class="back-btn" onclick="navigateTo(null)">← Back to blog</button>
+            <div id="articleContent"></div>
+        </div>
+
     </div>
 
     <div class="toast" id="toast"></div>
@@ -271,8 +338,9 @@
             {
                 title: "About professional",
                 excerpt: "Watch the development of Raton professional",
+                description: `test`,
                 date: "1 Apr 2026",
-                category: "Stuff",
+                category: "Deluxe",
                 tags: ["silly", "development", "raton"],
                 readTime: "2 min",
                 image: "pro.png",
@@ -289,6 +357,10 @@
             toastEl.classList.add('show');
             clearTimeout(showToast._t);
             showToast._t = setTimeout(() => toastEl.classList.remove('show'), 1800);
+        }
+        function formatNum(n) {
+            if (n >= 1000) return (n / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
+            return String(n);
         }
 
         function renderStats() {
@@ -310,7 +382,6 @@
         async function handleLike(index, btn) {
             const state = likeState[index];
             btn.disabled = true;
-
             const endpoint = state.liked ? '/unlike' : '/like';
             const res = await fetch(WORKER + endpoint, {
                 method: 'POST',
@@ -334,6 +405,8 @@
         function renderPosts() {
             const grid = document.getElementById('postsGrid');
             grid.innerHTML = '';
+
+            grid.classList.toggle('single-card', POSTS.length === 1);
 
             POSTS.forEach((post, i) => {
                 likeState[i] = { count: 0, liked: false };
@@ -397,11 +470,10 @@
                     body.appendChild(tagsRow);
                 }
 
-                const rm = document.createElement('a');
+                const rm = document.createElement('button');
                 rm.className = 'read-more';
-                rm.href = '#';
                 rm.innerHTML = 'Read more <span>→</span>';
-                rm.onclick = e => { e.preventDefault(); showToast('🔗 ' + post.title); };
+                rm.onclick = () => navigateTo(i + 1);
                 body.appendChild(rm);
 
                 const meta = document.createElement('div');
@@ -424,8 +496,6 @@
                 const rightMeta = document.createElement('div');
                 rightMeta.style.cssText = 'display:flex;align-items:center;gap:10px;';
 
-                const viewsEl = document.createElement('span');
-                viewsEl.className = 'post-views';
                 const likeBtn = document.createElement('button');
                 likeBtn.className = 'like-btn';
                 likeBtn.dataset.index = i;
@@ -433,7 +503,6 @@
                 likeBtn.disabled = true;
                 likeBtn.onclick = () => handleLike(i, likeBtn);
 
-                rightMeta.appendChild(viewsEl);
                 rightMeta.appendChild(likeBtn);
                 meta.appendChild(leftMeta);
                 meta.appendChild(rightMeta);
@@ -466,7 +535,155 @@
             });
         }
 
+        function makeLikeBtn(index) {
+            const state = likeState[index];
+            const btn = document.createElement('button');
+            btn.className = 'like-btn' + (state?.liked ? ' liked' : '');
+            btn.dataset.articleLike = index;
+            btn.innerHTML = `<span class="heart">♥</span><span class="like-count">${formatNum(state?.count ?? 0)}</span>`;
+            btn.disabled = (state?.count === undefined && state?.count === 0 && !state) ? true : false;
+            btn.onclick = async () => {
+                await handleLike(index, btn);
+                const gridBtn = document.querySelector(`[data-index="${index}"]`);
+                if (gridBtn) {
+                    gridBtn.querySelector('.like-count').textContent = formatNum(likeState[index].count);
+                    gridBtn.classList.toggle('liked', likeState[index].liked);
+                }
+            };
+            return btn;
+        }
+
+        function navigateTo(postId) {
+            const url = new URL(window.location);
+            if (postId === null) {
+                url.searchParams.delete('post');
+            } else {
+                url.searchParams.set('post', postId);
+            }
+            history.pushState({}, '', url);
+            render();
+        }
+
+        function render() {
+            const params = new URLSearchParams(window.location.search);
+            const postParam = params.get('post');
+            const blogList = document.getElementById('blogList');
+            const postPage = document.getElementById('postPage');
+
+            if (postParam !== null) {
+                const id = parseInt(postParam, 10) - 1; 
+                const post = POSTS[id];
+
+                blogList.style.display = 'none';
+                postPage.classList.add('active');
+
+                if (!post) {
+                    document.getElementById('articleContent').innerHTML = `<p style="color:var(--muted)">Post not found.</p>`;
+                    return;
+                }
+
+                const content = document.getElementById('articleContent');
+                content.innerHTML = '';
+
+                // Hero image
+                const hero = document.createElement('div');
+                hero.className = 'article-hero';
+                if (post.image) {
+                    const img = document.createElement('img');
+                    img.src = post.image;
+                    img.alt = post.title;
+                    img.onerror = function() {
+                        const ph = document.createElement('div');
+                        ph.className = 'article-hero-placeholder';
+                        ph.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="rgba(174,127,226,.6)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 15l5-5 4 4 3-3 6 6"/><circle cx="8.5" cy="8.5" r="1.5"/></svg>`;
+                        img.replaceWith(ph);
+                    };
+                    hero.appendChild(img);
+                } else {
+                    hero.innerHTML = `<div class="article-hero-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="rgba(174,127,226,.6)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 15l5-5 4 4 3-3 6 6"/><circle cx="8.5" cy="8.5" r="1.5"/></svg></div>`;
+                }
+                content.appendChild(hero);
+
+                // Category + featured badge row
+                const topRow = document.createElement('div');
+                topRow.className = 'article-top';
+                const cat = document.createElement('span');
+                cat.className = 'post-category';
+                cat.textContent = post.category;
+                topRow.appendChild(cat);
+                if (post.featured) {
+                    const badge = document.createElement('span');
+                    badge.className = 'featured-badge';
+                    badge.style.position = 'static';
+                    badge.textContent = 'Featured';
+                    topRow.appendChild(badge);
+                }
+                content.appendChild(topRow);
+
+                const titleEl = document.createElement('h1');
+                titleEl.className = 'article-title';
+                titleEl.textContent = post.title;
+                content.appendChild(titleEl);
+
+                const metaRow = document.createElement('div');
+                metaRow.className = 'article-meta-row';
+
+                const metaLeft = document.createElement('div');
+                metaLeft.className = 'article-meta-left';
+
+                const dateEl = document.createElement('span');
+                dateEl.className = 'article-date';
+                dateEl.textContent = post.date;
+
+                const readEl = document.createElement('span');
+                readEl.className = 'article-read-time';
+                readEl.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>${post.readTime} to read`;
+
+                metaLeft.appendChild(dateEl);
+                metaLeft.appendChild(readEl);
+
+                metaRow.appendChild(metaLeft);
+                metaRow.appendChild(makeLikeBtn(id));
+                content.appendChild(metaRow);
+
+                // Body / description
+                const body = document.createElement('div');
+                body.className = 'article-body';
+                const paragraphs = (post.description || post.excerpt).split(/\n\n+/);
+                paragraphs.forEach(p => {
+                    const el = document.createElement('p');
+                    el.textContent = p.trim();
+                    body.appendChild(el);
+                });
+                content.appendChild(body);
+
+                if (post.tags?.length) {
+                    const tagsRow = document.createElement('div');
+                    tagsRow.className = 'article-tags';
+                    post.tags.forEach(t => {
+                        const tg = document.createElement('span');
+                        tg.className = 'post-tag';
+                        tg.textContent = '#' + t;
+                        tagsRow.appendChild(tg);
+                    });
+                    content.appendChild(tagsRow);
+                }
+
+                document.title = `${post.title} — Raton Blog`;
+
+            } else {
+                blogList.style.display = '';
+                postPage.classList.remove('active');
+                document.title = 'Raton — Blog';
+            }
+        }
+
+        // Handle browser back/forward
+        window.addEventListener('popstate', render);
+
+        // Boot
         renderPosts();
+        render();
     </script>
 </body>
 </html>
