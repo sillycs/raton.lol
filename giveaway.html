@@ -10,13 +10,13 @@
 
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="Raton Giveaways"/>
-<meta property="og:title" content="🎁 Free Giveaway — Raton"/>
-<meta property="og:description" content="A free giveaway is here! Click to enter and check your win chances."/>
+<meta property="og:title" content="🎁 Giveaway"/>
+<meta property="og:description" content="A free giveaway is here, click to enter and check your win chances :)"/>
 <meta property="og:image" content="https://steep-sun-85c4.sillykuadro.workers.dev/og-image"/>
 <meta property="og:url" content=""/>
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:title" content="🎁 Free Giveaway — Raton"/>
-<meta name="twitter:description" content="A free giveaway is here! Click to enter and check your win chances."/>
+<meta name="twitter:title" content="🎁 Giveaway"/>
+<meta name="twitter:description" content="A free giveaway is here, click to enter and check your win chances :)"/>
 
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&family=Figtree:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <style>
@@ -597,7 +597,7 @@ async function render(){
           <input class="input" id="un" type="text" maxlength="32" placeholder="your discord username" autocomplete="off" spellcheck="false"/>
         </div>
         <button class="btn ${joined?'joined':''}" id="jb" ${joined?'disabled':''}>
-          ${joined?'✓ already joined':'join giveaway →'}
+          ${joined?'already joined':'join giveaway →'}
         </button>
         <div class="status" id="st"></div>
         `:`<div class="status ok" style="margin-top:10px;">
@@ -630,7 +630,7 @@ async function render(){
         const r=await fetch(`${WORKER}/join`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({giveawayId:ID,username:un})});
         const d=await r.json();
         if(d.ok){
-          jb.textContent='✓ joined';jb.classList.add('joined');
+          jb.textContent='joined';jb.classList.add('joined');
           setStatus("you're in! good luck :3",'ok');
           localStorage.setItem(JOINED_KEY,'1');
           document.getElementById('ec').textContent=d.count;
