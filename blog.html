@@ -276,11 +276,6 @@
         }
         .posts-grid.single-card { grid-template-columns: minmax(0, 480px); }
 
-        .posts-list {
-            display: flex; flex-direction: column; gap: 12px;
-            animation: view-in .3s ease both;
-        }
-
         .posts-magazine {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -314,40 +309,6 @@
         .posts-compact .post-card .post-meta { border: none; margin: 0; padding: 0; }
         .posts-compact .post-card .post-title { font-size: 14px; flex: 1; }
         .posts-compact .post-card .featured-badge { display: none; }
-
-        .posts-list .post-card {
-            flex-direction: row !important;
-        }
-        .posts-list .post-card .card-stripe {
-            width: 3px; height: auto;
-            min-height: 80px;
-        }
-        .posts-list .post-card .card-stripe.stripe-purple { background: linear-gradient(180deg, var(--p1), var(--p2)); }
-        .posts-list .post-card .card-stripe.stripe-rainbow {
-            background: linear-gradient(180deg,#ff4d4d,#ff9a4d,#ffd37a,#6dffb1,#7cc4ff,#b07cff,#ff6ad5,#ff4d4d);
-            background-size: 100% 300%; animation: rainbow-shift-v 5s linear infinite;
-        }
-        @keyframes rainbow-shift-v {
-            0%,100% { background-position: 50% 0%; }
-            50%     { background-position: 50% 100%; }
-        }
-        .posts-list .post-card .post-img-wrap {
-            width: 160px; min-width: 160px; height: 100%;
-            flex-shrink: 0; overflow: hidden;
-        }
-        .posts-list .post-card .post-img {
-            width: 100%; height: 100%; object-fit: cover; aspect-ratio: unset;
-        }
-        .posts-list .post-card .post-img-placeholder {
-            width: 100%; height: 100%; aspect-ratio: unset; min-height: 90px;
-        }
-        .posts-list .post-card .post-body {
-            flex: 1; padding: 16px;
-        }
-        .posts-list .post-card .featured-badge {
-            position: static; top: unset; right: unset;
-        }
-        .posts-list .post-card .post-title { font-size: 15px; }
 
         .post-card {
             isolation: isolate;
@@ -575,11 +536,6 @@
 
         @media (max-width: 640px) {
             .posts-magazine { grid-template-columns: 1fr; }
-            .posts-list .post-card { flex-direction: column !important; }
-            .posts-list .post-card .card-stripe { width: 100%; height: 3px; }
-            .posts-list .post-card .post-img-wrap { width: 100%; height: auto; }
-            .posts-list .post-card .post-img { aspect-ratio: 16/9; height: auto; }
-            .posts-list .post-card .post-img-placeholder { aspect-ratio: 16/9; height: auto; }
         }
         @media (max-width: 480px) {
             .stats-bar { flex-wrap: wrap; }
@@ -627,9 +583,6 @@
                     <button class="view-btn" data-view="magazine" title="Magazine" onclick="setView('magazine',this)">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="10" rx="1.5"/><rect x="3" y="16" width="8" height="5" rx="1.5"/><rect x="13" y="16" width="8" height="5" rx="1.5"/></svg>
                     </button>
-                    <button class="view-btn" data-view="list" title="List" onclick="setView('list',this)">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="4" rx="1.5"/><rect x="3" y="11" width="18" height="4" rx="1.5"/><rect x="3" y="18" width="18" height="4" rx="1.5"/></svg>
-                    </button>
                     <button class="view-btn" data-view="compact" title="Compact" onclick="setView('compact',this)">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="10" x2="20" y2="10"/><line x1="4" y1="14" x2="20" y2="14"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
                     </button>
@@ -651,8 +604,10 @@
         const WORKER = 'https://steep-sun-85c4.sillykuadro.workers.dev';
 
         /* =====================================================================
-         * NOTE FOR ME SO I DON'T FORGET
+         * NOTE FOR SILLY
          * ─────────────────────────────────────────────────────────────────────
+         * so i dun forget
+         *
          * title        {string}   Post title
          * titleEffect  {string}   'rainbow' | 'glitch' | 'shimmer' | 'gold' | 'gradient'
          * excerpt      {string}   Short description shown on card
@@ -683,9 +638,9 @@ I truly thank you from the bottom of my heart, and that's why I want to bring yo
 
 ---
 
-I'm starting a collaboration with **john williams** to bring you crypters. As for commands and everything else, I'm working on bringing you the ~~"Destruction" plugin~~ and also on adding more commands for you.
+I'm starting a collaboration with **AFR** to bring you crypters. As for commands and everything else, I'm working on bringing you the ~~Destruction~~ plugin and also on adding more commands for you.
 
-I'll start with improved traffic encryption soon. Thank you so much for everything, and I thank you on behalf of the entire Raton team ~~:3~~
+I'll start with improved traffic encryption soon. Thank you so much for everything, and I thank you on behalf of the entire Raton team :3
 
 ---
 
@@ -771,7 +726,6 @@ This is a second paragraph to show how line breaks work!
                     return;
                 }
                 const p = document.createElement('p');
-                // Parse inline: **bold** and ~~em~~
                 const parts = trimmed.split(/(\*\*[^*]+\*\*|~~[^~]+~~)/g);
                 parts.forEach(part => {
                     if (part.startsWith('**') && part.endsWith('**')) {
@@ -825,12 +779,12 @@ This is a second paragraph to show how line breaks work!
                 });
             } catch {
                 btn.disabled = false;
-                showToast('Get wifi brokie', true);
+                showToast('No connection — try again', true);
                 return;
             }
             if (!res.ok) {
                 btn.disabled = false;
-                const errMap = { 429: 'Woah, too many shit going here...', 401: 'Not authorized', 500: 'Server error — try again later' };
+                const errMap = { 429: 'Too many requests — slow down', 401: 'Not authorized', 500: 'Server error — try again later' };
                 showToast(errMap[res.status] || `Error ${res.status} — could not like`, true);
                 return;
             }
@@ -918,7 +872,6 @@ This is a second paragraph to show how line breaks work!
                 cat.className = 'post-category';
                 if (post.accent) {
                     cat.style.cssText = `background:${post.accent}22;border-color:${post.accent}44;color:${post.accent}`;
-                    cat.querySelector?.('::before')
                     cat.style.setProperty('--dot-color', post.accent);
                 }
                 cat.textContent = post.category;
@@ -960,7 +913,6 @@ This is a second paragraph to show how line breaks work!
             meta.className = 'post-meta';
 
             if (view === 'compact') {
-
                 const dateEl = document.createElement('span');
                 dateEl.className = 'post-date';
                 dateEl.textContent = post.date || '';
@@ -1001,7 +953,6 @@ This is a second paragraph to show how line breaks work!
 
             const viewClassMap = {
                 grid: 'posts-grid',
-                list: 'posts-list',
                 magazine: 'posts-magazine',
                 compact: 'posts-compact',
             };
