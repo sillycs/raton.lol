@@ -547,7 +547,7 @@ async function render(){
       <div class="sheen"></div>
       <div class="body">
 
-        <div class="kicker"><span class="dot-live"></span>Raton Giveaway<span style="color:rgba(244,240,255,.14)"> live</span></div>
+        <div class="kicker"><span class="dot-live"></span>Raton Giveaway<span style="color:rgba(244,240,255,.14)"> with love from our team</span></div>
 
         <div class="title">
           <span class="grad">Free</span>
@@ -573,7 +573,7 @@ async function render(){
         <div class="cd-wrap">
           <div class="cd-lbl">${ended?'⬛ ended':'⬤ ends in'}</div>
           ${ended
-            ?`<div class="cd-ended">Better luck next time!</div>`
+            ?`<div class="cd-ended">This giveaway has ended</div>`
             :`<div class="cd-units">
               <div class="cd-unit"><div class="cd-num-wrap"><div class="cd-num" id="cdd">00</div></div><div class="cd-sub">days</div></div>
               <div class="cd-sep">:</div>
@@ -601,7 +601,7 @@ async function render(){
         </button>
         <div class="status" id="st"></div>
         `:`<div class="status ok" style="margin-top:10px;">
-          ${hasWon?'congrats to the winner :)':'giveaway_closed — better luck next time'}
+          ${hasWon?'congrats to the winner :)':' '}
         </div>`}
 
       </div>
@@ -621,11 +621,21 @@ async function render(){
   floats();
   setTimeout(()=>{confetti();floats();},900);
 
-  setTimeout(()=>{
-    document.querySelector('.card-shell')?.classList.remove('gold');
-    document.querySelector('.card-glow')?.classList.remove('gold');
-    document.getElementById('stripe')?.classList.remove('gold-stripe');
-  },3000);
+setTimeout(()=>{
+  const shell = document.querySelector('.card-shell');
+  const glow = document.querySelector('.card-glow');
+  const stripe = document.getElementById('stripe');
+
+  shell?.classList.remove('gold');
+  glow?.classList.remove('gold');
+  stripe?.classList.remove('gold-stripe');
+
+  glow?.offsetHeight;
+
+  glow.style.animation = 'none';
+  glow.offsetHeight;
+  glow.style.animation = '';
+},6000);
 }
 
   const jb=document.getElementById('jb');
