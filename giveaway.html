@@ -512,7 +512,7 @@ const ID=new URLSearchParams(location.search).get('id');
 const JOINED_KEY=`raton_joined_${ID}`;
 
 function patchOG(g,ended,hasWon){
-  const titleText=`(${g.emoji}) - ${g.title} Giveaway`;
+  const titleText=`${g.emoji} ${g.title} giveaway`;
   const descParts=[
     g.description||'A free giveaway is here',
     `${g.entryCount} participant${g.entryCount!==1?'s':''}.`,
@@ -573,7 +573,7 @@ async function render(){
         <div class="cd-wrap">
           <div class="cd-lbl">${ended?'⬛ ended':'⬤ ends in'}</div>
           ${ended
-            ?`<div class="cd-ended">giveaway_closed</div>`
+            ?`<div class="cd-ended">Better luck next time!</div>`
             :`<div class="cd-units">
               <div class="cd-unit"><div class="cd-num-wrap"><div class="cd-num" id="cdd">00</div></div><div class="cd-sub">days</div></div>
               <div class="cd-sep">:</div>
@@ -616,7 +616,17 @@ async function render(){
     tick();setInterval(tick,1000);
   }
 
-  if(hasWon){confetti();floats();setTimeout(()=>{confetti();floats();},900);}
+  if(hasWon){
+  confetti();
+  floats();
+  setTimeout(()=>{confetti();floats();},900);
+
+  setTimeout(()=>{
+    document.querySelector('.card-shell')?.classList.remove('gold');
+    document.querySelector('.card-glow')?.classList.remove('gold');
+    document.getElementById('stripe')?.classList.remove('gold-stripe');
+  },3000);
+}
 
   const jb=document.getElementById('jb');
   if(jb&&!joined){
