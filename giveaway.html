@@ -588,7 +588,7 @@ async function render(){
 
         <div class="entries-row">
           <div class="e-pill"><div class="e-dot"></div><span id="ec">${g.entryCount}</span>&nbsp;<span class="e-count">participant${g.entryCount!==1?'s':''}</span></div>
-          <div class="e-chance" id="ech">${g.entryCount>0?((1/g.entryCount)*100).toFixed(1)+'% win chance':'be first!'}</div>
+          <div class="e-chance" id="ech">${g.entryCount>0?((1/g.entryCount)*100).toFixed(1)+'% win chance':'be the first in'}</div>
         </div>
 
         ${!ended&&!hasWon?`
