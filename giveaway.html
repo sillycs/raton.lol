@@ -24,7 +24,7 @@
   --p1:#AE7FE2;--p2:#D59DFF;--p3:#7c3aed;
   --bg0:#05060D;
   --text:#F4F0FF;--muted:rgba(244,240,255,.7);--dim:rgba(244,240,255,.28);
-  --gold:#FFD700;--green:#6DFFB1;--red:#FF6B6B;
+  --gold:#CC8899;--green:#6DFFB1;--red:#FF6B6B;
   --card-bg:rgba(10,12,26,.88);
   --glow-color:rgba(174,127,226,.55);
   --angle:0deg;
@@ -570,21 +570,20 @@ async function render(){
           <div class="winner-name">${g.winner}</div>
         </div>`:''}
 
-        <div class="cd-wrap">
-          <div class="cd-lbl">${ended?'⬛ ended':'⬤ ends in'}</div>
-          ${ended
-            ?`<div class="cd-ended">This giveaway has ended</div>`
-            :`<div class="cd-units">
-              <div class="cd-unit"><div class="cd-num-wrap"><div class="cd-num" id="cdd">00</div></div><div class="cd-sub">days</div></div>
-              <div class="cd-sep">:</div>
-              <div class="cd-unit"><div class="cd-num-wrap"><div class="cd-num" id="cdh">00</div></div><div class="cd-sub">hrs</div></div>
-              <div class="cd-sep">:</div>
-              <div class="cd-unit"><div class="cd-num-wrap"><div class="cd-num" id="cdm">00</div></div><div class="cd-sub">min</div></div>
-              <div class="cd-sep">:</div>
-              <div class="cd-unit"><div class="cd-num-wrap"><div class="cd-num" id="cds">00</div></div><div class="cd-sub">sec</div></div>
-            </div>`
-          }
-        </div>
+${ended ? `` : `
+<div class="cd-wrap">
+  <div class="cd-lbl">⬤ ends in</div>
+  <div class="cd-units">
+    <div class="cd-unit"><div class="cd-num-wrap"><div class="cd-num" id="cdd">00</div></div><div class="cd-sub">days</div></div>
+    <div class="cd-sep">:</div>
+    <div class="cd-unit"><div class="cd-num-wrap"><div class="cd-num" id="cdh">00</div></div><div class="cd-sub">hrs</div></div>
+    <div class="cd-sep">:</div>
+    <div class="cd-unit"><div class="cd-num-wrap"><div class="cd-num" id="cdm">00</div></div><div class="cd-sub">min</div></div>
+    <div class="cd-sep">:</div>
+    <div class="cd-unit"><div class="cd-num-wrap"><div class="cd-num" id="cds">00</div></div><div class="cd-sub">sec</div></div>
+  </div>
+</div>
+`}
 
         <div class="entries-row">
           <div class="e-pill"><div class="e-dot"></div><span id="ec">${g.entryCount}</span>&nbsp;<span class="e-count">participant${g.entryCount!==1?'s':''}</span></div>
@@ -601,7 +600,7 @@ async function render(){
         </button>
         <div class="status" id="st"></div>
         `:`<div class="status ok" style="margin-top:10px;">
-          ${hasWon?'congrats to the winner :)':' '}
+          ${hasWon?'Congrats to the winner :)':'Giveaway closed by an administrator'}
         </div>`}
 
       </div>
