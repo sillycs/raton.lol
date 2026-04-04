@@ -527,6 +527,19 @@
         .article-body p:last-child { margin-bottom: 0; }
         .article-body strong { color: var(--text); font-weight: 700; }
         .article-body em { color: var(--p2); font-style: normal; }
+
+        .article-body a {
+            color: var(--p2);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(213,157,255,.35);
+            transition: color .2s, border-color .2s;
+            word-break: break-all;
+        }
+        .article-body a:hover {
+            color: #ffffff;
+            border-color: rgba(255,255,255,.5);
+        }
+
         .article-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 32px; }
 
         .article-divider {
@@ -607,28 +620,6 @@
     <script>
         const WORKER = 'https://steep-sun-85c4.sillykuadro.workers.dev';
 
-        /* =====================================================================
-         * NOTE FOR SILLY
-         * ─────────────────────────────────────────────────────────────────────
-         * so i dun forget
-         *
-         * title        {string}   Post title
-         * titleEffect  {string}   'rainbow' | 'glitch' | 'shimmer' | 'gold' | 'gradient'
-         * excerpt      {string}   Short description shown on card
-         * description  {string}   Full post body. Supports:
-         *                           \n\n  → paragraph break
-         *                           **text**  → bold
-         *                           ~~text~~  → colored/italic (uses --p2)
-         *                           ---  → horizontal divider
-         * date         {string}   Display date
-         * category     {string}   Category label (shown as badge)
-         * tags         {string[]} Array of tag strings (no #)
-         * readTime     {string}   e.g. '2 min'
-         * image        {string}   Path or URL to image (optional)
-         * featured     {bool}     Shows rainbow stripe & featured badge
-         * pinned       {bool}     Subtle glow border
-         * accent       {string}   Custom hex color for category badge (optional)
-         * ===================================================================== */
         const POSTS = [
             {
                 title: "About professional",
@@ -726,6 +717,50 @@ I'll keep working on bringing **more updates and improvements** for all of you. 
             return span;
         }
 
+        const URL_REGEX = /https?:\/\/[^\s<>"'`\u2018\u2019\u201C\u201D)]+/g;
+
+        function parseInlineTokens(text, container) {
+            const TOKEN_RE = /(\*\*[^*]+\*\*|~~[^~]+~~|https?:\/\/[^\s<>"'`\u2018\u2019\u201C\u201D)]+)/g;
+            let last = 0, match;
+            while ((match = TOKEN_RE.exec(text)) !== null) {
+                if (match.index > last) {
+                    container.appendChild(document.createTextNode(text.slice(last, match.index)));
+                }
+                const token = match[0];
+                if (token.startsWith('**') && token.endsWith('**')) {
+                    const s = document.createElement('strong');
+                    s.textContent = token.slice(2, -2);
+                    container.appendChild(s);
+                } else if (token.startsWith('~~') && token.endsWith('~~')) {
+                    const inner = token.slice(2, -2);
+                    if (URL_REGEX.test(inner)) {
+                        URL_REGEX.lastIndex = 0;
+                        const a = document.createElement('a');
+                        a.href = inner;
+                        a.textContent = inner;
+                        a.target = '_blank';
+                        a.rel = 'noopener noreferrer';
+                        container.appendChild(a);
+                    } else {
+                        const s = document.createElement('em');
+                        s.textContent = inner;
+                        container.appendChild(s);
+                    }
+                } else if (/^https?:\/\//.test(token)) {
+                    const a = document.createElement('a');
+                    a.href = token;
+                    a.textContent = token;
+                    a.target = '_blank';
+                    a.rel = 'noopener noreferrer';
+                    container.appendChild(a);
+                }
+                last = match.index + token.length;
+            }
+            if (last < text.length) {
+                container.appendChild(document.createTextNode(text.slice(last)));
+            }
+        }
+
         function parseDescription(text) {
             const paragraphs = text.split(/\n\n+/);
             const result = document.createDocumentFragment();
@@ -739,20 +774,7 @@ I'll keep working on bringing **more updates and improvements** for all of you. 
                     return;
                 }
                 const p = document.createElement('p');
-                const parts = trimmed.split(/(\*\*[^*]+\*\*|~~[^~]+~~)/g);
-                parts.forEach(part => {
-                    if (part.startsWith('**') && part.endsWith('**')) {
-                        const s = document.createElement('strong');
-                        s.textContent = part.slice(2, -2);
-                        p.appendChild(s);
-                    } else if (part.startsWith('~~') && part.endsWith('~~')) {
-                        const s = document.createElement('em');
-                        s.textContent = part.slice(2, -2);
-                        p.appendChild(s);
-                    } else {
-                        p.appendChild(document.createTextNode(part));
-                    }
-                });
+                parseInlineTokens(trimmed, p);
                 result.appendChild(p);
             });
             return result;
