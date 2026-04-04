@@ -420,7 +420,7 @@ canvas#stars{position:fixed;inset:0;z-index:0;pointer-events:none;}
 <script>
 const WORKER='https://steep-sun-85c4.sillykuadro.workers.dev';
 const COLS=['#AE7FE2','#D59DFF','#ffd37a','#6dffb1','#7cc4ff','#ff6ad5','#ff4d4d','#c084fc','#fff'];
-const EMOJ=['🎉','💜','✨','🌟'];
+const EMOJ=['💜','💜','💜']; // Yes i replaced everything because i'm a lazy ass
 
 (function initStars(){
   const canvas=document.getElementById('stars');
@@ -601,7 +601,7 @@ async function render(){
         </button>
         <div class="status" id="st"></div>
         `:`<div class="status ok" style="margin-top:10px;">
-          ${hasWon?'congrats to the winner :3':'giveaway_closed — better luck next time'}
+          ${hasWon?'congrats to the winner :)':'giveaway_closed — better luck next time'}
         </div>`}
 
       </div>
