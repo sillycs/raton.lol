@@ -24,7 +24,7 @@
   --p1:#AE7FE2;--p2:#D59DFF;--p3:#7c3aed;
   --bg0:#05060D;
   --text:#F4F0FF;--muted:rgba(244,240,255,.7);--dim:rgba(244,240,255,.28);
-  --gold:#CC8899;--green:#6DFFB1;--red:#FF6B6B;
+  --gold:#7c3aed;--green:#6DFFB1;--red:#FF6B6B;
   --card-bg:rgba(10,12,26,.88);
   --glow-color:rgba(174,127,226,.55);
   --angle:0deg;
@@ -554,7 +554,7 @@ async function render(){
   <div class="card-shell ${hasWon?'gold':''}">
     <div class="card-glow ${hasWon?'gold':''}"></div>
     <div class="card" id="card">
-      <div class="stripe ${hasWon?'gold-stripe':ended?'rainbow-stripe':''}" id="stripe"></div>
+      <div class="stripe ${hasWon?'stripe':ended?'rainbow-stripe':''}" id="stripe"></div>
       <div class="sheen"></div>
       <div class="body">
 
@@ -629,23 +629,7 @@ ${ended ? `` : `
   if(hasWon){
   confetti();
   floats();
-  setTimeout(()=>{confetti();floats();},900);
-
-setTimeout(()=>{
-  const shell = document.querySelector('.card-shell');
-  const glow = document.querySelector('.card-glow');
-  const stripe = document.getElementById('stripe');
-
-  shell?.classList.remove('gold');
-  glow?.classList.remove('gold');
-  stripe?.classList.remove('gold-stripe');
-
-  glow?.offsetHeight;
-
-  glow.style.animation = 'none';
-  glow.offsetHeight;
-  glow.style.animation = '';
-},6000);
+  setTimeout(()=>{confetti();floats();},2000);
 }
 
   const jb=document.getElementById('jb');
