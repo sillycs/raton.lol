@@ -11,6 +11,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet">
     <style>
+        .posts-grid > .post-card:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    justify-self: center;
+    max-width: 390px;
+    width: 100%;
+}
         :root {
             --p1: #AE7FE2; --p2: #D59DFF; --p3: #8B5CF6;
             --bg0: #060810; --bg1: #090B14; --bg2: #0D1020; --bg3: #111426;
