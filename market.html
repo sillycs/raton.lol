@@ -327,15 +327,28 @@ Celestial Rat SRC : ~~20$~~
             if(last<text.length) container.appendChild(document.createTextNode(text.slice(last)));
         }
 
-        function parseDescription(text){
-            const frag=document.createDocumentFragment();
-            text.split(/\n\n+/).forEach(raw=>{
-                const tr=raw.trim(); if(!tr) return;
-                if(tr==='---'){const d=document.createElement('div');d.className='article-divider';frag.appendChild(d);return;}
-                const p=document.createElement('p'); parseInlineTokens(tr,p); frag.appendChild(p);
-            });
-            return frag;
-        }
+function parseDescription(text){
+    const frag=document.createDocumentFragment();
+
+    text
+        .split(/\n+/) 
+        .map(l => l.trim()) 
+        .filter(l => l.length > 0)
+        .forEach(tr => {
+            if(tr.replace(/\s/g,'') === '---'){
+                const d=document.createElement('div');
+                d.className='article-divider';
+                frag.appendChild(d);
+                return;
+            }
+
+            const p=document.createElement('p');
+            parseInlineTokens(tr,p);
+            frag.appendChild(p);
+        });
+
+    return frag;
+}
 
         function makeLegitBadge(inline=false){
             const s=document.createElement('span'); s.className=inline?'legit-inline':'legit-badge';
