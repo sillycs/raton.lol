@@ -52,7 +52,6 @@
 
         .page{position:relative;z-index:1;padding:56px 20px 100px;max-width:900px;margin:0 auto;}
 
-        /* HEADER */
         .market-header{display:flex;flex-direction:column;align-items:center;text-align:center;margin-bottom:48px;animation:fadeUp .6s cubic-bezier(.22,1,.36,1) both;}
         .market-logo-wrap{width:72px;height:72px;border-radius:20px;background:linear-gradient(135deg,rgba(174,127,226,.2),rgba(125,75,214,.1));border:1px solid rgba(174,127,226,.28);display:flex;align-items:center;justify-content:center;margin-bottom:20px;box-shadow:0 0 0 8px rgba(174,127,226,.05),0 16px 48px rgba(0,0,0,.5),0 0 40px rgba(139,92,246,.15);animation:float 4s ease-in-out infinite;}
         .market-logo-wrap svg{width:38px;height:38px;}
@@ -64,7 +63,6 @@
         .market-pill.secure{color:var(--green);background:var(--green-bg);border-color:var(--green-border);}
         .market-pill.exclusive{color:var(--p2);background:rgba(174,127,226,.08);border-color:rgba(174,127,226,.2);}
 
-        /* STATS */
         .stats-bar{display:flex;gap:0;margin-bottom:28px;animation:fadeUp .6s cubic-bezier(.22,1,.36,1) .1s both;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;backdrop-filter:blur(16px);}
         .stat-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:20px 12px;position:relative;}
         .stat-item+.stat-item::before{content:'';position:absolute;left:0;top:18%;height:64%;width:1px;background:var(--border);}
@@ -72,7 +70,6 @@
         .stat-num{font-family:'DM Mono',monospace;font-size:22px;font-weight:500;letter-spacing:-.02em;}
         .stat-label{font-size:10px;color:var(--dim);font-weight:600;letter-spacing:.1em;text-transform:uppercase;}
 
-        /* TOOLBAR */
         .toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;gap:12px;flex-wrap:wrap;animation:fadeUp .6s cubic-bezier(.22,1,.36,1) .15s both;}
         .posts-count{font-size:12px;color:var(--dim);font-weight:600;letter-spacing:.08em;text-transform:uppercase;}
         .view-switcher{display:flex;gap:4px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:10px;padding:4px;}
@@ -81,7 +78,6 @@
         .view-btn:hover:not(.active){background:rgba(255,255,255,.06);color:var(--muted);}
         .view-btn svg{width:16px;height:16px;}
 
-        /* GRIDS */
         .posts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,390px),1fr));gap:16px;animation:view-in .3s ease both;}
         .posts-grid.single-card{grid-template-columns:minmax(0,480px);}
         .posts-magazine{display:grid;grid-template-columns:1fr 1fr;gap:16px;animation:view-in .3s ease both;}
@@ -98,7 +94,6 @@
         .posts-compact .post-card .post-title{font-size:14px;flex:1;}
         .posts-compact .post-card .legit-badge{display:none;}
 
-        /* CARD */
         .post-card{isolation:isolate;border:1px solid var(--border);background:var(--card-bg);backdrop-filter:blur(20px);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;animation:fadeUp .55s cubic-bezier(.22,1,.36,1) both;transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease;position:relative;}
         .post-card:hover{transform:translateY(-5px);border-color:var(--border-hover);box-shadow:0 32px 80px rgba(0,0,0,.65),0 0 0 1px rgba(174,127,226,.12);}
         .post-card.pinned{border-color:rgba(174,127,226,.18);}
@@ -109,7 +104,6 @@
         .stripe-rainbow{background:linear-gradient(90deg,#ff4d4d,#ff9a4d,#ffd37a,#6dffb1,#7cc4ff,#b07cff,#ff6ad5,#ff4d4d);background-size:300% 100%;animation:rainbow-shift 5s linear infinite;}
         .stripe-green{background:linear-gradient(90deg,#16a34a,#4ade80,#86efac);}
 
-        /* PRODUCT IMAGE */
         .post-img-wrap{position:relative;cursor:zoom-in;overflow:hidden;background:rgba(174,127,226,.06);}
         .post-img-wrap::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(6,8,16,.6) 0%,transparent 50%);opacity:0;transition:opacity .25s;}
         .post-img-wrap:hover::after{opacity:1;}
@@ -123,7 +117,6 @@
         .post-img-placeholder{width:100%;aspect-ratio:16/9;background:linear-gradient(135deg,rgba(174,127,226,.07),rgba(125,75,214,.04));display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--border);}
         .post-img-placeholder svg{opacity:.14;width:40px;height:40px;}
 
-        /* CARD BODY */
         .post-body{padding:18px 20px;flex:1;display:flex;flex-direction:column;gap:10px;}
         .post-category{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:999px;background:rgba(174,127,226,.12);border:1px solid rgba(174,127,226,.22);color:var(--p2);align-self:flex-start;}
         .post-category::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--p2);flex-shrink:0;}
@@ -134,13 +127,11 @@
         .read-more{font-size:12px;font-weight:700;color:var(--p2);letter-spacing:.06em;text-transform:uppercase;display:inline-flex;align-items:center;gap:5px;margin-top:4px;align-self:flex-start;transition:gap .2s,opacity .2s;cursor:pointer;background:none;border:none;}
         .read-more:hover{gap:10px;opacity:.75;}
 
-        /* LEGIT BADGE */
         .legit-badge{position:absolute;top:14px;right:14px;z-index:4;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--green);background:var(--green-bg);border:1px solid var(--green-border);border-radius:999px;padding:3px 10px;display:inline-flex;align-items:center;gap:5px;}
         .legit-badge svg{width:10px;height:10px;flex-shrink:0;}
         .legit-inline{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--green);background:var(--green-bg);border:1px solid var(--green-border);border-radius:999px;padding:4px 12px;}
         .legit-inline svg{width:12px;height:12px;flex-shrink:0;}
 
-        /* STOCK */
         .stock-badge{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 11px;border-radius:999px;}
         .stock-badge .dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
         .stock-badge.in-stock{background:var(--green-bg);border:1px solid var(--green-border);color:var(--green);}
@@ -148,10 +139,8 @@
         .stock-badge.out-stock{background:var(--red-bg);border:1px solid var(--red-border);color:var(--red);}
         .stock-badge.out-stock .dot{background:var(--red);}
 
-        /* META */
         .post-meta{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:12px;border-top:1px solid rgba(255,255,255,.05);gap:8px;}
 
-        /* BUY BTN */
         .buy-btn{display:inline-flex;align-items:center;gap:7px;padding:8px 18px;border-radius:999px;border:1px solid rgba(174,127,226,.45);background:rgba(174,127,226,.12);cursor:pointer;font-size:12px;font-weight:700;color:var(--p2);font-family:'Space Grotesk',sans-serif;letter-spacing:.06em;text-transform:uppercase;transition:background .2s,border-color .2s,transform .15s,box-shadow .2s;text-decoration:none;animation:buy-pulse 2.5s ease-in-out infinite;}
         .buy-btn:hover{background:rgba(174,127,226,.22);border-color:rgba(213,157,255,.7);transform:scale(1.04);box-shadow:0 0 18px rgba(174,127,226,.25);}
         .buy-btn svg{width:13px;height:13px;flex-shrink:0;}
@@ -161,14 +150,12 @@
         .buy-btn-lg svg{width:16px;height:16px;flex-shrink:0;}
         .buy-btn-lg.disabled-buy{opacity:.35;pointer-events:none;filter:grayscale(.6);animation:none;}
 
-        /* LIGHTBOX */
         #lightbox{display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.88);align-items:center;justify-content:center;animation:lightboxIn .25s ease both;cursor:zoom-out;}
         #lightbox.open{display:flex;}
         #lightbox img{max-width:min(94vw,1200px);max-height:90vh;border-radius:14px;object-fit:contain;box-shadow:0 48px 140px rgba(0,0,0,.9),0 0 0 1px rgba(255,255,255,.08);animation:lightboxImgIn .32s cubic-bezier(.22,1,.36,1) both;cursor:default;}
         #lightboxClose{position:fixed;top:18px;right:22px;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.16);color:var(--text);font-size:17px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:1001;transition:background .2s,transform .2s;}
         #lightboxClose:hover{background:rgba(255,255,255,.2);transform:scale(1.08);}
 
-        /* POST PAGE */
         #postPage{display:none;}
         #postPage.active{display:block;animation:fadeUp .45s cubic-bezier(.22,1,.36,1) both;}
         .back-btn{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--p2);background:rgba(174,127,226,.08);border:1px solid rgba(174,127,226,.18);border-radius:999px;padding:7px 16px;cursor:pointer;letter-spacing:.05em;text-transform:uppercase;transition:gap .18s,background .18s,transform .18s;margin-bottom:36px;}
@@ -215,7 +202,7 @@
         <div id="marketList">
             <div class="market-header">
                 <h1 class="market-title">The <span class="rainbow-text">Raton</span> Market</h1>
-                <p class="market-subtitle">Exclusive tools, software and resources crafted by the Raton team. Every product is verified and legit.</p>
+                <p class="market-subtitle">Exclusive tools, software and resources crafted by our users. Every product is tested and checked.</p>
                 <div class="market-pills">
                     <span class="market-pill secure">✓ Verified products</span>
                     <span class="market-pill exclusive">★ Exclusive releases</span>
