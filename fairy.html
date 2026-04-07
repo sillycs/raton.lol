@@ -160,19 +160,19 @@ function pos(t) {
   const W = canvas.width, H = canvas.height;
   const cx = W * .5, cy = H * .5;
   const rx = W * .3, ry = H * .28;
-  const bx = cx + rx * Math.sin(t * 1.0 + .3);
+  const bx = (t * 60) % (W + FW) - FW;
   const by = cy + ry * Math.sin(t * 1.7 + 1.1);
   const dx = W * .05 * noise(t * .16, 1.2);
   const dy = H * .04 * noise(t * .20, 3.7);
   const fx = 2 * Math.sin(t * 8.8 + .5);
   const fy = 1.5 * Math.cos(t * 10.6 + 1.2);
-  return { x: bx+dx+fx, y: by+dy+fy };
+  return { x: bx + dx + fx, y: by + dy + fy };
 }
 
 function vel(t) {
   const dt = .006;
   const p0 = pos(t - dt), p1 = pos(t + dt);
-  return { vx: (p1.x-p0.x)/(2*dt), vy: (p1.y-p0.y)/(2*dt) };
+  return { vx: Math.abs((p1.x - p0.x) / (2*dt)), vy: (p1.y - p0.y) / (2*dt) };
 }
 
 function speedMult(t) {
