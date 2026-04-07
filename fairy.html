@@ -50,10 +50,10 @@
 </div>
 
 <script>
-const stage   = document.getElementById('stage');
-const canvas  = document.getElementById('sparkleCanvas');
-const ctx     = canvas.getContext('2d');
-const fairy   = document.getElementById('fairy');
+const stage  = document.getElementById('stage');
+const canvas = document.getElementById('sparkleCanvas');
+const ctx    = canvas.getContext('2d');
+const fairy  = document.getElementById('fairy');
 const FW = 72, FH = 72;
 
 function resize() {
@@ -64,7 +64,6 @@ resize();
 new ResizeObserver(resize).observe(stage);
 
 const sparkles = [];
-
 const COLORS = [
   [255,255,200],[180,255,220],[255,210,255],
   [255,240,160],[200,255,255],[255,185,210]
@@ -101,7 +100,7 @@ function star4(x, y, r, rot) {
     const rad = i % 2 === 0 ? r : r * .22;
     const a = (i / 8) * Math.PI * 2 - Math.PI / 2;
     i === 0 ? ctx.moveTo(Math.cos(a)*rad, Math.sin(a)*rad)
-             : ctx.lineTo(Math.cos(a)*rad, Math.sin(a)*rad);
+            : ctx.lineTo(Math.cos(a)*rad, Math.sin(a)*rad);
   }
   ctx.closePath();
   ctx.restore();
@@ -207,8 +206,8 @@ function frame() {
   spawnAcc += spd;
   if (spawnAcc > 7) {
     spawnAcc = 0;
-    const tx = p.x - Math.cos(angle)*16;
-    const ty = p.y - Math.sin(angle)*16;
+    const tx = p.x + Math.cos(angle) * 16;
+    const ty = p.y + Math.sin(angle) * 16;
     spawn(tx, ty, v.vx, v.vy);
     if (Math.random() < .25)
       spawn(p.x + (Math.random()-.5)*12, p.y + (Math.random()-.5)*12, v.vx*.15, v.vy*.15);
