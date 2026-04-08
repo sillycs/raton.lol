@@ -780,24 +780,38 @@ https://localtonet.com/`,
             }
         }
 
-        function parseDescription(text) {
-            const paragraphs = text.split(/\n\n+/);
-            const result = document.createDocumentFragment();
-            paragraphs.forEach(raw => {
-                const trimmed = raw.trim();
-                if (!trimmed) return;
-                if (trimmed === '---') {
-                    const div = document.createElement('div');
-                    div.className = 'article-divider';
-                    result.appendChild(div);
-                    return;
-                }
-                const p = document.createElement('p');
-                parseInlineTokens(trimmed, p);
-                result.appendChild(p);
-            });
-            return result;
+function parseDescription(text) {
+    const paragraphs = text.split(/\n\n+/);
+    const result = document.createDocumentFragment();
+
+    paragraphs.forEach(raw => {
+        const trimmed = raw.trim();
+        if (!trimmed) return;
+
+        if (trimmed === '---') {
+            const div = document.createElement('div');
+            div.className = 'article-divider';
+            result.appendChild(div);
+            return;
         }
+
+        const p = document.createElement('p');
+
+        const lines = trimmed.split('\n');
+
+        lines.forEach((line, index) => {
+            parseInlineTokens(line, p);
+
+            if (index < lines.length - 1) {
+                p.appendChild(document.createElement('br'));
+            }
+        });
+
+        result.appendChild(p);
+    });
+
+    return result;
+}
 
         function renderStats(loading = false) {
             const bar = document.getElementById('statsBar');
