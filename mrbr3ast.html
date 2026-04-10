@@ -1,0 +1,212 @@
+
+<style>
+  .feo-container {
+    background: repeating-linear-gradient(45deg, #ff00ff, #ff00ff 10px, #00ffff 10px, #00ffff 20px);
+    min-height: 600px;
+    padding: 10px;
+    font-family: 'Comic Sans MS', cursive;
+    text-align: center;
+    overflow: hidden;
+  }
+  .titulo {
+    font-size: 52px;
+    color: #ffff00;
+    text-shadow: 3px 3px 0 #ff0000, 6px 6px 0 #0000ff, 9px 9px 0 #00ff00, -2px -2px 0 #ff00ff;
+    background: #000080;
+    border: 8px dashed #ff6600;
+    padding: 10px;
+    transform: rotate(-3deg);
+    display: inline-block;
+    margin: 10px auto;
+  }
+  .pfp-wrapper {
+    margin: 20px auto;
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    border: 10px solid lime;
+    outline: 8px dashed red;
+    overflow: hidden;
+    box-shadow: 0 0 0 15px yellow, 0 0 0 22px blue, 0 0 0 30px orange;
+    background: #ff00ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .pfp-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+  .estrellas {
+    font-size: 30px;
+    color: gold;
+    animation: parpadeo 0.3s infinite;
+    display: block;
+    margin: 5px 0;
+  }
+  @keyframes parpadeo { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+  .marquee-box {
+    background: #ff0000;
+    border: 5px solid #ffff00;
+    padding: 8px;
+    margin: 10px 0;
+    font-size: 22px;
+    color: #00ff00;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .marquee-inner {
+    display: inline-block;
+    animation: mover 6s linear infinite;
+  }
+  @keyframes mover { 0% { transform: translateX(100vw); } 100% { transform: translateX(-100%); } }
+  .contador {
+    background: #000000;
+    color: #00ff00;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    border: 3px solid lime;
+    padding: 5px 10px;
+    display: inline-block;
+    margin: 5px;
+  }
+  .boton-feo {
+    background: linear-gradient(to bottom, #ffcc00, #ff6600);
+    border: 5px outset #ff0000;
+    font-family: 'Comic Sans MS', cursive;
+    font-size: 20px;
+    padding: 12px 24px;
+    cursor: pointer;
+    color: #000080;
+    font-weight: bold;
+    margin: 8px;
+    transform: skewX(-5deg);
+    box-shadow: 5px 5px 0 purple;
+  }
+  .boton-feo:active { border-style: inset; transform: skewX(-5deg) translate(2px,2px); }
+  .texto-girando {
+    display: inline-block;
+    font-size: 26px;
+    color: #ff00ff;
+    background: yellow;
+    padding: 8px 15px;
+    border: 4px double red;
+    animation: girar 4s linear infinite;
+    font-weight: bold;
+  }
+  @keyframes girar {
+    0%, 100% { transform: rotate(-2deg) scale(1); }
+    25% { transform: rotate(2deg) scale(1.05); }
+    50% { transform: rotate(-2deg) scale(1); }
+    75% { transform: rotate(2deg) scale(0.95); }
+  }
+  .cuadro-verde {
+    background: #006600;
+    border: 6px ridge #00ff00;
+    padding: 10px;
+    margin: 10px auto;
+    max-width: 400px;
+    color: #ffff00;
+    font-size: 18px;
+  }
+  .barrita {
+    height: 20px;
+    background: repeating-linear-gradient(90deg, red 0px, red 20px, blue 20px, blue 40px, yellow 40px, yellow 60px, green 60px, green 80px);
+    border: 3px solid black;
+    margin: 8px 0;
+    animation: desplazar 1s linear infinite;
+  }
+  @keyframes desplazar { 0% { background-position: 0 0; } 100% { background-position: 80px 0; } }
+  .cool-text {
+    font-size: 40px;
+    background: #000080;
+    color: #ff6600;
+    padding: 10px 20px;
+    border: 5px solid gold;
+    display: inline-block;
+    margin: 10px;
+    animation: pulsar 1s infinite;
+    text-shadow: 2px 2px 0 #ff0000;
+  }
+  @keyframes pulsar { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.04); } }
+  .estrellas-fondo {
+    position: absolute;
+    font-size: 25px;
+    animation: flotar 3s ease-in-out infinite;
+    pointer-events: none;
+  }
+  @keyframes flotar { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+  .visitas { font-size: 11px; color: gray; font-family: monospace; margin-top: 10px; }
+</style>
+
+<div class="feo-container">
+  <div class="estrellas-fondo" style="left:5%;top:40px;animation-delay:0s;">⭐</div>
+  <div class="estrellas-fondo" style="left:88%;top:80px;animation-delay:1s;">🌟</div>
+  <div class="estrellas-fondo" style="left:15%;top:200px;animation-delay:0.5s;">✨</div>
+  <div class="estrellas-fondo" style="left:80%;top:300px;animation-delay:1.5s;">⭐</div>
+
+  <div class="barrita"></div>
+  <span class="estrellas">★★★ WELCOME ★★★</span>
+
+  <div class="titulo">
+    !!!OFFICIAL PAGE!!!<br>
+    <span style="font-size:28px;">of mrbr3ast</span>
+  </div>
+
+  <div style="margin:15px auto;">
+    <div class="pfp-wrapper">
+      <img src="mrbeast.png" alt="mrbr3ast" onerror="this.style.display='none';document.getElementById('ef').style.display='block';" />
+      <div id="ef" style="display:none;font-size:80px;line-height:1;">🤑</div>
+    </div>
+    <div style="font-size:12px;color:#ffff00;font-family:monospace;margin-top:5px;">↑ OFFICIAL PHOTO (very handsome) ↑</div>
+  </div>
+
+  <div class="cool-text">mrbr3ast is VERY COOL</div>
+  <span class="estrellas">★★★★★★★★★★</span>
+
+  <div class="marquee-box">
+    <span class="marquee-inner">
+      🔥 mrbr3ast is very cool 🔥 &nbsp;&nbsp;&nbsp; COOL COOL COOL &nbsp;&nbsp;&nbsp; 🤑 THE COOLEST 🤑 &nbsp;&nbsp;&nbsp; mrbr3ast.com &nbsp;&nbsp;&nbsp; 100% COOL CERTIFIED
+    </span>
+  </div>
+
+  <div style="margin:10px auto;">
+    <div class="texto-girando">VERY COOL!!</div>
+  </div>
+
+  <div class="cuadro-verde">
+    <b>OFFICIAL FACTS:</b><br>
+    ✅ Is very cool: YES<br>
+    ✅ The coolest: ALSO YES<br>
+    ✅ Cool level: 9999/10
+  </div>
+
+  <div>
+    <button class="boton-feo" onclick="alert('YES, HE IS VERY COOL!')">
+      CLICK HERE TO CONFIRM HE IS COOL
+    </button>
+  </div>
+
+  <div class="barrita"></div>
+
+  <div class="contador">
+    <span>VISITORS: </span><span id="visitas">0</span>
+  </div>
+
+  <div class="visitas">
+    Best viewed in Internet Explorer 6.0 · Recommended resolution: 800x600<br>
+    © 2003 mrbr3ast official fan page · Made with love and Comic Sans
+  </div>
+</div>
+
+<script>
+  let v = Math.floor(Math.random() * 900000) + 100000;
+  document.getElementById('visitas').textContent = v.toLocaleString();
+  setInterval(() => {
+    v += Math.floor(Math.random() * 3) + 1;
+    document.getElementById('visitas').textContent = v.toLocaleString();
+  }, 2000);
+</script>
