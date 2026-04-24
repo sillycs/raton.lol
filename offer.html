@@ -13,32 +13,22 @@
   --p1:#AE7FE2;--p2:#D59DFF;--p3:#7c3aed;
   --bg0:#05060D;
   --text:#F4F0FF;--muted:rgba(244,240,255,.7);--dim:rgba(244,240,255,.28);
-  --green:#6DFFB1;
+  --green:#6DFFB1;--red:#FF6B6B;
   --card-bg:rgba(10,12,26,.88);
   --angle:0deg;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 @property --angle{syntax:'<angle>';initial-value:0deg;inherits:false;}
 
-body{
-  font-family:'Figtree',sans-serif;color:var(--text);background:var(--bg0);
-  min-height:100vh;display:flex;align-items:center;justify-content:center;
-  overflow-x:hidden;
-}
+body{font-family:'Figtree',sans-serif;color:var(--text);background:var(--bg0);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow-x:hidden;}
 canvas#stars{position:fixed;inset:0;z-index:0;pointer-events:none;}
-.aurora{
-  position:fixed;inset:0;z-index:0;pointer-events:none;
-  background:
-    radial-gradient(ellipse 1000px 650px at 12% 8%,rgba(124,58,237,.2) 0%,transparent 60%),
-    radial-gradient(ellipse 900px 750px at 88% 12%,rgba(174,127,226,.17) 0%,transparent 60%),
-    radial-gradient(ellipse 700px 600px at 50% 95%,rgba(109,255,177,.07) 0%,transparent 60%);
-  animation:aurora-shift 22s ease-in-out infinite alternate;
-}
+.aurora{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 1000px 650px at 12% 8%,rgba(124,58,237,.2) 0%,transparent 60%),radial-gradient(ellipse 900px 750px at 88% 12%,rgba(174,127,226,.17) 0%,transparent 60%),radial-gradient(ellipse 700px 600px at 50% 95%,rgba(109,255,177,.07) 0%,transparent 60%);animation:aurora-shift 22s ease-in-out infinite alternate;}
 @keyframes aurora-shift{0%{transform:translate(0,0)scale(1);}50%{transform:translate(25px,-18px)scale(1.04);}100%{transform:translate(-15px,12px)scale(.98);}}
 .noise-layer{position:fixed;inset:0;z-index:1;pointer-events:none;mix-blend-mode:overlay;opacity:.07;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.4'/%3E%3C/svg%3E");}
 .grid-layer{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.022;background-image:linear-gradient(rgba(174,127,226,1) 1px,transparent 1px),linear-gradient(90deg,rgba(174,127,226,1) 1px,transparent 1px);background-size:52px 52px;mask-image:radial-gradient(ellipse 75% 55% at 50% 50%,black 30%,transparent 100%);}
 
 @keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-12px);}to{opacity:1;transform:translateY(0);}}
 @keyframes rainbow{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
 @keyframes shimmer{0%{transform:translateX(-180%) skewX(-22deg);}100%{transform:translateX(800%) skewX(-22deg);}}
 @keyframes border-spin{to{--angle:360deg;}}
@@ -50,75 +40,84 @@ canvas#stars{position:fixed;inset:0;z-index:0;pointer-events:none;}
 @keyframes glitch-1{0%,91%,100%{clip-path:none;transform:none;}92%{clip-path:polygon(0 18%,100% 18%,100% 34%,0 34%);transform:translate(-4px,0);}94%{clip-path:polygon(0 62%,100% 62%,100% 78%,0 78%);transform:translate(4px,0);}97%{clip-path:polygon(0 38%,100% 38%,100% 52%,0 52%);transform:translate(-2px,0);}}
 @keyframes glitch-shadow{0%,91%,100%{text-shadow:none;}92%{text-shadow:-4px 0 #ff4d4d,4px 0 #7cc4ff;}94%{text-shadow:4px 0 #ff4d4d,-4px 0 #6dffb1;}97%{text-shadow:-2px 0 var(--p2),2px 0 var(--green);}}
 @keyframes hintPulse{0%,100%{opacity:.35;}50%{opacity:1;}}
-
-@keyframes giftShake{
-  0%,100%{transform:rotate(-4deg) translateY(0);}
-  15%{transform:rotate(4deg) translateY(-6px);}
-  30%{transform:rotate(-3deg) translateY(0);}
-  45%{transform:rotate(3deg) translateY(-5px);}
-  60%{transform:rotate(-2deg) translateY(0);}
-  75%{transform:rotate(2deg) translateY(-4px);}
-}
-@keyframes glowPulse{
-  0%,100%{filter:drop-shadow(0 0 18px rgba(174,127,226,.6)) drop-shadow(0 8px 20px rgba(0,0,0,.6));}
-  50%{filter:drop-shadow(0 0 40px rgba(213,157,255,.95)) drop-shadow(0 12px 30px rgba(0,0,0,.7));}
-}
-@keyframes lidFly{
-  0%  {transform:translateY(0)   rotate(0deg)   scale(1);   opacity:1;}
-  50% {transform:translateY(-80px) rotate(-30deg) scale(1.1); opacity:1;}
-  100%{transform:translateY(-160px) rotate(-50deg) scale(.6);  opacity:0;}
-}
+@keyframes giftShake{0%,100%{transform:rotate(-4deg) translateY(0);}15%{transform:rotate(4deg) translateY(-6px);}30%{transform:rotate(-3deg) translateY(0);}45%{transform:rotate(3deg) translateY(-5px);}60%{transform:rotate(-2deg) translateY(0);}75%{transform:rotate(2deg) translateY(-4px);}}
+@keyframes glowPulse{0%,100%{filter:drop-shadow(0 0 18px rgba(174,127,226,.6)) drop-shadow(0 8px 20px rgba(0,0,0,.6));}50%{filter:drop-shadow(0 0 40px rgba(213,157,255,.95)) drop-shadow(0 12px 30px rgba(0,0,0,.7));}}
+@keyframes lidFly{0%{transform:translateY(0) rotate(0deg) scale(1);opacity:1;}50%{transform:translateY(-80px) rotate(-30deg) scale(1.1);opacity:1;}100%{transform:translateY(-160px) rotate(-50deg) scale(.6);opacity:0;}}
 @keyframes popIn{from{opacity:0;transform:scale(.88) translateY(12px);}to{opacity:1;transform:scale(1) translateY(0);}}
-
 @keyframes discordBounce{0%,100%{transform:translateY(0);}28%{transform:translateY(-8px);}50%{transform:translateY(-3px);}70%{transform:translateY(-7px);}}
 @keyframes telegramBounce{0%,100%{transform:translateY(0);}30%{transform:translateY(-7px);}52%{transform:translateY(-2px);}72%{transform:translateY(-6px);}}
 @keyframes cpFall{to{transform:translateY(110vh) rotate(720deg);opacity:0;}}
 @keyframes fpFloat{to{opacity:0;transform:translateY(-130px) scale(.3);}}
+@keyframes stockPop{0%{transform:scale(1);}40%{transform:scale(1.35);}100%{transform:scale(1);}}
+@keyframes warnPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,107,107,.0);}50%{box-shadow:0 0 0 4px rgba(255,107,107,.15),0 0 20px rgba(255,107,107,.08);}}
+@keyframes soldOutShake{0%,100%{transform:translateX(0);}20%{transform:translateX(-5px);}40%{transform:translateX(5px);}60%{transform:translateX(-4px);}80%{transform:translateX(4px);}}
 
-.page{position:relative;z-index:2;width:100%;max-width:560px;padding:48px 16px 72px;animation:fadeUp .65s cubic-bezier(.22,1,.36,1) both;}
+.warn-bar{position:relative;z-index:10;width:100%;max-width:560px;margin-bottom:12px;padding:0 16px;animation:fadeDown .5s cubic-bezier(.22,1,.36,1) both;}
+.warn-inner{display:flex;align-items:center;gap:10px;padding:11px 16px;border-radius:12px;background:rgba(255,107,107,.07);border:1px solid rgba(255,107,107,.22);animation:warnPulse 3s ease-in-out infinite;}
+.warn-icon{font-size:14px;flex-shrink:0;}
+.warn-text{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.06em;color:rgba(255,107,107,.9);line-height:1.5;}
+.warn-text strong{color:#ff8f8f;}
+
+.page{position:relative;z-index:2;width:100%;max-width:560px;padding:0 16px 72px;animation:fadeUp .65s cubic-bezier(.22,1,.36,1) both;}
 .card-shell{position:relative;border-radius:23px;padding:1.5px;animation:border-spin 4s linear infinite,card-breathe 5s ease-in-out infinite;background:conic-gradient(from var(--angle),rgba(174,127,226,0) 0%,rgba(174,127,226,.7) 20%,rgba(213,157,255,1) 30%,rgba(174,127,226,.7) 40%,rgba(174,127,226,0) 60%);}
+.card-shell.dead{background:conic-gradient(from var(--angle),rgba(255,107,107,0) 0%,rgba(255,107,107,.5) 20%,rgba(255,107,107,.8) 30%,rgba(255,107,107,.5) 40%,rgba(255,107,107,0) 60%);}
 .card-glow{position:absolute;inset:-1px;border-radius:23px;z-index:0;pointer-events:none;background:conic-gradient(from var(--angle),transparent 0%,rgba(174,127,226,.35) 25%,rgba(213,157,255,.5) 30%,rgba(174,127,226,.35) 35%,transparent 60%);filter:blur(18px);opacity:.5;animation:border-spin 4s linear infinite;}
 .card{background:var(--card-bg);border-radius:22px;backdrop-filter:blur(24px) saturate(1.5);overflow:hidden;position:relative;}
 .stripe{height:3px;background:linear-gradient(90deg,var(--p3),var(--p1),var(--p2));}
+.stripe.dead-stripe{background:linear-gradient(90deg,#7a1a1a,var(--red),#ff9a4d);}
 .sheen{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:1;}
 .sheen::after{content:"";position:absolute;top:0;left:0;width:22%;height:100%;background:linear-gradient(108deg,transparent,rgba(255,255,255,.07) 45%,rgba(255,255,255,.12) 50%,rgba(255,255,255,.07) 55%,transparent);animation:shimmer 3.8s ease-in-out infinite 1.8s;}
 .body{padding:28px;position:relative;z-index:2;}
 
 .kicker{display:inline-flex;align-items:center;gap:7px;font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-bottom:12px;font-family:'JetBrains Mono',monospace;}
 .dot-live{width:7px;height:7px;border-radius:50%;background:var(--p2);animation:pulse-dot 1.8s ease-out infinite;}
+.dot-dead{width:7px;height:7px;border-radius:50%;background:var(--red);}
 .title{font-family:'Syne',sans-serif;font-size:clamp(24px,6vw,40px);font-weight:900;letter-spacing:-.04em;line-height:1.1;margin-bottom:4px;}
 .grad{background:linear-gradient(135deg,var(--p1),var(--p2));-webkit-background-clip:text;background-clip:text;color:transparent;}
 .rainbow-text{background:linear-gradient(90deg,#ff4d4d,#ff9a4d,#ffd37a,#6dffb1,#7cc4ff,#b07cff,#ff6ad5,#ff4d4d);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;display:inline-block;animation:rainbow 5s linear infinite,glitch-1 10s ease-in-out infinite,glitch-shadow 10s ease-in-out infinite;}
 .meta-sub{font-size:11px;color:var(--dim);font-family:'JetBrains Mono',monospace;margin-bottom:16px;letter-spacing:.04em;}
 
+.stock-row{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.055);
+  border-radius:14px;padding:14px 18px;margin-bottom:18px;position:relative;overflow:hidden;
+}
+.stock-row::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 60% 100% at 0% 50%,rgba(174,127,226,.06),transparent);}
+.stock-left{display:flex;flex-direction:column;gap:3px;}
+.stock-lbl{font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);font-family:'JetBrains Mono',monospace;}
+.stock-val{font-family:'Syne',sans-serif;font-size:28px;font-weight:900;letter-spacing:-.04em;line-height:1;color:var(--p2);transition:color .4s;}
+.stock-val.low{color:#ffb347;}
+.stock-val.zero{color:var(--red);}
+.stock-num{display:inline-block;}
+.stock-num.pop{animation:stockPop .35s cubic-bezier(.22,1,.36,1);}
+.stock-bar-wrap{flex:1;display:flex;flex-direction:column;gap:6px;align-items:flex-end;}
+.stock-bar-track{width:100%;height:6px;background:rgba(255,255,255,.06);border-radius:99px;overflow:hidden;}
+.stock-bar-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--p3),var(--p2));transition:width .5s cubic-bezier(.22,1,.36,1),background .4s;}
+.stock-bar-fill.low{background:linear-gradient(90deg,#c04800,#ffb347);}
+.stock-bar-fill.zero{background:linear-gradient(90deg,#7a0000,var(--red));}
+.stock-sub{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:.1em;color:var(--dim);text-transform:uppercase;}
+
 .gift-section{display:flex;flex-direction:column;align-items:center;padding:16px 0 10px;position:relative;}
-.gift-shaker{
-  position:relative;
-  width:160px;
-  height:190px;
-  cursor:pointer;
-  animation:giftShake 2s ease-in-out infinite, glowPulse 2s ease-in-out infinite;
-}
-.gift-shaker:hover{animation:giftShake .5s ease-in-out infinite, glowPulse .5s ease-in-out infinite;}
-
-.gift-lid-svg{
-  position:absolute;
-  top:0;left:0;
-  z-index:2;
-  transform-origin:center bottom;
-  transition:none;
-}
-.gift-lid-svg.fly{
-  animation:lidFly .7s cubic-bezier(.4,0,.2,1) forwards !important;
-}
-
-.gift-body-svg{
-  position:absolute;
-  bottom:0;left:0;
-  z-index:1;
-}
-
+.gift-shaker{position:relative;width:160px;height:190px;cursor:pointer;animation:giftShake 2s ease-in-out infinite,glowPulse 2s ease-in-out infinite;}
+.gift-shaker:hover{animation:giftShake .5s ease-in-out infinite,glowPulse .5s ease-in-out infinite;}
+.gift-shaker.no-stock{cursor:not-allowed;filter:grayscale(.8) brightness(.5);animation:none;}
+.gift-lid-svg{position:absolute;top:0;left:0;z-index:2;transform-origin:center bottom;}
+.gift-lid-svg.fly{animation:lidFly .7s cubic-bezier(.4,0,.2,1) forwards !important;}
+.gift-body-svg{position:absolute;bottom:0;left:0;z-index:1;}
 .gift-hint{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-top:12px;animation:hintPulse 2s ease-in-out infinite;transition:opacity .3s;}
+.gift-hint.dead-hint{color:var(--red);animation:none;opacity:1;}
+
+.sold-out-box{
+  display:none;
+  padding:28px 20px;border-radius:14px;
+  background:rgba(255,107,107,.06);border:1px solid rgba(255,107,107,.2);
+  text-align:center;margin-bottom:4px;
+  animation:soldOutShake .5s ease-in-out,popIn .4s cubic-bezier(.22,1,.36,1);
+}
+.sold-out-box.show{display:block;}
+.sold-icon{font-size:36px;margin-bottom:8px;}
+.sold-title{font-family:'Syne',sans-serif;font-size:22px;font-weight:900;color:var(--red);margin-bottom:6px;letter-spacing:-.03em;}
+.sold-sub{font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(255,107,107,.65);letter-spacing:.04em;line-height:1.6;}
 
 #promoReveal{display:none;}
 #promoReveal.show{display:block;animation:popIn .55s cubic-bezier(.22,1,.36,1) both;}
@@ -159,21 +158,42 @@ canvas#stars{position:fixed;inset:0;z-index:0;pointer-events:none;}
 <div class="noise-layer"></div>
 <div class="grid-layer"></div>
 
+<div class="warn-bar">
+  <div class="warn-inner">
+    <span class="warn-icon">⚠️</span>
+    <div class="warn-text">
+      <strong>Limited slots.</strong> Once stock runs out, no more promo codes will be accepted. One code per person.
+    </div>
+  </div>
+</div>
+
 <div class="page">
-  <div class="card-shell">
+  <div class="card-shell" id="cardShell">
     <div class="card-glow"></div>
     <div class="card">
-      <div class="stripe"></div>
+      <div class="stripe" id="topStripe"></div>
       <div class="sheen"></div>
       <div class="body">
 
-        <div class="kicker"><span class="dot-live"></span>Raton Exclusive<span style="color:rgba(244,240,255,.14)"> · special offer</span></div>
+        <div class="kicker"><span class="dot-live" id="kickDot"></span>Raton Exclusive<span style="color:rgba(244,240,255,.14)"> · special offer</span></div>
         <div class="title"><span class="grad">Claim your</span> <span class="rainbow-text">Reward</span></div>
-        <div class="meta-sub">click the gift to reveal your discount code</div>
+        <div class="meta-sub" id="metaSub">click the gift to reveal your discount code</div>
+
+        <div class="stock-row">
+          <div class="stock-left">
+            <div class="stock-lbl">slots left</div>
+            <div class="stock-val" id="stockVal">
+              <span class="stock-num" id="stockNum">10</span>
+            </div>
+          </div>
+          <div class="stock-bar-wrap">
+            <div class="stock-bar-track"><div class="stock-bar-fill" id="stockBar" style="width:100%"></div></div>
+            <div class="stock-sub" id="stockSub">10 of 10 remaining</div>
+          </div>
+        </div>
 
         <div class="gift-section" id="giftSection">
           <div class="gift-shaker" id="giftShaker">
-
             <svg class="gift-lid-svg" id="giftLid" width="160" height="88" viewBox="0 0 160 88" fill="none">
               <rect x="4" y="44" width="152" height="32" rx="8" fill="url(#lg)"/>
               <rect x="70" y="44" width="20" height="32" fill="rgba(157,85,255,.9)"/>
@@ -190,7 +210,6 @@ canvas#stars{position:fixed;inset:0;z-index:0;pointer-events:none;}
                 </linearGradient>
               </defs>
             </svg>
-
             <svg class="gift-body-svg" width="160" height="114" viewBox="0 0 160 114" fill="none">
               <ellipse cx="80" cy="111" rx="55" ry="7" fill="rgba(0,0,0,.5)"/>
               <rect x="4" y="4" width="152" height="100" rx="9" fill="url(#bg)"/>
@@ -208,9 +227,14 @@ canvas#stars{position:fixed;inset:0;z-index:0;pointer-events:none;}
                 </linearGradient>
               </defs>
             </svg>
-
           </div>
           <div class="gift-hint" id="giftHint">click to open ✦</div>
+        </div>
+
+        <div class="sold-out-box" id="soldOutBox">
+          <div class="sold-icon">🚫</div>
+          <div class="sold-title">Sold Out</div>
+          <div class="sold-sub">All promo slots have been claimed.<br>No more codes are being accepted.</div>
         </div>
 
         <div id="promoReveal">
@@ -263,6 +287,57 @@ canvas#stars{position:fixed;inset:0;z-index:0;pointer-events:none;}
   resize();mk();draw();window.addEventListener('resize',()=>{resize();mk();});
 })();
 
+const TOTAL_STOCK = 8;
+let stock = TOTAL_STOCK;
+
+const stockNumEl  = document.getElementById('stockNum');
+const stockValEl  = document.getElementById('stockVal');
+const stockBarEl  = document.getElementById('stockBar');
+const stockSubEl  = document.getElementById('stockSub');
+const giftShaker  = document.getElementById('giftShaker');
+const giftHint    = document.getElementById('giftHint');
+const kickDot     = document.getElementById('kickDot');
+const cardShell   = document.getElementById('cardShell');
+const topStripe   = document.getElementById('topStripe');
+const metaSub     = document.getElementById('metaSub');
+
+function updateStock(n, animate){
+  stock = n;
+  const pct = (n / TOTAL_STOCK) * 100;
+
+  if(animate){
+    stockNumEl.classList.remove('pop');
+    void stockNumEl.offsetWidth;
+    stockNumEl.classList.add('pop');
+  }
+
+  stockNumEl.textContent = n;
+  stockSubEl.textContent = n + ' of ' + TOTAL_STOCK + ' remaining';
+  stockBarEl.style.width = pct + '%';
+
+  if(n <= 0){
+    stockValEl.className = 'stock-val zero';
+    stockBarEl.className = 'stock-bar-fill zero';
+  } else if(n <= 3){
+    stockValEl.className = 'stock-val low';
+    stockBarEl.className = 'stock-bar-fill low';
+  } else {
+    stockValEl.className = 'stock-val';
+    stockBarEl.className = 'stock-bar-fill';
+  }
+}
+
+function goSoldOut(){
+  giftShaker.classList.add('no-stock');
+  giftHint.textContent = 'no slots left ✕';
+  giftHint.classList.add('dead-hint');
+  kickDot.className = 'dot-dead';
+  cardShell.classList.add('dead');
+  topStripe.classList.add('dead-stripe');
+  metaSub.textContent = 'all promo slots have been claimed.';
+  document.getElementById('soldOutBox').classList.add('show');
+}
+
 const CHARS='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 let code='RATONPROMO_';
 for(let i=0;i<10;i++)code+=CHARS[Math.floor(Math.random()*CHARS.length)];
@@ -288,27 +363,28 @@ function floats(){
 }
 
 let opened=false;
-document.getElementById('giftShaker').addEventListener('click',function(){
-  if(opened)return;
+giftShaker.addEventListener('click',function(){
+  if(opened || stock <= 0) return;
   opened=true;
 
-  const lid=document.getElementById('giftLid');
-  const hint=document.getElementById('giftHint');
-  const section=document.getElementById('giftSection');
-  const reveal=document.getElementById('promoReveal');
-  const shaker=document.getElementById('giftShaker');
+  const newStock = stock - 1;
+  updateStock(newStock, true);
 
-  shaker.style.animation='none';
+  const lid = document.getElementById('giftLid');
+  giftShaker.style.animation='none';
   lid.classList.add('fly');
-  hint.style.opacity='0';
-
+  giftHint.style.opacity='0';
   confetti();floats();
 
   setTimeout(function(){
-    section.style.display='none';
-    reveal.classList.add('show');
+    document.getElementById('giftSection').style.display='none';
+    document.getElementById('promoReveal').classList.add('show');
     setTimeout(function(){confetti();floats();},500);
-  }, 750);
+
+    if(newStock <= 0){
+      setTimeout(goSoldOut, 800);
+    }
+  },750);
 });
 
 async function copyCode(){
@@ -318,6 +394,8 @@ async function copyCode(){
   btn.textContent='copied!';btn.classList.add('ok');
   setTimeout(()=>{btn.textContent='copy';btn.classList.remove('ok');},2400);
 }
+
+updateStock(TOTAL_STOCK, false);
 </script>
 </body>
 </html>
