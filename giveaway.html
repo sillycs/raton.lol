@@ -500,17 +500,6 @@ function floats() {
 }
 
 const parts = []; let running = false;
-function explode(x, y) {
-    for (let i = 0; i < 18; i++) {
-        const p = document.createElement('img');
-        p.src = 'RATA.png'; p.className = 'cp';
-        p.style.cssText = `width:48px;height:48px;transform:translate(${x}px,${y}px);animation:none`;
-        document.body.appendChild(p);
-        const a = Math.random() * Math.PI * 2, sp = 3 + Math.random() * 4;
-        parts.push({ el: p, x, y, vx: Math.cos(a)*sp, vy: Math.sin(a)*sp, life: 100 });
-    }
-    if (!running) { running = true; requestAnimationFrame(tick); }
-}
 function tick() {
     for (let i = parts.length - 1; i >= 0; i--) {
         const p = parts[i];
@@ -621,7 +610,6 @@ async function render() {
               <span class="grad">Free</span>
               <span class="rainbow-text"> ${g.title}</span>
             </div>
-            <div class="meta-date">${g.endsAt ? `ends ${fmtDate(g.endsAt)}` : 'no end date set'}</div>
           </div>
 
           <div class="prize-row">
@@ -702,12 +690,11 @@ async function render() {
     if (jb && !joined) {
         jb.addEventListener('click', async (e) => {
             ripple(jb, e);
-            explode(e.clientX, e.clientY);
             const un = document.getElementById('un').value.trim();
             if (!un) { setStatus('enter your discord username', 'err'); return; }
             if (un.length < 2) { setStatus('username too short...', 'err'); return; }
             jb.disabled = true;
-            jb.innerHTML = '⏳ joining…';
+            jb.innerHTML = 'Joining…';
             setStatus('');
             try {
                 const r = await fetch(`${WORKER}/join`, {
@@ -717,7 +704,7 @@ async function render() {
                 });
                 const d = await r.json();
                 if (d.ok) {
-                    jb.innerHTML = '✓ joined'; jb.classList.remove('cta-purple'); jb.classList.add('cta-joined');
+                    jb.innerHTML = 'Joined'; jb.classList.remove('cta-purple'); jb.classList.add('cta-joined');
                     setStatus("you're in! good luck :3", 'ok');
                     localStorage.setItem(JOINED_KEY, '1');
                     document.getElementById('ec').textContent = d.count;
