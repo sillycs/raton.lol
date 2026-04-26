@@ -121,13 +121,11 @@ body::before {
     50%  { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
 }
-@keyframes spin { to { transform: rotate(360deg); } }
 @keyframes fall { to { transform: translateY(120vh) rotate(360deg); } }
 @keyframes fadeUp {
     from { opacity: 0; transform: translateY(22px); }
     to   { opacity: 1; transform: translateY(0); }
 }
-@keyframes border-spin { to { --angle: 360deg; } }
 @keyframes shimmer {
     0%   { transform: translateX(-180%) skewX(-22deg); }
     100% { transform: translateX(800%) skewX(-22deg); }
@@ -159,14 +157,6 @@ body::before {
 
 .card-shell {
     position: relative; border-radius: 20px; padding: 1.5px;
-    animation: border-spin 4s linear infinite;
-    background: conic-gradient(from var(--angle),
-        rgba(174,127,226,0) 0%,
-        rgba(174,127,226,.5) 20%,
-        rgba(213,157,255,.8) 30%,
-        rgba(174,127,226,.5) 40%,
-        rgba(174,127,226,0) 60%
-    );
     box-shadow: 0 8px 32px rgba(0,0,0,.40);
     transition: box-shadow .25s;
 }
