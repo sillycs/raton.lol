@@ -1,136 +1,66 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8"/>
+<meta charset="utf-8">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
-:root{--p1:#AE7FE2;--p2:#D59DFF;--text:#F2F0FF;--muted:rgba(242,240,255,.72);--dim:rgba(242,240,255,.28)}
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Inter,sans-serif;color:var(--text);background:radial-gradient(900px 600px at 15% 10%,rgba(174,127,226,.18) 0%,transparent 60%),radial-gradient(800px 600px at 85% 15%,rgba(213,157,255,.15) 0%,transparent 60%),linear-gradient(180deg,#080A10 0%,#0B0D14 50%,#101323 100%);min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;overflow-x:hidden}
-.blob{position:fixed;pointer-events:none;filter:blur(50px);opacity:.22;animation:drift 16s ease-in-out infinite}
-.b1{width:500px;height:500px;left:-150px;top:-150px;background:radial-gradient(circle,rgba(174,127,226,.9),transparent 65%)}
-.b2{width:600px;height:600px;right:-170px;top:20px;opacity:.18;background:radial-gradient(circle,rgba(213,157,255,.9),transparent 62%);animation-duration:19s}
-.b3{width:700px;height:700px;left:50%;bottom:-250px;opacity:.16;transform:translateX(-50%);background:radial-gradient(circle,rgba(125,75,214,.85),transparent 65%);animation-duration:22s}
-@keyframes drift{0%,100%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(20px,-16px,0) scale(1.03)}}
-@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-.page{position:relative;z-index:1;padding:40px 20px 60px;width:100%;max-width:480px;animation:fadeUp .55s cubic-bezier(.22,1,.36,1) both;display:flex;flex-direction:column;align-items:center;gap:28px}
-.title{font-size:clamp(28px,6vw,48px);font-weight:900;letter-spacing:-.04em}
-.grad{background:linear-gradient(90deg,var(--p1),var(--p2));-webkit-background-clip:text;background-clip:text;color:transparent}
-.sub{font-size:13.5px;color:var(--muted);line-height:1.55}
-
-.pw-box{
-  width:100%;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  padding:14px 16px;
-  border-radius:12px;
-  background:rgba(255,255,255,.04);
-  border:1px solid rgba(255,255,255,.08);
-  backdrop-filter:blur(10px)
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: black;
+    overflow: hidden;
 }
 
-.pw-left{
-  display:flex;
-  flex-direction:column;
-  align-items:flex-start
+#enter {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px 40px;
+    font-size: 24px;
+    background: black;
+    color: white;
+    border: 2px solid white;
+    cursor: pointer;
 }
 
-.pw-label{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--dim)}
-.pw-value{font-size:16px;font-weight:900;letter-spacing:.1em;background:linear-gradient(90deg,var(--p1),var(--p2));-webkit-background-clip:text;color:transparent}
-
-.pw-actions{
-  display:flex;
-  gap:8px;
-  align-items:center
+video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: none;
 }
-
-.pw-copy{
-  padding:8px 16px;
-  border-radius:8px;
-  font-size:12px;
-  font-weight:800;
-  letter-spacing:.05em;
-  color:#fff;
-  background:linear-gradient(90deg,var(--p1),var(--p2));
-  border:none;
-  cursor:pointer;
-  transition:transform .15s, box-shadow .15s;
-}
-
-.pw-copy:hover{
-  transform:translateY(-1px);
-  box-shadow:0 6px 18px rgba(174,127,226,.35)
-}
-
-.dl-btn{
-  padding:8px 16px;
-  border-radius:8px;
-  font-size:12px;
-  font-weight:800;
-  letter-spacing:.05em;
-  color:#fff;
-  background:linear-gradient(90deg,var(--p1),var(--p2));
-  border:none;
-  text-decoration:none;
-  transition:transform .15s, box-shadow .15s;
-}
-
-.dl-btn:hover{
-  transform:translateY(-1px);
-  box-shadow:0 6px 18px rgba(174,127,226,.35)
-}
-
-.countdown{font-size:12px;color:var(--dim)}
-.countdown a{color:var(--p1)}
-
-@keyframes fall{to{transform:translateY(110vh) rotate(360deg);opacity:0}}
 </style>
 </head>
+
 <body>
-<div class="blob b1"></div>
-<div class="blob b2"></div>
-<div class="blob b3"></div>
 
-<div class="page">
-  <div class="title"><span class="grad">Download</span> Raton</div>
+<button id="enter">Verify your browser</button>
 
-  <p class="sub">Your download will start automatically in <span id="timer">5</span>s.</p>
-
-  <div class="pw-box">
-    <div class="pw-left">
-      <span class="pw-label">Password</span>
-      <span class="pw-value">v3.8.7</span>
-    </div>
-    <div class="pw-actions">
-      <button class="pw-copy" onclick="copyPw()">Copy</button>
-      <a class="dl-btn" id="dl" href="https://codeberg.org/sillycs/notratonupdates/releases/download/v3.8.7/Free.zip">Download</a>
-    </div>
-  </div>
-
-  <div class="countdown"><a href="https://codeberg.org/sillycs/notratonupdates/releases/download/v3.8.7/Free.zip">Click here if download doesn't start</a></div>
-</div>
+<video id="vid" loop>
+    <source src="coolvideo.mp4" type="video/mp4">
+</video>
 
 <script>
-let s=5;
-const t=document.getElementById('timer');
-const iv=setInterval(()=>{s--;t.textContent=s;if(s<=0){clearInterval(iv);window.location.href='https://codeberg.org/sillycs/notratonupdates/releases/download/v3.8.7/Free.zip';}},1000);
+const btn = document.getElementById("enter");
+const video = document.getElementById("vid");
 
-function copyPw(){navigator.clipboard.writeText('v3.8.7').then(()=>{const b=document.querySelector('.pw-copy');b.textContent='Copied';setTimeout(()=>b.textContent='Copy',2000);});}
+btn.onclick = () => {
+    btn.style.display = "none";
+    video.style.display = "block";
 
-const COLS=['#AE7FE2','#D59DFF','#ffffff','#caa6ff','#9f7cff'];
+    if (video.requestFullscreen) {
+        video.requestFullscreen();
+    }
 
-function confetti() {
-    for (let i = 0; i < 120; i++) setTimeout(() => {
-        const el = document.createElement('div'); el.className = 'cp';
-        const s = Math.random() * 9 + 4;
-        el.style.cssText = `left:${Math.random()*100}vw;top:-10px;width:${s}px;height:${s*.6}px;background:${COLS[i%COLS.length]};border-radius:${Math.random()>.5?'50%':'2px'};animation:fall ${2+Math.random()*2.5}s linear ${Math.random()*.9}s forwards;transform:rotate(${Math.random()*360}deg);opacity:${.55+Math.random()*.45};position:fixed;pointer-events:none;z-index:9999`;
-        document.body.appendChild(el); setTimeout(() => el.remove(), 6000);
-    }, i * 13);
-}
-
-document.getElementById('dl').addEventListener('click',confetti);
+    video.muted = false;
+    video.volume = 1.0;
+    video.play();
+};
 </script>
+
 </body>
 </html>
