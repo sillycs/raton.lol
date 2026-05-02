@@ -717,6 +717,12 @@
                         row.style.animation=`rainbow 3s linear infinite, thanksPop .45s cubic-bezier(.22,1,.36,1) ${popDelay}ms forwards`;
                         row.style.borderColor='rgba(255,106,213,.7)';
                     }
+                                         if(s.amount===90){
+                        row.style.backgroundImage='linear-gradient(90deg,rgba(255,77,77,.45),rgba(255,154,77,.45),rgba(255,211,122,.45),rgba(109,255,177,.45),rgba(124,196,255,.45),rgba(176,124,255,.45),rgba(255,106,213,.45))';
+                        row.style.backgroundSize='300% 100%';
+                        row.style.animation=`rainbow 3s linear infinite, thanksPop .45s cubic-bezier(.22,1,.36,1) ${popDelay}ms forwards`;
+                        row.style.borderColor='rgba(255,106,213,.7)';
+                    }
                     row.innerHTML=`<div class="thanks-avatar">${s.emoji}</div><div class="thanks-info"><div class="thanks-name">${s.name}</div><div class="thanks-msg">${s.msg}</div></div><div class="thanks-amount">+$${s.amount!==undefined?s.amount:''}</div>`;
                     list.appendChild(row);
                 }
