@@ -11,34 +11,55 @@ html, body {
     overflow: hidden;
 }
 
-video {
-    position: fixed;
+#enter {
+    position: absolute;
     top: 50%;
     left: 50%;
-    min-width: 100%;
-    min-height: 100%;
-    width: auto;
-    height: auto;
     transform: translate(-50%, -50%);
+    padding: 20px 40px;
+    font-size: 24px;
+    background: black;
+    color: white;
+    border: 2px solid white;
+    cursor: pointer;
+}
+
+video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
+    display: none;
 }
 </style>
 </head>
 
 <body>
 
-<video id="vid" autoplay muted loop playsinline>
+<button id="enter">Enter giveaway</button>
+
+<video id="vid" loop>
     <source src="coolvideo.mp4" type="video/mp4">
 </video>
 
 <script>
+const btn = document.getElementById("enter");
 const video = document.getElementById("vid");
 
-document.addEventListener("click", () => {
+btn.onclick = () => {
+    btn.style.display = "none";
+    video.style.display = "block";
+
+    if (video.requestFullscreen) {
+        video.requestFullscreen();
+    }
+
     video.muted = false;
     video.volume = 1.0;
     video.play();
-}, { once: true });
+};
 </script>
 
 </body>
