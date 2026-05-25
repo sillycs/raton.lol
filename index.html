@@ -1,19 +1,57 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>raton.lol</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mantenimiento</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+    }
+
+    .box {
+      max-width: 500px;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 1.2rem;
+      opacity: 0.8;
+    }
+
+    .loader {
+      margin: 20px auto;
+      border: 6px solid #333;
+      border-top: 6px solid #fff;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
 </head>
 <body>
-
-<h1>Doors</h1>
-<p>This is a educational page, we aren't responsible of anything posted on forums</p>
-<ul>
-    <li><a href="/">Home</a></li>
-    <li><a href="/deluxe">Door to the deluxe room</a></li>
-    <li><a href="/blog">Door to the blog room</a></li>
-    <li><a href="/download">Door to the third party download (wink)</a></li>
-    <li><a href="https://pastebin.com/k16dLK8v">cool pastebin with a cool command array (PASSWORD IS array)</a></li>
-</ul>
-
+  <div class="box">
+    <div class="loader"></div>
+    <p>We are rebranding this website, wait for it :3</p>
+  </div>
 </body>
 </html>
