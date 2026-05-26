@@ -1,138 +1,606 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="es">
 <head>
 <meta charset="utf-8"/>
-  <link rel="icon" href="RATA.png"/>
-<title>Download</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Raton — Giveaway</title>
+<link rel="icon" href="RATA.png"/>
+
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Raton Giveaways"/>
+<meta property="og:title" content="🎁 Giveaway"/>
+<meta property="og:description" content="A free giveaway is here, click to enter and check your win chances :)"/>
+<meta property="og:image" content="https://steep-sun-85c4.sillykuadro.workers.dev/og-image"/>
+
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
-:root{--p1:#AE7FE2;--p2:#D59DFF;--text:#F2F0FF;--muted:rgba(242,240,255,.72);--dim:rgba(242,240,255,.28)}
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Inter,sans-serif;color:var(--text);background:radial-gradient(900px 600px at 15% 10%,rgba(174,127,226,.18) 0%,transparent 60%),radial-gradient(800px 600px at 85% 15%,rgba(213,157,255,.15) 0%,transparent 60%),linear-gradient(180deg,#080A10 0%,#0B0D14 50%,#101323 100%);min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;overflow-x:hidden}
-.blob{position:fixed;pointer-events:none;filter:blur(50px);opacity:.22;animation:drift 16s ease-in-out infinite}
-.b1{width:500px;height:500px;left:-150px;top:-150px;background:radial-gradient(circle,rgba(174,127,226,.9),transparent 65%)}
-.b2{width:600px;height:600px;right:-170px;top:20px;opacity:.18;background:radial-gradient(circle,rgba(213,157,255,.9),transparent 62%);animation-duration:19s}
-.b3{width:700px;height:700px;left:50%;bottom:-250px;opacity:.16;transform:translateX(-50%);background:radial-gradient(circle,rgba(125,75,214,.85),transparent 65%);animation-duration:22s}
-@keyframes drift{0%,100%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(20px,-16px,0) scale(1.03)}}
-@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-.page{position:relative;z-index:1;padding:40px 20px 60px;width:100%;max-width:480px;animation:fadeUp .55s cubic-bezier(.22,1,.36,1) both;display:flex;flex-direction:column;align-items:center;gap:28px}
-.title{font-size:clamp(28px,6vw,48px);font-weight:900;letter-spacing:-.04em}
-.grad{background:linear-gradient(90deg,var(--p1),var(--p2));-webkit-background-clip:text;background-clip:text;color:transparent}
-.sub{font-size:13.5px;color:var(--muted);line-height:1.55}
-
-.pw-box{
-  width:100%;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  padding:14px 16px;
-  border-radius:12px;
-  background:rgba(255,255,255,.04);
-  border:1px solid rgba(255,255,255,.08);
-  backdrop-filter:blur(10px)
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
-.pw-left{
-  display:flex;
-  flex-direction:column;
-  align-items:flex-start
+body{
+    font-family:sans-serif;
 }
 
-.pw-label{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--dim)}
-.pw-value{font-size:16px;font-weight:900;letter-spacing:.1em;background:linear-gradient(90deg,var(--p1),var(--p2));-webkit-background-clip:text;color:transparent}
-
-.pw-actions{
-  display:flex;
-  gap:8px;
-  align-items:center
+.page{
+    width:100%;
+    display:flex;
+    justify-content:center;
 }
 
-.pw-copy{
-  padding:8px 16px;
-  border-radius:8px;
-  font-size:12px;
-  font-weight:800;
-  letter-spacing:.05em;
-  color:#fff;
-  background:linear-gradient(90deg,var(--p1),var(--p2));
-  border:none;
-  cursor:pointer;
-  transition:transform .15s, box-shadow .15s;
+.container{
+    width:100%;
+    max-width:560px;
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+    padding:20px;
 }
 
-.pw-copy:hover{
-  transform:translateY(-1px);
-  box-shadow:0 6px 18px rgba(174,127,226,.35)
+.banner{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    padding:10px;
 }
 
-.dl-btn{
-  padding:8px 16px;
-  border-radius:8px;
-  font-size:12px;
-  font-weight:800;
-  letter-spacing:.05em;
-  color:#fff;
-  background:linear-gradient(90deg,var(--p1),var(--p2));
-  border:none;
-  text-decoration:none;
-  transition:transform .15s, box-shadow .15s;
+.banner-inner{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
 }
 
-.dl-btn:hover{
-  transform:translateY(-1px);
-  box-shadow:0 6px 18px rgba(174,127,226,.35)
+.card{
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+    border:1px solid #ccc;
+    padding:20px;
 }
 
-.countdown{font-size:12px;color:var(--dim)}
-.countdown a{color:var(--p1)}
+.kicker{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
 
-@keyframes fall{to{transform:translateY(110vh) rotate(360deg);opacity:0}}
+.prize-row{
+    display:flex;
+    gap:14px;
+    align-items:flex-start;
+}
+
+.prize-icon{
+    width:52px;
+    height:52px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:1px solid #ccc;
+}
+
+.prize-info{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+}
+
+.cd-wrap{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+.cd-units{
+    display:flex;
+    gap:8px;
+    align-items:center;
+}
+
+.cd-unit{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:6px;
+}
+
+.cd-num-wrap{
+    width:52px;
+    height:52px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:1px solid #ccc;
+}
+
+.entries-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.e-pill{
+    display:flex;
+    align-items:center;
+    gap:6px;
+}
+
+.input-wrap{
+    width:100%;
+}
+
+.input{
+    width:100%;
+    padding:12px;
+}
+
+.btn-wrap{
+    width:100%;
+}
+
+.plan-cta{
+    width:100%;
+    padding:14px;
+    cursor:pointer;
+}
+
+.status{
+    min-height:20px;
+}
+
+.loader{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:10px;
+    padding:60px 20px;
+}
+
+.toast{
+    position:fixed;
+    bottom:20px;
+    left:50%;
+    transform:translateX(-50%);
+    border:1px solid #ccc;
+    padding:10px 16px;
+    display:none;
+}
+
+.toast.show{
+    display:block;
+}
+
+.winner-box{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    border:1px solid #ccc;
+    padding:16px;
+}
+
+.mention{
+    display:inline-flex;
+    align-items:center;
+    gap:4px;
+}
 </style>
 </head>
 <body>
-<div class="blob b1"></div>
-<div class="blob b2"></div>
-<div class="blob b3"></div>
 
 <div class="page">
-  <div class="title"><span class="grad">Download</span> Raton</div>
-
-  <p class="sub">Your download will start automatically in <span id="timer">5</span>s.</p>
-
-  <div class="pw-box">
-    <div class="pw-left">
-      <span class="pw-label">Password</span>
-      <span class="pw-value">v3.9.0</span>
+    <div class="container">
+        <div id="root">
+            <div class="loader">
+                <div>loading giveaway...</div>
+            </div>
+        </div>
     </div>
-    <div class="pw-actions">
-      <button class="pw-copy" onclick="copyPw()">Copy</button>
-      <a class="dl-btn" id="dl" href="https://codeberg.org/sillycs/notratonupdates/releases/download/v3.9.0/Free.zip">Download</a>
-    </div>
-  </div>
-
-  <div class="countdown"><a href="https://codeberg.org/sillycs/notratonupdates/releases/download/v3.9.0/Free.zip">Click here if download doesn't start</a></div>
 </div>
 
+<div class="toast" id="toast"></div>
+
 <script>
-let s=5;
-const t=document.getElementById('timer');
-const iv=setInterval(()=>{s--;t.textContent=s;if(s<=0){clearInterval(iv);window.location.href='https://codeberg.org/sillycs/notratonupdates/releases/download/v3.9.0/Free.zip';}},1000);
+const WORKER = 'https://steep-sun-85c4.sillykuadro.workers.dev';
 
-function copyPw(){navigator.clipboard.writeText('v3.9.0').then(()=>{const b=document.querySelector('.pw-copy');b.textContent='Copied';setTimeout(()=>b.textContent='Copy',2000);});}
+const toast = document.getElementById('toast');
 
-const COLS=['#AE7FE2','#D59DFF','#ffffff','#caa6ff','#9f7cff'];
+function showToast(t) {
+    toast.textContent = t;
+    toast.classList.add('show');
 
-function confetti() {
-    for (let i = 0; i < 120; i++) setTimeout(() => {
-        const el = document.createElement('div'); el.className = 'cp';
-        const s = Math.random() * 9 + 4;
-        el.style.cssText = `left:${Math.random()*100}vw;top:-10px;width:${s}px;height:${s*.6}px;background:${COLS[i%COLS.length]};border-radius:${Math.random()>.5?'50%':'2px'};animation:fall ${2+Math.random()*2.5}s linear ${Math.random()*.9}s forwards;transform:rotate(${Math.random()*360}deg);opacity:${.55+Math.random()*.45};position:fixed;pointer-events:none;z-index:9999`;
-        document.body.appendChild(el); setTimeout(() => el.remove(), 6000);
-    }, i * 13);
+    clearTimeout(showToast._t);
+
+    showToast._t = setTimeout(() => {
+        toast.classList.remove('show');
+    }, 1800);
 }
 
-document.getElementById('dl').addEventListener('click',confetti);
+function parseMentions(text) {
+    if (!text) return '';
+
+    const escaped = text
+        .replace(/&/g,'&amp;')
+        .replace(/</g,'&lt;')
+        .replace(/>/g,'&gt;');
+
+    return escaped.replace(/@([\w.\-]{2,32})/g, (_, name) =>
+        `<span class="mention">@${name}</span>`
+    );
+}
+
+function pad(n) {
+    return String(n).padStart(2, '0');
+}
+
+function countdown(endsAt) {
+    const d = endsAt - Date.now();
+
+    if (d <= 0) return null;
+
+    return {
+        d: Math.floor(d / 86400000),
+        h: Math.floor(d % 86400000 / 3600000),
+        m: Math.floor(d % 3600000 / 60000),
+        s: Math.floor(d % 60000 / 1000)
+    };
+}
+
+function flipNum(id, val) {
+    const el = document.getElementById(id);
+
+    if (!el) return;
+
+    el.textContent = pad(val);
+}
+
+function fmtRelative(ts) {
+    if (!ts) return '';
+
+    const diff = ts - Date.now();
+
+    if (diff <= 0) return 'Ended';
+
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor(diff % 86400000 / 3600000);
+
+    if (d > 0) return `${d}d ${h}h left`;
+
+    const m = Math.floor(diff % 3600000 / 60000);
+
+    if (h > 0) return `${h}h ${m}m left`;
+
+    return `${m}m left`;
+}
+
+function setStatus(msg, type = '') {
+    const el = document.getElementById('st');
+
+    if (!el) return;
+
+    el.textContent = msg;
+    el.className = 'status';
+}
+
+function patchOG(g, ended, hasWon) {
+    const titleText = `${g.emoji} ${g.title} giveaway`;
+
+    const descParts = [
+        g.description || 'A free giveaway is here',
+        `${g.entryCount} participant${g.entryCount!==1?'s':''}.`,
+        hasWon
+            ? `Winner: ${g.winner}`
+            : ended
+                ? 'Giveaway closed.'
+                : (fmtRelative(g.endsAt) || 'Ends soon.')
+    ];
+
+    document.title = titleText;
+
+    document.querySelector('meta[property="og:title"]')
+        ?.setAttribute('content', titleText);
+
+    document.querySelector('meta[property="og:description"]')
+        ?.setAttribute('content', descParts.join(' '));
+}
+
+const ID = new URLSearchParams(location.search).get('id');
+
+const JOINED_KEY = `raton_joined_${ID}`;
+
+async function render() {
+
+    const root = document.getElementById('root');
+
+    if (!ID) {
+        root.innerHTML = notFound(
+            'Raton Giveaways',
+            'No giveaway ID in the URL.'
+        );
+        return;
+    }
+
+    const res = await fetch(
+        `${WORKER}/giveaway?id=${encodeURIComponent(ID)}`
+    ).catch(() => null);
+
+    if (!res?.ok) {
+        root.innerHTML = notFound(
+            'Giveaway not found',
+            'Check the link or contact the host.'
+        );
+        return;
+    }
+
+    const { giveaway: g } = await res.json();
+
+    const ended  = !g.active || (g.endsAt && Date.now() > g.endsAt);
+    const hasWon = !!g.winner;
+    const joined = !!localStorage.getItem(JOINED_KEY);
+
+    patchOG(g, ended, hasWon);
+
+    const descHtml = g.description
+        ? `<div>${parseMentions(g.description)}</div>`
+        : '';
+
+    root.innerHTML = `
+    <div class="card">
+
+        <div class="kicker">
+            <span>●</span>
+            <span>Raton Giveaway</span>
+        </div>
+
+        <div>
+            <h1>
+                Free ${g.title}
+            </h1>
+        </div>
+
+        <div class="prize-row">
+            <div class="prize-icon">
+                ${g.emoji}
+            </div>
+
+            <div class="prize-info">
+                <div>Prize</div>
+                <div>${g.title}</div>
+                ${descHtml}
+            </div>
+        </div>
+
+        ${hasWon ? `
+        <div class="winner-box">
+            <div>🏆</div>
+            <div>Winner Announced</div>
+            <div>${g.winner}</div>
+        </div>
+        ` : ''}
+
+        ${!ended ? `
+        <div class="cd-wrap">
+
+            <div>Ends in</div>
+
+            <div class="cd-units">
+
+                <div class="cd-unit">
+                    <div class="cd-num-wrap">
+                        <div id="cdd">00</div>
+                    </div>
+                    <div>days</div>
+                </div>
+
+                <div>:</div>
+
+                <div class="cd-unit">
+                    <div class="cd-num-wrap">
+                        <div id="cdh">00</div>
+                    </div>
+                    <div>hrs</div>
+                </div>
+
+                <div>:</div>
+
+                <div class="cd-unit">
+                    <div class="cd-num-wrap">
+                        <div id="cdm">00</div>
+                    </div>
+                    <div>min</div>
+                </div>
+
+                <div>:</div>
+
+                <div class="cd-unit">
+                    <div class="cd-num-wrap">
+                        <div id="cds">00</div>
+                    </div>
+                    <div>sec</div>
+                </div>
+
+            </div>
+
+        </div>
+        ` : ''}
+
+        <div class="entries-row">
+
+            <div class="e-pill">
+                <span>●</span>
+
+                <span id="ec">
+                    ${g.entryCount}
+                </span>
+
+                <span>
+                    participant${g.entryCount !== 1 ? 's' : ''}
+                </span>
+            </div>
+
+            <div id="ech">
+                ${g.entryCount > 0
+                    ? ((1/g.entryCount)*100).toFixed(1) + '% win chance'
+                    : 'be the first in'}
+            </div>
+
+        </div>
+
+        ${!ended && !hasWon ? `
+
+        <div class="input-wrap">
+            <input
+                class="input"
+                id="un"
+                type="text"
+                maxlength="32"
+                placeholder="your discord username"
+                autocomplete="off"
+                spellcheck="false"
+            />
+        </div>
+
+        <div class="btn-wrap">
+            <button
+                class="plan-cta"
+                id="jb"
+                ${joined ? 'disabled' : ''}
+            >
+                ${joined
+                    ? 'Already joined'
+                    : 'Join giveaway →'}
+            </button>
+        </div>
+
+        <div class="status" id="st"></div>
+
+        ` : `
+
+        <div class="status">
+            ${hasWon
+                ? 'Congrats to the winner :)'
+                : 'Giveaway closed by an administrator'}
+        </div>
+
+        `}
+
+    </div>
+    `;
+
+    if (!ended && !hasWon && g.endsAt) {
+
+        const tick = () => {
+
+            const cd = countdown(g.endsAt);
+
+            if (!cd) return;
+
+            flipNum('cdd', cd.d);
+            flipNum('cdh', cd.h);
+            flipNum('cdm', cd.m);
+            flipNum('cds', cd.s);
+        };
+
+        tick();
+
+        setInterval(tick, 1000);
+    }
+
+    const jb = document.getElementById('jb');
+
+    if (jb && !joined) {
+
+        jb.addEventListener('click', async () => {
+
+            const un = document.getElementById('un').value.trim();
+
+            if (!un) {
+                setStatus('enter your discord username');
+                return;
+            }
+
+            if (un.length < 2) {
+                setStatus('username too short...');
+                return;
+            }
+
+            jb.disabled = true;
+            jb.innerHTML = 'Joining…';
+
+            setStatus('');
+
+            try {
+
+                const r = await fetch(`${WORKER}/join`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        giveawayId: ID,
+                        username: un
+                    })
+                });
+
+                const d = await r.json();
+
+                if (d.ok) {
+
+                    jb.innerHTML = 'Joined';
+
+                    setStatus("you're in! good luck :3");
+
+                    localStorage.setItem(JOINED_KEY, '1');
+
+                    document.getElementById('ec').textContent = d.count;
+
+                    document.getElementById('ech').textContent =
+                        ((1/d.count)*100).toFixed(1) + '% win chance';
+
+                } else {
+
+                    jb.disabled = false;
+
+                    jb.innerHTML = 'Join giveaway →';
+
+                    setStatus(d.error || 'something went wrong...');
+                }
+
+            } catch {
+
+                jb.disabled = false;
+
+                jb.innerHTML = 'Join giveaway →';
+
+                setStatus('network error. try again.');
+            }
+
+        });
+
+    }
+
+}
+
+function notFound(h, p) {
+
+    return `
+    <div class="card">
+
+        <h1>${h}</h1>
+
+        <div>
+            ${p}
+        </div>
+
+    </div>
+    `;
+}
+
+render();
 </script>
+
 </body>
 </html>
