@@ -103,23 +103,23 @@ body{font-family:Inter,sans-serif;color:var(--text);background:radial-gradient(9
   <div class="pw-box">
     <div class="pw-left">
       <span class="pw-label">Password</span>
-      <span class="pw-value">v3.8.9</span>
+      <span class="pw-value">v3.9.0</span>
     </div>
     <div class="pw-actions">
       <button class="pw-copy" onclick="copyPw()">Copy</button>
-      <a class="dl-btn" id="dl" href="https://codeberg.org/sillycs/notratonupdates/releases/download/v3.8.9/Free.zip">Download</a>
+      <a class="dl-btn" id="dl" href="https://codeberg.org/sillycs/notratonupdates/releases/download/v3.9.0/Free.zip">Download</a>
     </div>
   </div>
 
-  <div class="countdown"><a href="https://codeberg.org/sillycs/notratonupdates/releases/download/v3.8.9/Free.zip">Click here if download doesn't start</a></div>
+  <div class="countdown"><a href="https://codeberg.org/sillycs/notratonupdates/releases/download/v3.9.0/Free.zip">Click here if download doesn't start</a></div>
 </div>
 
 <script>
 let s=5;
 const t=document.getElementById('timer');
-const iv=setInterval(()=>{s--;t.textContent=s;if(s<=0){clearInterval(iv);window.location.href='https://codeberg.org/sillycs/notratonupdates/releases/download/v3.8.9/Free.zip';}},1000);
+const iv=setInterval(()=>{s--;t.textContent=s;if(s<=0){clearInterval(iv);window.location.href='https://codeberg.org/sillycs/notratonupdates/releases/download/v3.9.0/Free.zip';}},1000);
 
-function copyPw(){navigator.clipboard.writeText('v3.8.9').then(()=>{const b=document.querySelector('.pw-copy');b.textContent='Copied';setTimeout(()=>b.textContent='Copy',2000);});}
+function copyPw(){navigator.clipboard.writeText('v3.9.0').then(()=>{const b=document.querySelector('.pw-copy');b.textContent='Copied';setTimeout(()=>b.textContent='Copy',2000);});}
 
 const COLS=['#AE7FE2','#D59DFF','#ffffff','#caa6ff','#9f7cff'];
 
