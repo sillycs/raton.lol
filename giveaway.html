@@ -3,202 +3,389 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Raton — Giveaway</title>
-<link rel="icon" href="RATA.png"/>
+<title>Raton — Giveaways</title>
+<link rel="icon" href="https://raton.lol/img/RATA.png"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.cdnfonts.com/css/nishiki-teki" rel="stylesheet">
+<link href="https://fonts.cdnfonts.com/css/kunal" rel="stylesheet">
 
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="Raton Giveaways"/>
 <meta property="og:title" content="🎁 Giveaway"/>
 <meta property="og:description" content="A free giveaway is here, click to enter and check your win chances :)"/>
-<meta property="og:image" content="https://steep-sun-85c4.sillykuadro.workers.dev/og-image"/>
 
 <style>
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-body{
-    font-family:sans-serif;
+:root {
+  --bg: #0d0d0d;
+  --surface: #141414;
+  --surface2: #1c1c1c;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.12);
+  --purple: #8b5cf6;
+  --purple2: #a78bfa;
+  --purple-dim: rgba(139,92,246,0.15);
+  --text: #f4f4f8;
+  --text2: #a0a0b8;
+  --text3: #606078;
+  --font-display: 'Nishiki-teki', sans-serif;
+  --font-logo: 'kunal', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+  --radius: 20px;
 }
 
-.page{
-    width:100%;
-    display:flex;
-    justify-content:center;
+* { cursor: url('https://raton.lol/img/default.png') 0 0, auto; }
+a, button, [role="button"] {
+  cursor: url('https://raton.lol/img/handpointing.png') 0 0, pointer;
 }
 
-.container{
-    width:100%;
-    max-width:560px;
-    display:flex;
-    flex-direction:column;
-    gap:16px;
-    padding:20px;
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
-.banner{
-    width:100%;
-    display:flex;
-    justify-content:center;
-    padding:10px;
+.rata-bg {
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 0; overflow: hidden;
+}
+.rata-sprite {
+  position: absolute; opacity: 0;
+  will-change: transform, opacity;
+  filter: grayscale(20%) brightness(0.55);
+  animation: rataFloat linear infinite;
+  transform-origin: center; user-select: none;
+}
+@keyframes rataFloat {
+  0%   { opacity: 0;    transform: translateY(0px)   rotate(0deg)  scale(1);    }
+  8%   { opacity: 0.14; }
+  50%  { opacity: 0.08; transform: translateY(-28px) rotate(7deg)  scale(1.05); }
+  92%  { opacity: 0.14; }
+  100% { opacity: 0;    transform: translateY(-55px) rotate(-4deg) scale(0.95); }
 }
 
-.banner-inner{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    flex-wrap:wrap;
+nav {
+  position: sticky; top: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 2rem; height: 60px;
+  background: rgba(13,13,13,0.88);
+  backdrop-filter: blur(24px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 8px;
+  font-family: var(--font-logo); font-weight: 800;
+  font-size: 1.4rem; color: var(--text); text-decoration: none;
+}
+.nav-tag {
+  font-size: 0.7rem; color: var(--purple2);
+  background: var(--purple-dim);
+  border: 1px solid rgba(139,92,246,0.2);
+  border-radius: 6px; padding: 2px 8px;
+  font-family: var(--font-body); font-weight: 600;
+  letter-spacing: 0.04em; text-transform: uppercase;
 }
 
-.card{
-    display:flex;
-    flex-direction:column;
-    gap:20px;
-    border:1px solid #ccc;
-    padding:20px;
+.page {
+  position: relative; z-index: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem 1.5rem 5rem;
 }
 
-.kicker{
-    display:flex;
-    align-items:center;
-    gap:8px;
+.container {
+  width: 100%;
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
 }
 
-.prize-row{
-    display:flex;
-    gap:14px;
-    align-items:flex-start;
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  position: relative;
+  overflow: hidden;
+  animation: fadeUp 0.5s ease both;
 }
 
-.prize-icon{
-    width:52px;
-    height:52px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border:1px solid #ccc;
+.card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(139,92,246,0.1), transparent 70%);
+  pointer-events: none;
 }
 
-.prize-info{
-    display:flex;
-    flex-direction:column;
-    gap:6px;
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-.cd-wrap{
-    display:flex;
-    flex-direction:column;
-    gap:12px;
+.kicker {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.75rem;
+  color: var(--text3);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.kicker-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--purple);
+  box-shadow: 0 0 8px rgba(139,92,246,0.7);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.6; transform: scale(1.3); }
 }
 
-.cd-units{
-    display:flex;
-    gap:8px;
-    align-items:center;
+.giveaway-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 6vw, 2.8rem);
+  font-weight: 800;
+  line-height: 1.0;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.giveaway-title .accent { color: var(--purple); }
+
+.prize-row {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1rem 1.2rem;
+}
+.prize-icon {
+  width: 52px; height: 52px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--purple-dim);
+  border: 1px solid rgba(139,92,246,0.2);
+  border-radius: 12px;
+  font-size: 1.6rem;
+}
+.prize-info { display: flex; flex-direction: column; gap: 3px; }
+.prize-label { font-size: 0.72rem; color: var(--text3); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; }
+.prize-name  { font-size: 1rem; font-weight: 600; color: var(--text); }
+.prize-desc  { font-size: 0.82rem; color: var(--text2); margin-top: 2px; }
+
+.winner-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(87, 242, 135, 0.06);
+  border: 1px solid rgba(87, 242, 135, 0.2);
+  border-radius: 14px;
+  padding: 1rem 1.2rem;
+}
+.winner-trophy { font-size: 1.6rem; }
+.winner-info   { display: flex; flex-direction: column; gap: 2px; }
+.winner-label  { font-size: 0.72rem; color: rgba(87,242,135,0.7); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; }
+.winner-name   { font-size: 0.95rem; font-weight: 600; color: #57f287; }
+
+.cd-wrap { display: flex; flex-direction: column; gap: 10px; }
+.cd-label { font-size: 0.72rem; color: var(--text3); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; }
+.cd-units { display: flex; gap: 8px; align-items: center; }
+.cd-unit  { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+.cd-num-wrap {
+  width: 56px; height: 56px;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border2);
+  border-radius: 12px;
+  font-family: var(--font-display);
+  font-size: 1.5rem; font-weight: 800;
+  color: var(--text);
+  letter-spacing: 0.02em;
+}
+.cd-sep { font-size: 1.2rem; color: var(--text3); font-weight: 300; margin-bottom: 18px; }
+.cd-unit-label { font-size: 0.65rem; color: var(--text3); text-transform: uppercase; letter-spacing: 0.05em; }
+
+.entries-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 0.8rem 1rem;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+.e-pill {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 0.875rem; color: var(--text);
+}
+.e-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--purple2);
+}
+.e-count { font-weight: 600; }
+.e-chance {
+  font-size: 0.78rem;
+  color: var(--purple2);
+  font-weight: 600;
+  background: var(--purple-dim);
+  border: 1px solid rgba(139,92,246,0.2);
+  border-radius: 8px;
+  padding: 3px 10px;
 }
 
-.cd-unit{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:6px;
+.input-wrap { display: flex; flex-direction: column; gap: 6px; }
+.input-label { font-size: 0.75rem; color: var(--text3); font-weight: 500; letter-spacing: 0.03em; text-transform: uppercase; }
+.input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border2);
+  border-radius: 12px;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+.input::placeholder { color: var(--text3); }
+.input:focus {
+  border-color: rgba(139,92,246,0.5);
+  background: rgba(139,92,246,0.05);
 }
 
-.cd-num-wrap{
-    width:52px;
-    height:52px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border:1px solid #ccc;
+.btn-wrap { width: 100%; }
+.plan-cta {
+  width: 100%;
+  padding: 0.85rem;
+  background: linear-gradient(135deg, var(--purple), #7c3aed);
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  font-family: var(--font-body);
+  font-size: 0.95rem; font-weight: 600;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  transition: all 0.2s;
+}
+.plan-cta:not(:disabled):hover {
+  background: linear-gradient(135deg, #7c3aed, #6d28d9);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(139,92,246,0.3);
+}
+.plan-cta:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid var(--border2);
 }
 
-.entries-row{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:10px;
-    flex-wrap:wrap;
+.status {
+  min-height: 18px;
+  font-size: 0.82rem;
+  color: var(--text2);
+  text-align: center;
+}
+.status.error { color: #f87171; }
+.status.success { color: #57f287; }
+
+.closed-msg {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 0.85rem; color: var(--text3);
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--border);
+  border-radius: 10px; padding: 0.75rem 1rem;
 }
 
-.e-pill{
-    display:flex;
-    align-items:center;
-    gap:6px;
+.loader {
+  display: flex; flex-direction: column;
+  align-items: center; gap: 12px;
+  padding: 4rem 2rem;
 }
-
-.input-wrap{
-    width:100%;
+.loader-spinner {
+  width: 32px; height: 32px;
+  border: 2px solid var(--border2);
+  border-top-color: var(--purple);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
 }
+@keyframes spin { to { transform: rotate(360deg); } }
+.loader-text { font-size: 0.85rem; color: var(--text3); }
 
-.input{
-    width:100%;
-    padding:12px;
+.toast {
+  position: fixed; bottom: 24px; left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 12px;
+  padding: 10px 18px;
+  font-size: 0.85rem; color: var(--text);
+  opacity: 0; pointer-events: none;
+  transition: all 0.25s ease;
+  z-index: 999; white-space: nowrap;
 }
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-.btn-wrap{
-    width:100%;
+.footer-note {
+  margin-top: 1.5rem;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  font-size: 0.75rem; color: var(--text3);
+  text-decoration: none;
 }
+.footer-note img { border-radius: 4px; }
+.footer-note:hover { color: var(--text2); }
 
-.plan-cta{
-    width:100%;
-    padding:14px;
-    cursor:pointer;
-}
-
-.status{
-    min-height:20px;
-}
-
-.loader{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:10px;
-    padding:60px 20px;
-}
-
-.toast{
-    position:fixed;
-    bottom:20px;
-    left:50%;
-    transform:translateX(-50%);
-    border:1px solid #ccc;
-    padding:10px 16px;
-    display:none;
-}
-
-.toast.show{
-    display:block;
-}
-
-.winner-box{
-    display:flex;
-    flex-direction:column;
-    gap:6px;
-    border:1px solid #ccc;
-    padding:16px;
-}
-
-.mention{
-    display:inline-flex;
-    align-items:center;
-    gap:4px;
+@media (max-width: 480px) {
+  .cd-num-wrap { width: 48px; height: 48px; font-size: 1.2rem; }
+  .cd-sep { font-size: 1rem; }
 }
 </style>
 </head>
 <body>
 
+<div class="rata-bg" id="rataBg" aria-hidden="true"></div>
+
+<nav>
+  <a class="nav-logo" href="https://raton.lol">
+    <img src="https://raton.lol/img/RATA.png" width="24" height="24" alt="Raton" onerror="this.style.display='none'">
+    Raton
+  </a>
+  <span class="nav-tag">Giveaway</span>
+</nav>
+
 <div class="page">
-    <div class="container">
-        <div id="root">
-            <div class="loader">
-                <div>loading giveaway...</div>
-            </div>
+  <div class="container">
+    <div id="root">
+      <div class="card">
+        <div class="loader">
+          <div class="loader-spinner"></div>
+          <div class="loader-text">loading giveaway...</div>
         </div>
+      </div>
     </div>
+    <a class="footer-note" href="https://raton.lol">
+      <img src="https://raton.lol/img/RATA.png" width="14" height="14" alt="" onerror="this.style.display='none'">
+      © 2026 SillyCS. All rights reserved
+    </a>
+  </div>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -206,397 +393,280 @@ body{
 <script>
 const WORKER = 'https://steep-sun-85c4.sillykuadro.workers.dev';
 
+(function() {
+  var bg = document.getElementById('rataBg');
+  var data = [
+    {x:5,  y:10, s:52, d:20, dl:0 },
+    {x:20, y:25, s:44, d:24, dl:5 },
+    {x:38, y:5,  s:60, d:18, dl:9 },
+    {x:55, y:18, s:48, d:26, dl:2 },
+    {x:70, y:4,  s:66, d:22, dl:13},
+    {x:85, y:22, s:44, d:30, dl:7 },
+    {x:92, y:10, s:56, d:16, dl:11},
+    {x:12, y:58, s:52, d:28, dl:3 },
+    {x:30, y:72, s:72, d:32, dl:16},
+    {x:52, y:62, s:44, d:20, dl:8 },
+    {x:74, y:78, s:60, d:25, dl:6 },
+    {x:90, y:52, s:48, d:19, dl:14},
+  ];
+  data.forEach(function(r) {
+    var img = document.createElement('img');
+    img.src = 'https://raton.lol/img/RATA.png';
+    img.className = 'rata-sprite'; img.alt = ''; img.draggable = false;
+    img.style.cssText = 'width:'+r.s+'px;height:'+r.s+'px;left:'+r.x+'%;top:'+r.y+'%;animation-duration:'+r.d+'s;animation-delay:-'+r.dl+'s';
+    bg.appendChild(img);
+  });
+})();
+
 const toast = document.getElementById('toast');
-
 function showToast(t) {
-    toast.textContent = t;
-    toast.classList.add('show');
-
-    clearTimeout(showToast._t);
-
-    showToast._t = setTimeout(() => {
-        toast.classList.remove('show');
-    }, 1800);
+  toast.textContent = t;
+  toast.classList.add('show');
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(() => toast.classList.remove('show'), 2000);
 }
 
 function parseMentions(text) {
-    if (!text) return '';
-
-    const escaped = text
-        .replace(/&/g,'&amp;')
-        .replace(/</g,'&lt;')
-        .replace(/>/g,'&gt;');
-
-    return escaped.replace(/@([\w.\-]{2,32})/g, (_, name) =>
-        `<span class="mention">@${name}</span>`
-    );
+  if (!text) return '';
+  const escaped = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  return escaped.replace(/@([\w.\-]{2,32})/g, (_, name) =>
+    `<span style="color:var(--purple2);background:var(--purple-dim);border-radius:4px;padding:0 4px;">@${name}</span>`
+  );
 }
 
-function pad(n) {
-    return String(n).padStart(2, '0');
-}
+function pad(n) { return String(n).padStart(2, '0'); }
 
 function countdown(endsAt) {
-    const d = endsAt - Date.now();
-
-    if (d <= 0) return null;
-
-    return {
-        d: Math.floor(d / 86400000),
-        h: Math.floor(d % 86400000 / 3600000),
-        m: Math.floor(d % 3600000 / 60000),
-        s: Math.floor(d % 60000 / 1000)
-    };
+  const d = endsAt - Date.now();
+  if (d <= 0) return null;
+  return {
+    d: Math.floor(d / 86400000),
+    h: Math.floor(d % 86400000 / 3600000),
+    m: Math.floor(d % 3600000 / 60000),
+    s: Math.floor(d % 60000 / 1000)
+  };
 }
 
 function flipNum(id, val) {
-    const el = document.getElementById(id);
-
-    if (!el) return;
-
-    el.textContent = pad(val);
+  const el = document.getElementById(id);
+  if (el) el.textContent = pad(val);
 }
 
 function fmtRelative(ts) {
-    if (!ts) return '';
-
-    const diff = ts - Date.now();
-
-    if (diff <= 0) return 'Ended';
-
-    const d = Math.floor(diff / 86400000);
-    const h = Math.floor(diff % 86400000 / 3600000);
-
-    if (d > 0) return `${d}d ${h}h left`;
-
-    const m = Math.floor(diff % 3600000 / 60000);
-
-    if (h > 0) return `${h}h ${m}m left`;
-
-    return `${m}m left`;
+  if (!ts) return '';
+  const diff = ts - Date.now();
+  if (diff <= 0) return 'Ended';
+  const d = Math.floor(diff / 86400000);
+  const h = Math.floor(diff % 86400000 / 3600000);
+  if (d > 0) return `${d}d ${h}h left`;
+  const m = Math.floor(diff % 3600000 / 60000);
+  if (h > 0) return `${h}h ${m}m left`;
+  return `${m}m left`;
 }
 
 function setStatus(msg, type = '') {
-    const el = document.getElementById('st');
-
-    if (!el) return;
-
-    el.textContent = msg;
-    el.className = 'status';
+  const el = document.getElementById('st');
+  if (!el) return;
+  el.textContent = msg;
+  el.className = 'status' + (type ? ' ' + type : '');
 }
 
 function patchOG(g, ended, hasWon) {
-    const titleText = `${g.emoji} ${g.title} giveaway`;
-
-    const descParts = [
-        g.description || 'A free giveaway is here',
-        `${g.entryCount} participant${g.entryCount!==1?'s':''}.`,
-        hasWon
-            ? `Winner: ${g.winner}`
-            : ended
-                ? 'Giveaway closed.'
-                : (fmtRelative(g.endsAt) || 'Ends soon.')
-    ];
-
-    document.title = titleText;
-
-    document.querySelector('meta[property="og:title"]')
-        ?.setAttribute('content', titleText);
-
-    document.querySelector('meta[property="og:description"]')
-        ?.setAttribute('content', descParts.join(' '));
+  const titleText = `${g.emoji} ${g.title} giveaway`;
+  document.title = `Raton — ${titleText}`;
+  document.querySelector('meta[property="og:title"]')?.setAttribute('content', titleText);
 }
 
 const ID = new URLSearchParams(location.search).get('id');
-
 const JOINED_KEY = `raton_joined_${ID}`;
 
 async function render() {
+  const root = document.getElementById('root');
 
-    const root = document.getElementById('root');
+  if (!ID) {
+    root.innerHTML = notFound('No giveaway ID found.', 'Check the link or contact the host.');
+    return;
+  }
 
-    if (!ID) {
-        root.innerHTML = notFound(
-            'Raton Giveaways',
-            'No giveaway ID in the URL.'
-        );
-        return;
-    }
+  const res = await fetch(`${WORKER}/giveaway?id=${encodeURIComponent(ID)}`).catch(() => null);
 
-    const res = await fetch(
-        `${WORKER}/giveaway?id=${encodeURIComponent(ID)}`
-    ).catch(() => null);
+  if (!res?.ok) {
+    root.innerHTML = notFound('Giveaway not found', 'Check the link or contact the host.');
+    return;
+  }
 
-    if (!res?.ok) {
-        root.innerHTML = notFound(
-            'Giveaway not found',
-            'Check the link or contact the host.'
-        );
-        return;
-    }
+  const { giveaway: g } = await res.json();
 
-    const { giveaway: g } = await res.json();
+  const ended  = !g.active || (g.endsAt && Date.now() > g.endsAt);
+  const hasWon = !!g.winner;
+  const joined = !!localStorage.getItem(JOINED_KEY);
 
-    const ended  = !g.active || (g.endsAt && Date.now() > g.endsAt);
-    const hasWon = !!g.winner;
-    const joined = !!localStorage.getItem(JOINED_KEY);
+  patchOG(g, ended, hasWon);
 
-    patchOG(g, ended, hasWon);
+  const descHtml = g.description
+    ? `<div class="prize-desc">${parseMentions(g.description)}</div>`
+    : '';
 
-    const descHtml = g.description
-        ? `<div>${parseMentions(g.description)}</div>`
-        : '';
+  const winChance = g.entryCount > 0
+    ? ((1 / g.entryCount) * 100).toFixed(1) + '% win chance'
+    : 'Be the first in!';
 
-    root.innerHTML = `
-    <div class="card">
+  root.innerHTML = `
+  <div class="card">
 
-        <div class="kicker">
-            <span>●</span>
-            <span>Raton Giveaway</span>
-        </div>
-
-        <div>
-            <h1>
-                Free ${g.title}
-            </h1>
-        </div>
-
-        <div class="prize-row">
-            <div class="prize-icon">
-                ${g.emoji}
-            </div>
-
-            <div class="prize-info">
-                <div>Prize</div>
-                <div>${g.title}</div>
-                ${descHtml}
-            </div>
-        </div>
-
-        ${hasWon ? `
-        <div class="winner-box">
-            <div>🏆</div>
-            <div>Winner Announced</div>
-            <div>${g.winner}</div>
-        </div>
-        ` : ''}
-
-        ${!ended ? `
-        <div class="cd-wrap">
-
-            <div>Ends in</div>
-
-            <div class="cd-units">
-
-                <div class="cd-unit">
-                    <div class="cd-num-wrap">
-                        <div id="cdd">00</div>
-                    </div>
-                    <div>days</div>
-                </div>
-
-                <div>:</div>
-
-                <div class="cd-unit">
-                    <div class="cd-num-wrap">
-                        <div id="cdh">00</div>
-                    </div>
-                    <div>hrs</div>
-                </div>
-
-                <div>:</div>
-
-                <div class="cd-unit">
-                    <div class="cd-num-wrap">
-                        <div id="cdm">00</div>
-                    </div>
-                    <div>min</div>
-                </div>
-
-                <div>:</div>
-
-                <div class="cd-unit">
-                    <div class="cd-num-wrap">
-                        <div id="cds">00</div>
-                    </div>
-                    <div>sec</div>
-                </div>
-
-            </div>
-
-        </div>
-        ` : ''}
-
-        <div class="entries-row">
-
-            <div class="e-pill">
-                <span>●</span>
-
-                <span id="ec">
-                    ${g.entryCount}
-                </span>
-
-                <span>
-                    participant${g.entryCount !== 1 ? 's' : ''}
-                </span>
-            </div>
-
-            <div id="ech">
-                ${g.entryCount > 0
-                    ? ((1/g.entryCount)*100).toFixed(1) + '% win chance'
-                    : 'be the first in'}
-            </div>
-
-        </div>
-
-        ${!ended && !hasWon ? `
-
-        <div class="input-wrap">
-            <input
-                class="input"
-                id="un"
-                type="text"
-                maxlength="32"
-                placeholder="your discord username"
-                autocomplete="off"
-                spellcheck="false"
-            />
-        </div>
-
-        <div class="btn-wrap">
-            <button
-                class="plan-cta"
-                id="jb"
-                ${joined ? 'disabled' : ''}
-            >
-                ${joined
-                    ? 'Already joined'
-                    : 'Join giveaway →'}
-            </button>
-        </div>
-
-        <div class="status" id="st"></div>
-
-        ` : `
-
-        <div class="status">
-            ${hasWon
-                ? 'Congrats to the winner :)'
-                : 'Giveaway closed by an administrator'}
-        </div>
-
-        `}
-
+    <div class="kicker">
+      <div class="kicker-dot"></div>
+      Raton Giveaway
     </div>
-    `;
 
-    if (!ended && !hasWon && g.endsAt) {
+    <div>
+      <h1 class="giveaway-title">Free <span class="accent">${g.title}</span></h1>
+    </div>
 
-        const tick = () => {
+    <div class="prize-row">
+      <div class="prize-icon">${g.emoji}</div>
+      <div class="prize-info">
+        <div class="prize-label">Prize</div>
+        <div class="prize-name">${g.title}</div>
+        ${descHtml}
+      </div>
+    </div>
 
-            const cd = countdown(g.endsAt);
+    ${hasWon ? `
+    <div class="winner-box">
+      <div class="winner-trophy">🏆</div>
+      <div class="winner-info">
+        <div class="winner-label">Winner Announced</div>
+        <div class="winner-name">${g.winner}</div>
+      </div>
+    </div>
+    ` : ''}
 
-            if (!cd) return;
+    ${!ended ? `
+    <div class="cd-wrap">
+      <div class="cd-label">Ends in</div>
+      <div class="cd-units">
+        <div class="cd-unit">
+          <div class="cd-num-wrap"><span id="cdd">00</span></div>
+          <div class="cd-unit-label">days</div>
+        </div>
+        <div class="cd-sep">:</div>
+        <div class="cd-unit">
+          <div class="cd-num-wrap"><span id="cdh">00</span></div>
+          <div class="cd-unit-label">hrs</div>
+        </div>
+        <div class="cd-sep">:</div>
+        <div class="cd-unit">
+          <div class="cd-num-wrap"><span id="cdm">00</span></div>
+          <div class="cd-unit-label">min</div>
+        </div>
+        <div class="cd-sep">:</div>
+        <div class="cd-unit">
+          <div class="cd-num-wrap"><span id="cds">00</span></div>
+          <div class="cd-unit-label">sec</div>
+        </div>
+      </div>
+    </div>
+    ` : ''}
 
-            flipNum('cdd', cd.d);
-            flipNum('cdh', cd.h);
-            flipNum('cdm', cd.m);
-            flipNum('cds', cd.s);
-        };
+    <div class="entries-row">
+      <div class="e-pill">
+        <div class="e-dot"></div>
+        <span id="ec" class="e-count">${g.entryCount}</span>
+        <span>participant${g.entryCount !== 1 ? 's' : ''}</span>
+      </div>
+      <div id="ech" class="e-chance">${winChance}</div>
+    </div>
 
-        tick();
+    ${!ended && !hasWon ? `
 
-        setInterval(tick, 1000);
-    }
+    <div class="input-wrap">
+      <label class="input-label" for="un">Your Discord username</label>
+      <input
+        class="input" id="un" type="text" maxlength="32"
+        placeholder="e.g. sillycs"
+        autocomplete="off" spellcheck="false"
+      />
+    </div>
 
-    const jb = document.getElementById('jb');
+    <div class="btn-wrap">
+      <button class="plan-cta" id="jb" ${joined ? 'disabled' : ''}>
+        ${joined ? '✓ Already joined' : 'Join giveaway →'}
+      </button>
+    </div>
 
-    if (jb && !joined) {
+    <div class="status" id="st"></div>
 
-        jb.addEventListener('click', async () => {
+    ` : `
+    <div class="closed-msg">
+      <span>${hasWon ? '🎉' : '🔒'}</span>
+      <span>${hasWon ? 'Congrats to the winner :)' : 'Giveaway closed by an administrator'}</span>
+    </div>
+    `}
 
-            const un = document.getElementById('un').value.trim();
+  </div>
+  `;
 
-            if (!un) {
-                setStatus('enter your discord username');
-                return;
-            }
+  if (!ended && !hasWon && g.endsAt) {
+    const tick = () => {
+      const cd = countdown(g.endsAt);
+      if (!cd) return;
+      flipNum('cdd', cd.d);
+      flipNum('cdh', cd.h);
+      flipNum('cdm', cd.m);
+      flipNum('cds', cd.s);
+    };
+    tick();
+    setInterval(tick, 1000);
+  }
 
-            if (un.length < 2) {
-                setStatus('username too short...');
-                return;
-            }
+  const jb = document.getElementById('jb');
+  if (jb && !joined) {
+    jb.addEventListener('click', async () => {
+      const un = document.getElementById('un').value.trim();
 
-            jb.disabled = true;
-            jb.innerHTML = 'Joining…';
+      if (!un) { setStatus('Enter your Discord username', 'error'); return; }
+      if (un.length < 2) { setStatus('Username too short...', 'error'); return; }
 
-            setStatus('');
+      jb.disabled = true;
+      jb.textContent = 'Joining…';
+      setStatus('');
 
-            try {
-
-                const r = await fetch(`${WORKER}/join`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        giveawayId: ID,
-                        username: un
-                    })
-                });
-
-                const d = await r.json();
-
-                if (d.ok) {
-
-                    jb.innerHTML = 'Joined';
-
-                    setStatus("you're in! good luck :3");
-
-                    localStorage.setItem(JOINED_KEY, '1');
-
-                    document.getElementById('ec').textContent = d.count;
-
-                    document.getElementById('ech').textContent =
-                        ((1/d.count)*100).toFixed(1) + '% win chance';
-
-                } else {
-
-                    jb.disabled = false;
-
-                    jb.innerHTML = 'Join giveaway →';
-
-                    setStatus(d.error || 'something went wrong...');
-                }
-
-            } catch {
-
-                jb.disabled = false;
-
-                jb.innerHTML = 'Join giveaway →';
-
-                setStatus('network error. try again.');
-            }
-
+      try {
+        const r = await fetch(`${WORKER}/join`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ giveawayId: ID, username: un })
         });
+        const d = await r.json();
 
-    }
-
+        if (d.ok) {
+          jb.textContent = '✓ Joined';
+          setStatus("You're in! Good luck :3", 'success');
+          localStorage.setItem(JOINED_KEY, '1');
+          document.getElementById('ec').textContent = d.count;
+          document.getElementById('ech').textContent = ((1/d.count)*100).toFixed(1) + '% win chance';
+        } else {
+          jb.disabled = false;
+          jb.textContent = 'Join giveaway →';
+          setStatus(d.error || 'Something went wrong...', 'error');
+        }
+      } catch {
+        jb.disabled = false;
+        jb.textContent = 'Join giveaway →';
+        setStatus('Network error. Try again.', 'error');
+      }
+    });
+  }
 }
 
 function notFound(h, p) {
-
-    return `
-    <div class="card">
-
-        <h1>${h}</h1>
-
-        <div>
-            ${p}
-        </div>
-
-    </div>
-    `;
+  return `
+  <div class="card">
+    <div class="kicker"><div class="kicker-dot"></div>Raton Giveaway</div>
+    <h1 class="giveaway-title" style="font-size:1.8rem;">${h}</h1>
+    <div class="closed-msg"><span>${p}</span></div>
+  </div>`;
 }
 
 render();
