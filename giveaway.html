@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Raton — Giveaways</title>
+<title>Giveaways</title>
 <link rel="icon" href="https://raton.lol/img/RATA.png"/>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link href="https://fonts.cdnfonts.com/css/nishiki-teki" rel="stylesheet">
@@ -154,7 +154,7 @@ nav {
 
 .giveaway-title {
   font-family: var(--font-display);
-  font-size: clamp(2rem, 6vw, 2.8rem);
+  font-size: 1.6rem;
   font-weight: 800;
   line-height: 1.0;
   letter-spacing: 0.04em;
@@ -193,7 +193,7 @@ nav {
   border-radius: 14px;
   padding: 1rem 1.2rem;
 }
-.winner-trophy { font-size: 1.6rem; }
+.winner-trophy { width: 40px; height: 40px; object-fit: contain; }
 .winner-info   { display: flex; flex-direction: column; gap: 2px; }
 .winner-label  { font-size: 0.72rem; color: rgba(87,242,135,0.7); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; }
 .winner-name   { font-size: 0.95rem; font-weight: 600; color: #57f287; }
@@ -301,10 +301,18 @@ nav {
 
 .closed-msg {
   display: flex; align-items: center; gap: 8px;
-  font-size: 0.85rem; color: var(--text3);
-  background: rgba(255,255,255,0.02);
-  border: 1px solid var(--border);
+  font-size: 0.85rem;
   border-radius: 10px; padding: 0.75rem 1rem;
+}
+.closed-msg.closed-admin {
+  color: #f87171;
+  background: rgba(248, 113, 113, 0.08);
+  border: 1px solid rgba(248, 113, 113, 0.25);
+}
+.closed-msg.closed-winner {
+  color: #57f287;
+  background: rgba(87, 242, 135, 0.08);
+  border: 1px solid rgba(87, 242, 135, 0.25);
 }
 
 .loader {
@@ -344,6 +352,8 @@ nav {
 }
 .footer-note img { border-radius: 4px; }
 .footer-note:hover { color: var(--text2); }
+
+@keyframes fall { to { transform: translateY(110vh) rotate(360deg); opacity: 0; } }
 
 @media (max-width: 480px) {
   .cd-num-wrap { width: 48px; height: 48px; font-size: 1.2rem; }
@@ -417,6 +427,34 @@ function showToast(t) {
   showToast._t = setTimeout(() => toast.classList.remove('show'), 2000);
 }
 
+var COLS = ['#8b5cf6','#a78bfa','#ffffff','#c4b5fd','#7c3aed','#ddd6fe'];
+function confetti() {
+  for (var i = 0; i < 600; i++) {
+    (function(i) {
+      setTimeout(function() {
+        var el = document.createElement('div');
+        var size = Math.random() * 9 + 4;
+        el.style.cssText = [
+          'position:fixed',
+          'left:'+(Math.random()*100)+'vw',
+          'top:-10px',
+          'width:'+size+'px',
+          'height:'+(size*0.6)+'px',
+          'background:'+COLS[i%COLS.length],
+          'border-radius:'+(Math.random()>0.5?'50%':'2px'),
+          'animation:fall '+(2+Math.random()*2.5)+'s linear '+(Math.random()*0.8)+'s forwards',
+          'transform:rotate('+(Math.random()*360)+'deg)',
+          'opacity:'+(0.55+Math.random()*0.45),
+          'pointer-events:none',
+          'z-index:9999'
+        ].join(';');
+        document.body.appendChild(el);
+        setTimeout(function() { el.remove(); }, 6000);
+      }, i * 12);
+    })(i);
+  }
+}
+
 function parseMentions(text) {
   if (!text) return '';
   const escaped = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
@@ -443,18 +481,6 @@ function flipNum(id, val) {
   if (el) el.textContent = pad(val);
 }
 
-function fmtRelative(ts) {
-  if (!ts) return '';
-  const diff = ts - Date.now();
-  if (diff <= 0) return 'Ended';
-  const d = Math.floor(diff / 86400000);
-  const h = Math.floor(diff % 86400000 / 3600000);
-  if (d > 0) return `${d}d ${h}h left`;
-  const m = Math.floor(diff % 3600000 / 60000);
-  if (h > 0) return `${h}h ${m}m left`;
-  return `${m}m left`;
-}
-
 function setStatus(msg, type = '') {
   const el = document.getElementById('st');
   if (!el) return;
@@ -475,7 +501,7 @@ async function render() {
   const root = document.getElementById('root');
 
   if (!ID) {
-    root.innerHTML = notFound('No giveaway ID found.', 'Check the link or contact the host.');
+    root.innerHTML = notFound('', 'Check the link or contact the host.');
     return;
   }
 
@@ -493,6 +519,8 @@ async function render() {
   const joined = !!localStorage.getItem(JOINED_KEY);
 
   patchOG(g, ended, hasWon);
+
+  if (hasWon) confetti();
 
   const descHtml = g.description
     ? `<div class="prize-desc">${parseMentions(g.description)}</div>`
@@ -525,7 +553,7 @@ async function render() {
 
     ${hasWon ? `
     <div class="winner-box">
-      <div class="winner-trophy">🏆</div>
+      <img class="winner-trophy" src="https://raton.lol/img/bigdonator.png" alt="Winner" onerror="this.style.display='none'">
       <div class="winner-info">
         <div class="winner-label">Winner Announced</div>
         <div class="winner-name">${g.winner}</div>
@@ -589,9 +617,8 @@ async function render() {
     <div class="status" id="st"></div>
 
     ` : `
-    <div class="closed-msg">
-      <span>${hasWon ? '🎉' : '🔒'}</span>
-      <span>${hasWon ? 'Congrats to the winner :)' : 'Giveaway closed by an administrator'}</span>
+    <div class="closed-msg ${hasWon ? 'closed-winner' : 'closed-admin'}">
+      <span>${hasWon ? '🎉 Congrats to the winner :)' : '🔒 Giveaway closed by an administrator'}</span>
     </div>
     `}
 
@@ -652,12 +679,7 @@ async function render() {
 }
 
 function notFound(h, p) {
-  return `
-  <div class="card">
-    <div class="kicker"><div class="kicker-dot"></div>Raton Giveaway</div>
-    <h1 class="giveaway-title" style="font-size:1.8rem;">${h}</h1>
-    <div class="closed-msg"><span>${p}</span></div>
-  </div>`;
+  return `Sorry, this giveaway doesn't exist, please use a valid giveaway link... :(`;
 }
 
 render();
