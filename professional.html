@@ -43,7 +43,13 @@ body{
   display:flex;
   flex-direction:column;
 }
-
+.interface-link  {
+  display: inline-flex; align-items: center; gap: 6px;
+  color: var(--purple2); font-size: 0.875rem; text-decoration: none;
+  margin-top: 1.5rem; font-weight: 500; transition: gap 0.2s;
+}
+.interface-link:hover    { gap: 10px; }
+.interface-link svg      { width: 16px; height: 16px; }
 .rata-bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
 .rata-sprite{
   position:absolute;opacity:0;
@@ -375,7 +381,12 @@ nav{
     referrerpolicy="strict-origin-when-cross-origin" 
     allowfullscreen>
   </iframe>
-</div>    </div>
+</div>    
+      <a href="https://raton.lol/#reviews" class="interface-link">
+        Check the reviews
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
 
     <div class="divider">already paid?</div>
 
