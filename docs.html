@@ -3,400 +3,254 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Documentation</title>
-  <link rel="icon" href="RATA.png"/>
-  <meta name="theme-color" content="#AE7FE2"/>
-  <meta name="color-scheme" content="dark"/>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <title>Raton — Plugin Docs</title>
+  <link rel="icon" href="https://raton.lol/img/RATA.png"/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.cdnfonts.com/css/nishiki-teki" rel="stylesheet">
+  <link href="https://fonts.cdnfonts.com/css/kunal" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --p1: #AE7FE2;
-      --p2: #D59DFF;
-      --bg0: #080A10;
-      --bg1: #0B0D14;
-      --bg2: #101323;
-      --side: #0A0C12;
-      --text: #F2F0FF;
-      --muted: rgba(242,240,255,.72);
-      --dim: rgba(242,240,255,.28);
-      --r: 16px;
-      --code-bg: #0D0D0D;
-      --sidebar-w: 220px;
+      --bg: #0d0d0d; --surface: #141414; --surface2: #1c1c1c;
+      --border: rgba(255,255,255,0.07); --border2: rgba(255,255,255,0.12);
+      --purple: #8b5cf6; --purple2: #a78bfa; --purple-dim: rgba(139,92,246,0.15);
+      --text: #f4f4f8; --text2: #a0a0b8; --text3: #606078;
+      --green: #4CAF50; --blue: #64B5F6; --yellow: #FFB74D; --red: #EF5350;
+      --font-display: 'Nishiki-teki', sans-serif; --font-logo: 'kunal', sans-serif;
+      --font-body: 'DM Sans', sans-serif; --font-mono: 'JetBrains Mono', monospace;
+      --sidebar-w: 220px; --code-bg: #0a0a0a;
     }
-    *{box-sizing:border-box;margin:0;padding:0}
+    * { cursor: url('https://raton.lol/img/default.png') 0 0, auto; }
+    a, button, select { cursor: url('https://raton.lol/img/handpointing.png') 0 0, pointer; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); color: var(--text); background: var(--bg); min-height: 100vh; overflow-x: hidden; }
 
-    body {
-      font-family: Inter, system-ui, sans-serif;
-      color: var(--text);
-      background:
-        radial-gradient(1100px 700px at 18% 12%, rgba(174,127,226,.16) 0%, transparent 60%),
-        radial-gradient(1000px 680px at 82% 18%, rgba(213,157,255,.14) 0%, transparent 62%),
-        radial-gradient(900px 650px at 50% 100%, rgba(125,75,214,.12) 0%, transparent 60%),
-        linear-gradient(180deg, var(--bg0) 0%, var(--bg1) 40%, var(--bg2) 100%);
-      background-attachment: fixed;
-      overflow-x: hidden;
-      min-height: 100vh;
+    .rata-bg { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+    .rata-sprite {
+      position: absolute; opacity: 0; will-change: transform, opacity;
+      filter: grayscale(20%) brightness(0.45); animation: rataFloat linear infinite;
+      transform-origin: center; user-select: none;
     }
-    body::before {
-      content:"";
-      position:fixed;inset:0;pointer-events:none;z-index:0;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'width='300'height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise'baseFrequency='.6'numOctaves='2'stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300'height='300'filter='url(%23n)'opacity='.18'/%3E%3C/svg%3E");
-      mix-blend-mode:overlay;opacity:.12;
+    @keyframes rataFloat {
+      0%   { opacity: 0;    transform: translateY(0px)   rotate(0deg)  scale(1);    }
+      8%   { opacity: 0.10; }
+      50%  { opacity: 0.06; transform: translateY(-28px) rotate(7deg)  scale(1.05); }
+      92%  { opacity: 0.10; }
+      100% { opacity: 0;    transform: translateY(-55px) rotate(-4deg) scale(0.95); }
     }
-    .blob{position:fixed;pointer-events:none;z-index:0;filter:blur(40px);opacity:.22;animation:drift 16s ease-in-out infinite}
-    .b1{width:520px;height:520px;left:-160px;top:-160px;background:radial-gradient(circle at 30% 35%,rgba(174,127,226,.9),transparent 64%)}
-    .b2{width:620px;height:620px;right:-180px;top:30px;opacity:.18;background:radial-gradient(circle at 40% 40%,rgba(213,157,255,.9),transparent 62%);animation-duration:18s}
-    .b3{width:720px;height:720px;left:50%;bottom:-260px;opacity:.15;transform:translateX(-50%);background:radial-gradient(circle at 50% 45%,rgba(125,75,214,.85),transparent 66%);animation-duration:20s}
-    @keyframes drift{0%,100%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(22px,-18px,0) scale(1.03)}}
-    @keyframes rainbow-shift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-    @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
-    @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+    @keyframes fadeUp { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:0.6;transform:scale(1.3);} }
 
-    .announcement-banner{
-      position:relative;z-index:100;width:100%;
-      background:linear-gradient(90deg,rgba(174,127,226,.07),rgba(213,157,255,.13),rgba(174,127,226,.07));
-      border-bottom:1px solid rgba(213,157,255,.20);
-      height:42px;display:flex;align-items:center;justify-content:center;overflow:hidden;
+    nav {
+      position: sticky; top: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem; height: 60px;
+      background: rgba(13,13,13,0.92); backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--border);
     }
-    .announcement-banner::before{
-      content:"";position:absolute;inset:0;pointer-events:none;
-      background:repeating-linear-gradient(90deg,rgba(174,127,226,.03) 0px,rgba(174,127,226,.03) 1px,transparent 1px,transparent 80px);
+    .nav-logo {
+      display: flex; align-items: center; gap: 8px;
+      font-family: var(--font-logo); font-weight: 800;
+      font-size: 1.4rem; color: var(--text); text-decoration: none;
     }
-    .anni-inner{display:flex;align-items:center;gap:14px;position:relative;z-index:1}
-    .anni-text{
-      font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
-      background:linear-gradient(90deg,var(--p1),var(--p2));
-      -webkit-background-clip:text;background-clip:text;color:transparent;
+    .nav-right { display: flex; align-items: center; gap: 10px; }
+    .nav-tag {
+      font-size: 0.68rem; color: var(--purple2); background: var(--purple-dim);
+      border: 1px solid rgba(139,92,246,0.2); border-radius: 6px; padding: 2px 8px;
+      font-family: var(--font-body); font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;
     }
-    .anni-divider{width:1px;height:16px;background:rgba(213,157,255,.22);flex-shrink:0}
-    .anni-tag{
-      font-size:10px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;
-      color:#ffd37a;background:rgba(255,200,90,.12);border:1px solid rgba(255,200,90,.28);
-      border-radius:999px;padding:2px 8px;white-space:nowrap;
-    }
-    @media(max-width:600px){.anni-text,.anni-divider{display:none}}
-
-    .shell{
-      position:relative;z-index:1;
-      display:grid;
-      grid-template-columns:var(--sidebar-w) 1fr;
-      min-height:calc(100vh - 42px);
-    }
-    @media(max-width:840px){.shell{grid-template-columns:1fr}.sidebar{display:none}}
-
-    .sidebar{
-      position:sticky;top:0;height:calc(100vh - 42px);
-      background:rgba(8,10,16,.82);
-      border-right:1px solid rgba(255,255,255,.06);
-      backdrop-filter:blur(16px);
-      display:flex;flex-direction:column;overflow:hidden;
-    }
-    .sidebar-inner{flex:1;overflow-y:auto;padding:20px 10px 32px;scrollbar-width:thin;scrollbar-color:#222 transparent}
-    .sidebar-inner::-webkit-scrollbar{width:4px}
-    .sidebar-inner::-webkit-scrollbar-thumb{background:#2A2A2A;border-radius:4px}
-    .nav-group-label{
-      font-size:9.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
-      color:#2E2E3A;padding:0 10px;margin:18px 0 6px;
-    }
-    .nav-item{
-      display:flex;align-items:center;gap:9px;
-      padding:8px 10px;border-radius:6px;cursor:pointer;
-      transition:background .15s,color .15s;text-decoration:none;
-      border:none;background:transparent;width:100%;text-align:left;
-    }
-    .nav-item:hover{background:rgba(255,255,255,.05)}
-    .nav-item.active{background:rgba(174,127,226,.12);border:1px solid rgba(174,127,226,.15)}
-    .nav-icon{
-      font-size:12px;line-height:1;flex-shrink:0;width:16px;text-align:center;
-      font-family:'Segoe MDL2 Assets','Apple Symbols',sans-serif;
-    }
-    .nav-label{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#888;font-weight:500}
-    .nav-item.active .nav-label{color:#ccc}
-    .nav-item:hover .nav-label{color:#aaa}
-
-    .main{
-      padding:52px clamp(24px,5vw,64px) 100px;
-      max-width:860px;
-      animation:fadeUp .5s cubic-bezier(.22,1,.36,1) both;
+    .nav-meta {
+      font-family: var(--font-mono); font-size: 0.68rem; color: var(--green);
+      background: rgba(76,175,80,0.08); border: 1px solid rgba(76,175,80,0.15);
+      border-radius: 6px; padding: 2px 8px;
     }
 
-    .page-header{margin-bottom:52px}
-    .page-kicker{
-      display:inline-flex;align-items:center;gap:10px;
-      color:var(--muted);font-weight:600;letter-spacing:.08em;
-      text-transform:uppercase;font-size:11.5px;margin-bottom:14px;
-    }
-    .dot{width:8px;height:8px;border-radius:999px;background:linear-gradient(135deg,var(--p1),var(--p2));box-shadow:0 0 0 5px rgba(174,127,226,.12)}
-    .page-header h1{font-size:clamp(28px,4vw,44px);font-weight:900;letter-spacing:-.04em;line-height:1.05;margin-bottom:12px}
-    .grad{background:linear-gradient(90deg,var(--p1),var(--p2));-webkit-background-clip:text;background-clip:text;color:transparent}
-    .page-header .lead{color:var(--muted);font-size:14.5px;line-height:1.7;max-width:58ch}
-    .header-meta{
-      display:inline-flex;align-items:center;gap:8px;margin-top:16px;
-      background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
-      border-radius:8px;padding:6px 14px;
-    }
-    .header-meta span{font-family:'JetBrains Mono',monospace;font-size:11px;color:#4CAF50}
+    .shell { position: relative; z-index: 1; display: grid; grid-template-columns: var(--sidebar-w) 1fr; min-height: calc(100vh - 60px); }
+    @media(max-width:840px) { .shell { grid-template-columns:1fr; } .sidebar { display:none; } }
 
-    .section{margin-bottom:56px;scroll-margin-top:28px}
-    .section-title{
-      font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;
-      letter-spacing:.1em;text-transform:uppercase;
-      color:var(--p1);margin-bottom:18px;
-      display:flex;align-items:center;gap:10px;
+    .sidebar {
+      position: sticky; top: 60px; height: calc(100vh - 60px);
+      background: rgba(10,10,10,0.85); border-right: 1px solid var(--border);
+      backdrop-filter: blur(16px); display: flex; flex-direction: column; overflow: hidden;
     }
-    .section-title::after{content:"";flex:1;height:1px;background:rgba(174,127,226,.12)}
-    .section h2{font-size:19px;font-weight:800;letter-spacing:-.02em;margin-bottom:8px}
-    .body-text{color:var(--muted);font-size:13.5px;line-height:1.75;margin-bottom:14px}
+    .sidebar-inner { flex:1; overflow-y:auto; padding:20px 10px 32px; scrollbar-width:thin; scrollbar-color:#222 transparent; }
+    .sidebar-inner::-webkit-scrollbar { width:4px; }
+    .sidebar-inner::-webkit-scrollbar-thumb { background:#2a2a2a; border-radius:4px; }
 
-    .qs-card{
-      background:rgba(22,22,22,.6);border:1px solid rgba(255,255,255,.06);
-      border-radius:12px;padding:20px 22px;margin:4px 0 18px;
-      backdrop-filter:blur(8px);
+    .nav-group-label { font-size:0.6rem; font-weight:800; letter-spacing:0.14em; text-transform:uppercase; color:var(--text3); padding:0 10px; margin:18px 0 6px; }
+    .nav-item {
+      display:flex; align-items:center; gap:9px; padding:7px 10px; border-radius:8px;
+      transition:background .15s; text-decoration:none; border:none;
+      background:transparent; width:100%; text-align:left;
     }
-    .qs-label{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:#444;margin-bottom:14px}
-    .qs-step{display:flex;align-items:flex-start;gap:12px;margin-bottom:10px}
-    .qs-step:last-child{margin-bottom:0}
-    .qs-num{
-      flex-shrink:0;width:22px;height:22px;border-radius:6px;
-      background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);
-      display:flex;align-items:center;justify-content:center;
-      font-family:'JetBrains Mono',monospace;font-size:11px;color:#555;font-weight:700;
-    }
-    .qs-text{font-size:13px;color:#888;line-height:1.5;padding-top:2px}
+    .nav-item:hover { background:rgba(255,255,255,0.04); }
+    .nav-item.active { background:rgba(139,92,246,0.1); border:1px solid rgba(139,92,246,0.15); }
+    .nav-dot { width:6px; height:6px; border-radius:50%; flex-shrink:0; }
+    .nav-label { font-family:var(--font-mono); font-size:11px; color:var(--text3); font-weight:500; }
+    .nav-item.active .nav-label { color:var(--text2); }
+    .nav-item:hover .nav-label { color:#aaa; }
 
-    .code-wrap{
-      background:var(--code-bg);border:1px solid rgba(255,255,255,.07);
-      border-radius:10px;overflow:hidden;margin:6px 0 16px;
+    .mobile-nav {
+      display:none; position:sticky; top:60px; z-index:50;
+      background:rgba(10,10,10,0.95); backdrop-filter:blur(16px);
+      border-bottom:1px solid var(--border); padding:10px 16px;
     }
-    .code-header{
-      background:rgba(22,22,22,.9);padding:10px 16px;
-      display:flex;align-items:center;justify-content:space-between;
-      border-bottom:1px solid rgba(255,255,255,.05);
+    .mobile-nav select {
+      background:var(--surface); color:var(--text2); border:1px solid var(--border2);
+      border-radius:8px; padding:6px 10px; font-size:13px; width:100%;
+      font-family:var(--font-mono); outline:none;
     }
-    .code-dots{display:flex;gap:5px}
-    .code-dots span{width:10px;height:10px;border-radius:999px;background:#2A2A2A;display:block}
-    .code-filename{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:#3A3A3A}
-    .copy-btn{
-      font-family:'JetBrains Mono',monospace;font-size:10px;color:#4CAF50;
-      background:rgba(76,175,80,.1);border:1px solid rgba(76,175,80,.2);
-      border-radius:4px;padding:3px 10px;cursor:pointer;
-      transition:background .15s,border-color .15s;
-    }
-    .copy-btn:hover{background:rgba(76,175,80,.18);border-color:rgba(76,175,80,.4)}
-    .copy-btn.copied{color:#64B5F6;background:rgba(100,181,246,.1);border-color:rgba(100,181,246,.2)}
-    .code-body{padding:16px 20px;overflow-x:auto;scrollbar-width:thin;scrollbar-color:#222 transparent}
-    .code-body::-webkit-scrollbar{height:4px}
-    .code-body::-webkit-scrollbar-thumb{background:#2A2A2A;border-radius:4px}
-    pre{margin:0}
-    code{font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.8;white-space:pre}
+    @media(max-width:840px) { .mobile-nav { display:block; } }
 
-    .kw{color:#569CD6}
-    .ty{color:#4EC9B0}
-    .fn{color:#DCDCAA}
-    .va{color:#9CDCFE}
-    .st{color:#CE9178}
-    .co{color:#6A9955}
-    .nu{color:#B5CEA8}
-    .pu{color:#D4D4D4}
+    .main { padding:48px clamp(24px,5vw,64px) 100px; max-width:860px; animation:fadeUp .5s cubic-bezier(.22,1,.36,1) both; }
 
-    .tree-wrap{
-      background:var(--code-bg);border:1px solid rgba(255,255,255,.07);
-      border-radius:10px;overflow:hidden;margin:6px 0 16px;
-    }
-    .tree-body{padding:16px 20px}
-    .tree-line{
-      font-family:'JetBrains Mono',monospace;font-size:12px;line-height:2;
-      display:block;
-    }
-    .tree-dir{color:#9CDCFE}
-    .tree-punct{color:#444}
-    .tree-note{color:#4CAF50}
+    .breadcrumb { display:flex; align-items:center; gap:8px; margin-bottom:32px; font-size:0.75rem; color:var(--text3); }
+    .breadcrumb a { color:var(--text3); text-decoration:none; transition:color .15s; }
+    .breadcrumb a:hover { color:var(--purple2); }
 
-    .tip-card,.warn-card{
-      border-radius:8px;padding:14px 16px;margin:4px 0 14px;
-      display:flex;gap:12px;align-items:flex-start;
-    }
-    .tip-card{background:rgba(26,31,46,.7);border:1px solid rgba(100,181,246,.1)}
-    .warn-card{background:rgba(31,26,16,.7);border-left:3px solid rgba(255,183,77,.35);border-radius:0 8px 8px 0}
-    .card-icon{font-size:14px;line-height:1;flex-shrink:0;margin-top:1px;font-family:'Segoe MDL2 Assets','Apple Symbols',sans-serif}
-    .tip-icon{color:#64B5F6}
-    .warn-icon{color:#FFB74D}
-    .card-body-text{font-size:12.5px;line-height:1.65}
-    .tip-card .card-body-text{color:#7A9CC8}
-    .warn-card .card-body-text{color:#A08050}
-    .card-body-text strong{font-weight:700;color:inherit;filter:brightness(1.3)}
+    .page-header { margin-bottom:52px; }
+    .page-kicker { display:inline-flex; align-items:center; gap:10px; color:var(--text3); font-weight:600; letter-spacing:0.08em; text-transform:uppercase; font-size:0.72rem; margin-bottom:14px; }
+    .kicker-dot { width:7px; height:7px; border-radius:50%; background:linear-gradient(135deg,var(--purple),var(--purple2)); box-shadow:0 0 0 4px rgba(139,92,246,0.12); animation:pulse 2s infinite; }
+    .page-header h1 { font-family:var(--font-display); font-size:clamp(2rem,5vw,3rem); font-weight:800; line-height:1.0; letter-spacing:0.04em; text-transform:uppercase; margin-bottom:12px; }
+    .grad { background:linear-gradient(90deg,var(--purple),var(--purple2)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+    .page-header .lead { color:var(--text2); font-size:0.9rem; line-height:1.7; max-width:58ch; }
 
-    .ref-table{
-      width:100%;border:1px solid rgba(255,255,255,.07);
-      border-radius:10px;overflow:hidden;margin:6px 0 16px;
-    }
-    .ref-table-head{
-      background:rgba(22,22,22,.9);padding:10px 16px;
-      display:grid;border-bottom:1px solid rgba(255,255,255,.06);
-    }
-    .ref-table-head span{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:#444}
-    .ref-row{
-      display:grid;padding:10px 16px;
-      border-bottom:1px solid rgba(255,255,255,.04);
-      align-items:start;
-    }
-    .ref-row:last-child{border-bottom:none}
-    .ref-row:nth-child(even){background:rgba(255,255,255,.015)}
-    .col-2{grid-template-columns:160px 1fr;gap:14px}
-    .col-3{grid-template-columns:180px 120px 1fr;gap:14px}
-    .ref-key{font-family:'JetBrains Mono',monospace;font-size:12px;color:#9CDCFE}
-    .ref-val{font-size:12px;color:#777;line-height:1.5}
-    .ref-fn{font-family:'JetBrains Mono',monospace;font-size:12px;color:#DCDCAA}
+    .section { margin-bottom:56px; scroll-margin-top:80px; }
+    .section-title { font-family:var(--font-mono); font-size:0.68rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--purple); margin-bottom:16px; display:flex; align-items:center; gap:10px; }
+    .section-title::after { content:""; flex:1; height:1px; background:rgba(139,92,246,0.12); }
+    .section h2 { font-size:1.15rem; font-weight:800; letter-spacing:-0.02em; margin-bottom:8px; }
+    .body-text { color:var(--text2); font-size:0.85rem; line-height:1.75; margin-bottom:14px; }
 
-    .s-info{color:LightSkyBlue}
-    .s-success{color:#4CAF50}
-    .s-warn{color:#FFB74D}
-    .s-error{color:#EF5350}
+    .qs-card { background:rgba(139,92,246,0.04); border:1px solid rgba(139,92,246,0.12); border-radius:14px; padding:20px 22px; margin:4px 0 18px; }
+    .qs-label { font-family:var(--font-mono); font-size:0.6rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--text3); margin-bottom:14px; }
+    .qs-step { display:flex; align-items:flex-start; gap:12px; margin-bottom:10px; }
+    .qs-step:last-child { margin-bottom:0; }
+    .qs-num { flex-shrink:0; width:22px; height:22px; border-radius:7px; background:rgba(139,92,246,0.1); border:1px solid rgba(139,92,246,0.2); display:flex; align-items:center; justify-content:center; font-family:var(--font-mono); font-size:11px; color:var(--purple2); font-weight:700; }
+    .qs-text { font-size:0.82rem; color:var(--text2); line-height:1.5; padding-top:2px; }
 
-    .param-table{
-      background:rgba(22,22,22,.6);border:1px solid rgba(255,255,255,.07);
-      border-radius:10px;overflow:hidden;margin:6px 0 16px;
-    }
-    .param-row{
-      display:grid;grid-template-columns:180px 1fr;
-      padding:11px 16px;border-bottom:1px solid rgba(255,255,255,.05);
-      align-items:center;
-    }
-    .param-row:last-child{border-bottom:none}
-    .param-name{font-family:'JetBrains Mono',monospace;font-size:12px}
-    .param-desc{font-size:12px;color:#777;line-height:1.5}
-    .param-action{color:#CE9178}
-    .param-args{color:#9CDCFE}
+    .code-wrap { background:var(--code-bg); border:1px solid var(--border2); border-radius:12px; overflow:hidden; margin:6px 0 16px; }
+    .code-header { background:rgba(20,20,20,0.95); padding:10px 16px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--border); }
+    .code-dots { display:flex; gap:5px; }
+    .code-dots span { width:10px; height:10px; border-radius:999px; background:#2a2a2a; display:block; }
+    .code-filename { font-family:var(--font-mono); font-size:0.65rem; color:var(--text3); }
+    .copy-btn { font-family:var(--font-mono); font-size:0.65rem; color:var(--green); background:rgba(76,175,80,0.08); border:1px solid rgba(76,175,80,0.18); border-radius:5px; padding:3px 10px; transition:all .15s; }
+    .copy-btn:hover { background:rgba(76,175,80,0.16); border-color:rgba(76,175,80,0.35); }
+    .copy-btn.copied { color:var(--blue); background:rgba(100,181,246,0.08); border-color:rgba(100,181,246,0.2); }
+    .code-body { padding:16px 20px; overflow-x:auto; scrollbar-width:thin; scrollbar-color:#222 transparent; }
+    .code-body::-webkit-scrollbar { height:4px; }
+    .code-body::-webkit-scrollbar-thumb { background:#2a2a2a; border-radius:4px; }
+    pre { margin:0; }
+    code { font-family:var(--font-mono); font-size:12px; line-height:1.8; white-space:pre; }
 
-    .tips-grid{display:grid;gap:10px}
-    .tips-card{
-      background:rgba(26,31,46,.6);border:1px solid rgba(100,181,246,.08);
-      border-radius:10px;padding:16px;
-      display:flex;gap:12px;
-    }
-    .tips-card-icon{font-size:14px;color:#FFD54F;flex-shrink:0;font-family:'Segoe MDL2 Assets','Apple Symbols',sans-serif}
-    .tips-card h4{font-size:13px;font-weight:700;color:#CCC;margin-bottom:4px}
-    .tips-card p{font-size:12px;color:#7A9CC8;line-height:1.6}
+    .kw{color:#569CD6} .ty{color:#4EC9B0} .fn{color:#DCDCAA} .va{color:#9CDCFE}
+    .st{color:#CE9178} .co{color:#6A9955} .nu{color:#B5CEA8} .pu{color:#D4D4D4}
 
-    .breadcrumb{
-      display:flex;align-items:center;gap:8px;margin-bottom:32px;
-      font-size:12px;color:#444;
-    }
-    .breadcrumb a{color:#666;text-decoration:none;transition:color .15s}
-    .breadcrumb a:hover{color:var(--p2)}
-    .breadcrumb span{color:#2A2A2A}
+    .tree-wrap { background:var(--code-bg); border:1px solid var(--border2); border-radius:12px; overflow:hidden; margin:6px 0 16px; }
+    .tree-body { padding:16px 20px; }
+    .tree-line { font-family:var(--font-mono); font-size:12px; line-height:2; display:block; }
+    .tree-dir{color:#9CDCFE} .tree-punct{color:var(--text3)} .tree-note{color:var(--green)}
 
-    .toast{
-      position:fixed;left:50%;bottom:22px;
-      transform:translateX(-50%) translateY(20px);
-      opacity:0;pointer-events:none;
-      padding:9px 16px;
-      background:rgba(12,14,26,.88);border:1px solid rgba(213,157,255,.22);
-      color:rgba(242,240,255,.92);box-shadow:0 22px 65px rgba(0,0,0,.55);
-      backdrop-filter:blur(14px);border-radius:9px;
-      transition:.25s ease;z-index:999;
-      font-size:12.5px;font-weight:600;white-space:nowrap;
-    }
-    .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+    .tip-card, .warn-card { border-radius:10px; padding:14px 16px; margin:4px 0 14px; display:flex; gap:12px; align-items:flex-start; }
+    .tip-card { background:rgba(100,181,246,0.05); border:1px solid rgba(100,181,246,0.1); }
+    .warn-card { background:rgba(255,183,77,0.05); border-left:3px solid rgba(255,183,77,0.3); border-radius:0 10px 10px 0; }
+    .card-icon { font-size:14px; flex-shrink:0; margin-top:1px; }
+    .card-body-text { font-size:0.78rem; line-height:1.65; }
+    .tip-card .card-body-text { color:#7A9CC8; }
+    .warn-card .card-body-text { color:#A08050; }
+    .card-body-text strong { font-weight:700; filter:brightness(1.3); }
 
-    .mobile-nav{
-      display:none;position:sticky;top:0;z-index:50;
-      background:rgba(8,10,16,.92);backdrop-filter:blur(16px);
-      border-bottom:1px solid rgba(255,255,255,.06);
-      padding:10px 16px;
-    }
-    .mobile-nav select{
-      background:#111;color:#aaa;border:1px solid rgba(255,255,255,.1);
-      border-radius:6px;padding:6px 10px;font-size:13px;width:100%;
-      font-family:'JetBrains Mono',monospace;outline:none;
-    }
-    @media(max-width:840px){.mobile-nav{display:block}}
+    .ref-table { width:100%; border:1px solid var(--border); border-radius:12px; overflow:hidden; margin:6px 0 16px; }
+    .ref-table-head { background:rgba(20,20,20,0.9); padding:10px 16px; display:grid; border-bottom:1px solid var(--border); }
+    .ref-table-head span { font-family:var(--font-mono); font-size:0.62rem; color:var(--text3); }
+    .ref-row { display:grid; padding:10px 16px; border-bottom:1px solid rgba(255,255,255,0.03); align-items:start; }
+    .ref-row:last-child { border-bottom:none; }
+    .ref-row:nth-child(even) { background:rgba(255,255,255,0.015); }
+    .col-2 { grid-template-columns:170px 1fr; gap:14px; }
+    .ref-key { font-family:var(--font-mono); font-size:12px; color:#9CDCFE; }
+    .ref-val { font-size:0.78rem; color:var(--text3); line-height:1.5; }
+    .ref-fn { font-family:var(--font-mono); font-size:12px; color:#DCDCAA; }
+    .s-info{color:LightSkyBlue} .s-success{color:#4CAF50} .s-warn{color:#FFB74D} .s-error{color:#EF5350}
+
+    .param-table { background:rgba(20,20,20,0.5); border:1px solid var(--border); border-radius:12px; overflow:hidden; margin:6px 0 16px; }
+    .param-row { display:grid; grid-template-columns:190px 1fr; padding:11px 16px; border-bottom:1px solid rgba(255,255,255,0.04); align-items:center; }
+    .param-row:last-child { border-bottom:none; }
+    .param-name { font-family:var(--font-mono); font-size:12px; }
+    .param-desc { font-size:0.78rem; color:var(--text3); line-height:1.5; }
+    .param-action{color:#CE9178} .param-args{color:#9CDCFE}
+
+    .tips-grid { display:grid; gap:10px; }
+    .tips-card { background:rgba(139,92,246,0.04); border:1px solid rgba(139,92,246,0.09); border-radius:12px; padding:16px; display:flex; gap:12px; transition:background .2s,border-color .2s; }
+    .tips-card:hover { background:rgba(139,92,246,0.08); border-color:rgba(139,92,246,0.18); }
+    .tips-card-icon { font-size:16px; color:#FFD54F; flex-shrink:0; }
+    .tips-card h4 { font-size:0.82rem; font-weight:700; color:var(--text2); margin-bottom:4px; }
+    .tips-card p { font-size:0.75rem; color:var(--text3); line-height:1.6; }
+
+    .toast { position:fixed; left:50%; bottom:22px; transform:translateX(-50%) translateY(20px); opacity:0; pointer-events:none; padding:9px 16px; background:rgba(20,20,20,0.95); border:1px solid rgba(139,92,246,0.25); color:var(--text); border-radius:10px; backdrop-filter:blur(14px); transition:.25s ease; z-index:999; font-size:0.78rem; font-weight:600; white-space:nowrap; box-shadow:0 8px 32px rgba(0,0,0,0.5); }
+    .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+
+    .footer-note { display:flex; align-items:center; justify-content:center; gap:6px; font-size:0.72rem; color:var(--text3); padding:1.5rem 0; text-decoration:none; }
+    .footer-note:hover { color:var(--text2); }
   </style>
 </head>
 <body>
 
-<div class="blob b1"></div>
-<div class="blob b2"></div>
-<div class="blob b3"></div>
+<div class="rata-bg" id="rataBg" aria-hidden="true"></div>
+
+<nav>
+  <a class="nav-logo" href="https://raton.lol">
+    <img src="https://raton.lol/img/RATA.png" width="24" height="24" alt="Raton" onerror="this.style.display='none'">
+    Raton
+  </a>
+  <div class="nav-right">
+    <span class="nav-meta">C# 7.3 · .NET 4.7.2</span>
+  </div>
+</nav>
 
 <div class="mobile-nav">
   <select id="mobileSelect" onchange="scrollToSection(this.value)">
-    <option value="welcome">Welcome</option>
-    <option value="structure">Project Structure</option>
-    <option value="plugininfo">[PluginInfo] Attribute</option>
-    <option value="entrypoint">Entry Point: Main</option>
-    <option value="pack">Pack &amp; Send</option>
-    <option value="args">Parsing Arguments</option>
-    <option value="packref">Pack Method Reference</option>
-    <option value="example">Full Example</option>
-    <option value="tips">Tips &amp; Tricks</option>
+    <option value="welcome">00 — Welcome</option>
+    <option value="structure">01 — Project Structure</option>
+    <option value="plugininfo">02 — [PluginInfo] Attribute</option>
+    <option value="entrypoint">03 — Entry Point: Main</option>
+    <option value="pack">04 — Pack &amp; Send</option>
+    <option value="args">05 — Parsing Arguments</option>
+    <option value="packref">06 — Pack Method Reference</option>
+    <option value="example">07 — Full Example</option>
+    <option value="tips">08 — Tips &amp; Tricks</option>
   </select>
 </div>
 
 <div class="shell">
-
   <aside class="sidebar">
     <div class="sidebar-inner">
       <div class="nav-group-label">Getting Started</div>
-      <button class="nav-item active" onclick="scrollToSection('welcome')">
-        <span class="nav-icon" style="color:#4CAF50">&#xE80F;</span>
-        <span class="nav-label">Welcome</span>
-      </button>
-      <button class="nav-item" onclick="scrollToSection('structure')">
-        <span class="nav-icon" style="color:#64B5F6">&#xE8A5;</span>
-        <span class="nav-label">Structure</span>
-      </button>
-      <button class="nav-item" onclick="scrollToSection('plugininfo')">
-        <span class="nav-icon" style="color:#CE93D8">&#xE946;</span>
-        <span class="nav-label">Plugin data</span>
-      </button>
-      <button class="nav-item" onclick="scrollToSection('entrypoint')">
-        <span class="nav-icon" style="color:#FFB74D">&#xE756;</span>
-        <span class="nav-label">Entry Point</span>
-      </button>
-      <button class="nav-item" onclick="scrollToSection('pack')">
-        <span class="nav-icon" style="color:#EF5350">&#xE8C8;</span>
-        <span class="nav-label">Pack &amp; Send</span>
-      </button>
-      <button class="nav-item" onclick="scrollToSection('args')">
-        <span class="nav-icon" style="color:#80CBC4">&#xE70F;</span>
-        <span class="nav-label">Arguments</span>
-      </button>
+      <button class="nav-item active" onclick="scrollToSection('welcome')"><span class="nav-dot" style="background:var(--green)"></span><span class="nav-label">Welcome</span></button>
+      <button class="nav-item" onclick="scrollToSection('structure')"><span class="nav-dot" style="background:var(--blue)"></span><span class="nav-label">Structure</span></button>
+      <button class="nav-item" onclick="scrollToSection('plugininfo')"><span class="nav-dot" style="background:var(--purple2)"></span><span class="nav-label">Plugin data</span></button>
+      <button class="nav-item" onclick="scrollToSection('entrypoint')"><span class="nav-dot" style="background:var(--yellow)"></span><span class="nav-label">Entry Point</span></button>
+      <button class="nav-item" onclick="scrollToSection('pack')"><span class="nav-dot" style="background:var(--red)"></span><span class="nav-label">Pack &amp; Send</span></button>
+      <button class="nav-item" onclick="scrollToSection('args')"><span class="nav-dot" style="background:#80CBC4"></span><span class="nav-label">Arguments</span></button>
       <div class="nav-group-label" style="margin-top:24px">Reference</div>
-      <button class="nav-item" onclick="scrollToSection('packref')">
-        <span class="nav-icon" style="color:#555">&#xE8B7;</span>
-        <span class="nav-label">Pack Method</span>
-      </button>
-      <button class="nav-item" onclick="scrollToSection('example')">
-        <span class="nav-icon" style="color:#555">&#xE943;</span>
-        <span class="nav-label">Full example</span>
-      </button>
-      <button class="nav-item" onclick="scrollToSection('tips')">
-        <span class="nav-icon" style="color:#555">&#xE734;</span>
-        <span class="nav-label">Tips &amp; tricks</span>
-      </button>
+      <button class="nav-item" onclick="scrollToSection('packref')"><span class="nav-dot" style="background:var(--text3)"></span><span class="nav-label">Pack Method</span></button>
+      <button class="nav-item" onclick="scrollToSection('example')"><span class="nav-dot" style="background:var(--text3)"></span><span class="nav-label">Full example</span></button>
+      <button class="nav-item" onclick="scrollToSection('tips')"><span class="nav-dot" style="background:var(--text3)"></span><span class="nav-label">Tips &amp; tricks</span></button>
     </div>
   </aside>
 
   <main class="main">
-
     <div class="breadcrumb">
-      <a href="#">Raton</a>
+      <a href="https://raton.lol">Raton</a>
       <span>›</span>
       <a href="#">Deluxe Plugins</a>
       <span>›</span>
-      <span style="color:#888">Documentation</span>
+      <span style="color:var(--text2)">Documentation</span>
     </div>
 
     <div class="page-header">
-      <div class="page-kicker"><span class="dot"></span>The raton plugin development</div>
+      <div class="page-kicker"><span class="kicker-dot"></span>The raton plugin development</div>
       <h1><span class="grad">Plugin</span> Development</h1>
       <p class="lead">Build powerful plugins for Raton in minutes. Extend the client with compiled C# assemblies loaded at runtime.</p>
-      <div class="header-meta">
-        <span>C# 7.3 on .NET Framework 4.7.2</span>
-      </div>
     </div>
 
     <section class="section" id="welcome">
@@ -405,22 +259,10 @@
       <p class="body-text">Welcome to the Raton Plugin Guide. This guide walks you through everything needed to create, test, and publish plugins that extend Raton's functionality. Plugins are compiled C# assemblies loaded at runtime — they can receive arguments from the UI and communicate back through a structured packet system.</p>
       <div class="qs-card">
         <div class="qs-label">Quick start</div>
-        <div class="qs-step">
-          <div class="qs-num">1</div>
-          <div class="qs-text">Create a new .NET Class Library project targeting .NET Framework 4.7.2</div>
-        </div>
-        <div class="qs-step">
-          <div class="qs-num">2</div>
-          <div class="qs-text">Use the test plugin source to guide yourself</div>
-        </div>
-        <div class="qs-step">
-          <div class="qs-num">3</div>
-          <div class="qs-text">Decorate your class with <code style="font-size:12px;color:#CE93D8;background:rgba(206,147,216,.1);padding:1px 6px;border-radius:3px">[PluginInfo]</code> and implement Main</div>
-        </div>
-        <div class="qs-step">
-          <div class="qs-num">4</div>
-          <div class="qs-text">Compile, drop the <code style="font-size:12px;color:#9CDCFE;background:rgba(156,220,254,.08);padding:1px 6px;border-radius:3px">.dll</code> into Raton's <code style="font-size:12px;color:#9CDCFE;background:rgba(156,220,254,.08);padding:1px 6px;border-radius:3px">/plugins</code> folder — done</div>
-        </div>
+        <div class="qs-step"><div class="qs-num">1</div><div class="qs-text">Create a new .NET Class Library project targeting .NET Framework 4.7.2</div></div>
+        <div class="qs-step"><div class="qs-num">2</div><div class="qs-text">Use the test plugin source to guide yourself</div></div>
+        <div class="qs-step"><div class="qs-num">3</div><div class="qs-text">Decorate your class with <code style="font-size:12px;color:#CE93D8;background:rgba(206,147,216,.08);padding:1px 6px;border-radius:4px;font-family:JetBrains Mono,monospace">[PluginInfo]</code> and implement Main</div></div>
+        <div class="qs-step"><div class="qs-num">4</div><div class="qs-text">Compile, drop the <code style="font-size:12px;color:#9CDCFE;background:rgba(156,220,254,.06);padding:1px 6px;border-radius:4px;font-family:JetBrains Mono,monospace">.dll</code> into Raton's <code style="font-size:12px;color:#9CDCFE;background:rgba(156,220,254,.06);padding:1px 6px;border-radius:4px;font-family:JetBrains Mono,monospace">/plugins</code> folder — done</div></div>
       </div>
     </section>
 
@@ -429,10 +271,7 @@
       <h2>Project Structure</h2>
       <p class="body-text">Your plugin is a standard .NET Class Library project. Raton discovers it as a compiled DLL. Minimum layout:</p>
       <div class="tree-wrap">
-        <div class="code-header">
-          <div class="code-dots"><span></span><span></span><span></span></div>
-          <span class="code-filename">folder structure</span>
-        </div>
+        <div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><span class="code-filename">folder structure</span></div>
         <div class="tree-body">
           <span class="tree-line"><span class="tree-dir">MyPlugin/</span></span>
           <span class="tree-line"><span class="tree-punct">├── </span><span class="tree-dir">MyPlugin.csproj</span></span>
@@ -442,25 +281,18 @@
         </div>
       </div>
       <div class="tip-card">
-        <span class="card-icon tip-icon">&#xE946;</span>
-        <div class="card-body-text"><strong>Tip:</strong> Set output type to <code style="background:rgba(100,181,246,.08);color:#9CDCFE;padding:1px 5px;border-radius:3px;font-family:JetBrains Mono,monospace;font-size:11px">Class Library</code> in your <code style="background:rgba(100,181,246,.08);color:#9CDCFE;padding:1px 5px;border-radius:3px;font-family:JetBrains Mono,monospace;font-size:11px">.csproj</code> so the compiler emits a <code style="background:rgba(100,181,246,.08);color:#9CDCFE;padding:1px 5px;border-radius:3px;font-family:JetBrains Mono,monospace;font-size:11px">.dll</code> instead of an <code style="background:rgba(100,181,246,.08);color:#9CDCFE;padding:1px 5px;border-radius:3px;font-family:JetBrains Mono,monospace;font-size:11px">.exe</code>.</div>
+        <span class="card-icon" style="color:var(--blue)">ℹ</span>
+        <div class="card-body-text"><strong>Tip:</strong> Set output type to <code style="background:rgba(100,181,246,.06);color:#9CDCFE;padding:1px 5px;border-radius:3px;font-family:JetBrains Mono,monospace;font-size:11px">Class Library</code> in your <code style="background:rgba(100,181,246,.06);color:#9CDCFE;padding:1px 5px;border-radius:3px;font-family:JetBrains Mono,monospace;font-size:11px">.csproj</code> so the compiler emits a <code style="background:rgba(100,181,246,.06);color:#9CDCFE;padding:1px 5px;border-radius:3px;font-family:JetBrains Mono,monospace;font-size:11px">.dll</code> instead of an <code style="background:rgba(100,181,246,.06);color:#9CDCFE;padding:1px 5px;border-radius:3px;font-family:JetBrains Mono,monospace;font-size:11px">.exe</code>.</div>
       </div>
     </section>
 
     <section class="section" id="plugininfo">
       <div class="section-title">02 — [plugininfo] attribute</div>
       <h2>[PluginInfo] Attribute</h2>
-      <p class="body-text">Every plugin class must be decorated with <code style="color:#CE93D8;background:rgba(206,147,216,.1);padding:1px 6px;border-radius:3px;font-family:JetBrains Mono,monospace;font-size:12px">[PluginInfo]</code>. Raton reads this to register your plugin in the UI and display a description to the user.</p>
+      <p class="body-text">Every plugin class must be decorated with <code style="color:#CE93D8;background:rgba(206,147,216,.08);padding:1px 6px;border-radius:4px;font-family:JetBrains Mono,monospace;font-size:12px">[PluginInfo]</code>. Raton reads this to register your plugin in the UI and display a description to the user.</p>
       <div class="code-wrap">
-        <div class="code-header">
-          <div class="code-dots"><span></span><span></span><span></span></div>
-          <div style="display:flex;align-items:center;gap:8px">
-            <span class="code-filename">PluginInfoAttribute.cs</span>
-            <button class="copy-btn" onclick="copyCode(this, 'code-plugininfo-attr')">Copy</button>
-          </div>
-        </div>
-        <div class="code-body">
-<pre><code id="code-plugininfo-attr"><span class="kw">using</span> <span class="pu">System;</span>
+        <div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div style="display:flex;align-items:center;gap:8px"><span class="code-filename">PluginInfoAttribute.cs</span><button class="copy-btn" onclick="copyCode(this,'code-plugininfo-attr')">Copy</button></div></div>
+        <div class="code-body"><pre><code id="code-plugininfo-attr"><span class="kw">using</span> <span class="pu">System;</span>
 <span class="pu">[</span><span class="fn">AttributeUsage</span><span class="pu">(AttributeTargets.</span><span class="va">Class</span><span class="pu">)]</span>
 <span class="kw">public class</span> <span class="ty">PluginInfoAttribute</span> <span class="pu">:</span> <span class="ty">Attribute</span>
 <span class="pu">{</span>
@@ -472,56 +304,34 @@
         <span class="va">Provider    </span><span class="pu">=</span> <span class="st">"Raton"</span><span class="pu">;</span>
         <span class="va">Description </span><span class="pu">= description;</span>
     <span class="pu">}</span>
-<span class="pu">}</span></code></pre>
-        </div>
+<span class="pu">}</span></code></pre></div>
       </div>
       <div class="warn-card">
-        <span class="card-icon warn-icon">&#xE7BA;</span>
+        <span class="card-icon" style="color:var(--yellow)">⚠</span>
         <div class="card-body-text"><strong>Warning:</strong> Never change <code style="color:#CE9178;font-family:JetBrains Mono,monospace;font-size:11px">Provider = "Raton"</code>. Raton uses this field to verify the plugin origin.</div>
       </div>
       <p class="body-text" style="margin-top:14px">Usage on your own class:</p>
       <div class="code-wrap">
-        <div class="code-header">
-          <div class="code-dots"><span></span><span></span><span></span></div>
-          <div style="display:flex;align-items:center;gap:8px">
-            <span class="code-filename">Program.cs</span>
-            <button class="copy-btn" onclick="copyCode(this, 'code-plugininfo-usage')">Copy</button>
-          </div>
-        </div>
-        <div class="code-body">
-<pre><code id="code-plugininfo-usage"><span class="pu">[</span><span class="ty">PluginInfo</span><span class="pu">(</span><span class="st">"Example plugin for testing"</span><span class="pu">)]</span>
+        <div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div style="display:flex;align-items:center;gap:8px"><span class="code-filename">Program.cs</span><button class="copy-btn" onclick="copyCode(this,'code-plugininfo-usage')">Copy</button></div></div>
+        <div class="code-body"><pre><code id="code-plugininfo-usage"><span class="pu">[</span><span class="ty">PluginInfo</span><span class="pu">(</span><span class="st">"Example plugin for testing"</span><span class="pu">)]</span>
 <span class="kw">class</span> <span class="ty">Program</span>
 <span class="pu">{</span>
     <span class="co">// ...</span>
-<span class="pu">}</span></code></pre>
-        </div>
+<span class="pu">}</span></code></pre></div>
       </div>
     </section>
 
     <section class="section" id="entrypoint">
       <div class="section-title">03 — entry point</div>
       <h2>Entry Point: Main</h2>
-      <p class="body-text">Raton calls a static <code style="color:#DCDCAA;background:rgba(220,220,170,.08);padding:1px 6px;border-radius:3px;font-family:JetBrains Mono,monospace;font-size:12px">Main</code> method on your class. The signature is different — Raton injects two parameters:</p>
+      <p class="body-text">Raton calls a static <code style="color:#DCDCAA;background:rgba(220,220,170,.06);padding:1px 6px;border-radius:4px;font-family:JetBrains Mono,monospace;font-size:12px">Main</code> method on your class. The signature is different — Raton injects two parameters:</p>
       <div class="param-table">
-        <div class="param-row">
-          <span class="param-name param-action">Action&lt;byte[]&gt; send</span>
-          <span class="param-desc">Delegate to send a serialized Pack back to the client. Store it in a static field.</span>
-        </div>
-        <div class="param-row">
-          <span class="param-name param-args">string[] args</span>
-          <span class="param-desc">Arguments the user typed in the plugin prompt. May be <code style="color:#569CD6;font-family:JetBrains Mono,monospace;font-size:11px">null</code> if invoked with no arguments.</span>
-        </div>
+        <div class="param-row"><span class="param-name param-action">Action&lt;byte[]&gt; send</span><span class="param-desc">Delegate to send a serialized Pack back to the client. Store it in a static field.</span></div>
+        <div class="param-row"><span class="param-name param-args">string[] args</span><span class="param-desc">Arguments the user typed in the plugin prompt. May be <code style="color:#569CD6;font-family:JetBrains Mono,monospace;font-size:11px">null</code> if invoked with no arguments.</span></div>
       </div>
       <div class="code-wrap">
-        <div class="code-header">
-          <div class="code-dots"><span></span><span></span><span></span></div>
-          <div style="display:flex;align-items:center;gap:8px">
-            <span class="code-filename">Program.cs — Main</span>
-            <button class="copy-btn" onclick="copyCode(this, 'code-main')">Copy</button>
-          </div>
-        </div>
-        <div class="code-body">
-<pre><code id="code-main"><span class="kw">public static</span> <span class="ty">Action</span><span class="pu">&lt;</span><span class="kw">byte</span><span class="pu">[]&gt;</span> <span class="va">_send</span><span class="pu">;</span>
+        <div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div style="display:flex;align-items:center;gap:8px"><span class="code-filename">Program.cs — Main</span><button class="copy-btn" onclick="copyCode(this,'code-main')">Copy</button></div></div>
+        <div class="code-body"><pre><code id="code-main"><span class="kw">public static</span> <span class="ty">Action</span><span class="pu">&lt;</span><span class="kw">byte</span><span class="pu">[]&gt;</span> <span class="va">_send</span><span class="pu">;</span>
 
 <span class="kw">static void</span> <span class="fn">Main</span><span class="pu">(</span><span class="ty">Action</span><span class="pu">&lt;</span><span class="kw">byte</span><span class="pu">[]&gt;</span> <span class="va">send</span><span class="pu">,</span> <span class="kw">string</span><span class="pu">[]</span> <span class="va">args</span><span class="pu">)</span>
 <span class="pu">{</span>
@@ -532,53 +342,29 @@
         <span class="kw">return</span><span class="pu">;</span>
     <span class="pu">}</span>
     <span class="fn">ParseArgs</span><span class="pu">(args);</span>
-<span class="pu">}</span></code></pre>
-        </div>
+<span class="pu">}</span></code></pre></div>
       </div>
     </section>
 
     <section class="section" id="pack">
       <div class="section-title">04 — pack &amp; send</div>
       <h2>Pack &amp; Send</h2>
-      <p class="body-text">Communication back to the client is done through the <code style="color:#4EC9B0;background:rgba(78,201,176,.08);padding:1px 6px;border-radius:3px;font-family:JetBrains Mono,monospace;font-size:12px">Pack</code> class (from <code style="color:#9CDCFE;font-family:JetBrains Mono,monospace;font-size:12px">Stuff.dll</code>). Fill key-value pairs, serialize with <code style="color:#DCDCAA;font-family:JetBrains Mono,monospace;font-size:12px">.Pacc()</code>, and pass the resulting <code style="color:#569CD6;font-family:JetBrains Mono,monospace;font-size:12px">byte[]</code> to <code style="color:#9CDCFE;font-family:JetBrains Mono,monospace;font-size:12px">_send</code>.</p>
+      <p class="body-text">Communication back to the client is done through the <code style="color:#4EC9B0;background:rgba(78,201,176,.06);padding:1px 6px;border-radius:4px;font-family:JetBrains Mono,monospace;font-size:12px">Pack</code> class (from <code style="color:#9CDCFE;font-family:JetBrains Mono,monospace;font-size:12px">Stuff.dll</code>). Fill key-value pairs, serialize with <code style="color:#DCDCAA;font-family:JetBrains Mono,monospace;font-size:12px">.Pacc()</code>, and pass the resulting <code style="color:#569CD6;font-family:JetBrains Mono,monospace;font-size:12px">byte[]</code> to <code style="color:#9CDCFE;font-family:JetBrains Mono,monospace;font-size:12px">_send</code>.</p>
       <div class="code-wrap">
-        <div class="code-header">
-          <div class="code-dots"><span></span><span></span><span></span></div>
-          <div style="display:flex;align-items:center;gap:8px">
-            <span class="code-filename">Sending a message</span>
-            <button class="copy-btn" onclick="copyCode(this, 'code-pack')">Copy</button>
-          </div>
-        </div>
-        <div class="code-body">
-<pre><code id="code-pack"><span class="ty">Pack</span> <span class="va">pack</span> <span class="pu">=</span> <span class="kw">new</span> <span class="ty">Pack</span><span class="pu">();</span>
+        <div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div style="display:flex;align-items:center;gap:8px"><span class="code-filename">Sending a message</span><button class="copy-btn" onclick="copyCode(this,'code-pack')">Copy</button></div></div>
+        <div class="code-body"><pre><code id="code-pack"><span class="ty">Pack</span> <span class="va">pack</span> <span class="pu">=</span> <span class="kw">new</span> <span class="ty">Pack</span><span class="pu">();</span>
 <span class="va">pack</span><span class="pu">.</span><span class="fn">SetString</span><span class="pu">(</span><span class="st">"Packet"</span><span class="pu">,</span>  <span class="st">"UserMessage"</span><span class="pu">);</span>
 <span class="va">pack</span><span class="pu">.</span><span class="fn">SetString</span><span class="pu">(</span><span class="st">"Message"</span><span class="pu">,</span> <span class="st">"Hello from my plugin!"</span><span class="pu">);</span>
 <span class="va">pack</span><span class="pu">.</span><span class="fn">SetString</span><span class="pu">(</span><span class="st">"Status"</span><span class="pu">,</span>  <span class="st">"Success"</span><span class="pu">);</span>
-<span class="va">_send</span><span class="pu">(pack.</span><span class="fn">Pacc</span><span class="pu">());</span></code></pre>
-        </div>
+<span class="va">_send</span><span class="pu">(pack.</span><span class="fn">Pacc</span><span class="pu">());</span></code></pre></div>
       </div>
       <p class="body-text">Available <code style="color:#9CDCFE;font-family:JetBrains Mono,monospace;font-size:12px">Status</code> values:</p>
       <div class="ref-table">
-        <div class="ref-table-head col-2">
-          <span>Value</span>
-          <span>Log entry</span>
-        </div>
-        <div class="ref-row col-2">
-          <span class="ref-key s-info">"Information"</span>
-          <span class="ref-val">Sky blue entry — send information or current status</span>
-        </div>
-        <div class="ref-row col-2">
-          <span class="ref-key s-success">"Success"</span>
-          <span class="ref-val">Green entry — operation completed successfully</span>
-        </div>
-        <div class="ref-row col-2">
-          <span class="ref-key s-warn">"Warning"</span>
-          <span class="ref-val">Yellow entry — non-critical notice</span>
-        </div>
-        <div class="ref-row col-2">
-          <span class="ref-key s-error">"Error"</span>
-          <span class="ref-val">Red entry — something went wrong</span>
-        </div>
+        <div class="ref-table-head col-2"><span>Value</span><span>Log entry</span></div>
+        <div class="ref-row col-2"><span class="ref-key s-info">"Information"</span><span class="ref-val">Sky blue entry — send information or current status</span></div>
+        <div class="ref-row col-2"><span class="ref-key s-success">"Success"</span><span class="ref-val">Green entry — operation completed successfully</span></div>
+        <div class="ref-row col-2"><span class="ref-key s-warn">"Warning"</span><span class="ref-val">Yellow entry — non-critical notice</span></div>
+        <div class="ref-row col-2"><span class="ref-key s-error">"Error"</span><span class="ref-val">Red entry — something went wrong</span></div>
       </div>
     </section>
 
@@ -587,15 +373,8 @@
       <h2>Parsing Arguments</h2>
       <p class="body-text">Arguments follow a <code style="color:#CE9178;font-family:JetBrains Mono,monospace;font-size:12px">-flag value</code> convention. Iterate the args array, detect tokens starting with <code style="color:#CE9178;font-family:JetBrains Mono,monospace;font-size:12px">-</code> as flag names, and accumulate subsequent tokens as the value. Use a <code style="color:#4EC9B0;font-family:JetBrains Mono,monospace;font-size:12px">StringBuilder</code> for multi-word values.</p>
       <div class="code-wrap">
-        <div class="code-header">
-          <div class="code-dots"><span></span><span></span><span></span></div>
-          <div style="display:flex;align-items:center;gap:8px">
-            <span class="code-filename">ParseArgs helper</span>
-            <button class="copy-btn" onclick="copyCode(this, 'code-parseargs')">Copy</button>
-          </div>
-        </div>
-        <div class="code-body">
-<pre><code id="code-parseargs"><span class="kw">static void</span> <span class="fn">ParseArgs</span><span class="pu">(</span><span class="kw">string</span><span class="pu">[]</span> <span class="va">args</span><span class="pu">)</span>
+        <div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div style="display:flex;align-items:center;gap:8px"><span class="code-filename">ParseArgs helper</span><button class="copy-btn" onclick="copyCode(this,'code-parseargs')">Copy</button></div></div>
+        <div class="code-body"><pre><code id="code-parseargs"><span class="kw">static void</span> <span class="fn">ParseArgs</span><span class="pu">(</span><span class="kw">string</span><span class="pu">[]</span> <span class="va">args</span><span class="pu">)</span>
 <span class="pu">{</span>
     <span class="kw">string</span> <span class="va">currentArg</span> <span class="pu">=</span> <span class="kw">null</span><span class="pu">;</span>
     <span class="ty">StringBuilder</span> <span class="va">valueBuilder</span> <span class="pu">=</span> <span class="kw">new</span> <span class="ty">StringBuilder</span><span class="pu">();</span>
@@ -618,11 +397,10 @@
     <span class="pu">}</span>
     <span class="kw">if</span> <span class="pu">(currentArg !=</span> <span class="kw">null</span><span class="pu">)</span>
         <span class="fn">ExecuteArg</span><span class="pu">(currentArg, valueBuilder.</span><span class="fn">ToString</span><span class="pu">());</span>
-<span class="pu">}</span></code></pre>
-        </div>
+<span class="pu">}</span></code></pre></div>
       </div>
       <div class="tip-card">
-        <span class="card-icon tip-icon">&#xE946;</span>
+        <span class="card-icon" style="color:var(--blue)">ℹ</span>
         <div class="card-body-text"><strong>Tip:</strong> Always use the <code style="color:#CE9178;font-family:JetBrains Mono,monospace;font-size:11px">"default"</code> case in your switch. When invoked with no args, use it to print a usage hint.</div>
       </div>
     </section>
@@ -631,26 +409,11 @@
       <div class="section-title">06 — pack method reference</div>
       <h2>Pack Method Reference</h2>
       <div class="ref-table">
-        <div class="ref-table-head col-2">
-          <span>Method</span>
-          <span>Description</span>
-        </div>
-        <div class="ref-row col-2">
-          <span class="ref-fn">SetString(key, value)</span>
-          <span class="ref-val">Store a string value under key</span>
-        </div>
-        <div class="ref-row col-2">
-          <span class="ref-fn">SetInt(key, value)</span>
-          <span class="ref-val">Store an integer value under key</span>
-        </div>
-        <div class="ref-row col-2">
-          <span class="ref-fn">SetBytes(key, value)</span>
-          <span class="ref-val">Store a byte array under key (e.g. file data)</span>
-        </div>
-        <div class="ref-row col-2">
-          <span class="ref-fn">Pacc()</span>
-          <span class="ref-val">Serialize the Pack to <code style="color:#569CD6;font-family:JetBrains Mono,monospace;font-size:11px">byte[]</code> — pass result to <code style="color:#9CDCFE;font-family:JetBrains Mono,monospace;font-size:11px">_send()</code></span>
-        </div>
+        <div class="ref-table-head col-2"><span>Method</span><span>Description</span></div>
+        <div class="ref-row col-2"><span class="ref-fn">SetString(key, value)</span><span class="ref-val">Store a string value under key</span></div>
+        <div class="ref-row col-2"><span class="ref-fn">SetInt(key, value)</span><span class="ref-val">Store an integer value under key</span></div>
+        <div class="ref-row col-2"><span class="ref-fn">SetBytes(key, value)</span><span class="ref-val">Store a byte array under key (e.g. file data)</span></div>
+        <div class="ref-row col-2"><span class="ref-fn">Pacc()</span><span class="ref-val">Serialize the Pack to <code style="color:#569CD6;font-family:JetBrains Mono,monospace;font-size:11px">byte[]</code> — pass result to <code style="color:#9CDCFE;font-family:JetBrains Mono,monospace;font-size:11px">_send()</code></span></div>
       </div>
     </section>
 
@@ -658,20 +421,12 @@
       <div class="section-title">07 — full example</div>
       <h2>Full Example</h2>
       <p class="body-text">Complete plugin. Responds to <code style="color:#CE9178;font-family:JetBrains Mono,monospace;font-size:12px">-msg &lt;text&gt;</code> and prints a usage hint when called without arguments.</p>
-      <div class="code-wrap" style="border-color:rgba(78,160,78,.18)">
-        <div class="code-header" style="background:rgba(20,26,20,.9)">
-          <div class="code-dots">
-            <span style="background:#1E3A1E"></span>
-            <span style="background:#1E3A1E"></span>
-            <span style="background:#1E3A1E"></span>
-          </div>
-          <div style="display:flex;align-items:center;gap:8px">
-            <span class="code-filename" style="color:#3A6A3A">TestPlugin/Program.cs</span>
-            <button class="copy-btn" onclick="copyCode(this, 'code-full')">Copy all</button>
-          </div>
+      <div class="code-wrap" style="border-color:rgba(76,175,80,0.15)">
+        <div class="code-header" style="background:rgba(10,20,10,0.95)">
+          <div class="code-dots"><span style="background:#1E3A1E"></span><span style="background:#1E3A1E"></span><span style="background:#1E3A1E"></span></div>
+          <div style="display:flex;align-items:center;gap:8px"><span class="code-filename" style="color:#3A6A3A">TestPlugin/Program.cs</span><button class="copy-btn" onclick="copyCode(this,'code-full')">Copy all</button></div>
         </div>
-        <div class="code-body">
-<pre><code id="code-full"><span class="kw">using</span> <span class="pu">Stuff;</span>
+        <div class="code-body"><pre><code id="code-full"><span class="kw">using</span> <span class="pu">Stuff;</span>
 <span class="kw">using</span> <span class="pu">System;</span>
 <span class="kw">using</span> <span class="pu">System.Text;</span>
 
@@ -738,8 +493,7 @@
             <span class="pu">}</span>
         <span class="pu">}</span>
     <span class="pu">}</span>
-<span class="pu">}</span></code></pre>
-        </div>
+<span class="pu">}</span></code></pre></div>
       </div>
     </section>
 
@@ -747,87 +501,77 @@
       <div class="section-title">08 — tips &amp; tricks</div>
       <h2>Tips &amp; Tricks</h2>
       <div class="tips-grid">
-        <div class="tips-card">
-          <span class="tips-card-icon">&#xE734;</span>
-          <div>
-            <h4>Always guard args for null</h4>
-            <p>Raton may call your plugin with a null array when no input is given. Check <code style="color:#9CDCFE;font-family:JetBrains Mono,monospace;font-size:11px">args == null</code> before everything.</p>
-          </div>
-        </div>
-        <div class="tips-card">
-          <span class="tips-card-icon">&#xE734;</span>
-          <div>
-            <h4>Store _send as static</h4>
-            <p>The delegate is injected once in Main. Store it as a static field so all your methods can call it without passing it around.</p>
-          </div>
-        </div>
-        <div class="tips-card">
-          <span class="tips-card-icon">&#xE734;</span>
-          <div>
-            <h4>Use Status semantically</h4>
-            <p><code style="color:#47B9FF;font-family:JetBrains Mono,monospace;font-size:11px">Information</code>, <code style="color:#4CAF50;font-family:JetBrains Mono,monospace;font-size:11px">Success</code>, <code style="color:#FFB74D;font-family:JetBrains Mono,monospace;font-size:11px">Warning</code>, and <code style="color:#EF5350;font-family:JetBrains Mono,monospace;font-size:11px">Error</code> map to colored log entries. Don't mark everything as Success.</p>
-          </div>
-        </div>
-        <div class="tips-card">
-          <span class="tips-card-icon">&#xE734;</span>
-          <div>
-            <h4>Keep plugins focused</h4>
-            <p>One plugin = one purpose. Small, composable plugins are easier to debug and update. Or whatever.</p>
-          </div>
-        </div>
-        <div class="tips-card">
-          <span class="tips-card-icon">&#xE734;</span>
-          <div>
-            <h4>Keep it safe</h4>
-            <p>Be careful when executing code from other people — this may cause RCE attempts or client stealing.</p>
-          </div>
-        </div>
+        <div class="tips-card"><span class="tips-card-icon">★</span><div><h4>Always guard args for null</h4><p>Raton may call your plugin with a null array when no input is given. Check <code style="color:#9CDCFE;font-family:JetBrains Mono,monospace;font-size:11px">args == null</code> before everything.</p></div></div>
+        <div class="tips-card"><span class="tips-card-icon">★</span><div><h4>Store _send as static</h4><p>The delegate is injected once in Main. Store it as a static field so all your methods can call it without passing it around.</p></div></div>
+        <div class="tips-card"><span class="tips-card-icon">★</span><div><h4>Use Status semantically</h4><p><code style="color:#47B9FF;font-family:JetBrains Mono,monospace;font-size:11px">Information</code>, <code style="color:#4CAF50;font-family:JetBrains Mono,monospace;font-size:11px">Success</code>, <code style="color:#FFB74D;font-family:JetBrains Mono,monospace;font-size:11px">Warning</code>, and <code style="color:#EF5350;font-family:JetBrains Mono,monospace;font-size:11px">Error</code> map to colored log entries. Don't mark everything as Success.</p></div></div>
+        <div class="tips-card"><span class="tips-card-icon">★</span><div><h4>Keep plugins focused</h4><p>One plugin = one purpose. Small, composable plugins are easier to debug and update. Or whatever.</p></div></div>
+        <div class="tips-card"><span class="tips-card-icon">★</span><div><h4>Keep it safe</h4><p>Be careful when executing code from other people — this may cause RCE attempts or client stealing.</p></div></div>
       </div>
     </section>
 
+    <a class="footer-note" href="https://raton.lol">
+      <img src="https://raton.lol/img/RATA.png" width="13" height="13" alt="" onerror="this.style.display='none'">
+      powered by raton.lol
+    </a>
   </main>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-  const sections = document.querySelectorAll('.section');
-  const navItems = document.querySelectorAll('.nav-item');
+(function() {
+  var bg = document.getElementById('rataBg');
+  var data = [
+    {x:5,y:10,s:52,d:20,dl:0},{x:20,y:25,s:44,d:24,dl:5},{x:38,y:5,s:60,d:18,dl:9},
+    {x:55,y:18,s:48,d:26,dl:2},{x:70,y:4,s:66,d:22,dl:13},{x:85,y:22,s:44,d:30,dl:7},
+    {x:92,y:10,s:56,d:16,dl:11},{x:12,y:58,s:52,d:28,dl:3},{x:30,y:72,s:72,d:32,dl:16},
+    {x:52,y:62,s:44,d:20,dl:8},{x:74,y:78,s:60,d:25,dl:6},{x:90,y:52,s:48,d:19,dl:14},
+  ];
+  data.forEach(function(r) {
+    var img = document.createElement('img');
+    img.src = 'https://raton.lol/img/RATA.png';
+    img.className = 'rata-sprite'; img.alt = ''; img.draggable = false;
+    img.style.cssText = 'width:'+r.s+'px;height:'+r.s+'px;left:'+r.x+'%;top:'+r.y+'%;animation-duration:'+r.d+'s;animation-delay:-'+r.dl+'s';
+    bg.appendChild(img);
+  });
+})();
 
-  function setActive(id) {
-    navItems.forEach(n => n.classList.remove('active'));
-    const match = [...navItems].find(n => n.getAttribute('onclick')?.includes("'" + id + "'"));
-    if (match) match.classList.add('active');
-  }
+const sections = document.querySelectorAll('.section');
+const navItems = document.querySelectorAll('.nav-item');
 
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) setActive(e.target.id); });
-  }, { rootMargin: '-30% 0px -60% 0px' });
-  sections.forEach(s => observer.observe(s));
+function setActive(id) {
+  navItems.forEach(n => n.classList.remove('active'));
+  const match = [...navItems].find(n => n.getAttribute('onclick')?.includes("'" + id + "'"));
+  if (match) match.classList.add('active');
+}
 
-  function scrollToSection(id) {
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) setActive(e.target.id); });
+}, { rootMargin: '-30% 0px -60% 0px' });
+sections.forEach(s => observer.observe(s));
 
-  const toast = document.getElementById('toast');
-  function showToast(t) {
-    toast.textContent = t; toast.classList.add('show');
-    clearTimeout(showToast._t);
-    showToast._t = setTimeout(() => toast.classList.remove('show'), 1800);
-  }
+function scrollToSection(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
 
-  function copyCode(btn, id) {
-    const el = document.getElementById(id);
-    if (!el) return;
-    const text = el.innerText;
-    navigator.clipboard.writeText(text).then(() => {
-      btn.textContent = 'Copied!'; btn.classList.add('copied');
-      showToast('Copied to clipboard');
-      setTimeout(() => { btn.textContent = btn.dataset.orig || 'Copy'; btn.classList.remove('copied'); }, 1800);
-    });
-  }
-  document.querySelectorAll('.copy-btn').forEach(b => b.dataset.orig = b.textContent);
+const toast = document.getElementById('toast');
+function showToast(t) {
+  toast.textContent = t; toast.classList.add('show');
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(() => toast.classList.remove('show'), 1800);
+}
+
+function copyCode(btn, id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  navigator.clipboard.writeText(el.innerText).then(() => {
+    btn.textContent = 'Copied!'; btn.classList.add('copied');
+    showToast('Copied to clipboard');
+    setTimeout(() => { btn.textContent = btn.dataset.orig || 'Copy'; btn.classList.remove('copied'); }, 1800);
+  });
+}
+document.querySelectorAll('.copy-btn').forEach(b => b.dataset.orig = b.textContent);
 </script>
 </body>
 </html>
