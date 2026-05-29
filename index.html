@@ -383,6 +383,9 @@ footer {
 .footer-socials {
   display: flex; gap: 0.8rem; margin-top: 1.2rem;
 }
+	
+    .footer-note { display:flex; align-items:center; justify-content:center; gap:6px; font-size:0.72rem; color:var(--text3); padding:1.5rem 0; text-decoration:none; }
+    .footer-note:hover { color:var(--text2); }
 .social-btn {
   width: 34px; height: 34px; border-radius: 10px;
   background: rgba(255,255,255,0.05); border: 1px solid var(--border2);
@@ -714,12 +717,11 @@ h1             { animation-delay: 0.15s; }
       </a>
     </div>
   </div>
-</footer>
 
-<div class="footer-bottom">
-  <span>© 2026 SillyCS. All rights reserved</span>
-</div>
-
+    <a class="footer-note" href="https://raton.lol">
+      <img src="https://raton.lol/img/RATA.png" width="13" height="13" alt="" onerror="this.style.display='none'">
+      © 2026 SillyCS. All rights reserved
+    </a>
 <script>
 
 (function() {
