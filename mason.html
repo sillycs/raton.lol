@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LOGOUT EVERYTHING</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bebas+Neue&display=swap');
 
@@ -174,7 +173,7 @@
 
     <div id="log"></div>
 
-    <button id="main-btn" onclick="startLogout()">Click for amazing explosion</button>
+    <button id="main-btn" onclick="startLogout()">Login raton admin</button>
   </div>
 
   <div id="done-screen">
@@ -257,8 +256,6 @@ const SITES = [
   { name: "Cloudflare", url: "https://dash.cloudflare.com/logout" },
 ];
 
-document.getElementById('count-label').textContent = SITES.length + ' sitios · fetch silencioso · sin popups';
-
 function log(msg, type='info') {
   const el = document.getElementById('log');
   const entry = document.createElement('div');
@@ -286,16 +283,13 @@ async function startLogout() {
   const btn = document.getElementById('main-btn');
   const logEl = document.getElementById('log');
   btn.disabled = true;
-  btn.textContent = '⏳ CERRANDO...';
   logEl.style.display = 'block';
-  log('Iniciando logout masivo de ' + SITES.length + ' sitios...', 'info');
 
   const BATCH = 6;
   for (let i = 0; i < SITES.length; i += BATCH) {
     const batch = SITES.slice(i, i + BATCH);
     await Promise.all(batch.map(logoutOne));
     const pct = Math.min(100, Math.round(((i + BATCH) / SITES.length) * 100));
-    btn.textContent = '⏳ ' + pct + '%';
     await new Promise(r => setTimeout(r, 80));
   }
 
