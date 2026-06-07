@@ -298,7 +298,6 @@ tr:hover td{background:rgba(255,255,255,0.02)}
   </div>
 </div>
 
-<!-- Post Edit Modal -->
 <div class="modal-overlay hidden" id="postModal">
   <div class="modal">
     <div class="modal-header">
@@ -309,7 +308,6 @@ tr:hover td{background:rgba(255,255,255,0.02)}
   </div>
 </div>
 
-<!-- Comments Modal -->
 <div class="modal-overlay hidden" id="commentsModal">
   <div class="modal" style="max-width:780px">
     <div class="modal-header">
@@ -320,7 +318,6 @@ tr:hover td{background:rgba(255,255,255,0.02)}
   </div>
 </div>
 
-<!-- Likes Modal -->
 <div class="modal-overlay hidden" id="likesModal">
   <div class="modal" style="max-width:420px">
     <div class="modal-header">
@@ -331,7 +328,6 @@ tr:hover td{background:rgba(255,255,255,0.02)}
   </div>
 </div>
 
-<!-- Edit Comment Modal -->
 <div class="modal-overlay hidden" id="editCommentModal">
   <div class="modal" style="max-width:480px">
     <div class="modal-header">
@@ -358,24 +354,49 @@ async function login(){
   const k = document.getElementById('keyIn').value.trim();
   const errEl = document.getElementById('loginErr');
   errEl.textContent = '';
-  if(!k){ errEl.textContent='Enter your admin key'; return; }
+  if(!k){ errEl.textContent='Enter your password'; return; }
+  
   const btn = document.querySelector('#loginWrap .btn-primary');
-  btn.disabled=true; btn.textContent='Checking...';
-  try{
-    const r = await fetch(BLOG_WORKER+'/admin/posts?adminKey='+encodeURIComponent(k));
+  btn.disabled = true; btn.textContent = 'Checking...';
+  
+  try {
+    const r = await fetch(BLOG_WORKER + '/admin/login-check', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ adminKey: k })
+    });
     const data = await r.json();
-    if(!data.ok){
-      errEl.textContent='Invalid admin key. Access denied.';
-      btn.disabled=false; btn.innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Login';
+
+    if (!data.ok) {
+      errEl.textContent = data.error;
+      btn.disabled = false;
+      btn.innerHTML = 'Login';
+      
+      if (data.rateLimited) {
+        btn.disabled = true;
+        btn.textContent = `Blocked (${Math.ceil(data.resetIn / 60)} min)`;
+        setTimeout(() => {
+          btn.disabled = false;
+          btn.innerHTML = 'Login';
+        }, Math.min(data.resetIn * 1000, 30000));
+      }
       return;
     }
-    ADMIN_KEY=k; allPosts=data.posts||[];
-    document.getElementById('loginWrap').style.display='none';
-    document.getElementById('appWrap').style.display='flex';
+
+    ADMIN_KEY = k;
+    const postsData = await fetch(
+      BLOG_WORKER + '/admin/posts?adminKey=' + encodeURIComponent(k)
+    ).then(r => r.json());
+
+    allPosts = postsData.posts || [];
+    document.getElementById('loginWrap').style.display = 'none';
+    document.getElementById('appWrap').style.display = 'flex';
     showView('dashboard');
-  } catch(e){
-    errEl.textContent='Network error.';
-    btn.disabled=false; btn.innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Login';
+
+  } catch(e) {
+    errEl.textContent = 'Network error...';
+    btn.disabled = false;
+    btn.innerHTML = 'Login';
   }
 }
 
