@@ -177,7 +177,7 @@ nav {
   background: var(--purple-dim);
   border: 1px solid rgba(139,92,246,0.2);
   border-radius: 12px;
-  font-size: 1.6rem;
+  color: var(--purple2);
 }
 .prize-info { display: flex; flex-direction: column; gap: 3px; }
 .prize-label { font-size: 0.72rem; color: var(--text3); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; }
@@ -300,10 +300,11 @@ nav {
 .status.success { color: #57f287; }
 
 .closed-msg {
-  display: flex; align-items: center; gap: 8px;
+  display: flex; align-items: center; gap: 10px;
   font-size: 0.85rem;
   border-radius: 10px; padding: 0.75rem 1rem;
 }
+.closed-msg svg { flex-shrink: 0; }
 .closed-msg.closed-admin {
   color: #f87171;
   background: rgba(248, 113, 113, 0.08);
@@ -384,7 +385,7 @@ nav {
     </div>
     <a class="footer-note" href="https://raton.lol">
       <img src="https://raton.lol/img/RATA.png" width="14" height="14" alt="" onerror="this.style.display='none'">
-      © 2026 SillyCS. All rights reserved
+      &copy; 2026 SillyCS. All rights reserved
     </a>
   </div>
 </div>
@@ -497,6 +498,14 @@ function patchOG(g, ended, hasWon) {
 const ID = new URLSearchParams(location.search).get('id');
 const JOINED_KEY = `raton_joined_${ID}`;
 
+const SVG = {
+  gift: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>`,
+  check: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`,
+  arrow: `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>`,
+  lock: `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>`,
+  sparkles: `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>`,
+};
+
 async function render() {
   const root = document.getElementById('root');
 
@@ -543,7 +552,7 @@ async function render() {
     </div>
 
     <div class="prize-row">
-      <div class="prize-icon">${g.emoji}</div>
+      <div class="prize-icon">${SVG.gift}</div>
       <div class="prize-info">
         <div class="prize-label">Prize</div>
         <div class="prize-name">${g.title}</div>
@@ -610,7 +619,9 @@ async function render() {
 
     <div class="btn-wrap">
       <button class="plan-cta" id="jb" ${joined ? 'disabled' : ''}>
-        ${joined ? '✓ Already joined' : 'Join giveaway →'}
+        ${joined
+          ? `${SVG.check} Already joined`
+          : `Join giveaway ${SVG.arrow}`}
       </button>
     </div>
 
@@ -618,7 +629,8 @@ async function render() {
 
     ` : `
     <div class="closed-msg ${hasWon ? 'closed-winner' : 'closed-admin'}">
-      <span>${hasWon ? '🎉 Congrats to the winner :)' : '🔒 Giveaway closed by an administrator'}</span>
+      ${hasWon ? SVG.sparkles : SVG.lock}
+      <span>${hasWon ? 'Congrats to the winner :)' : 'Giveaway closed by an administrator'}</span>
     </div>
     `}
 
@@ -647,7 +659,7 @@ async function render() {
       if (un.length < 2) { setStatus('Username too short...', 'error'); return; }
 
       jb.disabled = true;
-      jb.textContent = 'Joining…';
+      jb.innerHTML = 'Joining\u2026';
       setStatus('');
 
       try {
@@ -659,19 +671,19 @@ async function render() {
         const d = await r.json();
 
         if (d.ok) {
-          jb.textContent = '✓ Joined';
+          jb.innerHTML = `${SVG.check} Joined`;
           setStatus("You're in! Good luck :3", 'success');
           localStorage.setItem(JOINED_KEY, '1');
           document.getElementById('ec').textContent = d.count;
           document.getElementById('ech').textContent = ((1/d.count)*100).toFixed(1) + '% win chance';
         } else {
           jb.disabled = false;
-          jb.textContent = 'Join giveaway →';
+          jb.innerHTML = `Join giveaway ${SVG.arrow}`;
           setStatus(d.error || 'Something went wrong...', 'error');
         }
       } catch {
         jb.disabled = false;
-        jb.textContent = 'Join giveaway →';
+        jb.innerHTML = `Join giveaway ${SVG.arrow}`;
         setStatus('Network error. Try again.', 'error');
       }
     });
