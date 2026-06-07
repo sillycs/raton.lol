@@ -411,11 +411,16 @@
 <div class="page-header">
       <div class="page-kicker"><span class="kicker-dot"></span>The raton plugin development</div>
       <h1><span class="grad">Plugin</span> Development</h1>
-      <p class="lead">Build powerful plugins for Raton in minutes. Extend the client with compiled C# assemblies loaded at runtime.</p>
+      <p class="lead">
+    Build powerful plugins for Raton in minutes. Extend the client with compiled C# assemblies loaded at runtime.
+    <a href="https://github.com/sillycs/plugins" target="_blank" rel="noopener noreferrer">
+        DOWNLOAD THE REPOSITORY HERE TO START
+    </a>
+</p>
     </div>
 
     <section class="section" id="welcome">
-      <div class="section-title">00 — getting started</div>
+      <div class="section-title">00 — the basics</div>
       <h2>Welcome</h2>
       <p class="body-text">Welcome to the Raton Plugin Guide. This guide walks you through everything needed to create, test, and publish plugins that extend Raton's functionality. Plugins are compiled C# assemblies loaded at runtime — they can receive arguments from the UI and communicate back through a structured packet system.</p>
       <div class="qs-card">
@@ -423,7 +428,9 @@
         <div class="qs-step"><div class="qs-num">1</div><div class="qs-text">Create a new .NET Class Library project targeting .NET Framework 4.7.2</div></div>
         <div class="qs-step"><div class="qs-num">2</div><div class="qs-text">Use the test plugin source to guide yourself</div></div>
         <div class="qs-step"><div class="qs-num">3</div><div class="qs-text">Decorate your class with <code style="font-size:12px;color:#CE93D8;background:rgba(206,147,216,.08);padding:1px 6px;border-radius:4px;font-family:JetBrains Mono,monospace">[PluginInfo]</code> and implement Main</div></div>
-        <div class="qs-step"><div class="qs-num">4</div><div class="qs-text">Compile, drop the <code style="font-size:12px;color:#9CDCFE;background:rgba(156,220,254,.06);padding:1px 6px;border-radius:4px;font-family:JetBrains Mono,monospace">.dll</code> into Raton's <code style="font-size:12px;color:#9CDCFE;background:rgba(156,220,254,.06);padding:1px 6px;border-radius:4px;font-family:JetBrains Mono,monospace">/plugins</code> folder — done</div></div>
+        <div class="qs-step"><div class="qs-num">4</div><div class="qs-text">Compile, drop the <code style="font-size:12px;color:#9CDCFE;background:rgba(156,220,254,.06);padding:1px 6px;border-radius:4px;font-family:JetBrains Mono,monospace">.dll</code> into Raton's <code style="font-size:12px;color:#9CDCFE;background:rgba(156,220,254,.06);padding:1px 6px;border-radius:4px;font-family:JetBrains Mono,monospace">/plugins</code> folder</div></div>
+        <div class="qs-step"><div class="qs-num">5</div><div class="qs-text">Enjoy :)</div></div>
+
       </div>
     </section>
 
@@ -485,10 +492,10 @@
     <section class="section" id="entrypoint">
       <div class="section-title">03 — entry point</div>
       <h2>Entry Point: Main</h2>
-      <p class="body-text">Raton calls a static <code style="color:#DCDCAA;background:rgba(220,220,170,.06);padding:1px 6px;border-radius:4px;font-family:JetBrains Mono,monospace;font-size:12px">Main</code> method on your class. The signature is different — Raton injects two parameters:</p>
+      <p class="body-text">Raton calls a static <code style="color:#DCDCAA;background:rgba(220,220,170,.06);padding:1px 6px;border-radius:4px;font-family:JetBrains Mono,monospace;font-size:12px">Main</code> method on your class, the signature is different. Raton injects two parameters:</p>
       <div class="param-table">
         <div class="param-row"><span class="param-name param-action">Action&lt;byte[]&gt; send</span><span class="param-desc">Delegate to send a serialized Pack back to the client. Store it in a static field.</span></div>
-        <div class="param-row"><span class="param-name param-args">string[] args</span><span class="param-desc">Arguments the user typed in the plugin prompt. May be <code style="color:#569CD6;font-family:JetBrains Mono,monospace;font-size:11px">null</code> if invoked with no arguments.</span></div>
+        <div class="param-row"><span class="param-name param-args">string[] args</span><span class="param-desc">Arguments the server typed in the plugin. May be <code style="color:#569CD6;font-family:JetBrains Mono,monospace;font-size:11px">null</code> (we'll get to that soon)</span></div>
       </div>
       <div class="code-wrap">
         <div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div style="display:flex;align-items:center;gap:8px"><span class="code-filename">Program.cs — Main</span><button class="copy-btn" onclick="copyCode(this,'code-main')">Copy</button></div></div>
@@ -662,11 +669,11 @@
       <div class="section-title">08 — tips &amp; tricks</div>
       <h2>Tips &amp; Tricks</h2>
       <div class="tips-grid">
-        <div class="tips-card"><span class="tips-card-icon">★</span><div><h4>Always guard args for null</h4><p>Raton may call your plugin with a null array when no input is given. Check <code style="color:#9CDCFE;font-family:JetBrains Mono,monospace;font-size:11px">args == null</code> before everything.</p></div></div>
+        <div class="tips-card"><span class="tips-card-icon">★</span><div><h4>Always guard args for null</h4><p>Raton may call your plugin with null when no input is given. Use <code style="color:#9CDCFE;font-family:JetBrains Mono,monospace;font-size:11px">default:</code> as we said before</p></div></div>
         <div class="tips-card"><span class="tips-card-icon">★</span><div><h4>Store _send as static</h4><p>The delegate is injected once in Main. Store it as a static field so all your methods can call it without passing it around.</p></div></div>
         <div class="tips-card"><span class="tips-card-icon">★</span><div><h4>Use Status semantically</h4><p><code style="color:#47B9FF;font-family:JetBrains Mono,monospace;font-size:11px">Information</code>, <code style="color:#22c55e;font-family:JetBrains Mono,monospace;font-size:11px">Success</code>, <code style="color:#FFB74D;font-family:JetBrains Mono,monospace;font-size:11px">Warning</code>, and <code style="color:#EF5350;font-family:JetBrains Mono,monospace;font-size:11px">Error</code> map to colored log entries. Don't mark everything as Success.</p></div></div>
-        <div class="tips-card"><span class="tips-card-icon">★</span><div><h4>Keep plugins focused</h4><p>One plugin = one purpose. Small, composable plugins are easier to debug and update. Or whatever.</p></div></div>
-        <div class="tips-card"><span class="tips-card-icon">★</span><div><h4>Keep it safe</h4><p>Be careful when executing code from other people — this may cause RCE attempts or client stealing.</p></div></div>
+        <div class="tips-card"><span class="tips-card-icon">★</span><div><h4>Keep plugins focused</h4><p>One plugin = one purpose. Small, composable plugins are easier to debug and update. Or whatever...</p></div></div>
+        <div class="tips-card"><span class="tips-card-icon">★</span><div><h4>Keep it safe</h4><p>Be careful when executing code from other people, this may cause RCE attempts or client stealing.</p></div></div>
       </div>
     </section>
 
