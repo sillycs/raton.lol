@@ -664,7 +664,7 @@ async function renderPost(id){
     api(`/comments?postId=${id}`)
   ]);
 
-  if(!pData.ok){ app.innerHTML='<div class="single-wrap" style="position:relative;z-index:1"><div class="empty">Post not found.</div></div>'; return; }
+  if(!pData.ok){ app.innerHTML='<div class="single-wrap" style="position:relative;z-index:1"><div class="empty">This post was deleted by an administrator or it doesnt exist anymore</div></div>'; return; }
   const p = pData.post;
   const comments = cData.comments||[];
   const liked = likedPosts[p.id];
