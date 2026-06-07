@@ -416,7 +416,8 @@ footer{
     <li><a href="https://raton.lol/#pricing">Pricing</a></li>
     <li><a href="https://raton.lol/#showcase">Showcase</a></li>
     <li><a href="https://raton.lol/download">Download</a></li>
-    <li><a href="#" class="active" id="blogNavLink">Blog</a></li>
+    <li><a href="https://raton.lol/docs">Documentation</a></li>
+    <li><a href="#" class="active" id="blogNavLink">Forum</a></li>
   </ul>
   <button class="nav-mobile-toggle" onclick="document.getElementById('mainNav').classList.toggle('open')">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
@@ -506,9 +507,9 @@ async function renderList(){
   const app = document.getElementById('app');
   app.innerHTML = `
     <div class="blog-hero" style="position:relative;z-index:1">
-      <div class="hero-eyebrow"><span></span>Blog<span></span></div>
-      <h1>Notes & Updates</h1>
-      <p>The latest from the Raton team — updates, guides, and behind the scenes.</p>
+      <div class="hero-eyebrow"><span></span>Forum<span></span></div>
+      <h1>The raton forum</h1>
+      <p>The latest from the Raton team: updates, guides, and leaks (or js shit)</p>
     </div>
     <div class="blog-wrap" style="position:relative;z-index:1">
       <div class="search-bar-wrap">
@@ -565,7 +566,7 @@ function applySearchAndRender(){
 function renderCards(posts){
   const grid = document.getElementById('postsGrid');
   if(!grid) return;
-  if(!posts.length){ grid.innerHTML='<div class="empty">No posts found.</div>'; return; }
+  if(!posts.length){ grid.innerHTML='<div class="empty">No posts yet...</div>'; return; }
   grid.innerHTML = posts.map(p=>cardHTML(p)).join('');
 }
 
