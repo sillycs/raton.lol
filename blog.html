@@ -20,7 +20,6 @@
   --purple:#8b5cf6;
   --purple2:#a78bfa;
   --purple-dim:rgba(139,92,246,0.15);
-  --purple-glow:rgba(139,92,246,0.08);
   --text:#f4f4f8;
   --text2:#a0a0b8;
   --text3:#606078;
@@ -46,8 +45,6 @@ body{
   display:flex;
   flex-direction:column;
 }
-
-/* ── NAV ───────────────────────────────── */
 nav{
   position:sticky;top:0;z-index:100;
   display:flex;align-items:center;justify-content:space-between;
@@ -69,8 +66,6 @@ nav{
 .nav-links a:hover{color:var(--text)}
 .nav-links a.active{color:var(--purple2)}
 .nav-mobile-toggle{display:none;background:none;border:none;color:var(--text);padding:6px}
-
-/* ── HERO ──────────────────────────────── */
 .blog-hero{
   position:relative;
   padding:4rem 2rem 3rem;
@@ -81,7 +76,7 @@ nav{
 .blog-hero::before{
   content:'';
   position:absolute;inset:0;
-  background:radial-gradient(ellipse 60% 70% at 50% 0%,rgba(139,92,246,0.12) 0%,transparent 70%);
+  background:radial-gradient(ellipse 60% 70% at 50% 0%,rgba(139,92,246,0.08) 0%,transparent 70%);
   pointer-events:none;
 }
 .hero-eyebrow{
@@ -100,32 +95,28 @@ nav{
 .blog-hero p{
   color:var(--text2);font-size:1rem;max-width:460px;margin:0 auto;
 }
-
-/* ── LAYOUT ────────────────────────────── */
 .blog-wrap{
   flex:1;max-width:900px;width:100%;
   margin:0 auto;padding:3rem 2rem;
   display:flex;flex-direction:column;gap:2rem;
 }
-
-/* ── FILTERS ───────────────────────────── */
-.filter-bar{
-  display:flex;align-items:center;gap:0.6rem;flex-wrap:wrap;
+.search-bar-wrap{
+  position:relative;
 }
-.filter-chip{
-  padding:0.32rem 0.85rem;border-radius:99px;
-  font-size:0.76rem;font-weight:500;
-  border:1px solid var(--border2);
-  background:rgba(255,255,255,0.04);
-  color:var(--text2);text-decoration:none;
-  transition:.2s;
+.search-bar-wrap svg{
+  position:absolute;left:0.85rem;top:50%;transform:translateY(-50%);
+  color:var(--text3);pointer-events:none;
 }
-.filter-chip:hover{background:rgba(255,255,255,0.09);color:var(--text)}
-.filter-chip.active{background:var(--purple-dim);border-color:var(--purple);color:var(--purple2)}
-
-/* ── POST CARDS ────────────────────────── */
+.search-input{
+  width:100%;background:var(--surface);
+  border:1px solid var(--border2);border-radius:10px;
+  padding:0.6rem 1rem 0.6rem 2.4rem;
+  color:var(--text);font-family:var(--font-body);font-size:0.875rem;
+  transition:.2s;outline:none;
+}
+.search-input:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(139,92,246,0.12)}
+.search-input::placeholder{color:var(--text3)}
 .posts-grid{display:flex;flex-direction:column;gap:1.4rem}
-
 .post-card{
   background:var(--surface);
   border:1px solid var(--border2);
@@ -183,8 +174,6 @@ nav{
 .like-btn:hover{color:var(--purple2);background:var(--purple-dim)}
 .like-btn.liked{color:var(--purple2)}
 .like-btn.liked svg{fill:var(--purple2)}
-
-/* ── PAGINATION ────────────────────────── */
 .pagination{display:flex;gap:0.5rem;justify-content:center;align-items:center}
 .page-btn{
   padding:0.45rem 0.9rem;border-radius:9px;
@@ -195,8 +184,6 @@ nav{
 .page-btn:hover{background:rgba(255,255,255,0.1);color:var(--text)}
 .page-btn.active{background:var(--purple);border-color:var(--purple);color:#fff}
 .page-btn:disabled{opacity:.35;pointer-events:none}
-
-/* ── SINGLE POST ───────────────────────── */
 .single-wrap{max-width:720px;margin:0 auto;padding:3rem 2rem;width:100%}
 .post-back{
   display:inline-flex;align-items:center;gap:6px;
@@ -247,8 +234,6 @@ nav{
   border-radius:12px;overflow-x:auto;
   border:1px solid var(--border);margin:1rem 0;
 }
-
-/* post actions bar */
 .post-actions{
   display:flex;align-items:center;gap:1rem;
   padding:1.2rem 0;
@@ -268,8 +253,6 @@ nav{
 .action-btn:hover{background:rgba(255,255,255,0.1);color:var(--text)}
 .action-btn.liked{background:var(--purple-dim);border-color:var(--purple);color:var(--purple2)}
 .action-btn.liked svg{fill:var(--purple2)}
-
-/* ── COMMENTS ──────────────────────────── */
 .comments-section{margin-top:0.5rem}
 .comments-section h3{
   font-family:var(--font-display);
@@ -307,7 +290,6 @@ nav{
 }
 .submit-btn:hover{background:#7c3aed;transform:translateY(-1px)}
 .submit-btn:disabled{opacity:.5;pointer-events:none}
-
 .comment-list{display:flex;flex-direction:column;gap:1rem}
 .comment{
   background:var(--surface);
@@ -357,8 +339,10 @@ nav{
   border:1px solid var(--border);
   border-radius:10px;padding:0.9rem;
 }
-
-/* ── EMPTY / LOADING ───────────────────── */
+.name-locked-hint{
+  font-size:0.68rem;color:var(--text3);margin-top:0.3rem;
+  font-style:italic;
+}
 .empty{text-align:center;padding:4rem 2rem;color:var(--text3)}
 .spinner{
   width:28px;height:28px;border:2px solid var(--border2);
@@ -367,8 +351,6 @@ nav{
   margin:2rem auto;
 }
 @keyframes spin{to{transform:rotate(360deg)}}
-
-/* ── TOAST ─────────────────────────────── */
 .toast{
   position:fixed;bottom:1.5rem;right:1.5rem;
   background:var(--surface);border:1px solid var(--border2);
@@ -380,8 +362,6 @@ nav{
   pointer-events:none;
 }
 .toast.show{transform:translateY(0);opacity:1}
-
-/* ── RATA BG ───────────────────────────── */
 .rata-bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
 .rata-sprite{
   position:absolute;opacity:0;
@@ -397,15 +377,12 @@ nav{
   92%{opacity:0.18}
   100%{opacity:0;transform:translateY(-55px) rotate(-4deg) scale(0.95)}
 }
-
-/* ── FOOTER ────────────────────────────── */
 footer{
   position:relative;z-index:1;
   border-top:1px solid var(--border);
   padding:1.5rem 3rem;text-align:center;
 }
 .footer-bottom{font-size:0.75rem;color:var(--text3)}
-
 @media(max-width:768px){
   nav{padding:0 1.2rem}
   .nav-links{display:none}
@@ -455,11 +432,9 @@ footer{
 <div class="toast" id="toast"></div>
 
 <script>
-// ── CONFIG ───────────────────────────────────────────────────
-const WORKER = 'https://bold-glitter-3cd0.sillycro.workers.dev'; // ← replace
+const WORKER = 'https://bold-glitter-3cd0.sillycro.workers.dev';
 const SITE   = window.location.origin + window.location.pathname;
 
-// ── RATA BG ──────────────────────────────────────────────────
 (function(){
   var bg = document.getElementById('rataBg');
   [{x:5,y:8,s:56,d:20,dl:0},{x:18,y:22,s:48,d:24,dl:5},{x:32,y:5,s:64,d:18,dl:9},
@@ -473,14 +448,12 @@ const SITE   = window.location.origin + window.location.pathname;
   });
 })();
 
-// ── TOAST ────────────────────────────────────────────────────
 function showToast(msg, dur=2800){
   const t = document.getElementById('toast');
   t.textContent = msg; t.classList.add('show');
   setTimeout(()=>t.classList.remove('show'), dur);
 }
 
-// ── DATE FORMAT ──────────────────────────────────────────────
 function fmtDate(ts){
   return new Date(ts).toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'});
 }
@@ -492,21 +465,20 @@ function timeAgo(ts){
   return Math.floor(s/86400)+'d ago';
 }
 
-// ── STATE ────────────────────────────────────────────────────
-let currentPage=1, currentTag=null, currentPostId=null;
+let currentPage=1, currentPostId=null, searchQuery='';
 const likedPosts = JSON.parse(localStorage.getItem('liked_posts')||'{}');
 const likedComments = JSON.parse(localStorage.getItem('liked_comments')||'{}');
+let commentAuthorName = localStorage.getItem('comment_author_name')||'';
 
 function saveLikedPosts(){ localStorage.setItem('liked_posts',JSON.stringify(likedPosts)); }
 function saveLikedComments(){ localStorage.setItem('liked_comments',JSON.stringify(likedComments)); }
+function saveAuthorName(n){ commentAuthorName=n; localStorage.setItem('comment_author_name',n); }
 
-// ── API ──────────────────────────────────────────────────────
 async function api(path, opts={}){
   const r = await fetch(WORKER+path, opts);
   return r.json();
 }
 
-// ── ROUTER ───────────────────────────────────────────────────
 function getUrlParam(k){ return new URLSearchParams(window.location.search).get(k); }
 function setUrl(params){
   const u = new URL(window.location);
@@ -519,54 +491,81 @@ function setUrl(params){
 
 function route(){
   const postId = getUrlParam('post');
-  const tag = getUrlParam('tag');
   const page = parseInt(getUrlParam('page')||'1');
-  currentTag = tag; currentPage = page;
+  currentPage = page;
   if(postId){ renderPost(postId); }
   else { renderList(); }
 }
 window.addEventListener('popstate', route);
 
-// ── LIST VIEW ────────────────────────────────────────────────
+let allPostsCache = [];
+let searchDebounce = null;
+
 async function renderList(){
   currentPostId = null;
   const app = document.getElementById('app');
   app.innerHTML = `
     <div class="blog-hero" style="position:relative;z-index:1">
-      <h1>Notes and updates</h1>
-      <p>test</p>
+      <div class="hero-eyebrow"><span></span>Blog<span></span></div>
+      <h1>Notes & Updates</h1>
+      <p>The latest from the Raton team — updates, guides, and behind the scenes.</p>
     </div>
     <div class="blog-wrap" style="position:relative;z-index:1">
-      <div class="filter-bar" id="filterBar"></div>
+      <div class="search-bar-wrap">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input class="search-input" id="searchInput" placeholder="Search posts..." value="${escHtml(searchQuery)}" oninput="handleSearch(this.value)">
+      </div>
       <div class="posts-grid" id="postsGrid"><div class="spinner"></div></div>
       <div class="pagination" id="pagination"></div>
     </div>`;
 
-  const data = await api(`/posts?page=${currentPage}&limit=8`);
-  if(!data.ok){ document.getElementById('postsGrid').innerHTML='<div class="empty">Failed to load posts.</div>'; return; }
-
-  const allTags = [...new Set(data.posts.flatMap(p=>p.tags||[]))];
-  renderFilters(allTags);
-  renderCards(data.posts.filter(p=>p.published && (!currentTag||p.tags?.includes(currentTag))));
-  renderPagination(data.total, data.page, data.limit);
+  await loadAndRender();
 }
 
-function renderFilters(tags){
-  const bar = document.getElementById('filterBar');
-  bar.innerHTML = `<a class="filter-chip ${!currentTag?'active':''}" href="#" onclick="setTag(null,event)">All</a>`
-    + tags.map(t=>`<a class="filter-chip ${currentTag===t?'active':''}" href="#" onclick="setTag('${t}',event)">${t}</a>`).join('');
+async function loadAndRender(){
+  if(!allPostsCache.length){
+    const data = await api(`/posts?page=1&limit=100`);
+    if(!data.ok){ document.getElementById('postsGrid').innerHTML='<div class="empty">Failed to load posts.</div>'; return; }
+    allPostsCache = (data.posts||[]).filter(p=>p.published);
+  }
+  applySearchAndRender();
 }
 
-function setTag(tag, e){
-  e&&e.preventDefault();
-  currentTag=tag; currentPage=1;
-  setUrl({tag,page:null});
-  renderList();
+function handleSearch(val){
+  searchQuery = val;
+  clearTimeout(searchDebounce);
+  searchDebounce = setTimeout(()=>{
+    currentPage=1;
+    setUrl({page:null});
+    applySearchAndRender();
+  }, 250);
+}
+
+function applySearchAndRender(){
+  const q = searchQuery.trim().toLowerCase();
+  const filtered = q
+    ? allPostsCache.filter(p=>
+        (p.title||'').toLowerCase().includes(q)||
+        (p.excerpt||'').toLowerCase().includes(q)||
+        (p.author||'').toLowerCase().includes(q)||
+        (p.tags||[]).some(t=>t.toLowerCase().includes(q))
+      )
+    : allPostsCache;
+
+  const limit = 8;
+  const total = filtered.length;
+  const pages = Math.ceil(total/limit);
+  const page = Math.min(currentPage, Math.max(1, pages));
+  const slice = filtered.slice((page-1)*limit, page*limit);
+
+  renderCards(slice);
+  renderPagination(total, page, limit);
 }
 
 function renderCards(posts){
   const grid = document.getElementById('postsGrid');
-  if(!posts.length){ grid.innerHTML='<div class="empty">No posts yet.</div>'; return; }
+  if(!grid) return;
+  if(!posts.length){ grid.innerHTML='<div class="empty">No posts found.</div>'; return; }
   grid.innerHTML = posts.map(p=>cardHTML(p)).join('');
 }
 
@@ -591,7 +590,10 @@ function cardHTML(p){
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
           ${p.commentCount||0}
         </span>
-        <span class="stat" id="views-${p.id}">${p.views||0} views</span>
+        <span class="stat">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          <span id="views-${p.id}">${p.views||0}</span>
+        </span>
       </div>
       <button class="like-btn ${liked?'liked':''}" onclick="likePost(event,'${p.id}')" id="like-${p.id}">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="${liked?'currentColor':'none'}" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
@@ -603,17 +605,23 @@ function cardHTML(p){
 
 function renderPagination(total, page, limit){
   const pages = Math.ceil(total/limit);
-  if(pages<=1){document.getElementById('pagination').innerHTML='';return;}
+  const el = document.getElementById('pagination');
+  if(!el) return;
+  if(pages<=1){el.innerHTML='';return;}
   let html='';
-  html+=`<button class="page-btn" onclick="goPage(${page-1})" ${page<=1?'disabled':''}>← Prev</button>`;
+  html+=`<button class="page-btn" onclick="goPage(${page-1})" ${page<=1?'disabled':''}>
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg> Prev
+  </button>`;
   for(let i=1;i<=pages;i++){
     html+=`<button class="page-btn ${i===page?'active':''}" onclick="goPage(${i})">${i}</button>`;
   }
-  html+=`<button class="page-btn" onclick="goPage(${page+1})" ${page>=pages?'disabled':''}>Next →</button>`;
-  document.getElementById('pagination').innerHTML=html;
+  html+=`<button class="page-btn" onclick="goPage(${page+1})" ${page>=pages?'disabled':''}>Next
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+  </button>`;
+  el.innerHTML=html;
 }
 
-function goPage(p){ currentPage=p; setUrl({page:p}); renderList(); scrollTo({top:0,behavior:'smooth'}); }
+function goPage(p){ currentPage=p; setUrl({page:p}); applySearchAndRender(); scrollTo({top:0,behavior:'smooth'}); }
 
 async function likePost(e, id){
   e.preventDefault(); e.stopPropagation();
@@ -622,27 +630,33 @@ async function likePost(e, id){
     headers:{'Content-Type':'application/json'},
     body:JSON.stringify({postId:id,type:'post'})
   });
-  if(!data.ok){showToast('⚠️ '+data.error);return;}
+  if(!data.ok){showToast(data.error);return;}
   likedPosts[id]=data.liked; saveLikedPosts();
   const btn = document.getElementById(`like-${id}`);
   const cnt = document.getElementById(`lc-${id}`);
   if(btn){ btn.classList.toggle('liked',data.liked); btn.querySelector('svg').setAttribute('fill',data.liked?'currentColor':'none'); }
   if(cnt) cnt.textContent=data.count;
-  showToast(data.liked?'❤️ Liked!':'💔 Unliked');
+  showToast(data.liked?'Liked':'Unliked');
 }
 
 function openPost(id, e){
   e&&e.preventDefault();
-  setUrl({post:id,page:null,tag:null});
+  allPostsCache=[];
+  setUrl({post:id,page:null});
   renderPost(id);
   scrollTo({top:0,behavior:'smooth'});
 }
 
-// ── SINGLE POST ──────────────────────────────────────────────
 async function renderPost(id){
   currentPostId = id;
   const app = document.getElementById('app');
   app.innerHTML = `<div class="single-wrap" style="position:relative;z-index:1"><div class="spinner"></div></div>`;
+
+  await api('/view',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({postId:id})
+  });
 
   const [pData, cData] = await Promise.all([
     api(`/post?id=${id}`),
@@ -656,7 +670,10 @@ async function renderPost(id){
   const tags = (p.tags||[]).map(t=>`<span class="post-tag">${t}</span>`).join('');
 
   app.innerHTML = `<div class="single-wrap" style="position:relative;z-index:1">
-    <a class="post-back" href="#" onclick="goList(event)">← Back to blog</a>
+    <a class="post-back" href="#" onclick="goList(event)">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+      Back to blog
+    </a>
     <div class="single-header">
       <div class="post-meta">
         <span>${escHtml(p.author||'Admin')}</span>
@@ -678,7 +695,12 @@ async function renderPost(id){
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
         Share
       </button>
-      <span style="margin-left:auto;font-size:0.78rem;color:var(--text3)">${p.commentCount||0} comments · ${p.views||0} views</span>
+      <span style="margin-left:auto;font-size:0.78rem;color:var(--text3)">
+        ${p.commentCount||0} comments
+        <span style="margin:0 4px">·</span>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline;vertical-align:middle"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        ${p.views||0}
+      </span>
     </div>
     <div class="comments-section" id="commentsSection">
       ${renderCommentsHTML(comments, id)}
@@ -687,11 +709,16 @@ async function renderPost(id){
 }
 
 function renderCommentsHTML(comments, postId){
-  return `<h3>💬 Comments (${comments.length})</h3>
+  const savedName = commentAuthorName;
+  return `<h3>
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline;vertical-align:middle;margin-right:6px"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    Comments (${comments.filter(c=>!c.parentId).length})
+  </h3>
   <div class="comment-form">
     <div class="form-row">
-      <input class="form-input" id="cName" placeholder="Your name" maxlength="32">
+      <input class="form-input" id="cName" placeholder="Your name" maxlength="32" value="${escHtml(savedName)}" oninput="handleNameInput(this.value)">
     </div>
+    ${savedName?`<p class="name-locked-hint">Commenting as <strong>${escHtml(savedName)}</strong>. <a href="#" onclick="clearName(event)" style="color:var(--purple2)">Change</a></p>`:''}
     <textarea class="form-input form-textarea" id="cBody" placeholder="Write a comment..." maxlength="1000"></textarea>
     <div class="form-row-submit">
       <button class="submit-btn" onclick="submitComment(null,'${postId}')">
@@ -702,7 +729,7 @@ function renderCommentsHTML(comments, postId){
   </div>
   <div class="comment-list" id="commentList">
     ${comments.filter(c=>!c.parentId).map(c=>commentHTML(c,postId,comments)).join('')}
-    ${!comments.length?'<div class="empty" style="padding:2rem 0">No comments yet. Be the first!</div>':''}
+    ${!comments.filter(c=>!c.parentId).length?'<div class="empty" style="padding:2rem 0">No comments yet. Be the first!</div>':''}
   </div>`;
 }
 
@@ -722,7 +749,10 @@ function commentHTML(c, postId, allComments){
         <svg width="12" height="12" viewBox="0 0 24 24" fill="${cLiked?'currentColor':'none'}" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
         <span id="cl-${c.id}">${c.likes||0}</span>
       </button>
-      ${!isDeleted?`<button class="reply-toggle" onclick="toggleReplyForm('${c.id}','${postId}')">↩ Reply</button>`:''}
+      ${!isDeleted?`<button class="reply-toggle" onclick="toggleReplyForm('${c.id}','${postId}')">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 17 4 12 9 7"/><path d="M20 18v-2a4 4 0 0 0-4-4H4"/></svg>
+        Reply
+      </button>`:''}
     </div>
     <div id="replyForm-${c.id}"></div>
     ${replies.length?`<div class="reply-list" id="replies-${c.id}">${replies.map(r=>replyHTML(r,c.id,postId)).join('')}</div>`:`<div id="replies-${c.id}"></div>`}
@@ -748,16 +778,36 @@ function replyHTML(r, parentId, postId){
   </div>`;
 }
 
+function handleNameInput(val){
+  commentAuthorName = val;
+}
+
+function clearName(e){
+  e&&e.preventDefault();
+  saveAuthorName('');
+  const postId = currentPostId;
+  if(postId){
+    api(`/comments?postId=${postId}`).then(cData=>{
+      document.getElementById('commentsSection').innerHTML = renderCommentsHTML(cData.comments||[], postId);
+    });
+  }
+}
+
 function toggleReplyForm(commentId, postId){
   const el = document.getElementById(`replyForm-${commentId}`);
   if(el.innerHTML){el.innerHTML='';return;}
+  const savedName = commentAuthorName;
   el.innerHTML=`<div class="reply-form">
     <div class="form-row">
-      <input class="form-input" id="rName-${commentId}" placeholder="Your name" maxlength="32">
+      <input class="form-input" id="rName-${commentId}" placeholder="Your name" maxlength="32" value="${escHtml(savedName)}" oninput="commentAuthorName=this.value">
     </div>
+    ${savedName?`<p class="name-locked-hint">Replying as <strong>${escHtml(savedName)}</strong></p>`:''}
     <textarea class="form-input form-textarea" id="rBody-${commentId}" placeholder="Write a reply..." style="min-height:60px" maxlength="500"></textarea>
     <div class="form-row-submit">
-      <button class="submit-btn" onclick="submitComment('${commentId}','${postId}')">↩ Reply</button>
+      <button class="submit-btn" onclick="submitComment('${commentId}','${postId}')">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 17 4 12 9 7"/><path d="M20 18v-2a4 4 0 0 0-4-4H4"/></svg>
+        Reply
+      </button>
     </div>
   </div>`;
 }
@@ -767,16 +817,25 @@ async function submitComment(parentId, postId){
   const bodyEl = document.getElementById(parentId?`rBody-${parentId}`:'cBody');
   const name = nameEl?.value.trim();
   const body = bodyEl?.value.trim();
-  if(!name||name.length<2){showToast('⚠️ Name must be at least 2 characters');return;}
-  if(!body||body.length<2){showToast('⚠️ Comment must be at least 2 characters');return;}
+  if(!name||name.length<2){showToast('Name must be at least 2 characters');return;}
+  if(!body||body.length<2){showToast('Comment must be at least 2 characters');return;}
+
+  const nameCheck = await api('/check-name',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({postId,name})
+  });
+  if(!nameCheck.ok){showToast(nameCheck.error);return;}
+
   const data = await api('/comment',{
     method:'POST',
     headers:{'Content-Type':'application/json'},
     body:JSON.stringify({postId,name,body,parentId})
   });
-  if(!data.ok){showToast('⚠️ '+data.error);return;}
-  showToast('✅ Comment posted!');
-  // reload comments
+  if(!data.ok){showToast(data.error);return;}
+
+  saveAuthorName(name);
+  showToast('Comment posted!');
   const cData = await api(`/comments?postId=${postId}`);
   document.getElementById('commentsSection').innerHTML = renderCommentsHTML(cData.comments||[], postId);
 }
@@ -790,7 +849,7 @@ async function likeComment(e, postId, type, commentId, replyId){
     headers:{'Content-Type':'application/json'},
     body:JSON.stringify(body)
   });
-  if(!data.ok){showToast('⚠️ '+data.error);return;}
+  if(!data.ok){showToast(data.error);return;}
   const lKey = type==='reply'?`r:${replyId}`:`c:${commentId}`;
   likedComments[lKey]=data.liked; saveLikedComments();
   const countEl = document.getElementById(type==='reply'?`rl-${replyId}`:`cl-${commentId}`);
@@ -798,7 +857,7 @@ async function likeComment(e, postId, type, commentId, replyId){
   const btn = e.currentTarget;
   btn.classList.toggle('liked',data.liked);
   btn.querySelector('svg').setAttribute('fill',data.liked?'currentColor':'none');
-  showToast(data.liked?'❤️ Liked!':'💔 Unliked');
+  showToast(data.liked?'Liked':'Unliked');
 }
 
 async function likePostSingle(id){
@@ -807,21 +866,21 @@ async function likePostSingle(id){
     headers:{'Content-Type':'application/json'},
     body:JSON.stringify({postId:id,type:'post'})
   });
-  if(!data.ok){showToast('⚠️ '+data.error);return;}
+  if(!data.ok){showToast(data.error);return;}
   likedPosts[id]=data.liked; saveLikedPosts();
   const btn = document.getElementById('post-like-btn');
   const cnt = document.getElementById('single-lc');
   if(btn){ btn.classList.toggle('liked',data.liked); btn.querySelector('svg').setAttribute('fill',data.liked?'currentColor':'none'); }
   if(cnt) cnt.textContent=data.count;
-  showToast(data.liked?'❤️ Liked!':'💔 Unliked');
+  showToast(data.liked?'Liked':'Unliked');
 }
 
 function copyLink(id){
   const url = `${SITE}?post=${id}`;
-  navigator.clipboard.writeText(url).then(()=>showToast('🔗 Link copied!'));
+  navigator.clipboard.writeText(url).then(()=>showToast('Link copied!'));
 }
 
-function goList(e){ e&&e.preventDefault(); setUrl({post:null,page:null,tag:null}); renderList(); scrollTo({top:0}); }
+function goList(e){ e&&e.preventDefault(); currentPostId=null; allPostsCache=[]; setUrl({post:null,page:null}); renderList(); scrollTo({top:0}); }
 
 function renderMarkdown(md){
   if(!md) return '';
@@ -843,7 +902,6 @@ function escHtml(s){
   return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-// ── BOOT ─────────────────────────────────────────────────────
 route();
 </script>
 </body>
