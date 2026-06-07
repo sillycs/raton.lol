@@ -125,7 +125,7 @@ nav{
   position:relative;
 }
 .post-card.pinned::before{
-  content:'📌 Pinned';
+  content:' Pinned';
   position:absolute;top:10px;right:10px;
   background:var(--purple-dim);border:1px solid rgba(139,92,246,0.4);
   color:var(--purple2);font-size:0.65rem;font-weight:700;letter-spacing:0.08em;
@@ -662,7 +662,7 @@ function cardHTML(p){
         <span class="dot"></span>
         <span>${fmtDate(p.ts)}</span>
         ${tags?`<span class="dot"></span>${tags}`:''}
-        ${p.locked?`<span class="dot"></span><span style="color:#f59e0b;font-size:0.67rem">🔒 Locked</span>`:''}
+        ${p.locked?`<span class="dot"></span><span style="color:#f59e0b;font-size:0.67rem"> Locked</span>`:''}
       </div>
       <h2>${escHtml(p.title)}</h2>
       <p>${escHtml(p.excerpt||'')}</p>
@@ -719,7 +719,7 @@ async function likePost(e, id){
   const cnt = document.getElementById(`lc-${id}`);
   if(btn){ btn.classList.toggle('liked',data.liked); btn.querySelector('svg').setAttribute('fill',data.liked?'currentColor':'none'); }
   if(cnt) cnt.textContent=data.count;
-  showToast(data.liked?'❤️ Liked':'Unliked');
+  showToast(data.liked?' Liked':'Unliked');
 }
 
 function openPost(id, e){
@@ -764,8 +764,8 @@ async function renderPost(id){
         <span>${fmtDate(p.ts)}</span>
         ${p.editedAt?`<span class="dot"></span><span style="color:var(--text3);font-style:italic">edited ${timeAgo(p.editedAt)}</span>`:''}
         ${tags?`<span class="dot"></span>${tags}`:''}
-        ${p.pinned?`<span class="dot"></span><span style="color:var(--purple2)">📌 Pinned</span>`:''}
-        ${p.locked?`<span class="dot"></span><span style="color:#f59e0b">🔒 Comments locked</span>`:''}
+        ${p.pinned?`<span class="dot"></span><span style="color:var(--purple2)"> Pinned</span>`:''}
+        ${p.locked?`<span class="dot"></span><span style="color:#f59e0b">Comments locked</span>`:''}
       </div>
       <h1>${escHtml(p.title)}</h1>
     </div>
@@ -953,7 +953,7 @@ async function submitComment(parentId, postId){
 
   identityBoundName = name;
   saveAuthorName(name);
-  showToast('✅ Comment posted!');
+  showToast(' Comment posted!');
   const cData = await api(`/comments?postId=${postId}`);
   const isLocked = !!document.querySelector('.locked-notice');
   document.getElementById('commentsSection').innerHTML = renderCommentsHTML(cData.comments||[], postId, isLocked);
@@ -976,7 +976,7 @@ async function likeComment(e, postId, type, commentId, replyId){
   const btn = e.currentTarget;
   btn.classList.toggle('liked',data.liked);
   btn.querySelector('svg').setAttribute('fill',data.liked?'currentColor':'none');
-  showToast(data.liked?'❤️ Liked':'Unliked');
+  showToast(data.liked?' Liked':'Unliked');
 }
 
 async function likePostSingle(id){
@@ -991,12 +991,12 @@ async function likePostSingle(id){
   const cnt = document.getElementById('single-lc');
   if(btn){ btn.classList.toggle('liked',data.liked); btn.querySelector('svg').setAttribute('fill',data.liked?'currentColor':'none'); }
   if(cnt) cnt.textContent=data.count;
-  showToast(data.liked?'❤️ Liked':'Unliked');
+  showToast(data.liked?' Liked':'Unliked');
 }
 
 function copyLink(id){
   const url = `${SITE}?post=${id}`;
-  navigator.clipboard.writeText(url).then(()=>showToast('🔗 Link copied!'));
+  navigator.clipboard.writeText(url).then(()=>showToast(' Link copied!'));
 }
 
 function goList(e){ e&&e.preventDefault(); currentPostId=null; allPostsCache=[]; setUrl({post:null,page:null}); renderList(); scrollTo({top:0}); }
