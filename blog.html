@@ -228,6 +228,20 @@ nav{
   font-size:0.82rem;font-weight:500;color:var(--text2);
   transition:.2s;
 }
+  .footer-note {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+
+  margin-top:1rem;
+
+  font-size:0.72rem;
+  color:var(--text3);
+  text-decoration:none;
+  padding-top:0.5rem;
+}
+.footer-note:hover { color: var(--text2); }
 .action-btn:hover{background:rgba(255,255,255,0.1);color:var(--text)}
 .action-btn.liked{background:var(--purple-dim);border-color:var(--purple);color:var(--purple2)}
 .action-btn.liked svg{fill:var(--purple2)}
@@ -419,9 +433,10 @@ footer{
 
 <div id="app"></div>
 
-<footer>
-  <p class="footer-bottom">© 2026 SillyCS. All rights reserved</p>
-</footer>
+  <a class="footer-note" href="https://raton.lol">
+    <img src="https://raton.lol/img/RATA.png" width="13" height="13" alt="" onerror="this.style.display='none'">
+    © 2026 SillyCS. All rights reserved
+  </a>
 
 <div class="toast" id="toast"></div>
 
