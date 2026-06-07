@@ -195,12 +195,6 @@ tr:hover td{background:rgba(255,255,255,0.02)}
 .spinner{width:24px;height:24px;border:2px solid var(--border2);border-top-color:var(--purple);border-radius:50%;animation:spin .7s linear infinite;margin:2rem auto;display:block}
 @keyframes spin{to{transform:rotate(360deg)}}
 .empty{text-align:center;padding:3rem;color:var(--text3);font-size:0.85rem}
-.section-divider{
-  display:flex;align-items:center;gap:0.6rem;
-  font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;
-  color:var(--text3);margin:1.6rem 0 0.8rem;
-}
-.section-divider::before,.section-divider::after{content:'';flex:1;height:1px;background:var(--border)}
 .gw-card{
   background:var(--surface);border:1px solid var(--border);
   border-radius:12px;padding:1.2rem;margin-bottom:0.8rem;
@@ -466,7 +460,7 @@ async function renderDashboard(){
           <thead><tr><th>Title</th><th>Date</th><th>Likes</th><th>Views</th><th>Status</th></tr></thead>
           <tbody>${posts.slice(0,5).map(p=>`
             <tr>
-              <td class="td-title">${esc(p.title)}${p.pinned?' 📌':''}${p.locked?' 🔒':''}</td>
+              <td class="td-title">${esc(p.title)}${p.pinned?' [pinned]':''}${p.locked?' [locked]':''}</td>
               <td>${fmt(p.ts)}</td>
               <td>${p.likes||0}</td>
               <td>${p.views||0}</td>
@@ -509,15 +503,15 @@ async function renderPosts(forceRefresh=true){
             </td>
             <td>
               <span class="badge ${p.published?'badge-pub':'badge-draft'}">${p.published?'Live':'Draft'}</span>
-              ${p.pinned?'<span class="badge badge-pinned">📌</span>':''}
-              ${p.locked?'<span class="badge badge-locked">🔒</span>':''}
+              ${p.pinned?'<span class="badge badge-pinned">Pinned</span>':''}
+              ${p.locked?'<span class="badge badge-locked">Locked</span>':''}
             </td>
             <td class="td-actions">
               <button class="btn btn-ghost btn-sm" onclick="editPost('${p.id}')">Edit</button>
               <a class="btn btn-ghost btn-sm" href="${BLOG_URL}?post=${p.id}" target="_blank">View</a>
               <button class="btn btn-ghost btn-sm" onclick="togglePublish('${p.id}')">${p.published?'Unpublish':'Publish'}</button>
-              <button class="btn btn-yellow btn-sm" onclick="togglePin('${p.id}')">${p.pinned?'Unpin':'📌 Pin'}</button>
-              <button class="btn btn-warning btn-sm" onclick="toggleLock('${p.id}')">${p.locked?'Unlock':'🔒 Lock'}</button>
+              <button class="btn btn-yellow btn-sm" onclick="togglePin('${p.id}')">${p.pinned?'Unpin':'Pin'}</button>
+              <button class="btn btn-warning btn-sm" onclick="toggleLock('${p.id}')">${p.locked?'Unlock':'Lock'}</button>
               <button class="btn btn-warning btn-sm" onclick="resetLikes('${p.id}')">Reset Likes</button>
               <button class="btn btn-danger btn-sm" onclick="nukeComments('${p.id}')">Nuke Comments</button>
               <button class="btn btn-danger btn-sm" onclick="deletePost('${p.id}')">Delete</button>
@@ -625,7 +619,7 @@ async function createPost(){
 
   const data=await blogPost('/admin/post',{title,body,excerpt,author,tags,imageUrl,published,pinned});
   if(!data.ok){toast(data.error);btn.disabled=false;btn.textContent='Publish Post';return;}
-  toast('✅ Post published! ID: '+data.post.id);
+  toast('Post published — ID: '+data.post.id);
   pendingImageBase64=null; pendingImageMime=null;
   allPosts=[];
   setTimeout(()=>showView('posts'),1000);
@@ -695,7 +689,7 @@ async function saveEdit(id){
   if(imageUrl!==undefined) payload.imageUrl=imageUrl;
   const data=await blogPost('/admin/update-post',payload);
   if(!data.ok){toast(data.error);return;}
-  toast('✅ Post updated!');
+  toast('Post updated');
   pendingImageBase64=null; pendingImageMime=null;
   closeModal('postModal');
   allPosts=[]; renderPosts();
@@ -704,21 +698,21 @@ async function saveEdit(id){
 async function togglePublish(id){
   const data=await blogPost('/admin/toggle-publish',{id});
   if(!data.ok){toast(data.error);return;}
-  toast(data.published?'✅ Published':'Post unpublished');
+  toast(data.published?'Published':'Unpublished');
   allPosts=[]; renderPosts();
 }
 
 async function togglePin(id){
   const data=await blogPost('/admin/pin-post',{id});
   if(!data.ok){toast(data.error);return;}
-  toast(data.pinned?'📌 Post pinned':'Post unpinned');
+  toast(data.pinned?'Post pinned':'Post unpinned');
   allPosts=[]; renderPosts();
 }
 
 async function toggleLock(id){
   const data=await blogPost('/admin/lock-post',{id});
   if(!data.ok){toast(data.error);return;}
-  toast(data.locked?'🔒 Comments locked':'🔓 Comments unlocked');
+  toast(data.locked?'Comments locked':'Comments unlocked');
   allPosts=[]; renderPosts();
 }
 
@@ -726,16 +720,16 @@ async function resetLikes(id){
   if(!confirm(`Reset all likes for this post? This cannot be undone.`)) return;
   const data=await blogPost('/admin/reset-likes',{postId:id});
   if(!data.ok){toast(data.error);return;}
-  toast('✅ Likes reset');
+  toast('Likes reset');
   allPosts=[]; renderPosts();
 }
 
 async function nukeComments(id){
-  if(!confirm(`⚠️ DELETE ALL COMMENTS on this post? This is irreversible.`)) return;
-  if(!confirm(`Are you ABSOLUTELY sure? All comments and replies will be gone forever.`)) return;
+  if(!confirm(`Delete ALL comments on this post? This is irreversible.`)) return;
+  if(!confirm(`Are you absolutely sure? All comments and replies will be gone.`)) return;
   const data=await blogPost('/admin/nuke-comments',{postId:id});
   if(!data.ok){toast(data.error);return;}
-  toast('💥 All comments deleted');
+  toast('All comments deleted');
   allPosts=[]; renderPosts();
 }
 
@@ -743,7 +737,7 @@ async function deletePost(id){
   if(!confirm(`Delete post "${id}"? This cannot be undone.`)) return;
   const data=await blogPost('/admin/delete-post',{id});
   if(!data.ok){toast(data.error);return;}
-  toast('🗑️ Post deleted');
+  toast('Post deleted');
   allPosts=[]; renderPosts();
 }
 
@@ -775,7 +769,7 @@ async function renderComments(){
             <td>${fmt(p.ts)}</td>
             <td>${p.commentCount||0}</td>
             <td>
-              ${p.locked?'<span class="badge badge-locked">🔒 Locked</span>':'<span class="badge badge-pub">Open</span>'}
+              ${p.locked?'<span class="badge badge-locked">Locked</span>':'<span class="badge badge-pub">Open</span>'}
             </td>
             <td class="td-actions">
               <button class="btn btn-ghost btn-sm" onclick="showComments('${p.id}')">Manage</button>
@@ -813,19 +807,19 @@ function renderAdminComments(comments, postId){
         ${!c.deleted?`<span class="comment-meta-ip" title="IP">${esc(c.ip||'?')}</span>`:''}
         ${c.fp?`<span class="comment-meta-fp" title="Fingerprint">fp:${esc(c.fp.slice(0,8))}</span>`:''}
         ${c.deleted?'<span class="badge badge-del">Soft Deleted</span>':''}
-        ${c.editedByAdmin?'<span class="badge" style="background:var(--purple-dim);color:var(--purple2);border:1px solid rgba(139,92,246,0.25)">Edited by mod</span>':''}
-        <span style="margin-left:auto;font-size:0.72rem;color:var(--text3)">${c.likes||0} ❤️ · ID: ${esc(c.id)}</span>
+        ${c.editedByAdmin&&!c.deleted?'<span class="badge" style="background:var(--purple-dim);color:var(--purple2);border:1px solid rgba(139,92,246,0.25)">Edited by mod</span>':''}
+        <span style="margin-left:auto;font-size:0.72rem;color:var(--text3)">${c.likes||0} likes · ID: ${esc(c.id)}</span>
       </div>
       <div class="comment-text ${c.deleted?'deleted-msg':''}">${esc(c.body)}</div>
       <div style="display:flex;gap:0.4rem;margin-top:0.5rem;flex-wrap:wrap">
         ${!c.deleted?`
-          <button class="btn btn-warning btn-sm" onclick="softDeleteComment('${postId}','${c.id}')">🪄 Soft Delete</button>
-          <button class="btn btn-ghost btn-sm" onclick="openEditComment('${postId}','${c.id}',null,'${esc(c.body).replace(/'/g,"\\'")}')">✏️ Edit</button>
+          <button class="btn btn-warning btn-sm" onclick="softDeleteComment('${postId}','${c.id}')">Soft Delete</button>
+          <button class="btn btn-ghost btn-sm" onclick="openEditComment('${postId}','${c.id}',null,'${esc(c.body).replace(/'/g,"\\'")}')">Edit</button>
         `:''}
-        <button class="btn btn-danger btn-sm" onclick="hardDeleteComment('${postId}','${c.id}')">🗑️ Hard Delete</button>
-        ${!c.deleted?`<button class="btn btn-yellow btn-sm" onclick="banByIp('${esc(c.ip||'')}')">🚫 Ban IP</button>`:''}
+        <button class="btn btn-danger btn-sm" onclick="hardDeleteComment('${postId}','${c.id}')">Hard Delete</button>
+        ${!c.deleted?`<button class="btn btn-yellow btn-sm" onclick="banByIp('${esc(c.ip||'')}')">Ban IP</button>`:''}
       </div>
-      ${(c.replies||[]).length?`<div class="reply-indent">${c.replies.map(r=>replyAdminHTML(r,c.id,postId,c.ip)).join('')}</div>`:''}
+      ${(c.replies||[]).length?`<div class="reply-indent">${c.replies.map(r=>replyAdminHTML(r,c.id,postId)).join('')}</div>`:''}
     </div>`).join('');
 }
 
@@ -837,17 +831,17 @@ function replyAdminHTML(r, parentId, postId){
       ${!r.deleted?`<span class="comment-meta-ip">${esc(r.ip||'?')}</span>`:''}
       ${r.fp?`<span class="comment-meta-fp">fp:${esc(r.fp.slice(0,8))}</span>`:''}
       ${r.deleted?'<span class="badge badge-del">Soft Deleted</span>':''}
-      ${r.editedByAdmin?'<span class="badge" style="background:var(--purple-dim);color:var(--purple2);border:1px solid rgba(139,92,246,0.25)">Edited</span>':''}
-      <span style="margin-left:auto;font-size:0.72rem;color:var(--text3)">${r.likes||0} ❤️</span>
+      ${r.editedByAdmin&&!r.deleted?'<span class="badge" style="background:var(--purple-dim);color:var(--purple2);border:1px solid rgba(139,92,246,0.25)">Edited</span>':''}
+      <span style="margin-left:auto;font-size:0.72rem;color:var(--text3)">${r.likes||0} likes</span>
     </div>
     <div class="comment-text ${r.deleted?'deleted-msg':''}">${esc(r.body)}</div>
     <div style="display:flex;gap:0.4rem;margin-top:0.4rem;flex-wrap:wrap">
       ${!r.deleted?`
-        <button class="btn btn-warning btn-sm" onclick="softDeleteComment('${postId}','${parentId}','${r.id}')">🪄 Soft Delete</button>
-        <button class="btn btn-ghost btn-sm" onclick="openEditComment('${postId}','${parentId}','${r.id}','${esc(r.body).replace(/'/g,"\\'")}')">✏️ Edit</button>
+        <button class="btn btn-warning btn-sm" onclick="softDeleteComment('${postId}','${parentId}','${r.id}')">Soft Delete</button>
+        <button class="btn btn-ghost btn-sm" onclick="openEditComment('${postId}','${parentId}','${r.id}','${esc(r.body).replace(/'/g,"\\'")}')">Edit</button>
       `:''}
-      <button class="btn btn-danger btn-sm" onclick="hardDeleteComment('${postId}','${parentId}','${r.id}')">🗑️ Hard Delete</button>
-      ${!r.deleted?`<button class="btn btn-yellow btn-sm" onclick="banByIp('${esc(r.ip||'')}')">🚫 Ban IP</button>`:''}
+      <button class="btn btn-danger btn-sm" onclick="hardDeleteComment('${postId}','${parentId}','${r.id}')">Hard Delete</button>
+      ${!r.deleted?`<button class="btn btn-yellow btn-sm" onclick="banByIp('${esc(r.ip||'')}')">Ban IP</button>`:''}
     </div>
   </div>`;
 }
@@ -856,16 +850,16 @@ async function softDeleteComment(postId, commentId, replyId){
   if(!confirm('Soft delete: marks as [deleted by moderator], still visible as placeholder.')) return;
   const data=await blogPost('/admin/delete-comment',{postId,commentId,replyId:replyId||undefined});
   if(!data.ok){toast(data.error);return;}
-  toast('🪄 Soft deleted');
+  toast('Soft deleted');
   showComments(postId);
 }
 
 async function hardDeleteComment(postId, commentId, replyId){
-  if(!confirm('⚠️ Hard delete: completely removes the comment. Cannot be undone.')) return;
+  if(!confirm('Hard delete: completely removes the comment. Cannot be undone.')) return;
   const data=await blogPost('/admin/hard-delete-comment',{postId,commentId,replyId:replyId||undefined});
   if(!data.ok){toast(data.error);return;}
-  toast('🗑️ Hard deleted');
-  allPosts=[]; // refresh comment count
+  toast('Hard deleted');
+  allPosts=[];
   showComments(postId);
 }
 
@@ -876,7 +870,7 @@ function openEditComment(postId, commentId, replyId, currentBody){
         <label class="form-label">Edit body</label>
         <textarea class="input textarea" id="editCommentText" style="min-height:120px">${currentBody}</textarea>
       </div>
-      <p style="font-size:0.72rem;color:var(--text3)">⚠️ This will mark the comment as "edited by mod" for all users.</p>
+      <p style="font-size:0.72rem;color:var(--text3)">This will mark the comment as "edited by mod" for all users.</p>
       <div style="display:flex;gap:0.6rem">
         <button class="btn btn-primary" onclick="saveEditComment('${postId}','${commentId}','${replyId||''}')">Save</button>
         <button class="btn btn-ghost" onclick="closeModal('editCommentModal')">Cancel</button>
@@ -892,7 +886,7 @@ async function saveEditComment(postId, commentId, replyId){
   if(replyId) payload.replyId=replyId;
   const data=await blogPost('/admin/edit-comment',payload);
   if(!data.ok){toast(data.error);return;}
-  toast('✅ Comment edited');
+  toast('Comment edited');
   closeModal('editCommentModal');
   showComments(postId);
 }
@@ -904,11 +898,10 @@ function banByIp(ip){
   const reason=prompt('Ban reason (optional):','Violation of community guidelines')||'Violation of community guidelines';
   blogPost('/admin/ban-identity',{ip,reason,durationHours:parseInt(hours)||24}).then(data=>{
     if(!data.ok){toast(data.error);return;}
-    toast(`🚫 IP ${ip} banned for ${hours}h`);
+    toast(`IP ${ip} banned for ${hours}h`);
   });
 }
 
-// ── Tools view ────────────────────────────────────────────────────────────────
 function renderTools(){
   document.getElementById('mainContent').innerHTML=`
     <div style="max-width:720px;display:flex;flex-direction:column;gap:1.2rem">
@@ -961,8 +954,8 @@ function renderTools(){
             <input class="input" id="banReason" value="Violation of community guidelines">
           </div>
           <div class="action-group-row">
-            <button class="btn btn-danger" onclick="banIdentity()">🚫 Ban</button>
-            <button class="btn btn-success" onclick="unbanIdentity()">✅ Unban</button>
+            <button class="btn btn-danger" onclick="banIdentity()">Ban</button>
+            <button class="btn btn-success" onclick="unbanIdentity()">Unban</button>
           </div>
         </div>
       </div>
@@ -985,7 +978,7 @@ function renderTools(){
             </div>
           </div>
           <div>
-            <button class="btn btn-warning" onclick="resetUserName()">🔄 Reset Name</button>
+            <button class="btn btn-warning" onclick="resetUserName()">Reset Name</button>
           </div>
         </div>
       </div>
@@ -1001,10 +994,10 @@ function renderTools(){
             <input class="input" id="bulkPostId" placeholder="post-id-here">
           </div>
           <div class="action-group-row">
-            <button class="btn btn-yellow btn-sm" onclick="bulkAction('lock')">🔒 Lock Comments</button>
-            <button class="btn btn-ghost btn-sm" onclick="bulkAction('unlock')">🔓 Unlock Comments</button>
+            <button class="btn btn-yellow btn-sm" onclick="bulkAction('lock')">Lock Comments</button>
+            <button class="btn btn-ghost btn-sm" onclick="bulkAction('unlock')">Unlock Comments</button>
             <button class="btn btn-warning btn-sm" onclick="bulkAction('reset-likes')">Reset Likes</button>
-            <button class="btn btn-danger btn-sm" onclick="bulkAction('nuke')">💥 Nuke Comments</button>
+            <button class="btn btn-danger btn-sm" onclick="bulkAction('nuke')">Nuke Comments</button>
           </div>
         </div>
       </div>
@@ -1020,7 +1013,7 @@ async function sendAnnouncement(){
   if(!message){toast('Message is required');return;}
   const data=await blogPost('/admin/announce',{message,title,color});
   if(!data.ok){toast(data.error);return;}
-  toast('📢 Announcement sent!');
+  toast('Announcement sent');
 }
 
 async function banIdentity(){
@@ -1030,7 +1023,7 @@ async function banIdentity(){
   if(!ip){toast('IP is required');return;}
   const data=await blogPost('/admin/ban-identity',{ip,reason,durationHours:hours});
   if(!data.ok){toast(data.error);return;}
-  toast(`🚫 Banned ${ip} for ${hours}h`);
+  toast(`Banned ${ip} for ${hours}h`);
 }
 
 async function unbanIdentity(){
@@ -1038,7 +1031,7 @@ async function unbanIdentity(){
   if(!ip){toast('IP is required');return;}
   const data=await blogPost('/admin/unban-identity',{ip});
   if(!data.ok){toast(data.error);return;}
-  toast(`✅ Unbanned ${ip}`);
+  toast(`Unbanned ${ip}`);
 }
 
 async function resetUserName(){
@@ -1047,7 +1040,7 @@ async function resetUserName(){
   if(!ip&&!fp){toast('IP or fingerprint required');return;}
   const data=await blogPost('/admin/reset-name',{ip,fp});
   if(!data.ok){toast(data.error);return;}
-  toast('🔄 Name binding reset');
+  toast('Name binding reset');
 }
 
 async function bulkAction(action){
@@ -1057,23 +1050,22 @@ async function bulkAction(action){
   if(action==='lock'||action==='unlock'){
     const data=await blogPost('/admin/lock-post',{id:postId});
     if(!data.ok){toast(data.error);return;}
-    toast(data.locked?'🔒 Locked':'🔓 Unlocked');
+    toast(data.locked?'Locked':'Unlocked');
   } else if(action==='reset-likes'){
     if(!confirm(`Reset likes for "${postId}"?`)) return;
     const data=await blogPost('/admin/reset-likes',{postId});
     if(!data.ok){toast(data.error);return;}
-    toast('✅ Likes reset');
+    toast('Likes reset');
   } else if(action==='nuke'){
-    if(!confirm(`⚠️ Nuke ALL comments for "${postId}"? Cannot undo.`)) return;
-    if(!confirm('Are you SURE?')) return;
+    if(!confirm(`Nuke ALL comments for "${postId}"? Cannot undo.`)) return;
+    if(!confirm('Are you sure?')) return;
     const data=await blogPost('/admin/nuke-comments',{postId});
     if(!data.ok){toast(data.error);return;}
-    toast('💥 Nuked');
+    toast('Nuked');
   }
   allPosts=[];
 }
 
-// ── Giveaways ─────────────────────────────────────────────────────────────────
 function fmtTimeLeft(ms){
   if(ms<=0) return 'Ended';
   const h=Math.floor(ms/3600000); const m=Math.floor((ms%3600000)/60000);
@@ -1158,7 +1150,7 @@ async function createGiveaway(){
       const ids=JSON.parse(localStorage.getItem('gw_ids')||'[]');
       if(!ids.includes(id)) ids.push(id);
       localStorage.setItem('gw_ids',JSON.stringify(ids));
-      toast('✅ Giveaway created!');
+      toast('Giveaway created');
       showView('giveaways');
     } else {
       toast(r.error||'Failed to create');
@@ -1173,7 +1165,7 @@ async function createGiveaway(){
 async function pickWinner(id){
   if(!confirm(`Pick a winner for "${id}"?`)) return;
   const r=await gwPost('/admin/winner',{adminKey:ADMIN_KEY,giveawayId:id});
-  if(r.ok){toast('🎉 Winner: '+r.winner);renderGiveaways();}
+  if(r.ok){toast('Winner: '+r.winner);renderGiveaways();}
   else toast(r.error||'Failed');
 }
 
@@ -1184,7 +1176,6 @@ async function endGiveaway(id){
   else toast(r.error||'Failed');
 }
 
-// ── Modal helpers ─────────────────────────────────────────────────────────────
 function openModal(id){ document.getElementById(id).classList.remove('hidden'); }
 function closeModal(id){ document.getElementById(id).classList.add('hidden'); }
 document.addEventListener('keydown',e=>{ if(e.key==='Escape') document.querySelectorAll('.modal-overlay').forEach(m=>m.classList.add('hidden')); });
