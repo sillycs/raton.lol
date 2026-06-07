@@ -49,7 +49,6 @@
       flex-direction: column;
     }
 
-    /* ─── RATA BG ─── */
     .rata-bg { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
     .rata-sprite {
       position: absolute; opacity: 0; will-change: transform, opacity;
@@ -66,7 +65,6 @@
     @keyframes fadeUp { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
     @keyframes pulse  { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:0.6;transform:scale(1.3);} }
 
-    /* ─── TOP NAV (from Download) ─── */
     nav {
       position: sticky; top: 0; z-index: 200;
       display: flex; align-items: center; justify-content: space-between;
@@ -92,13 +90,11 @@
       color: var(--text); padding: 6px;
     }
 
-    /* ─── LAYOUT ─── */
     .layout {
       position: relative; z-index: 1;
       display: flex; flex: 1; min-height: calc(100vh - 64px);
     }
 
-    /* ─── LEFT SIDEBAR (from Admin) ─── */
     .sidebar {
       width: var(--sidebar-w); flex-shrink: 0;
       background: var(--surface);
@@ -125,7 +121,6 @@
     .sidebar-item svg { flex-shrink: 0; opacity: .7; }
     .sidebar-item.active svg { opacity: 1; }
 
-    /* ─── MOBILE NAV SELECT ─── */
     .mobile-nav {
       display: none; position: sticky; top: 64px; z-index: 50;
       background: rgba(10,10,10,0.95); backdrop-filter: blur(16px);
@@ -138,7 +133,6 @@
       font-family: var(--font-mono); outline: none;
     }
 
-    /* ─── MAIN CONTENT ─── */
     .main {
       flex: 1; padding: 48px clamp(24px,5vw,64px) 100px;
       max-width: 860px;
@@ -329,7 +323,7 @@
     <li><a href="https://raton.lol/#testimonials">Reviews</a></li>
     <li><a href="https://raton.lol/#pricing">Pricing</a></li>
     <li><a href="https://raton.lol/#showcase">Showcase</a></li>
-    <li><a href="https://raton.lol/">Download</a></li>
+    <li><a href="https://raton.lol/download">Download</a></li>
     <li><a href="https://raton.lol/docs" class="active">Documentation</a></li>
     <li><a href="https://raton.lol/blog">Forum</a></li>
   </ul>
@@ -732,7 +726,7 @@ function copyCode(btn, id) {
   const el = document.getElementById(id);
   if (!el) return;
   navigator.clipboard.writeText(el.innerText).then(() => {
-    btn.textContent = 'Copied!'; btn.classList.add('copied');
+    btn.textContent = 'Copied'; btn.classList.add('copied');
     showToast('Copied to clipboard');
     setTimeout(() => { btn.textContent = btn.dataset.orig || 'Copy'; btn.classList.remove('copied'); }, 1800);
   });
