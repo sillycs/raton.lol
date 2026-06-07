@@ -1,577 +1,285 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Documentation</title>
-  <link rel="icon" href="https://raton.lol/img/RATA.png"/>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link href="https://fonts.cdnfonts.com/css/nishiki-teki" rel="stylesheet">
-  <link href="https://fonts.cdnfonts.com/css/kunal" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --bg: #0d0d0d; --surface: #141414; --surface2: #1c1c1c;
-      --border: rgba(255,255,255,0.07); --border2: rgba(255,255,255,0.12);
-      --purple: #8b5cf6; --purple2: #a78bfa; --purple-dim: rgba(139,92,246,0.15);
-      --text: #f4f4f8; --text2: #a0a0b8; --text3: #606078;
-      --green: #4CAF50; --blue: #64B5F6; --yellow: #FFB74D; --red: #EF5350;
-      --font-display: 'Nishiki-teki', sans-serif; --font-logo: 'kunal', sans-serif;
-      --font-body: 'DM Sans', sans-serif; --font-mono: 'JetBrains Mono', monospace;
-      --sidebar-w: 220px; --code-bg: #0a0a0a;
-    }
-    * { cursor: url('https://raton.lol/img/default.png') 0 0, auto; }
-    a, button, select { cursor: url('https://raton.lol/img/handpointing.png') 0 0, pointer; }
-    html { scroll-behavior: smooth; }
-    body { font-family: var(--font-body); color: var(--text); background: var(--bg); min-height: 100vh; overflow-x: hidden; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Download</title>
+<link rel="icon" type="image/png" href="https://raton.lol/img/RATA.png">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.cdnfonts.com/css/kunal" rel="stylesheet">
+<link href="https://fonts.cdnfonts.com/css/nishiki-teki" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d0d0d;
+  --surface:#141414;
+  --surface2:#1c1c1c;
+  --border:rgba(255,255,255,0.07);
+  --border2:rgba(255,255,255,0.12);
+  --purple:#8b5cf6;
+  --purple2:#a78bfa;
+  --purple-dim:rgba(139,92,246,0.15);
+  --text:#f4f4f8;
+  --text2:#a0a0b8;
+  --text3:#606078;
+  --font-display:'Nishiki-teki',sans-serif;
+  --font-logo:'kunal',sans-serif;
+  --font-body:'DM Sans',sans-serif;
+}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:#0d0d0d}
+::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--purple),#5b21b6);border-radius:99px;cursor:url('https://raton.lol/img/handpointing.png') 0 0,pointer}
+::-webkit-scrollbar-thumb:hover{background:var(--purple2)}
+*{scrollbar-width:thin;scrollbar-color:var(--purple) #0d0d0d}
+*{cursor:url('https://raton.lol/img/default.png') 0 0,auto}
+a,button,[role="button"]{cursor:url('https://raton.lol/img/handpointing.png') 0 0,pointer}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font-body);
+  font-size:16px;
+  line-height:1.6;
+  overflow-x:hidden;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+}
 
-    .rata-bg { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
-    .rata-sprite {
-      position: absolute; opacity: 0; will-change: transform, opacity;
-      filter: grayscale(20%) brightness(0.45); animation: rataFloat linear infinite;
-      transform-origin: center; user-select: none;
-    }
-    @keyframes rataFloat {
-      0%   { opacity: 0;    transform: translateY(0px)   rotate(0deg)  scale(1);    }
-      8%   { opacity: 0.10; }
-      50%  { opacity: 0.06; transform: translateY(-28px) rotate(7deg)  scale(1.05); }
-      92%  { opacity: 0.10; }
-      100% { opacity: 0;    transform: translateY(-55px) rotate(-4deg) scale(0.95); }
-    }
-    @keyframes fadeUp { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
-    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:0.6;transform:scale(1.3);} }
+.rata-bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.rata-sprite{
+  position:absolute;opacity:0;
+  will-change:transform,opacity;
+  filter:grayscale(20%) brightness(0.65);
+  animation:rataFloat linear infinite;
+  transform-origin:center;user-select:none;
+}
+@keyframes rataFloat{
+  0%{opacity:0;transform:translateY(0px) rotate(0deg) scale(1)}
+  8%{opacity:0.18}
+  50%{opacity:0.10;transform:translateY(-28px) rotate(7deg) scale(1.05)}
+  92%{opacity:0.18}
+  100%{opacity:0;transform:translateY(-55px) rotate(-4deg) scale(0.95)}
+}
 
-    nav {
-      position: sticky; top: 0; z-index: 200;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 2rem; height: 60px;
-      background: rgba(13,13,13,0.92); backdrop-filter: blur(24px);
-      border-bottom: 1px solid var(--border);
-    }
-    .nav-logo {
-      display: flex; align-items: center; gap: 8px;
-      font-family: var(--font-logo); font-weight: 800;
-      font-size: 1.4rem; color: var(--text); text-decoration: none;
-    }
-    .nav-right { display: flex; align-items: center; gap: 10px; }
-    .nav-tag {
-      font-size: 0.68rem; color: var(--purple2); background: var(--purple-dim);
-      border: 1px solid rgba(139,92,246,0.2); border-radius: 6px; padding: 2px 8px;
-      font-family: var(--font-body); font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;
-    }
-    .nav-meta {
-      font-family: var(--font-mono); font-size: 0.68rem; color: var(--green);
-      background: rgba(76,175,80,0.08); border: 1px solid rgba(76,175,80,0.15);
-      border-radius: 6px; padding: 2px 8px;
-    }
+nav{
+  position:sticky;top:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 3rem;height:64px;
+  background:rgba(13,13,13,0.88);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo{
+  display:flex;align-items:center;gap:10px;
+  font-family:var(--font-logo);font-weight:800;
+  font-size:1.5rem;color:var(--text);text-decoration:none;
+}
+.nav-links{display:flex;align-items:center;gap:2rem;list-style:none}
+.nav-links a{
+  text-decoration:none;color:var(--text2);
+  font-size:0.875rem;font-weight:400;transition:color 0.2s;
+}
+.nav-links a:hover{color:var(--text)}
+.nav-links a.active{color:var(--purple2)}
+.nav-mobile-toggle{display:none;background:none;border:none;color:var(--text);padding:6px}
 
-    .shell { position: relative; z-index: 1; display: grid; grid-template-columns: var(--sidebar-w) 1fr; min-height: calc(100vh - 60px); }
-    @media(max-width:840px) { .shell { grid-template-columns:1fr; } .sidebar { display:none; } }
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:0.55rem 1.3rem;border-radius:10px;
+  font-family:var(--font-body);font-size:0.875rem;font-weight:500;
+  text-decoration:none;border:none;transition:all 0.2s;
+}
+.btn-primary{background:var(--purple);color:#fff}
+.btn-primary:hover{background:#7c3aed;transform:translateY(-1px)}
+.btn-ghost{background:rgba(255,255,255,0.06);color:var(--text);border:1px solid var(--border2)}
+.btn-ghost:hover{background:rgba(255,255,255,0.1)}
 
-    .sidebar {
-      position: sticky; top: 60px; height: calc(100vh - 60px);
-      background: rgba(10,10,10,0.85); border-right: 1px solid var(--border);
-      backdrop-filter: blur(16px); display: flex; flex-direction: column; overflow: hidden;
-    }
-    .sidebar-inner { flex:1; overflow-y:auto; padding:20px 10px 32px; scrollbar-width:thin; scrollbar-color:#222 transparent; }
-    .sidebar-inner::-webkit-scrollbar { width:4px; }
-    .sidebar-inner::-webkit-scrollbar-thumb { background:#2a2a2a; border-radius:4px; }
+.main{
+  position:relative;z-index:1;
+  flex:1;display:flex;align-items:center;justify-content:center;
+  padding:3rem 2rem;
+}
+.page{
+  width:100%;max-width:430px;
+  display:flex;flex-direction:column;align-items:center;gap:0.9rem;
+  animation:fadeUp .55s cubic-bezier(.22,1,.36,1) both;
+}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.page-logo{
+  display:flex;align-items:center;gap:10px;text-decoration:none;
+  font-family:var(--font-logo);font-size:1.3rem;font-weight:800;
+  color:var(--text);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:0.1rem;
+}
+.page-sub{text-align:center;font-size:0.82rem;line-height:1.3;color:var(--text2)}
+.page-sub #timer{color:var(--purple2);font-weight:700}
 
-    .nav-group-label { font-size:0.6rem; font-weight:800; letter-spacing:0.14em; text-transform:uppercase; color:var(--text3); padding:0 10px; margin:18px 0 6px; }
-    .nav-item {
-      display:flex; align-items:center; gap:9px; padding:7px 10px; border-radius:8px;
-      transition:background .15s; text-decoration:none; border:none;
-      background:transparent; width:100%; text-align:left;
-    }
-    .nav-item:hover { background:rgba(255,255,255,0.04); }
-    .nav-item.active { background:rgba(139,92,246,0.1); border:1px solid rgba(139,92,246,0.15); }
-    .nav-dot { width:6px; height:6px; border-radius:50%; flex-shrink:0; }
-    .nav-label { font-family:var(--font-mono); font-size:11px; color:var(--text3); font-weight:500; }
-    .nav-item.active .nav-label { color:var(--text2); }
-    .nav-item:hover .nav-label { color:#aaa; }
+.dl-card{
+  width:100%;background:var(--surface);
+  border:1px solid var(--border2);border-radius:18px;
+  padding:1rem;display:flex;flex-direction:column;gap:0.8rem;
+  backdrop-filter:blur(12px);
+}
+.dl-card-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.pw-block{display:flex;flex-direction:column;gap:0}
+.pw-label{font-size:0.66rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--text3)}
+.pw-value{font-family:var(--font-display);font-size:1.15rem;font-weight:800;letter-spacing:0.08em;color:var(--purple2)}
+.btn-row{display:flex;align-items:center;gap:6px}
+.btn-sm{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:0.45rem 0.9rem;border-radius:9px;text-decoration:none;border:none;
+  font-family:var(--font-body);font-size:0.76rem;font-weight:600;transition:.2s ease;
+}
+.btn-sm svg{flex-shrink:0}
+.btn-ghost-sm{background:rgba(255,255,255,0.06);color:var(--text);border:1px solid var(--border2)}
+.btn-ghost-sm:hover{background:rgba(255,255,255,0.1)}
+.btn-primary-sm{background:var(--purple);color:#fff}
+.btn-primary-sm:hover{background:#7c3aed;transform:translateY(-1px)}
 
-    .mobile-nav {
-      display:none; position:sticky; top:60px; z-index:50;
-      background:rgba(10,10,10,0.95); backdrop-filter:blur(16px);
-      border-bottom:1px solid var(--border); padding:10px 16px;
-    }
-    .mobile-nav select {
-      background:var(--surface); color:var(--text2); border:1px solid var(--border2);
-      border-radius:8px; padding:6px 10px; font-size:13px; width:100%;
-      font-family:var(--font-mono); outline:none;
-    }
-    @media(max-width:840px) { .mobile-nav { display:block; } }
+@keyframes fall{to{transform:translateY(110vh) rotate(360deg);opacity:0}}
 
-    .main { padding:48px clamp(24px,5vw,64px) 100px; max-width:860px; animation:fadeUp .5s cubic-bezier(.22,1,.36,1) both; }
+footer{
+  position:relative;z-index:1;
+  border-top:1px solid var(--border);
+  padding:1.5rem 3rem;
+  display:flex;align-items:center;justify-content:center;
+}
+.footer-bottom{font-size:0.75rem;color:var(--text3);text-align:center}
 
-    .breadcrumb { display:flex; align-items:center; gap:8px; margin-bottom:32px; font-size:0.75rem; color:var(--text3); }
-    .breadcrumb a { color:var(--text3); text-decoration:none; transition:color .15s; }
-    .breadcrumb a:hover { color:var(--purple2); }
-
-    .page-header { margin-bottom:52px; }
-    .page-kicker { display:inline-flex; align-items:center; gap:10px; color:var(--text3); font-weight:600; letter-spacing:0.08em; text-transform:uppercase; font-size:0.72rem; margin-bottom:14px; }
-    .kicker-dot { width:7px; height:7px; border-radius:50%; background:linear-gradient(135deg,var(--purple),var(--purple2)); box-shadow:0 0 0 4px rgba(139,92,246,0.12); animation:pulse 2s infinite; }
-    .page-header h1 { font-family:var(--font-display); font-size:clamp(2rem,5vw,3rem); font-weight:800; line-height:1.0; letter-spacing:0.04em; text-transform:uppercase; margin-bottom:12px; }
-    .grad { background:linear-gradient(90deg,var(--purple),var(--purple2)); -webkit-background-clip:text; background-clip:text; color:transparent; }
-    .page-header .lead { color:var(--text2); font-size:0.9rem; line-height:1.7; max-width:58ch; }
-
-    .section { margin-bottom:56px; scroll-margin-top:80px; }
-    .section-title { font-family:var(--font-mono); font-size:0.68rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--purple); margin-bottom:16px; display:flex; align-items:center; gap:10px; }
-    .section-title::after { content:""; flex:1; height:1px; background:rgba(139,92,246,0.12); }
-    .section h2 { font-size:1.15rem; font-weight:800; letter-spacing:-0.02em; margin-bottom:8px; }
-    .body-text { color:var(--text2); font-size:0.85rem; line-height:1.75; margin-bottom:14px; }
-
-    .qs-card { background:rgba(139,92,246,0.04); border:1px solid rgba(139,92,246,0.12); border-radius:14px; padding:20px 22px; margin:4px 0 18px; }
-    .qs-label { font-family:var(--font-mono); font-size:0.6rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--text3); margin-bottom:14px; }
-    .qs-step { display:flex; align-items:flex-start; gap:12px; margin-bottom:10px; }
-    .qs-step:last-child { margin-bottom:0; }
-    .qs-num { flex-shrink:0; width:22px; height:22px; border-radius:7px; background:rgba(139,92,246,0.1); border:1px solid rgba(139,92,246,0.2); display:flex; align-items:center; justify-content:center; font-family:var(--font-mono); font-size:11px; color:var(--purple2); font-weight:700; }
-    .qs-text { font-size:0.82rem; color:var(--text2); line-height:1.5; padding-top:2px; }
-
-    .code-wrap { background:var(--code-bg); border:1px solid var(--border2); border-radius:12px; overflow:hidden; margin:6px 0 16px; }
-    .code-header { background:rgba(20,20,20,0.95); padding:10px 16px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--border); }
-    .code-dots { display:flex; gap:5px; }
-    .code-dots span { width:10px; height:10px; border-radius:999px; background:#2a2a2a; display:block; }
-    .code-filename { font-family:var(--font-mono); font-size:0.65rem; color:var(--text3); }
-    .copy-btn { font-family:var(--font-mono); font-size:0.65rem; color:var(--green); background:rgba(76,175,80,0.08); border:1px solid rgba(76,175,80,0.18); border-radius:5px; padding:3px 10px; transition:all .15s; }
-    .copy-btn:hover { background:rgba(76,175,80,0.16); border-color:rgba(76,175,80,0.35); }
-    .copy-btn.copied { color:var(--blue); background:rgba(100,181,246,0.08); border-color:rgba(100,181,246,0.2); }
-    .code-body { padding:16px 20px; overflow-x:auto; scrollbar-width:thin; scrollbar-color:#222 transparent; }
-    .code-body::-webkit-scrollbar { height:4px; }
-    .code-body::-webkit-scrollbar-thumb { background:#2a2a2a; border-radius:4px; }
-    pre { margin:0; }
-    code { font-family:var(--font-mono); font-size:12px; line-height:1.8; white-space:pre; }
-
-    .kw{color:#569CD6} .ty{color:#4EC9B0} .fn{color:#DCDCAA} .va{color:#9CDCFE}
-    .st{color:#CE9178} .co{color:#6A9955} .nu{color:#B5CEA8} .pu{color:#D4D4D4}
-
-    .tree-wrap { background:var(--code-bg); border:1px solid var(--border2); border-radius:12px; overflow:hidden; margin:6px 0 16px; }
-    .tree-body { padding:16px 20px; }
-    .tree-line { font-family:var(--font-mono); font-size:12px; line-height:2; display:block; }
-    .tree-dir{color:#9CDCFE} .tree-punct{color:var(--text3)} .tree-note{color:var(--green)}
-
-    .tip-card, .warn-card { border-radius:10px; padding:14px 16px; margin:4px 0 14px; display:flex; gap:12px; align-items:flex-start; }
-    .tip-card { background:rgba(100,181,246,0.05); border:1px solid rgba(100,181,246,0.1); }
-    .warn-card { background:rgba(255,183,77,0.05); border-left:3px solid rgba(255,183,77,0.3); border-radius:0 10px 10px 0; }
-    .card-icon { font-size:14px; flex-shrink:0; margin-top:1px; }
-    .card-body-text { font-size:0.78rem; line-height:1.65; }
-    .tip-card .card-body-text { color:#7A9CC8; }
-    .warn-card .card-body-text { color:#A08050; }
-    .card-body-text strong { font-weight:700; filter:brightness(1.3); }
-
-    .ref-table { width:100%; border:1px solid var(--border); border-radius:12px; overflow:hidden; margin:6px 0 16px; }
-    .ref-table-head { background:rgba(20,20,20,0.9); padding:10px 16px; display:grid; border-bottom:1px solid var(--border); }
-    .ref-table-head span { font-family:var(--font-mono); font-size:0.62rem; color:var(--text3); }
-    .ref-row { display:grid; padding:10px 16px; border-bottom:1px solid rgba(255,255,255,0.03); align-items:start; }
-    .ref-row:last-child { border-bottom:none; }
-    .ref-row:nth-child(even) { background:rgba(255,255,255,0.015); }
-    .col-2 { grid-template-columns:170px 1fr; gap:14px; }
-    .ref-key { font-family:var(--font-mono); font-size:12px; color:#9CDCFE; }
-    .ref-val { font-size:0.78rem; color:var(--text3); line-height:1.5; }
-    .ref-fn { font-family:var(--font-mono); font-size:12px; color:#DCDCAA; }
-    .s-info{color:LightSkyBlue} .s-success{color:#4CAF50} .s-warn{color:#FFB74D} .s-error{color:#EF5350}
-
-    .param-table { background:rgba(20,20,20,0.5); border:1px solid var(--border); border-radius:12px; overflow:hidden; margin:6px 0 16px; }
-    .param-row { display:grid; grid-template-columns:190px 1fr; padding:11px 16px; border-bottom:1px solid rgba(255,255,255,0.04); align-items:center; }
-    .param-row:last-child { border-bottom:none; }
-    .param-name { font-family:var(--font-mono); font-size:12px; }
-    .param-desc { font-size:0.78rem; color:var(--text3); line-height:1.5; }
-    .param-action{color:#CE9178} .param-args{color:#9CDCFE}
-
-    .tips-grid { display:grid; gap:10px; }
-    .tips-card { background:rgba(139,92,246,0.04); border:1px solid rgba(139,92,246,0.09); border-radius:12px; padding:16px; display:flex; gap:12px; transition:background .2s,border-color .2s; }
-    .tips-card:hover { background:rgba(139,92,246,0.08); border-color:rgba(139,92,246,0.18); }
-    .tips-card-icon { font-size:16px; color:#FFD54F; flex-shrink:0; }
-    .tips-card h4 { font-size:0.82rem; font-weight:700; color:var(--text2); margin-bottom:4px; }
-    .tips-card p { font-size:0.75rem; color:var(--text3); line-height:1.6; }
-
-    .toast { position:fixed; left:50%; bottom:22px; transform:translateX(-50%) translateY(20px); opacity:0; pointer-events:none; padding:9px 16px; background:rgba(20,20,20,0.95); border:1px solid rgba(139,92,246,0.25); color:var(--text); border-radius:10px; backdrop-filter:blur(14px); transition:.25s ease; z-index:999; font-size:0.78rem; font-weight:600; white-space:nowrap; box-shadow:0 8px 32px rgba(0,0,0,0.5); }
-    .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
-
-    .footer-note { display:flex; align-items:center; justify-content:center; gap:6px; font-size:0.72rem; color:var(--text3); padding:1.5rem 0; text-decoration:none; }
-    .footer-note:hover { color:var(--text2); }
-  </style>
+@media(max-width:768px){
+  nav{padding:0 1.2rem}
+  .nav-links{display:none}
+  .nav-mobile-toggle{display:flex}
+  nav.open .nav-links{
+    display:flex;flex-direction:column;position:fixed;
+    top:64px;left:0;right:0;
+    background:rgba(13,13,13,0.97);backdrop-filter:blur(20px);
+    border-bottom:1px solid var(--border);
+    padding:1.5rem 1.5rem 2rem;gap:1.2rem;z-index:99;
+  }
+  .main{padding:2rem 1.2rem}
+  .dl-card-top{flex-direction:column;align-items:stretch}
+  .btn-row{width:100%}
+  .btn-sm{flex:1;justify-content:center}
+  .pw-block{text-align:center}
+  footer{padding:1.2rem}
+}
+</style>
 </head>
 <body>
 
 <div class="rata-bg" id="rataBg" aria-hidden="true"></div>
 
-<nav>
-  <a class="nav-logo" href="https://raton.lol">
-    <img src="https://raton.lol/img/RATA.png" width="24" height="24" alt="Raton" onerror="this.style.display='none'">
+<nav id="mainNav">
+  <a class="nav-logo" href="https://raton.lol/">
+    <img src="https://raton.lol/img/RATA.png" width="28" height="28" alt="Logo" onerror="this.style.display='none'">
     Raton
   </a>
-  <div class="nav-right">
-    <span class="nav-meta">C# 7.3 · .NET 4.7.2</span>
-  </div>
+  <ul class="nav-links">
+    <li><a href="https://raton.lol/#features">Features</a></li>
+    <li><a href="https://raton.lol/#testimonials">Reviews</a></li>
+    <li><a href="https://raton.lol/#pricing">Pricing</a></li>
+    <li><a href="https://raton.lol/#showcase">Showcase</a></li>
+    <li><a href="https://raton.lol/" class="active">Download</a></li>
+    <li><a href="https://raton.lol/docs">Documentation</a></li>
+	  <li><a href="https://raton.lol/blog">Forum</a></li>
+  </ul>
+  <button class="nav-mobile-toggle" aria-label="Menu" onclick="document.getElementById('mainNav').classList.toggle('open')">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
 </nav>
 
-<div class="mobile-nav">
-  <select id="mobileSelect" onchange="scrollToSection(this.value)">
-    <option value="welcome">00 — Welcome</option>
-    <option value="structure">01 — Project Structure</option>
-    <option value="plugininfo">02 — [PluginInfo] Attribute</option>
-    <option value="entrypoint">03 — Entry Point: Main</option>
-    <option value="pack">04 — Pack &amp; Send</option>
-    <option value="args">05 — Parsing Arguments</option>
-    <option value="packref">06 — Pack Method Reference</option>
-    <option value="example">07 — Full Example</option>
-    <option value="tips">08 — Tips &amp; Tricks</option>
-  </select>
-</div>
-
-<div class="shell">
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-      <div class="nav-group-label">Getting Started</div>
-      <button class="nav-item active" onclick="scrollToSection('welcome')"><span class="nav-dot" style="background:var(--green)"></span><span class="nav-label">Welcome</span></button>
-      <button class="nav-item" onclick="scrollToSection('structure')"><span class="nav-dot" style="background:var(--blue)"></span><span class="nav-label">Structure</span></button>
-      <button class="nav-item" onclick="scrollToSection('plugininfo')"><span class="nav-dot" style="background:var(--purple2)"></span><span class="nav-label">Plugin data</span></button>
-      <button class="nav-item" onclick="scrollToSection('entrypoint')"><span class="nav-dot" style="background:var(--yellow)"></span><span class="nav-label">Entry Point</span></button>
-      <button class="nav-item" onclick="scrollToSection('pack')"><span class="nav-dot" style="background:var(--red)"></span><span class="nav-label">Pack &amp; Send</span></button>
-      <button class="nav-item" onclick="scrollToSection('args')"><span class="nav-dot" style="background:#80CBC4"></span><span class="nav-label">Arguments</span></button>
-      <div class="nav-group-label" style="margin-top:24px">Reference</div>
-      <button class="nav-item" onclick="scrollToSection('packref')"><span class="nav-dot" style="background:var(--text3)"></span><span class="nav-label">Pack Method</span></button>
-      <button class="nav-item" onclick="scrollToSection('example')"><span class="nav-dot" style="background:var(--text3)"></span><span class="nav-label">Full example</span></button>
-      <button class="nav-item" onclick="scrollToSection('tips')"><span class="nav-dot" style="background:var(--text3)"></span><span class="nav-label">Tips &amp; tricks</span></button>
-    </div>
-  </aside>
-
-  <main class="main">
-    <div class="breadcrumb">
-      <a href="https://raton.lol">Raton</a>
-      <span>›</span>
-      <a href="#">Deluxe Plugins</a>
-      <span>›</span>
-      <span style="color:var(--text2)">Documentation</span>
-    </div>
-
-    <div class="page-header">
-      <div class="page-kicker"><span class="kicker-dot"></span>The raton plugin development</div>
-      <h1><span class="grad">Plugin</span> Development</h1>
-      <p class="lead">Build powerful plugins for Raton in minutes. Extend the client with compiled C# assemblies loaded at runtime.</p>
-    </div>
-
-    <section class="section" id="welcome">
-      <div class="section-title">00 — getting started</div>
-      <h2>Welcome</h2>
-      <p class="body-text">Welcome to the Raton Plugin Guide. This guide walks you through everything needed to create, test, and publish plugins that extend Raton's functionality. Plugins are compiled C# assemblies loaded at runtime — they can receive arguments from the UI and communicate back through a structured packet system.</p>
-      <div class="qs-card">
-        <div class="qs-label">Quick start</div>
-        <div class="qs-step"><div class="qs-num">1</div><div class="qs-text">Create a new .NET Class Library project targeting .NET Framework 4.7.2</div></div>
-        <div class="qs-step"><div class="qs-num">2</div><div class="qs-text">Use the test plugin source to guide yourself</div></div>
-        <div class="qs-step"><div class="qs-num">3</div><div class="qs-text">Decorate your class with <code style="font-size:12px;color:#CE93D8;background:rgba(206,147,216,.08);padding:1px 6px;border-radius:4px;font-family:JetBrains Mono,monospace">[PluginInfo]</code> and implement Main</div></div>
-        <div class="qs-step"><div class="qs-num">4</div><div class="qs-text">Compile, drop the <code style="font-size:12px;color:#9CDCFE;background:rgba(156,220,254,.06);padding:1px 6px;border-radius:4px;font-family:JetBrains Mono,monospace">.dll</code> into Raton's <code style="font-size:12px;color:#9CDCFE;background:rgba(156,220,254,.06);padding:1px 6px;border-radius:4px;font-family:JetBrains Mono,monospace">/plugins</code> folder — done</div></div>
-      </div>
-    </section>
-
-    <section class="section" id="structure">
-      <div class="section-title">01 — project structure</div>
-      <h2>Project Structure</h2>
-      <p class="body-text">Your plugin is a standard .NET Class Library project. Raton discovers it as a compiled DLL. Minimum layout:</p>
-      <div class="tree-wrap">
-        <div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><span class="code-filename">folder structure</span></div>
-        <div class="tree-body">
-          <span class="tree-line"><span class="tree-dir">MyPlugin/</span></span>
-          <span class="tree-line"><span class="tree-punct">├── </span><span class="tree-dir">MyPlugin.csproj</span></span>
-          <span class="tree-line"><span class="tree-punct">├── </span><span class="tree-dir">Main.cs</span></span>
-          <span class="tree-line"><span class="tree-punct">└── Networking/</span></span>
-          <span class="tree-line"><span class="tree-punct">    └── </span><span class="tree-note">Default classes</span></span>
-        </div>
-      </div>
-      <div class="tip-card">
-        <span class="card-icon" style="color:var(--blue)">ℹ</span>
-        <div class="card-body-text"><strong>Tip:</strong> Set output type to <code style="background:rgba(100,181,246,.06);color:#9CDCFE;padding:1px 5px;border-radius:3px;font-family:JetBrains Mono,monospace;font-size:11px">Class Library</code> in your <code style="background:rgba(100,181,246,.06);color:#9CDCFE;padding:1px 5px;border-radius:3px;font-family:JetBrains Mono,monospace;font-size:11px">.csproj</code> so the compiler emits a <code style="background:rgba(100,181,246,.06);color:#9CDCFE;padding:1px 5px;border-radius:3px;font-family:JetBrains Mono,monospace;font-size:11px">.dll</code> instead of an <code style="background:rgba(100,181,246,.06);color:#9CDCFE;padding:1px 5px;border-radius:3px;font-family:JetBrains Mono,monospace;font-size:11px">.exe</code>.</div>
-      </div>
-    </section>
-
-    <section class="section" id="plugininfo">
-      <div class="section-title">02 — [plugininfo] attribute</div>
-      <h2>[PluginInfo] Attribute</h2>
-      <p class="body-text">Every plugin class must be decorated with <code style="color:#CE93D8;background:rgba(206,147,216,.08);padding:1px 6px;border-radius:4px;font-family:JetBrains Mono,monospace;font-size:12px">[PluginInfo]</code>. Raton reads this to register your plugin in the UI and display a description to the user.</p>
-      <div class="code-wrap">
-        <div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div style="display:flex;align-items:center;gap:8px"><span class="code-filename">PluginInfoAttribute.cs</span><button class="copy-btn" onclick="copyCode(this,'code-plugininfo-attr')">Copy</button></div></div>
-        <div class="code-body"><pre><code id="code-plugininfo-attr"><span class="kw">using</span> <span class="pu">System;</span>
-<span class="pu">[</span><span class="fn">AttributeUsage</span><span class="pu">(AttributeTargets.</span><span class="va">Class</span><span class="pu">)]</span>
-<span class="kw">public class</span> <span class="ty">PluginInfoAttribute</span> <span class="pu">:</span> <span class="ty">Attribute</span>
-<span class="pu">{</span>
-    <span class="kw">public string</span> <span class="va">Description </span><span class="pu">{ </span><span class="kw">get</span><span class="pu">; }</span>
-    <span class="kw">public string</span> <span class="va">Provider    </span><span class="pu">{ </span><span class="kw">get</span><span class="pu">; }</span>
-
-    <span class="kw">public</span> <span class="fn">PluginInfoAttribute</span><span class="pu">(</span><span class="kw">string</span> <span class="va">description</span><span class="pu">)</span>
-    <span class="pu">{</span>
-        <span class="va">Provider    </span><span class="pu">=</span> <span class="st">"Raton"</span><span class="pu">;</span>
-        <span class="va">Description </span><span class="pu">= description;</span>
-    <span class="pu">}</span>
-<span class="pu">}</span></code></pre></div>
-      </div>
-      <div class="warn-card">
-        <span class="card-icon" style="color:var(--yellow)">⚠</span>
-        <div class="card-body-text"><strong>Warning:</strong> Never change <code style="color:#CE9178;font-family:JetBrains Mono,monospace;font-size:11px">Provider = "Raton"</code>. Raton uses this field to verify the plugin origin.</div>
-      </div>
-      <p class="body-text" style="margin-top:14px">Usage on your own class:</p>
-      <div class="code-wrap">
-        <div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div style="display:flex;align-items:center;gap:8px"><span class="code-filename">Program.cs</span><button class="copy-btn" onclick="copyCode(this,'code-plugininfo-usage')">Copy</button></div></div>
-        <div class="code-body"><pre><code id="code-plugininfo-usage"><span class="pu">[</span><span class="ty">PluginInfo</span><span class="pu">(</span><span class="st">"Example plugin for testing"</span><span class="pu">)]</span>
-<span class="kw">class</span> <span class="ty">Program</span>
-<span class="pu">{</span>
-    <span class="co">// ...</span>
-<span class="pu">}</span></code></pre></div>
-      </div>
-    </section>
-
-    <section class="section" id="entrypoint">
-      <div class="section-title">03 — entry point</div>
-      <h2>Entry Point: Main</h2>
-      <p class="body-text">Raton calls a static <code style="color:#DCDCAA;background:rgba(220,220,170,.06);padding:1px 6px;border-radius:4px;font-family:JetBrains Mono,monospace;font-size:12px">Main</code> method on your class. The signature is different — Raton injects two parameters:</p>
-      <div class="param-table">
-        <div class="param-row"><span class="param-name param-action">Action&lt;byte[]&gt; send</span><span class="param-desc">Delegate to send a serialized Pack back to the client. Store it in a static field.</span></div>
-        <div class="param-row"><span class="param-name param-args">string[] args</span><span class="param-desc">Arguments the user typed in the plugin prompt. May be <code style="color:#569CD6;font-family:JetBrains Mono,monospace;font-size:11px">null</code> if invoked with no arguments.</span></div>
-      </div>
-      <div class="code-wrap">
-        <div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div style="display:flex;align-items:center;gap:8px"><span class="code-filename">Program.cs — Main</span><button class="copy-btn" onclick="copyCode(this,'code-main')">Copy</button></div></div>
-        <div class="code-body"><pre><code id="code-main"><span class="kw">public static</span> <span class="ty">Action</span><span class="pu">&lt;</span><span class="kw">byte</span><span class="pu">[]&gt;</span> <span class="va">_send</span><span class="pu">;</span>
-
-<span class="kw">static void</span> <span class="fn">Main</span><span class="pu">(</span><span class="ty">Action</span><span class="pu">&lt;</span><span class="kw">byte</span><span class="pu">[]&gt;</span> <span class="va">send</span><span class="pu">,</span> <span class="kw">string</span><span class="pu">[]</span> <span class="va">args</span><span class="pu">)</span>
-<span class="pu">{</span>
-    <span class="va">_send</span> <span class="pu">= send;</span>
-    <span class="kw">if</span> <span class="pu">(args ==</span> <span class="kw">null</span> <span class="pu">|| args.Length ==</span> <span class="nu">0</span><span class="pu">)</span>
-    <span class="pu">{</span>
-        <span class="fn">ExecuteArg</span><span class="pu">(</span><span class="st">"default"</span><span class="pu">,</span> <span class="st">""</span><span class="pu">);</span>
-        <span class="kw">return</span><span class="pu">;</span>
-    <span class="pu">}</span>
-    <span class="fn">ParseArgs</span><span class="pu">(args);</span>
-<span class="pu">}</span></code></pre></div>
-      </div>
-    </section>
-
-    <section class="section" id="pack">
-      <div class="section-title">04 — pack &amp; send</div>
-      <h2>Pack &amp; Send</h2>
-      <p class="body-text">Communication back to the client is done through the <code style="color:#4EC9B0;background:rgba(78,201,176,.06);padding:1px 6px;border-radius:4px;font-family:JetBrains Mono,monospace;font-size:12px">Pack</code> class (from <code style="color:#9CDCFE;font-family:JetBrains Mono,monospace;font-size:12px">Stuff.dll</code>). Fill key-value pairs, serialize with <code style="color:#DCDCAA;font-family:JetBrains Mono,monospace;font-size:12px">.Pacc()</code>, and pass the resulting <code style="color:#569CD6;font-family:JetBrains Mono,monospace;font-size:12px">byte[]</code> to <code style="color:#9CDCFE;font-family:JetBrains Mono,monospace;font-size:12px">_send</code>.</p>
-      <div class="code-wrap">
-        <div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div style="display:flex;align-items:center;gap:8px"><span class="code-filename">Sending a message</span><button class="copy-btn" onclick="copyCode(this,'code-pack')">Copy</button></div></div>
-        <div class="code-body"><pre><code id="code-pack"><span class="ty">Pack</span> <span class="va">pack</span> <span class="pu">=</span> <span class="kw">new</span> <span class="ty">Pack</span><span class="pu">();</span>
-<span class="va">pack</span><span class="pu">.</span><span class="fn">SetString</span><span class="pu">(</span><span class="st">"Packet"</span><span class="pu">,</span>  <span class="st">"UserMessage"</span><span class="pu">);</span>
-<span class="va">pack</span><span class="pu">.</span><span class="fn">SetString</span><span class="pu">(</span><span class="st">"Message"</span><span class="pu">,</span> <span class="st">"Hello from my plugin!"</span><span class="pu">);</span>
-<span class="va">pack</span><span class="pu">.</span><span class="fn">SetString</span><span class="pu">(</span><span class="st">"Status"</span><span class="pu">,</span>  <span class="st">"Success"</span><span class="pu">);</span>
-<span class="va">_send</span><span class="pu">(pack.</span><span class="fn">Pacc</span><span class="pu">());</span></code></pre></div>
-      </div>
-      <p class="body-text">Available <code style="color:#9CDCFE;font-family:JetBrains Mono,monospace;font-size:12px">Status</code> values:</p>
-      <div class="ref-table">
-        <div class="ref-table-head col-2"><span>Value</span><span>Log entry</span></div>
-        <div class="ref-row col-2"><span class="ref-key s-info">"Information"</span><span class="ref-val">Sky blue entry — send information or current status</span></div>
-        <div class="ref-row col-2"><span class="ref-key s-success">"Success"</span><span class="ref-val">Green entry — operation completed successfully</span></div>
-        <div class="ref-row col-2"><span class="ref-key s-warn">"Warning"</span><span class="ref-val">Yellow entry — non-critical notice</span></div>
-        <div class="ref-row col-2"><span class="ref-key s-error">"Error"</span><span class="ref-val">Red entry — something went wrong</span></div>
-      </div>
-    </section>
-
-    <section class="section" id="args">
-      <div class="section-title">05 — parsing arguments</div>
-      <h2>Parsing Arguments</h2>
-      <p class="body-text">Arguments follow a <code style="color:#CE9178;font-family:JetBrains Mono,monospace;font-size:12px">-flag value</code> convention. Iterate the args array, detect tokens starting with <code style="color:#CE9178;font-family:JetBrains Mono,monospace;font-size:12px">-</code> as flag names, and accumulate subsequent tokens as the value. Use a <code style="color:#4EC9B0;font-family:JetBrains Mono,monospace;font-size:12px">StringBuilder</code> for multi-word values.</p>
-      <div class="code-wrap">
-        <div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div style="display:flex;align-items:center;gap:8px"><span class="code-filename">ParseArgs helper</span><button class="copy-btn" onclick="copyCode(this,'code-parseargs')">Copy</button></div></div>
-        <div class="code-body"><pre><code id="code-parseargs"><span class="kw">static void</span> <span class="fn">ParseArgs</span><span class="pu">(</span><span class="kw">string</span><span class="pu">[]</span> <span class="va">args</span><span class="pu">)</span>
-<span class="pu">{</span>
-    <span class="kw">string</span> <span class="va">currentArg</span> <span class="pu">=</span> <span class="kw">null</span><span class="pu">;</span>
-    <span class="ty">StringBuilder</span> <span class="va">valueBuilder</span> <span class="pu">=</span> <span class="kw">new</span> <span class="ty">StringBuilder</span><span class="pu">();</span>
-
-    <span class="kw">for</span> <span class="pu">(</span><span class="kw">int</span> <span class="va">i</span> <span class="pu">=</span> <span class="nu">0</span><span class="pu">; i &lt; args.Length; i++)</span>
-    <span class="pu">{</span>
-        <span class="kw">string</span> <span class="va">arg</span> <span class="pu">= args[i];</span>
-        <span class="kw">if</span> <span class="pu">(arg.</span><span class="fn">StartsWith</span><span class="pu">(</span><span class="st">"-"</span><span class="pu">))</span>
-        <span class="pu">{</span>
-            <span class="kw">if</span> <span class="pu">(currentArg !=</span> <span class="kw">null</span><span class="pu">)</span>
-                <span class="fn">ExecuteArg</span><span class="pu">(currentArg, valueBuilder.</span><span class="fn">ToString</span><span class="pu">());</span>
-            <span class="va">currentArg</span> <span class="pu">= arg.</span><span class="fn">ToLower</span><span class="pu">();</span>
-            <span class="va">valueBuilder</span><span class="pu">.</span><span class="fn">Clear</span><span class="pu">();</span>
-        <span class="pu">}</span>
-        <span class="kw">else</span>
-        <span class="pu">{</span>
-            <span class="kw">if</span> <span class="pu">(valueBuilder.Length &gt;</span> <span class="nu">0</span><span class="pu">) valueBuilder.</span><span class="fn">Append</span><span class="pu">(</span><span class="st">" "</span><span class="pu">);</span>
-            <span class="va">valueBuilder</span><span class="pu">.</span><span class="fn">Append</span><span class="pu">(arg);</span>
-        <span class="pu">}</span>
-    <span class="pu">}</span>
-    <span class="kw">if</span> <span class="pu">(currentArg !=</span> <span class="kw">null</span><span class="pu">)</span>
-        <span class="fn">ExecuteArg</span><span class="pu">(currentArg, valueBuilder.</span><span class="fn">ToString</span><span class="pu">());</span>
-<span class="pu">}</span></code></pre></div>
-      </div>
-      <div class="tip-card">
-        <span class="card-icon" style="color:var(--blue)">ℹ</span>
-        <div class="card-body-text"><strong>Tip:</strong> Always use the <code style="color:#CE9178;font-family:JetBrains Mono,monospace;font-size:11px">"default"</code> case in your switch. When invoked with no args, use it to print a usage hint.</div>
-      </div>
-    </section>
-
-    <section class="section" id="packref">
-      <div class="section-title">06 — pack method reference</div>
-      <h2>Pack Method Reference</h2>
-      <div class="ref-table">
-        <div class="ref-table-head col-2"><span>Method</span><span>Description</span></div>
-        <div class="ref-row col-2"><span class="ref-fn">SetString(key, value)</span><span class="ref-val">Store a string value under key</span></div>
-        <div class="ref-row col-2"><span class="ref-fn">SetInt(key, value)</span><span class="ref-val">Store an integer value under key</span></div>
-        <div class="ref-row col-2"><span class="ref-fn">SetBytes(key, value)</span><span class="ref-val">Store a byte array under key (e.g. file data)</span></div>
-        <div class="ref-row col-2"><span class="ref-fn">Pacc()</span><span class="ref-val">Serialize the Pack to <code style="color:#569CD6;font-family:JetBrains Mono,monospace;font-size:11px">byte[]</code> — pass result to <code style="color:#9CDCFE;font-family:JetBrains Mono,monospace;font-size:11px">_send()</code></span></div>
-      </div>
-    </section>
-
-    <section class="section" id="example">
-      <div class="section-title">07 — full example</div>
-      <h2>Full Example</h2>
-      <p class="body-text">Complete plugin. Responds to <code style="color:#CE9178;font-family:JetBrains Mono,monospace;font-size:12px">-msg &lt;text&gt;</code> and prints a usage hint when called without arguments.</p>
-      <div class="code-wrap" style="border-color:rgba(76,175,80,0.15)">
-        <div class="code-header" style="background:rgba(10,20,10,0.95)">
-          <div class="code-dots"><span style="background:#1E3A1E"></span><span style="background:#1E3A1E"></span><span style="background:#1E3A1E"></span></div>
-          <div style="display:flex;align-items:center;gap:8px"><span class="code-filename" style="color:#3A6A3A">TestPlugin/Program.cs</span><button class="copy-btn" onclick="copyCode(this,'code-full')">Copy all</button></div>
-        </div>
-        <div class="code-body"><pre><code id="code-full"><span class="kw">using</span> <span class="pu">Stuff;</span>
-<span class="kw">using</span> <span class="pu">System;</span>
-<span class="kw">using</span> <span class="pu">System.Text;</span>
-
-<span class="kw">namespace</span> <span class="pu">TestPlugin</span>
-<span class="pu">{</span>
-    <span class="pu">[</span><span class="ty">PluginInfo</span><span class="pu">(</span><span class="st">"Example plugin for testing"</span><span class="pu">)]</span>
-    <span class="kw">class</span> <span class="ty">Program</span>
-    <span class="pu">{</span>
-        <span class="kw">public static</span> <span class="ty">Action</span><span class="pu">&lt;</span><span class="kw">byte</span><span class="pu">[]&gt;</span> <span class="va">_send</span><span class="pu">;</span>
-
-        <span class="kw">static void</span> <span class="fn">Main</span><span class="pu">(</span><span class="ty">Action</span><span class="pu">&lt;</span><span class="kw">byte</span><span class="pu">[]&gt;</span> <span class="va">send</span><span class="pu">,</span> <span class="kw">string</span><span class="pu">[]</span> <span class="va">args</span><span class="pu">)</span>
-        <span class="pu">{</span>
-            <span class="va">_send</span> <span class="pu">= send;</span>
-            <span class="kw">if</span> <span class="pu">(args ==</span> <span class="kw">null</span> <span class="pu">|| args.Length ==</span> <span class="nu">0</span><span class="pu">)</span>
-            <span class="pu">{</span>
-                <span class="fn">ExecuteArg</span><span class="pu">(</span><span class="st">"default"</span><span class="pu">,</span> <span class="st">""</span><span class="pu">);</span>
-                <span class="kw">return</span><span class="pu">;</span>
-            <span class="pu">}</span>
-            <span class="fn">ParseArgs</span><span class="pu">(args);</span>
-        <span class="pu">}</span>
-
-        <span class="kw">static void</span> <span class="fn">ParseArgs</span><span class="pu">(</span><span class="kw">string</span><span class="pu">[]</span> <span class="va">args</span><span class="pu">)</span>
-        <span class="pu">{</span>
-            <span class="kw">string</span> <span class="va">currentArg</span> <span class="pu">=</span> <span class="kw">null</span><span class="pu">;</span>
-            <span class="ty">StringBuilder</span> <span class="va">valueBuilder</span> <span class="pu">=</span> <span class="kw">new</span> <span class="ty">StringBuilder</span><span class="pu">();</span>
-            <span class="kw">for</span> <span class="pu">(</span><span class="kw">int</span> <span class="va">i</span> <span class="pu">=</span> <span class="nu">0</span><span class="pu">; i &lt; args.Length; i++)</span>
-            <span class="pu">{</span>
-                <span class="kw">string</span> <span class="va">arg</span> <span class="pu">= args[i];</span>
-                <span class="kw">if</span> <span class="pu">(arg.</span><span class="fn">StartsWith</span><span class="pu">(</span><span class="st">"-"</span><span class="pu">))</span>
-                <span class="pu">{</span>
-                    <span class="kw">if</span> <span class="pu">(currentArg !=</span> <span class="kw">null</span><span class="pu">)</span>
-                        <span class="fn">ExecuteArg</span><span class="pu">(currentArg, valueBuilder.</span><span class="fn">ToString</span><span class="pu">());</span>
-                    <span class="va">currentArg</span> <span class="pu">= arg.</span><span class="fn">ToLower</span><span class="pu">();</span>
-                    <span class="va">valueBuilder</span><span class="pu">.</span><span class="fn">Clear</span><span class="pu">();</span>
-                <span class="pu">}</span>
-                <span class="kw">else</span>
-                <span class="pu">{</span>
-                    <span class="kw">if</span> <span class="pu">(valueBuilder.Length &gt;</span> <span class="nu">0</span><span class="pu">) valueBuilder.</span><span class="fn">Append</span><span class="pu">(</span><span class="st">" "</span><span class="pu">);</span>
-                    <span class="va">valueBuilder</span><span class="pu">.</span><span class="fn">Append</span><span class="pu">(arg);</span>
-                <span class="pu">}</span>
-            <span class="pu">}</span>
-            <span class="kw">if</span> <span class="pu">(currentArg !=</span> <span class="kw">null</span><span class="pu">)</span>
-                <span class="fn">ExecuteArg</span><span class="pu">(currentArg, valueBuilder.</span><span class="fn">ToString</span><span class="pu">());</span>
-        <span class="pu">}</span>
-
-        <span class="kw">static void</span> <span class="fn">ExecuteArg</span><span class="pu">(</span><span class="kw">string</span> <span class="va">arg</span><span class="pu">,</span> <span class="kw">string</span> <span class="va">value</span><span class="pu">)</span>
-        <span class="pu">{</span>
-            <span class="kw">switch</span> <span class="pu">(arg)</span>
-            <span class="pu">{</span>
-                <span class="kw">case</span> <span class="st">"-msg"</span><span class="pu">:</span>
-                    <span class="ty">Pack</span> <span class="va">pack</span> <span class="pu">=</span> <span class="kw">new</span> <span class="ty">Pack</span><span class="pu">();</span>
-                    <span class="va">pack</span><span class="pu">.</span><span class="fn">SetString</span><span class="pu">(</span><span class="st">"Packet"</span><span class="pu">,</span> <span class="st">"UserMessage"</span><span class="pu">);</span>
-                    <span class="va">pack</span><span class="pu">.</span><span class="fn">SetString</span><span class="pu">(</span><span class="st">"Message"</span><span class="pu">,</span> <span class="st">"Your message was: "</span> <span class="pu">+ value);</span>
-                    <span class="va">pack</span><span class="pu">.</span><span class="fn">SetString</span><span class="pu">(</span><span class="st">"Status"</span><span class="pu">,</span> <span class="st">"Success"</span><span class="pu">);</span>
-                    <span class="va">_send</span><span class="pu">(pack.</span><span class="fn">Pacc</span><span class="pu">());</span>
-                    <span class="kw">break</span><span class="pu">;</span>
-                <span class="kw">default</span><span class="pu">:</span>
-                    <span class="ty">Pack</span> <span class="va">pack2</span> <span class="pu">=</span> <span class="kw">new</span> <span class="ty">Pack</span><span class="pu">();</span>
-                    <span class="va">pack2</span><span class="pu">.</span><span class="fn">SetString</span><span class="pu">(</span><span class="st">"Packet"</span><span class="pu">,</span> <span class="st">"UserMessage"</span><span class="pu">);</span>
-                    <span class="va">pack2</span><span class="pu">.</span><span class="fn">SetString</span><span class="pu">(</span><span class="st">"Message"</span><span class="pu">,</span> <span class="st">"Try: -msg &lt;text&gt;"</span><span class="pu">);</span>
-                    <span class="va">pack2</span><span class="pu">.</span><span class="fn">SetString</span><span class="pu">(</span><span class="st">"Status"</span><span class="pu">,</span> <span class="st">"Warning"</span><span class="pu">);</span>
-                    <span class="va">_send</span><span class="pu">(pack2.</span><span class="fn">Pacc</span><span class="pu">());</span>
-                    <span class="kw">break</span><span class="pu">;</span>
-            <span class="pu">}</span>
-        <span class="pu">}</span>
-    <span class="pu">}</span>
-<span class="pu">}</span></code></pre></div>
-      </div>
-    </section>
-
-    <section class="section" id="tips">
-      <div class="section-title">08 — tips &amp; tricks</div>
-      <h2>Tips &amp; Tricks</h2>
-      <div class="tips-grid">
-        <div class="tips-card"><span class="tips-card-icon">★</span><div><h4>Always guard args for null</h4><p>Raton may call your plugin with a null array when no input is given. Check <code style="color:#9CDCFE;font-family:JetBrains Mono,monospace;font-size:11px">args == null</code> before everything.</p></div></div>
-        <div class="tips-card"><span class="tips-card-icon">★</span><div><h4>Store _send as static</h4><p>The delegate is injected once in Main. Store it as a static field so all your methods can call it without passing it around.</p></div></div>
-        <div class="tips-card"><span class="tips-card-icon">★</span><div><h4>Use Status semantically</h4><p><code style="color:#47B9FF;font-family:JetBrains Mono,monospace;font-size:11px">Information</code>, <code style="color:#4CAF50;font-family:JetBrains Mono,monospace;font-size:11px">Success</code>, <code style="color:#FFB74D;font-family:JetBrains Mono,monospace;font-size:11px">Warning</code>, and <code style="color:#EF5350;font-family:JetBrains Mono,monospace;font-size:11px">Error</code> map to colored log entries. Don't mark everything as Success.</p></div></div>
-        <div class="tips-card"><span class="tips-card-icon">★</span><div><h4>Keep plugins focused</h4><p>One plugin = one purpose. Small, composable plugins are easier to debug and update. Or whatever.</p></div></div>
-        <div class="tips-card"><span class="tips-card-icon">★</span><div><h4>Keep it safe</h4><p>Be careful when executing code from other people — this may cause RCE attempts or client stealing.</p></div></div>
-      </div>
-    </section>
-
-    <a class="footer-note" href="https://raton.lol">
-      <img src="https://raton.lol/img/RATA.png" width="13" height="13" alt="" onerror="this.style.display='none'">
-      powered by raton.lol
+<main class="main">
+  <div class="page">
+    <a class="page-logo" href="https://raton.lol/">
+      <img src="https://raton.lol/img/RATA.png" width="24" height="24" alt="" onerror="this.style.display='none'">
+      Raton
     </a>
-  </main>
-</div>
+    <p class="page-sub">Your download will start automatically in <span id="timer">5</span>s</p>
+    <div class="dl-card">
+      <div class="dl-card-top">
+        <div class="pw-block">
+          <span class="pw-label">Password</span>
+          <span class="pw-value" id="pwValue">v3.9.6</span>
+        </div>
+        <div class="btn-row">
+          <button class="btn-sm btn-ghost-sm" id="copyBtn" onclick="copyPw()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+              <rect x="9" y="9" width="13" height="13" rx="2"/>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+            </svg>
+            Copy
+          </button>
+          <a class="btn-sm btn-primary-sm" id="dlBtn" href="https://codeberg.org/sillycs/notratonupdates/releases/download/v3.9.6/HelloImRaton.zip">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            Download
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
 
-<div class="toast" id="toast"></div>
+<footer>
+  <p class="footer-bottom">© 2026 SillyCS. All rights reserved</p>
+</footer>
 
 <script>
-(function() {
-  var bg = document.getElementById('rataBg');
-  var data = [
-    {x:5,y:10,s:52,d:20,dl:0},{x:20,y:25,s:44,d:24,dl:5},{x:38,y:5,s:60,d:18,dl:9},
-    {x:55,y:18,s:48,d:26,dl:2},{x:70,y:4,s:66,d:22,dl:13},{x:85,y:22,s:44,d:30,dl:7},
-    {x:92,y:10,s:56,d:16,dl:11},{x:12,y:58,s:52,d:28,dl:3},{x:30,y:72,s:72,d:32,dl:16},
-    {x:52,y:62,s:44,d:20,dl:8},{x:74,y:78,s:60,d:25,dl:6},{x:90,y:52,s:48,d:19,dl:14},
-  ];
-  data.forEach(function(r) {
-    var img = document.createElement('img');
-    img.src = 'https://raton.lol/img/RATA.png';
-    img.className = 'rata-sprite'; img.alt = ''; img.draggable = false;
-    img.style.cssText = 'width:'+r.s+'px;height:'+r.s+'px;left:'+r.x+'%;top:'+r.y+'%;animation-duration:'+r.d+'s;animation-delay:-'+r.dl+'s';
+(function(){
+  var bg=document.getElementById('rataBg');
+  var data=[{x:5,y:8,s:56,d:20,dl:0},{x:18,y:22,s:48,d:24,dl:5},{x:32,y:5,s:64,d:18,dl:9},{x:65,y:3,s:72,d:22,dl:13},{x:78,y:20,s:48,d:30,dl:7},{x:90,y:8,s:60,d:16,dl:11},{x:10,y:55,s:56,d:28,dl:3},{x:72,y:75,s:64,d:25,dl:6}];
+  data.forEach(function(r){
+    var img=document.createElement('img');
+    img.src='https://raton.lol/img/RATA.png';
+    img.className='rata-sprite';img.alt='';img.draggable=false;
+    img.style.cssText='width:'+r.s+'px;height:'+r.s+'px;left:'+r.x+'%;top:'+r.y+'%;animation-duration:'+r.d+'s;animation-delay:-'+r.dl+'s';
     bg.appendChild(img);
   });
 })();
 
-const sections = document.querySelectorAll('.section');
-const navItems = document.querySelectorAll('.nav-item');
+var s=5;
+var t=document.getElementById('timer');
+var iv=setInterval(function(){
+  s--;t.textContent=s;
+  if(s<=0){
+    clearInterval(iv);confetti();
+    window.location.href='https://codeberg.org/sillycs/notratonupdates/releases/download/v3.9.6/HelloImRaton.zip';
+  }
+},1000);
 
-function setActive(id) {
-  navItems.forEach(n => n.classList.remove('active'));
-  const match = [...navItems].find(n => n.getAttribute('onclick')?.includes("'" + id + "'"));
-  if (match) match.classList.add('active');
-}
-
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) setActive(e.target.id); });
-}, { rootMargin: '-30% 0px -60% 0px' });
-sections.forEach(s => observer.observe(s));
-
-function scrollToSection(id) {
-  const el = document.getElementById(id);
-  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
-const toast = document.getElementById('toast');
-function showToast(t) {
-  toast.textContent = t; toast.classList.add('show');
-  clearTimeout(showToast._t);
-  showToast._t = setTimeout(() => toast.classList.remove('show'), 1800);
-}
-
-function copyCode(btn, id) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  navigator.clipboard.writeText(el.innerText).then(() => {
-    btn.textContent = 'Copied!'; btn.classList.add('copied');
-    showToast('Copied to clipboard');
-    setTimeout(() => { btn.textContent = btn.dataset.orig || 'Copy'; btn.classList.remove('copied'); }, 1800);
+function copyPw(){
+  var pw=document.getElementById('pwValue').textContent;
+  navigator.clipboard.writeText(pw).then(function(){
+    var b=document.getElementById('copyBtn');
+    b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" width="14" height="14"><polyline points="20 6 9 17 4 12"/></svg> Copied';
+    setTimeout(function(){
+      b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy';
+    },2000);
   });
 }
-document.querySelectorAll('.copy-btn').forEach(b => b.dataset.orig = b.textContent);
+
+var COLS=['#8b5cf6','#a78bfa','#ffffff','#c4b5fd','#7c3aed','#ddd6fe'];
+function confetti(){
+  for(var i=0;i<600;i++){
+    (function(i){
+      setTimeout(function(){
+        var el=document.createElement('div');
+        var size=Math.random()*9+4;
+        el.style.cssText=['position:fixed','left:'+(Math.random()*100)+'vw','top:-10px','width:'+size+'px','height:'+(size*0.6)+'px','background:'+COLS[i%COLS.length],'border-radius:'+(Math.random()>0.5?'50%':'2px'),'animation:fall '+(2+Math.random()*2.5)+'s linear '+(Math.random()*0.8)+'s forwards','transform:rotate('+(Math.random()*360)+'deg)','opacity:'+(0.55+Math.random()*0.45),'pointer-events:none','z-index:9999'].join(';');
+        document.body.appendChild(el);
+        setTimeout(function(){el.remove();},6000);
+      },i*12);
+    })(i);
+  }
+}
+document.getElementById('dlBtn').addEventListener('click',confetti);
 </script>
 </body>
 </html>
