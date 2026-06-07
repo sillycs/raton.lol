@@ -922,7 +922,7 @@ function toggleReplyForm(commentId, postId){
         ${nameIsLocked?'readonly':''}
         oninput="${nameIsLocked?'':'commentAuthorName=this.value'}">
     </div>
-    ${savedName?`<p class="name-locked-hint">Replying as <strong>${escHtml(savedName)}</strong>${nameIsLocked?' (identity-locked)':''}</p>`:''}
+    ${savedName?`<p class="name-locked-hint">Replying as <strong>${escHtml(savedName)}</strong>${nameIsLocked?' (Your name)':''}</p>`:''}
     <textarea class="form-input form-textarea" id="rBody-${commentId}" placeholder="Write a reply..." style="min-height:60px" maxlength="500"></textarea>
     <div class="form-row-submit">
       <button class="submit-btn" onclick="submitComment('${commentId}','${postId}')">
