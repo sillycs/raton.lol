@@ -99,9 +99,7 @@ nav{
   margin-top:1.5rem;
   border-radius:12px;
   overflow:hidden;
-  animation:bannerFadeIn 0.5s ease;
 }
-@keyframes bannerFadeIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
 .broadcast-banner-inner{
   display:flex;align-items:center;gap:12px;
   padding:0.85rem 1.2rem;
@@ -501,23 +499,139 @@ nav{
   animation:spin .6s linear infinite;flex-shrink:0;
 }
 .user-tag{
-  display:inline-flex;align-items:center;gap:3px;
-  padding:1px 6px;border-radius:99px;
-  font-size:0.6rem;font-weight:700;letter-spacing:0.06em;
-  text-transform:uppercase;margin-left:4px;
+  display:inline-flex;
+  align-items:center;
+  gap:3px;
+  padding:1px 6px;
+  border-radius:99px;
+  font-size:0.6rem;
+  font-weight:700;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  margin-left:4px;
   vertical-align:middle;
+  position:relative;
+  overflow:visible;
 }
+
+
 .user-tag.deluxe{
-  background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.35);
-  color:#818cf8;
+  background:linear-gradient(
+    90deg,
+    #ff0000,
+    #ff8000,
+    #ffff00,
+    #00ff00,
+    #00ffff,
+    #0000ff,
+    #8000ff,
+    #ff0080,
+    #ff0000
+  );
+  background-size:400% 100%;
+  color:#fff;
+  border:1px solid rgba(255,255,255,0.25);
+  animation:rainbowMove 4s linear infinite;
+  text-shadow:0 0 6px rgba(255,255,255,0.5);
 }
+
+@keyframes rainbowMove{
+  0%{background-position:0% 50%;}
+  100%{background-position:400% 50%;}
+}
+
+
 .user-tag.gold{
-  background:rgba(245,158,11,0.12);border:1px solid rgba(245,158,11,0.3);
-  color:#fbbf24;
+  color:#fff7d6;
+  border:1px solid rgba(255,215,0,0.5);
+  background:linear-gradient(
+    135deg,
+    #7c5a00,
+    #ffd700,
+    #fff0a8,
+    #ffd700,
+    #7c5a00
+  );
+  background-size:200% 100%;
+  box-shadow:
+    0 0 8px rgba(255,215,0,0.45),
+    0 0 16px rgba(255,215,0,0.25);
+  animation:goldShine 2.5s linear infinite;
 }
+
+@keyframes goldShine{
+  0%{
+    background-position:-200% 0;
+    filter:brightness(1);
+  }
+  50%{
+    filter:brightness(1.3);
+  }
+  100%{
+    background-position:200% 0;
+    filter:brightness(1);
+  }
+}
+
+
 .user-tag.developer{
-  background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.3);
-  color:#34d399;
+  color:#fff;
+  border:1px solid rgba(255,0,0,0.5);
+  background:linear-gradient(
+    135deg,
+    #2a0000,
+    #8b0000,
+    #ff0000,
+    #8b0000,
+    #2a0000
+  );
+  box-shadow:
+    0 0 10px rgba(255,0,0,0.5),
+    0 0 20px rgba(255,0,0,0.2);
+  animation:adminShake 0.12s infinite alternate;
+}
+
+
+@keyframes adminShake{
+  from{
+    transform:translateX(-1px);
+  }
+  to{
+    transform:translateX(1px);
+  }
+}
+
+
+.user-tag.developer:hover::before,
+.user-tag.developer:hover::after{
+  content:"";
+  position:absolute;
+  width:3px;
+  height:3px;
+  background:#ff4040;
+  pointer-events:none;
+  box-shadow:
+    8px -4px #ff0000,
+    16px 2px #ff6666,
+    22px -6px #ff2222,
+    -8px -2px #ff4444,
+    -14px 4px #ff0000;
+  animation:pixelBurst .6s ease-out infinite;
+}
+
+.user-tag.developer:hover::after{
+  animation-delay:.25s;
+}
+
+@keyframes pixelBurst{
+  from{
+    opacity:1;
+    transform:translate(0,0) scale(1);
+  }
+  to{
+    opacity:0;
+    transform:translate(12px,-12px) scale(0);
+  }
 }
 .rata-bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
 .rata-sprite{
@@ -1103,10 +1217,9 @@ async function renderPost(id){
   </div>`;
 }
 
-// Generate tag badge HTML
 function tagBadge(tag) {
   if (!tag) return '';
-  const labels = { deluxe: '✦ Deluxe', gold: '★ Gold', developer: '⌨ Dev' };
+  const labels = { deluxe: 'Professional', gold: 'Start', developer: 'Administrator' };
   const label = labels[tag] || tag;
   return `<span class="user-tag ${tag}">${label}</span>`;
 }
