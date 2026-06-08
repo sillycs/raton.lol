@@ -10,93 +10,44 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#0a0a0a;
-  --surface:#111;
-  --surface2:#181818;
-  --surface3:#1e1e1e;
-  --border:rgba(255,255,255,0.07);
-  --border2:rgba(255,255,255,0.12);
-  --purple:#8b5cf6;
-  --purple2:#a78bfa;
-  --purple-dim:rgba(139,92,246,0.15);
-  --text:#f4f4f8;
-  --text2:#a0a0b8;
-  --text3:#606078;
-  --red:#ef4444;
-  --red-dim:rgba(239,68,68,0.15);
-  --orange:#f97316;
-  --orange-dim:rgba(249,115,22,0.12);
-  --green:#22c55e;
-  --green-dim:rgba(34,197,94,0.12);
-  --yellow:#f59e0b;
-  --yellow-dim:rgba(245,158,11,0.12);
-  --font-logo:'kunal',sans-serif;
-  --font-body:'DM Sans',sans-serif;
+  --bg:#0a0a0a;--surface:#111;--surface2:#181818;--surface3:#1e1e1e;
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.12);
+  --purple:#8b5cf6;--purple2:#a78bfa;--purple-dim:rgba(139,92,246,0.15);
+  --text:#f4f4f8;--text2:#a0a0b8;--text3:#606078;
+  --red:#ef4444;--red-dim:rgba(239,68,68,0.15);
+  --orange:#f97316;--orange-dim:rgba(249,115,22,0.12);
+  --green:#22c55e;--green-dim:rgba(34,197,94,0.12);
+  --yellow:#f59e0b;--yellow-dim:rgba(245,158,11,0.12);
+  --font-logo:'kunal',sans-serif;--font-body:'DM Sans',sans-serif;
 }
 body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:14px;min-height:100vh;display:flex;flex-direction:column}
 a{color:var(--purple2);text-decoration:none}
 a:hover{text-decoration:underline}
 .layout{display:flex;flex:1;min-height:100vh}
-.sidebar{
-  width:220px;flex-shrink:0;
-  background:var(--surface);
-  border-right:1px solid var(--border);
-  display:flex;flex-direction:column;
-  padding:1.2rem 0;
-  position:sticky;top:0;height:100vh;
-  overflow-y:auto;
-}
-.sidebar-logo{
-  display:flex;align-items:center;gap:8px;
-  font-family:var(--font-logo);font-size:1.1rem;font-weight:800;
-  color:var(--text);padding:0 1.2rem 1.2rem;
-  border-bottom:1px solid var(--border);margin-bottom:0.8rem;
-}
+.sidebar{width:220px;flex-shrink:0;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;padding:1.2rem 0;position:sticky;top:0;height:100vh;overflow-y:auto}
+.sidebar-logo{display:flex;align-items:center;gap:8px;font-family:var(--font-logo);font-size:1.1rem;font-weight:800;color:var(--text);padding:0 1.2rem 1.2rem;border-bottom:1px solid var(--border);margin-bottom:0.8rem}
 .sidebar-section{padding:0 0.8rem;margin-bottom:0.4rem}
-.sidebar-label{font-size:0.65rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--text3);padding:0.4rem 0.6rem;margin-bottom:0.2rem;}
-.sidebar-item{
-  display:flex;align-items:center;gap:8px;
-  padding:0.5rem 0.8rem;border-radius:8px;
-  color:var(--text2);font-size:0.82rem;font-weight:500;
-  cursor:pointer;transition:.15s;user-select:none;
-}
+.sidebar-label{font-size:0.65rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--text3);padding:0.4rem 0.6rem;margin-bottom:0.2rem}
+.sidebar-item{display:flex;align-items:center;gap:8px;padding:0.5rem 0.8rem;border-radius:8px;color:var(--text2);font-size:0.82rem;font-weight:500;cursor:pointer;transition:.15s;user-select:none}
 .sidebar-item:hover{background:rgba(255,255,255,0.06);color:var(--text)}
 .sidebar-item.active{background:var(--purple-dim);color:var(--purple2)}
 .sidebar-item svg{flex-shrink:0;opacity:.7}
 .sidebar-footer{margin-top:auto;padding:0.8rem;border-top:1px solid var(--border)}
 .sidebar-footer span{font-size:0.72rem;color:var(--text3)}
 .main{flex:1;display:flex;flex-direction:column;overflow-x:hidden}
-.topbar{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 2rem;height:58px;
-  background:rgba(10,10,10,0.9);
-  border-bottom:1px solid var(--border);
-  position:sticky;top:0;z-index:50;
-  backdrop-filter:blur(16px);
-}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:58px;background:rgba(10,10,10,0.9);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:50;backdrop-filter:blur(16px)}
 .topbar-title{font-size:0.9rem;font-weight:600;color:var(--text)}
 .topbar-actions{display:flex;align-items:center;gap:0.6rem}
 .content{padding:2rem;flex:1}
-.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--bg);}
-.login-card{background:var(--surface);border:1px solid var(--border2);border-radius:16px;padding:2.4rem;width:100%;max-width:360px;text-align:center;}
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--bg)}
+.login-card{background:var(--surface);border:1px solid var(--border2);border-radius:16px;padding:2.4rem;width:100%;max-width:360px;text-align:center}
 .login-card h1{font-family:var(--font-logo);font-size:1.5rem;margin-bottom:0.3rem}
 .login-card p{color:var(--text3);font-size:0.82rem;margin-bottom:1.6rem}
-.login-err{color:var(--red);font-size:0.78rem;text-align:center;margin-top:0.5rem;min-height:1.2em;}
-.input{
-  width:100%;background:var(--surface2);
-  border:1px solid var(--border2);border-radius:8px;
-  padding:0.6rem 0.9rem;
-  color:var(--text);font-family:var(--font-body);font-size:0.875rem;
-  outline:none;transition:.2s;
-}
+.login-err{color:var(--red);font-size:0.78rem;text-align:center;margin-top:0.5rem;min-height:1.2em}
+.input{width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:0.6rem 0.9rem;color:var(--text);font-family:var(--font-body);font-size:0.875rem;outline:none;transition:.2s}
 .input:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(139,92,246,0.12)}
 .textarea{min-height:120px;resize:vertical;line-height:1.5}
-.btn{
-  display:inline-flex;align-items:center;gap:7px;
-  padding:0.5rem 1.1rem;border-radius:8px;border:none;
-  font-family:var(--font-body);font-size:0.8rem;font-weight:600;
-  transition:.2s;cursor:pointer;
-}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:0.5rem 1.1rem;border-radius:8px;border:none;font-family:var(--font-body);font-size:0.8rem;font-weight:600;transition:.2s;cursor:pointer}
 .btn-primary{background:var(--purple);color:#fff}
 .btn-primary:hover{background:#7c3aed}
 .btn-ghost{background:rgba(255,255,255,0.06);border:1px solid var(--border2);color:var(--text2)}
@@ -111,11 +62,11 @@ a:hover{text-decoration:underline}
 .btn-yellow:hover{background:rgba(245,158,11,0.2)}
 .btn-sm{padding:0.35rem 0.7rem;font-size:0.73rem}
 .btn:disabled{opacity:.45;pointer-events:none}
-.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.4rem;}
-.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.2rem;}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.4rem}
+.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.2rem}
 .card-title{font-size:0.9rem;font-weight:600;color:var(--text)}
 .stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1rem;margin-bottom:2rem}
-.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.2rem;}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.2rem}
 .stat-label{font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);margin-bottom:0.3rem}
 .stat-value{font-size:1.8rem;font-weight:700;color:var(--text)}
 .stat-sub{font-size:0.72rem;color:var(--text3);margin-top:0.2rem}
@@ -129,7 +80,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
 .td-title{color:var(--text);font-weight:500;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .td-id{font-family:monospace;font-size:0.72rem;color:var(--text3)}
 .td-actions{display:flex;align-items:center;gap:0.4rem;flex-wrap:wrap}
-.badge{display:inline-block;padding:0.2rem 0.55rem;border-radius:99px;font-size:0.67rem;font-weight:700;letter-spacing:0.06em;}
+.badge{display:inline-block;padding:0.2rem 0.55rem;border-radius:99px;font-size:0.67rem;font-weight:700;letter-spacing:0.06em}
 .badge-pub{background:var(--green-dim);color:var(--green);border:1px solid rgba(34,197,94,0.25)}
 .badge-draft{background:rgba(245,158,11,0.12);color:var(--yellow);border:1px solid rgba(245,158,11,0.25)}
 .badge-del{background:var(--red-dim);color:var(--red);border:1px solid rgba(239,68,68,0.25)}
@@ -140,35 +91,19 @@ tr:hover td{background:rgba(255,255,255,0.02)}
 .form-group{display:flex;flex-direction:column;gap:0.4rem}
 .form-label{font-size:0.72rem;font-weight:600;color:var(--text2);letter-spacing:0.04em}
 .form-hint{font-size:0.68rem;color:var(--text3)}
-.img-upload-area{
-  border:2px dashed var(--border2);border-radius:10px;
-  padding:1.2rem;text-align:center;
-  transition:.2s;cursor:pointer;position:relative;
-}
+.img-upload-area{border:2px dashed var(--border2);border-radius:10px;padding:1.2rem;text-align:center;transition:.2s;cursor:pointer;position:relative}
 .img-upload-area:hover{border-color:var(--purple);background:var(--purple-dim)}
-.img-upload-area input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.img-upload-area input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
 .img-upload-area p{font-size:0.78rem;color:var(--text3);margin-top:0.4rem}
-.img-preview{width:100%;max-height:160px;object-fit:cover;border-radius:8px;margin-top:0.6rem;border:1px solid var(--border);display:none;}
-.modal-overlay{
-  position:fixed;inset:0;background:rgba(0,0,0,0.7);
-  backdrop-filter:blur(4px);z-index:200;
-  display:flex;align-items:center;justify-content:center;
-  padding:1rem;
-}
+.img-preview{width:100%;max-height:160px;object-fit:cover;border-radius:8px;margin-top:0.6rem;border:1px solid var(--border);display:none}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);z-index:200;display:flex;align-items:center;justify-content:center;padding:1rem}
 .modal-overlay.hidden{display:none}
-.modal{
-  background:var(--surface);border:1px solid var(--border2);
-  border-radius:16px;padding:2rem;width:100%;max-width:640px;
-  max-height:90vh;overflow-y:auto;
-}
+.modal{background:var(--surface);border:1px solid var(--border2);border-radius:16px;padding:2rem;width:100%;max-width:640px;max-height:90vh;overflow-y:auto}
 .modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.4rem}
 .modal-title{font-size:1rem;font-weight:700;color:var(--text)}
-.modal-close{background:none;border:none;color:var(--text3);font-size:1.2rem;line-height:1;padding:4px;cursor:pointer;transition:color .2s;}
+.modal-close{background:none;border:none;color:var(--text3);font-size:1.2rem;line-height:1;padding:4px;cursor:pointer;transition:color .2s}
 .modal-close:hover{color:var(--text)}
-.comment-item{
-  background:var(--surface2);border:1px solid var(--border);
-  border-radius:10px;padding:0.9rem 1rem;margin-bottom:0.7rem;
-}
+.comment-item{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:0.9rem 1rem;margin-bottom:0.7rem}
 .comment-item.deleted{opacity:.5}
 .comment-meta{display:flex;align-items:center;gap:0.5rem;margin-bottom:0.4rem;flex-wrap:wrap}
 .comment-meta-name{font-weight:600;color:var(--text);font-size:0.82rem}
@@ -180,14 +115,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
 .reply-indent{margin-left:1.2rem;margin-top:0.5rem}
 .ip-list{display:flex;flex-wrap:wrap;gap:0.3rem;margin-top:0.4rem}
 .ip-tag{font-family:monospace;font-size:0.68rem;background:var(--surface2);padding:2px 8px;border-radius:4px;color:var(--text3);border:1px solid var(--border)}
-.toast{
-  position:fixed;bottom:1.5rem;right:1.5rem;
-  background:var(--surface);border:1px solid var(--border2);
-  border-radius:10px;padding:0.7rem 1.1rem;
-  font-size:0.82rem;color:var(--text);
-  box-shadow:0 8px 24px rgba(0,0,0,0.5);z-index:9999;
-  transform:translateY(12px);opacity:0;transition:.3s;pointer-events:none;
-}
+.toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--surface);border:1px solid var(--border2);border-radius:10px;padding:0.7rem 1.1rem;font-size:0.82rem;color:var(--text);box-shadow:0 8px 24px rgba(0,0,0,0.5);z-index:9999;transform:translateY(12px);opacity:0;transition:.3s;pointer-events:none}
 .toast.show{transform:translateY(0);opacity:1}
 .search-bar{position:relative;margin-bottom:1.2rem}
 .search-bar input{padding-left:2.2rem}
@@ -195,42 +123,28 @@ tr:hover td{background:rgba(255,255,255,0.02)}
 .spinner{width:24px;height:24px;border:2px solid var(--border2);border-top-color:var(--purple);border-radius:50%;animation:spin .7s linear infinite;margin:2rem auto;display:block}
 @keyframes spin{to{transform:rotate(360deg)}}
 .empty{text-align:center;padding:3rem;color:var(--text3);font-size:0.85rem}
-.gw-card{
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:12px;padding:1.2rem;margin-bottom:0.8rem;
-  display:flex;align-items:center;gap:1rem;flex-wrap:wrap;
-}
+.gw-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.2rem;margin-bottom:0.8rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
 .gw-info{flex:1;min-width:0}
 .gw-title{font-weight:600;color:var(--text);font-size:0.9rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .gw-meta{font-size:0.72rem;color:var(--text3);margin-top:0.2rem}
 .gw-actions{display:flex;gap:0.4rem;flex-shrink:0;flex-wrap:wrap}
-.action-group{
-  background:var(--surface2);border:1px solid var(--border);
-  border-radius:10px;padding:1rem;margin-bottom:0.8rem;
-}
-.action-group-title{
-  font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
-  color:var(--text3);margin-bottom:0.7rem;display:flex;align-items:center;gap:6px;
-}
+.action-group{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:1rem;margin-bottom:0.8rem}
+.action-group-title{font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);margin-bottom:0.7rem;display:flex;align-items:center;gap:6px}
 .action-group-row{display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center}
-
-.banner-card{
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:10px;padding:1rem 1.2rem;
-  display:flex;align-items:center;gap:1rem;
-  margin-bottom:0.6rem;
-}
-.banner-card-preview{
-  flex-shrink:0;width:6px;height:36px;border-radius:3px;
-}
+.banner-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;display:flex;align-items:center;gap:1rem;margin-bottom:0.6rem}
+.banner-card-preview{flex-shrink:0;width:6px;height:36px;border-radius:3px}
 .banner-card-info{flex:1;min-width:0}
 .banner-card-text{font-size:0.85rem;color:var(--text);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .banner-card-meta{font-size:0.7rem;color:var(--text3);margin-top:2px}
-
-@media(max-width:900px){
-  .sidebar{display:none}
-  .form-row{grid-template-columns:1fr}
-}
+.icon-presets{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:0.5rem}
+.icon-preset-btn{background:var(--surface);border:1px solid var(--border2);border-radius:8px;padding:0.4rem 0.7rem;font-size:0.72rem;color:var(--text2);cursor:pointer;transition:.15s;display:flex;align-items:center;gap:5px}
+.icon-preset-btn:hover{border-color:var(--purple);color:var(--purple2);background:var(--purple-dim)}
+.tag-badge{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:99px;font-size:0.65rem;font-weight:700;letter-spacing:0.08em}
+.tag-deluxe{background:linear-gradient(90deg,#ff6ec7,#ffbe0b,#3a86ff,#fb5607,#ff006e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;border:1px solid rgba(255,110,199,0.4)}
+.tag-gold{background:linear-gradient(90deg,#ffd700,#ffb347);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;border:1px solid rgba(255,215,0,0.4)}
+.tag-developer{background:linear-gradient(90deg,#00d2ff,#3a7bd5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;border:1px solid rgba(0,210,255,0.4)}
+.tag-list-item{display:flex;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:0.7rem 1rem;margin-bottom:0.5rem}
+@media(max-width:900px){.sidebar{display:none}.form-row{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -241,7 +155,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
     <p>Enter your password to continue</p>
     <div style="display:flex;flex-direction:column;gap:0.8rem">
       <input type="password" class="input" id="keyIn" placeholder="Password" onkeydown="if(event.key==='Enter')login()">
-      <button class="btn btn-primary" style="justify-content:center;width:100%" onclick="login()">
+      <button class="btn btn-primary" style="justify-content:center;width:100%" onclick="login()" id="loginBtn">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
         Login
       </button>
@@ -274,6 +188,10 @@ tr:hover td{background:rgba(255,255,255,0.02)}
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
         Moderation
       </div>
+      <div class="sidebar-item" id="nav-tags" onclick="showView('tags')">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+        User Tags
+      </div>
       <div class="sidebar-item" id="nav-tools" onclick="showView('tools')">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
         Tools
@@ -293,6 +211,9 @@ tr:hover td{background:rgba(255,255,255,0.02)}
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         New Giveaway
       </div>
+    </div>
+    <div class="sidebar-footer">
+      <span id="sessionTimer">Session active</span>
     </div>
   </aside>
 
@@ -363,18 +284,60 @@ const BLOG_WORKER = 'https://bold-glitter-3cd0.sillycro.workers.dev';
 const GW_WORKER   = 'https://steep-sun-85c4.sillykuadro.workers.dev';
 const BLOG_URL    = 'https://raton.lol/blog';
 const GW_URL      = 'https://raton.lol/giveaway';
+const SESSION_TTL = 24 * 60 * 60 * 1000;
 
 let ADMIN_KEY = '';
 let allPosts = [];
 let gwList = [];
+let sessionExpiry = 0;
+let sessionTimerInterval = null;
 
-async function login(){
+function saveSession(key) {
+  const expiry = Date.now() + SESSION_TTL;
+  sessionStorage.setItem('admin_key', key);
+  sessionStorage.setItem('admin_expiry', String(expiry));
+  localStorage.setItem('admin_key', key);
+  localStorage.setItem('admin_expiry', String(expiry));
+}
+
+function loadSession() {
+  const key = sessionStorage.getItem('admin_key') || localStorage.getItem('admin_key');
+  const expiry = parseInt(sessionStorage.getItem('admin_expiry') || localStorage.getItem('admin_expiry') || '0');
+  if (key && expiry && Date.now() < expiry) {
+    return { key, expiry };
+  }
+  return null;
+}
+
+function clearSession() {
+  sessionStorage.removeItem('admin_key');
+  sessionStorage.removeItem('admin_expiry');
+  localStorage.removeItem('admin_key');
+  localStorage.removeItem('admin_expiry');
+}
+
+function startSessionTimer(expiry) {
+  sessionExpiry = expiry;
+  clearInterval(sessionTimerInterval);
+  sessionTimerInterval = setInterval(() => {
+    const rem = sessionExpiry - Date.now();
+    if (rem <= 0) { logout(); return; }
+    const h = Math.floor(rem / 3600000);
+    const m = Math.floor((rem % 3600000) / 60000);
+    const el = document.getElementById('sessionTimer');
+    if (el) el.textContent = `Session: ${h}h ${m}m left`;
+  }, 30000);
+  const el = document.getElementById('sessionTimer');
+  if (el) { const rem = expiry - Date.now(); const h=Math.floor(rem/3600000); const m=Math.floor((rem%3600000)/60000); el.textContent=`Session: ${h}h ${m}m left`; }
+}
+
+async function login() {
   const k = document.getElementById('keyIn').value.trim();
   const errEl = document.getElementById('loginErr');
   errEl.textContent = '';
-  if(!k){ errEl.textContent='Enter your password'; return; }
+  if (!k) { errEl.textContent = 'Enter your password'; return; }
 
-  const btn = document.querySelector('#loginWrap .btn-primary');
+  const btn = document.getElementById('loginBtn');
   btn.disabled = true; btn.textContent = 'Checking...';
 
   try {
@@ -388,102 +351,127 @@ async function login(){
     if (!data.ok) {
       errEl.textContent = data.error;
       btn.disabled = false;
-      btn.innerHTML = 'Login';
-
+      btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Login';
       if (data.rateLimited) {
         btn.disabled = true;
         btn.textContent = `Blocked (${Math.ceil(data.resetIn / 60)} min)`;
-        setTimeout(() => {
-          btn.disabled = false;
-          btn.innerHTML = 'Login';
-        }, Math.min(data.resetIn * 1000, 30000));
+        setTimeout(() => { btn.disabled = false; btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Login'; }, Math.min(data.resetIn * 1000, 30000));
       }
       return;
     }
 
-    ADMIN_KEY = k;
-    const postsData = await fetch(
-      BLOG_WORKER + '/admin/posts?adminKey=' + encodeURIComponent(k)
-    ).then(r => r.json());
-
-    allPosts = postsData.posts || [];
-    document.getElementById('loginWrap').style.display = 'none';
-    document.getElementById('appWrap').style.display = 'flex';
-    showView('dashboard');
-
-  } catch(e) {
+    await initApp(k);
+  } catch (e) {
     errEl.textContent = 'Network error...';
     btn.disabled = false;
-    btn.innerHTML = 'Login';
+    btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Login';
   }
 }
 
-function logout(){
-  ADMIN_KEY=''; allPosts=[];
-  document.getElementById('appWrap').style.display='none';
-  document.getElementById('loginWrap').style.display='flex';
-  document.getElementById('keyIn').value='';
-  document.getElementById('loginErr').textContent='';
-  const btn=document.querySelector('#loginWrap .btn-primary');
-  btn.disabled=false;
-  btn.innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Login';
+async function initApp(k) {
+  ADMIN_KEY = k;
+  const expiry = Date.now() + SESSION_TTL;
+  saveSession(k);
+
+  const postsData = await fetch(BLOG_WORKER + '/admin/posts?adminKey=' + encodeURIComponent(k)).then(r => r.json());
+  allPosts = postsData.posts || [];
+
+  document.getElementById('loginWrap').style.display = 'none';
+  document.getElementById('appWrap').style.display = 'flex';
+  startSessionTimer(expiry);
+  showView('dashboard');
 }
 
-function toast(msg, dur=2800){
-  const t=document.getElementById('toast');
-  t.textContent=msg; t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),dur);
-}
-
-function esc(s){ if(typeof s!=='string')return''; return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-function fmt(ts){ return new Date(ts).toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'}); }
-function timeAgo(ts){
-  const s=Math.floor((Date.now()-ts)/1000);
-  if(s<60)return'just now'; if(s<3600)return Math.floor(s/60)+'m ago';
-  if(s<86400)return Math.floor(s/3600)+'h ago'; return Math.floor(s/86400)+'d ago';
-}
-
-async function api(worker, path, opts={}){
-  const r=await fetch(worker+path, opts);
-  return r.json();
-}
-async function blogGet(path){ return api(BLOG_WORKER, path+'&adminKey='+encodeURIComponent(ADMIN_KEY)); }
-async function blogPost(path,body){ return api(BLOG_WORKER, path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({adminKey:ADMIN_KEY,...body})}); }
-async function gwPost(path,body){ return api(GW_WORKER, path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({adminKey:ADMIN_KEY,...body})}); }
-async function gwGet(path){ return api(GW_WORKER, path); }
-
-function showView(v){
-  document.querySelectorAll('.sidebar-item').forEach(el=>el.classList.remove('active'));
-  const navEl=document.getElementById(`nav-${v}`);
-  if(navEl) navEl.classList.add('active');
-  const titles={dashboard:'Dashboard',posts:'All Posts',new:'New Post',comments:'Moderation',tools:'Admin Tools',broadcasts:'Broadcasts & Live Warnings',giveaways:'Giveaways',['giveaway-new']:'New Giveaway'};
-  document.getElementById('topbarTitle').textContent=titles[v]||v;
-  const c=document.getElementById('mainContent');
-  c.innerHTML='<div class="spinner"></div>';
-  if(v==='dashboard') renderDashboard();
-  else if(v==='posts') renderPosts();
-  else if(v==='new') renderNew();
-  else if(v==='comments') renderComments();
-  else if(v==='tools') renderTools();
-  else if(v==='broadcasts') renderBroadcasts();
-  else if(v==='giveaways') renderGiveaways();
-  else if(v==='giveaway-new') renderGiveawayNew();
-}
-
-async function renderDashboard(){
-  if(!allPosts.length){
-    const data=await blogGet('/admin/posts?');
-    allPosts=data.posts||[];
+window.addEventListener('load', async () => {
+  const session = loadSession();
+  if (session) {
+    const btn = document.getElementById('loginBtn');
+    btn.disabled = true; btn.textContent = 'Resuming session...';
+    try {
+      const r = await fetch(BLOG_WORKER + '/admin/login-check', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ adminKey: session.key })
+      });
+      const data = await r.json();
+      if (data.ok) {
+        await initApp(session.key);
+        return;
+      }
+    } catch (_) {}
+    clearSession();
+    btn.disabled = false;
+    btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Login';
   }
-  const posts=allPosts;
-  const totalLikes=posts.reduce((a,p)=>a+(p.likes||0),0);
-  const totalComments=posts.reduce((a,p)=>a+(p.commentCount||0),0);
-  const totalViews=posts.reduce((a,p)=>a+(p.views||0),0);
-  const published=posts.filter(p=>p.published).length;
-  const pinned=posts.filter(p=>p.pinned).length;
-  const locked=posts.filter(p=>p.locked).length;
+});
 
-  document.getElementById('mainContent').innerHTML=`
+function logout() {
+  clearSession();
+  clearInterval(sessionTimerInterval);
+  ADMIN_KEY = ''; allPosts = [];
+  document.getElementById('appWrap').style.display = 'none';
+  document.getElementById('loginWrap').style.display = 'flex';
+  document.getElementById('keyIn').value = '';
+  document.getElementById('loginErr').textContent = '';
+  const btn = document.getElementById('loginBtn');
+  btn.disabled = false;
+  btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Login';
+}
+
+function toast(msg, dur = 2800) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), dur);
+}
+
+function esc(s) { if (typeof s !== 'string') return ''; return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function fmt(ts) { return new Date(ts).toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' }); }
+function timeAgo(ts) { const s=Math.floor((Date.now()-ts)/1000); if(s<60)return'just now'; if(s<3600)return Math.floor(s/60)+'m ago'; if(s<86400)return Math.floor(s/3600)+'h ago'; return Math.floor(s/86400)+'d ago'; }
+
+async function api(worker, path, opts = {}) { const r = await fetch(worker+path, opts); return r.json(); }
+async function blogGet(path) { return api(BLOG_WORKER, path+'&adminKey='+encodeURIComponent(ADMIN_KEY)); }
+async function blogPost(path, body) { return api(BLOG_WORKER, path, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ adminKey: ADMIN_KEY, ...body }) }); }
+async function gwPost(path, body) { return api(GW_WORKER, path, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ adminKey: ADMIN_KEY, ...body }) }); }
+async function gwGet(path) { return api(GW_WORKER, path); }
+
+function tagBadgeHTML(tag) {
+  if (!tag) return '';
+  if (tag === 'deluxe') return `<span class="tag-badge tag-deluxe">✦ DELUXE</span>`;
+  if (tag === 'gold') return `<span class="tag-badge tag-gold">★ GOLD</span>`;
+  if (tag === 'developer') return `<span class="tag-badge tag-developer">⌨ DEV</span>`;
+  return '';
+}
+
+function showView(v) {
+  document.querySelectorAll('.sidebar-item').forEach(el => el.classList.remove('active'));
+  const navEl = document.getElementById(`nav-${v}`);
+  if (navEl) navEl.classList.add('active');
+  const titles = { dashboard:'Dashboard', posts:'All Posts', new:'New Post', comments:'Moderation', tags:'User Tags', tools:'Admin Tools', broadcasts:'Broadcasts & Live Warnings', giveaways:'Giveaways', 'giveaway-new':'New Giveaway' };
+  document.getElementById('topbarTitle').textContent = titles[v] || v;
+  const c = document.getElementById('mainContent');
+  c.innerHTML = '<div class="spinner"></div>';
+  if (v==='dashboard') renderDashboard();
+  else if (v==='posts') renderPosts();
+  else if (v==='new') renderNew();
+  else if (v==='comments') renderComments();
+  else if (v==='tags') renderTags();
+  else if (v==='tools') renderTools();
+  else if (v==='broadcasts') renderBroadcasts();
+  else if (v==='giveaways') renderGiveaways();
+  else if (v==='giveaway-new') renderGiveawayNew();
+}
+
+async function renderDashboard() {
+  if (!allPosts.length) { const data = await blogGet('/admin/posts?'); allPosts = data.posts||[]; }
+  const posts = allPosts;
+  const totalLikes = posts.reduce((a,p)=>a+(p.likes||0), 0);
+  const totalComments = posts.reduce((a,p)=>a+(p.commentCount||0), 0);
+  const totalViews = posts.reduce((a,p)=>a+(p.views||0), 0);
+  const published = posts.filter(p=>p.published).length;
+  const pinned = posts.filter(p=>p.pinned).length;
+  const locked = posts.filter(p=>p.locked).length;
+
+  document.getElementById('mainContent').innerHTML = `
     <div class="stats-row">
       <div class="stat-card"><div class="stat-label">Total Posts</div><div class="stat-value">${posts.length}</div><div class="stat-sub">${published} published · ${pinned} pinned · ${locked} locked</div></div>
       <div class="stat-card"><div class="stat-label">Total Likes</div><div class="stat-value">${totalLikes}</div><div class="stat-sub">across all posts</div></div>
@@ -491,117 +479,90 @@ async function renderDashboard(){
       <div class="stat-card"><div class="stat-label">Views</div><div class="stat-value">${totalViews}</div></div>
     </div>
     <div class="card">
-      <div class="card-header">
-        <span class="card-title">Recent Posts</span>
-        <button class="btn btn-ghost btn-sm" onclick="showView('posts')">View all</button>
-      </div>
+      <div class="card-header"><span class="card-title">Recent Posts</span><button class="btn btn-ghost btn-sm" onclick="showView('posts')">View all</button></div>
       <div class="table-wrap">
-        <table>
-          <thead><tr><th>Title</th><th>Date</th><th>Likes</th><th>Views</th><th>Status</th></tr></thead>
-          <tbody>${posts.slice(0,5).map(p=>`
-            <tr>
-              <td class="td-title">${esc(p.title)}${p.pinned?' [pinned]':''}${p.locked?' [locked]':''}</td>
-              <td>${fmt(p.ts)}</td>
-              <td>${p.likes||0}</td>
-              <td>${p.views||0}</td>
-              <td><span class="badge ${p.published?'badge-pub':'badge-draft'}">${p.published?'Live':'Draft'}</span></td>
-            </tr>`).join('')}
-          </tbody>
-        </table>
+        <table><thead><tr><th>Title</th><th>Date</th><th>Likes</th><th>Views</th><th>Status</th></tr></thead>
+        <tbody>${posts.slice(0,5).map(p=>`<tr>
+          <td class="td-title">${esc(p.title)}${p.pinned?' <img src="https://raton.lol/img/office-push-pin.png" width="12" height="12" style="vertical-align:middle;margin-left:3px">':''}${p.locked?' [locked]':''}</td>
+          <td>${fmt(p.ts)}</td><td>${p.likes||0}</td><td>${p.views||0}</td>
+          <td><span class="badge ${p.published?'badge-pub':'badge-draft'}">${p.published?'Live':'Draft'}</span></td>
+        </tr>`).join('')}</tbody></table>
       </div>
     </div>`;
 }
 
-let postSearch='';
-async function renderPosts(forceRefresh=true){
-  if(forceRefresh||!allPosts.length){
-    const data=await blogGet('/admin/posts?');
-    allPosts=data.posts||[];
-  }
-  const filtered=postSearch ? allPosts.filter(p=>p.title.toLowerCase().includes(postSearch.toLowerCase())||p.id.toLowerCase().includes(postSearch.toLowerCase())) : allPosts;
+let postSearch = '';
+async function renderPosts(forceRefresh = true) {
+  if (forceRefresh || !allPosts.length) { const data = await blogGet('/admin/posts?'); allPosts = data.posts||[]; }
+  const filtered = postSearch ? allPosts.filter(p=>p.title.toLowerCase().includes(postSearch.toLowerCase())||p.id.toLowerCase().includes(postSearch.toLowerCase())) : allPosts;
 
-  document.getElementById('mainContent').innerHTML=`
+  document.getElementById('mainContent').innerHTML = `
     <div class="search-bar">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
       <input class="input" id="postSearch" placeholder="Search posts..." value="${esc(postSearch)}" oninput="postSearch=this.value;renderPosts(false)">
     </div>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>ID</th><th>Title</th><th>Author</th><th>Date</th><th>Likes</th><th>Views</th><th>Comments</th><th>Status</th><th>Actions</th></tr></thead>
-        <tbody>${filtered.map(p=>`
-          <tr>
-            <td class="td-id">${esc(p.id)}</td>
-            <td class="td-title" title="${esc(p.title)}">${esc(p.title)}</td>
-            <td>${esc(p.author||'Admin')}</td>
-            <td style="white-space:nowrap">${fmt(p.ts)}</td>
-            <td>
-              <button class="btn btn-ghost btn-sm" onclick="showLikes('${p.id}')">${p.likes||0}</button>
-            </td>
-            <td>${p.views||0}</td>
-            <td>
-              <button class="btn btn-ghost btn-sm" onclick="showComments('${p.id}')">${p.commentCount||0}</button>
-            </td>
-            <td>
-              <span class="badge ${p.published?'badge-pub':'badge-draft'}">${p.published?'Live':'Draft'}</span>
-              ${p.pinned?'<span class="badge badge-pinned">Pinned</span>':''}
-              ${p.locked?'<span class="badge badge-locked">Locked</span>':''}
-            </td>
-            <td class="td-actions">
-              <button class="btn btn-ghost btn-sm" onclick="editPost('${p.id}')">Edit</button>
-              <a class="btn btn-ghost btn-sm" href="${BLOG_URL}?post=${p.id}" target="_blank">View</a>
-              <button class="btn btn-ghost btn-sm" onclick="togglePublish('${p.id}')">${p.published?'Unpublish':'Publish'}</button>
-              <button class="btn btn-yellow btn-sm" onclick="togglePin('${p.id}')">${p.pinned?'Unpin':'Pin'}</button>
-              <button class="btn btn-warning btn-sm" onclick="toggleLock('${p.id}')">${p.locked?'Unlock':'Lock'}</button>
-              <button class="btn btn-warning btn-sm" onclick="resetLikes('${p.id}')">Reset Likes</button>
-              <button class="btn btn-danger btn-sm" onclick="nukeComments('${p.id}')">Nuke Comments</button>
-              <button class="btn btn-danger btn-sm" onclick="deletePost('${p.id}')">Delete</button>
-            </td>
-          </tr>`).join('')}
-          ${!filtered.length?'<tr><td colspan="9" class="empty">No posts found</td></tr>':''}
-        </tbody>
-      </table>
-    </div>`;
+    <div class="table-wrap"><table>
+      <thead><tr><th>ID</th><th>Title</th><th>Author</th><th>Date</th><th>Likes</th><th>Views</th><th>Comments</th><th>Status</th><th>Actions</th></tr></thead>
+      <tbody>${filtered.map(p=>`<tr>
+        <td class="td-id">${esc(p.id)}</td>
+        <td class="td-title" title="${esc(p.title)}">${esc(p.title)}</td>
+        <td>${esc(p.author||'Admin')}</td>
+        <td style="white-space:nowrap">${fmt(p.ts)}</td>
+        <td><button class="btn btn-ghost btn-sm" onclick="showLikes('${p.id}')">${p.likes||0}</button></td>
+        <td>${p.views||0}</td>
+        <td><button class="btn btn-ghost btn-sm" onclick="showComments('${p.id}')">${p.commentCount||0}</button></td>
+        <td>
+          <span class="badge ${p.published?'badge-pub':'badge-draft'}">${p.published?'Live':'Draft'}</span>
+          ${p.pinned?`<img src="https://raton.lol/img/office-push-pin.png" width="14" height="14" style="vertical-align:middle;margin-left:2px" title="Pinned">`:''}
+          ${p.locked?'<span class="badge badge-locked">Locked</span>':''}
+        </td>
+        <td class="td-actions">
+          <button class="btn btn-ghost btn-sm" onclick="editPost('${p.id}')">Edit</button>
+          <a class="btn btn-ghost btn-sm" href="${BLOG_URL}?post=${p.id}" target="_blank">View</a>
+          <button class="btn btn-ghost btn-sm" onclick="togglePublish('${p.id}')">${p.published?'Unpublish':'Publish'}</button>
+          <button class="btn btn-yellow btn-sm" onclick="togglePin('${p.id}')">${p.pinned?'Unpin':'Pin'}</button>
+          <button class="btn btn-warning btn-sm" onclick="toggleLock('${p.id}')">${p.locked?'Unlock':'Lock'}</button>
+          <button class="btn btn-ghost btn-sm" onclick="clonePost('${p.id}')">Clone</button>
+          <button class="btn btn-warning btn-sm" onclick="resetLikes('${p.id}')">Reset Likes</button>
+          <button class="btn btn-danger btn-sm" onclick="nukeComments('${p.id}')">Nuke Cmnts</button>
+          <button class="btn btn-danger btn-sm" onclick="deletePost('${p.id}')">Delete</button>
+        </td>
+      </tr>`).join('')}
+      ${!filtered.length?'<tr><td colspan="9" class="empty">No posts found</td></tr>':''}
+      </tbody>
+    </table></div>`;
 }
 
-let pendingImageBase64=null, pendingImageMime=null;
+let pendingImageBase64 = null, pendingImageMime = null;
 
-function handleImageFile(file, previewId, labelId){
-  if(!file) return;
-  const allowed=['image/jpeg','image/png','image/gif','image/webp'];
-  if(!allowed.includes(file.type)){toast('Only JPG, PNG, GIF, WEBP allowed');return;}
-  if(file.size>5*1024*1024){toast('Image must be under 5MB');return;}
-  const reader=new FileReader();
-  reader.onload=e=>{
-    pendingImageBase64=e.target.result.split(',')[1];
-    pendingImageMime=file.type;
-    const preview=document.getElementById(previewId);
-    if(preview){preview.src=e.target.result;preview.style.display='block';}
-    const lbl=document.getElementById(labelId);
-    if(lbl) lbl.textContent=file.name;
+function handleImageFile(file, previewId, labelId) {
+  if (!file) return;
+  const allowed = ['image/jpeg','image/png','image/gif','image/webp'];
+  if (!allowed.includes(file.type)) { toast('Only JPG, PNG, GIF, WEBP allowed'); return; }
+  if (file.size > 5*1024*1024) { toast('Image must be under 5MB'); return; }
+  const reader = new FileReader();
+  reader.onload = e => {
+    pendingImageBase64 = e.target.result.split(',')[1];
+    pendingImageMime = file.type;
+    const preview = document.getElementById(previewId);
+    if (preview) { preview.src = e.target.result; preview.style.display = 'block'; }
+    const lbl = document.getElementById(labelId);
+    if (lbl) lbl.textContent = file.name;
   };
   reader.readAsDataURL(file);
 }
 
-function renderNew(){
-  pendingImageBase64=null; pendingImageMime=null;
-  document.getElementById('mainContent').innerHTML=`
+function renderNew() {
+  pendingImageBase64 = null; pendingImageMime = null;
+  document.getElementById('mainContent').innerHTML = `
     <div class="card" style="max-width:780px">
       <div class="card-header"><span class="card-title">Create New Post</span></div>
       <div class="form-grid">
         <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">Title *</label>
-            <input class="input" id="nTitle" placeholder="Post title">
-          </div>
-          <div class="form-group">
-            <label class="form-label">Author</label>
-            <input class="input" id="nAuthor" placeholder="Admin" value="Admin">
-          </div>
+          <div class="form-group"><label class="form-label">Title *</label><input class="input" id="nTitle" placeholder="Post title"></div>
+          <div class="form-group"><label class="form-label">Author</label><input class="input" id="nAuthor" placeholder="Admin" value="Admin"></div>
         </div>
-        <div class="form-group">
-          <label class="form-label">Excerpt</label>
-          <input class="input" id="nExcerpt" placeholder="Short summary (auto-generated if empty)">
-        </div>
+        <div class="form-group"><label class="form-label">Excerpt</label><input class="input" id="nExcerpt" placeholder="Short summary (auto-generated if empty)"></div>
         <div class="form-group">
           <label class="form-label">Image</label>
           <div class="img-upload-area" ondragover="event.preventDefault()" ondrop="event.preventDefault();handleImageFile(event.dataTransfer.files[0],'nImgPreview','nImgLabel')">
@@ -611,79 +572,56 @@ function renderNew(){
           </div>
           <img id="nImgPreview" class="img-preview" alt="">
         </div>
-        <div class="form-group">
-          <label class="form-label">Tags</label>
-          <input class="input" id="nTags" placeholder="update, guide, news  (comma separated)">
-        </div>
+        <div class="form-group"><label class="form-label">Tags</label><input class="input" id="nTags" placeholder="update, guide, news  (comma separated)"></div>
         <div class="form-group">
           <label class="form-label">Content * <span style="color:var(--text3);font-weight:400">(Markdown supported)</span></label>
           <textarea class="input textarea" id="nBody" style="min-height:280px" placeholder="Write your post here..."></textarea>
         </div>
         <div style="display:flex;align-items:center;gap:1.2rem;flex-wrap:wrap">
-          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:0.82rem;color:var(--text2)">
-            <input type="checkbox" id="nPublish" checked style="accent-color:var(--purple)"> Publish immediately
-          </label>
-          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:0.82rem;color:var(--text2)">
-            <input type="checkbox" id="nPinned" style="accent-color:var(--purple)"> Pin post
-          </label>
+          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:0.82rem;color:var(--text2)"><input type="checkbox" id="nPublish" checked style="accent-color:var(--purple)"> Publish immediately</label>
+          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:0.82rem;color:var(--text2)"><input type="checkbox" id="nPinned" style="accent-color:var(--purple)"> Pin post</label>
         </div>
-        <div>
-          <button class="btn btn-primary" onclick="createPost()" id="createBtn">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            Publish Post
-          </button>
-        </div>
+        <div><button class="btn btn-primary" onclick="createPost()" id="createBtn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Publish Post</button></div>
       </div>
     </div>`;
 }
 
-async function createPost(){
-  const title=document.getElementById('nTitle').value.trim();
-  const body=document.getElementById('nBody').value.trim();
-  const author=document.getElementById('nAuthor').value.trim()||'Admin';
-  const excerpt=document.getElementById('nExcerpt').value.trim();
-  const tags=document.getElementById('nTags').value.split(',').map(t=>t.trim()).filter(Boolean);
-  const published=document.getElementById('nPublish').checked;
-  const pinned=document.getElementById('nPinned').checked;
-  if(!title){toast('Title is required');return;}
-  if(!body){toast('Content is required');return;}
-  const btn=document.getElementById('createBtn');
-  btn.disabled=true; btn.textContent='Publishing...';
-
-  let imageUrl=null;
-  if(pendingImageBase64){
-    const upRes=await blogPost('/admin/upload-image',{imageData:pendingImageBase64,mimeType:pendingImageMime});
-    if(!upRes.ok){toast('Image upload failed: '+upRes.error);btn.disabled=false;btn.textContent='Publish Post';return;}
-    imageUrl=upRes.url;
+async function createPost() {
+  const title = document.getElementById('nTitle').value.trim();
+  const body = document.getElementById('nBody').value.trim();
+  const author = document.getElementById('nAuthor').value.trim() || 'Admin';
+  const excerpt = document.getElementById('nExcerpt').value.trim();
+  const tags = document.getElementById('nTags').value.split(',').map(t=>t.trim()).filter(Boolean);
+  const published = document.getElementById('nPublish').checked;
+  const pinned = document.getElementById('nPinned').checked;
+  if (!title) { toast('Title is required'); return; }
+  if (!body) { toast('Content is required'); return; }
+  const btn = document.getElementById('createBtn');
+  btn.disabled = true; btn.textContent = 'Publishing...';
+  let imageUrl = null;
+  if (pendingImageBase64) {
+    const upRes = await blogPost('/admin/upload-image', { imageData: pendingImageBase64, mimeType: pendingImageMime });
+    if (!upRes.ok) { toast('Image upload failed: '+upRes.error); btn.disabled=false; btn.textContent='Publish Post'; return; }
+    imageUrl = upRes.url;
   }
-
-  const data=await blogPost('/admin/post',{title,body,excerpt,author,tags,imageUrl,published,pinned});
-  if(!data.ok){toast(data.error);btn.disabled=false;btn.textContent='Publish Post';return;}
+  const data = await blogPost('/admin/post', { title, body, excerpt, author, tags, imageUrl, published, pinned });
+  if (!data.ok) { toast(data.error); btn.disabled=false; btn.textContent='Publish Post'; return; }
   toast('Post published — ID: '+data.post.id);
-  pendingImageBase64=null; pendingImageMime=null;
-  allPosts=[];
-  setTimeout(()=>showView('posts'),1000);
+  pendingImageBase64 = null; pendingImageMime = null;
+  allPosts = [];
+  setTimeout(() => showView('posts'), 1000);
 }
 
-function editPost(id){
-  const p=allPosts.find(x=>x.id===id);
-  if(!p) return;
-  pendingImageBase64=null; pendingImageMime=null;
-  document.getElementById('modalTitle').textContent='Edit Post';
-  document.getElementById('modalBody').innerHTML=`
+function editPost(id) {
+  const p = allPosts.find(x=>x.id===id);
+  if (!p) return;
+  pendingImageBase64 = null; pendingImageMime = null;
+  document.getElementById('modalTitle').textContent = 'Edit Post';
+  document.getElementById('modalBody').innerHTML = `
     <div class="form-grid">
-      <div class="form-group">
-        <label class="form-label">Title</label>
-        <input class="input" id="eTitle" value="${esc(p.title)}">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Author</label>
-        <input class="input" id="eAuthor" value="${esc(p.author||'Admin')}">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Excerpt</label>
-        <input class="input" id="eExcerpt" value="${esc(p.excerpt||'')}">
-      </div>
+      <div class="form-group"><label class="form-label">Title</label><input class="input" id="eTitle" value="${esc(p.title)}"></div>
+      <div class="form-group"><label class="form-label">Author</label><input class="input" id="eAuthor" value="${esc(p.author||'Admin')}"></div>
+      <div class="form-group"><label class="form-label">Excerpt</label><input class="input" id="eExcerpt" value="${esc(p.excerpt||'')}"></div>
       <div class="form-group">
         <label class="form-label">Image</label>
         ${p.imageUrl?`<img src="${esc(p.imageUrl)}" style="max-height:120px;border-radius:8px;margin-bottom:0.6rem;border:1px solid var(--border)">`:''}
@@ -694,14 +632,8 @@ function editPost(id){
         </div>
         <img id="eImgPreview" class="img-preview" alt="">
       </div>
-      <div class="form-group">
-        <label class="form-label">Tags (comma separated)</label>
-        <input class="input" id="eTags" value="${esc((p.tags||[]).join(', '))}">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Content</label>
-        <textarea class="input textarea" id="eBody" style="min-height:220px">${esc(p.body)}</textarea>
-      </div>
+      <div class="form-group"><label class="form-label">Tags (comma separated)</label><input class="input" id="eTags" value="${esc((p.tags||[]).join(', '))}"></div>
+      <div class="form-group"><label class="form-label">Content</label><textarea class="input textarea" id="eBody" style="min-height:220px">${esc(p.body)}</textarea></div>
       <div style="display:flex;gap:0.6rem;flex-wrap:wrap">
         <button class="btn btn-primary" onclick="saveEdit('${id}')">Save Changes</button>
         <button class="btn btn-ghost" onclick="closeModal('postModal')">Cancel</button>
@@ -711,135 +643,104 @@ function editPost(id){
   openModal('postModal');
 }
 
-async function saveEdit(id){
-  let imageUrl=undefined;
-  if(pendingImageBase64){
-    const upRes=await blogPost('/admin/upload-image',{imageData:pendingImageBase64,mimeType:pendingImageMime});
-    if(!upRes.ok){toast('Image upload failed: '+upRes.error);return;}
-    imageUrl=upRes.url;
+async function saveEdit(id) {
+  let imageUrl = undefined;
+  if (pendingImageBase64) {
+    const upRes = await blogPost('/admin/upload-image', { imageData: pendingImageBase64, mimeType: pendingImageMime });
+    if (!upRes.ok) { toast('Image upload failed: '+upRes.error); return; }
+    imageUrl = upRes.url;
   }
-  const payload={
+  const payload = {
     id,
-    title:document.getElementById('eTitle').value.trim(),
-    author:document.getElementById('eAuthor').value.trim(),
-    excerpt:document.getElementById('eExcerpt').value.trim(),
-    body:document.getElementById('eBody').value.trim(),
-    tags:document.getElementById('eTags').value.split(',').map(t=>t.trim()).filter(Boolean)
+    title: document.getElementById('eTitle').value.trim(),
+    author: document.getElementById('eAuthor').value.trim(),
+    excerpt: document.getElementById('eExcerpt').value.trim(),
+    body: document.getElementById('eBody').value.trim(),
+    tags: document.getElementById('eTags').value.split(',').map(t=>t.trim()).filter(Boolean)
   };
-  if(imageUrl!==undefined) payload.imageUrl=imageUrl;
-  const data=await blogPost('/admin/update-post',payload);
-  if(!data.ok){toast(data.error);return;}
+  if (imageUrl !== undefined) payload.imageUrl = imageUrl;
+  const data = await blogPost('/admin/update-post', payload);
+  if (!data.ok) { toast(data.error); return; }
   toast('Post updated');
-  pendingImageBase64=null; pendingImageMime=null;
+  pendingImageBase64 = null; pendingImageMime = null;
   closeModal('postModal');
-  allPosts=[]; renderPosts();
+  allPosts = []; renderPosts();
 }
 
-async function togglePublish(id){
-  const data=await blogPost('/admin/toggle-publish',{id});
-  if(!data.ok){toast(data.error);return;}
-  toast(data.published?'Published':'Unpublished');
-  allPosts=[]; renderPosts();
+async function togglePublish(id) { const data = await blogPost('/admin/toggle-publish',{id}); if(!data.ok){toast(data.error);return;} toast(data.published?'Published':'Unpublished'); allPosts=[]; renderPosts(); }
+async function togglePin(id) { const data = await blogPost('/admin/pin-post',{id}); if(!data.ok){toast(data.error);return;} toast(data.pinned?'Post pinned':'Post unpinned'); allPosts=[]; renderPosts(); }
+async function toggleLock(id) { const data = await blogPost('/admin/lock-post',{id}); if(!data.ok){toast(data.error);return;} toast(data.locked?'Comments locked':'Comments unlocked'); allPosts=[]; renderPosts(); }
+async function clonePost(id) { const data = await blogPost('/admin/clone-post',{id}); if(!data.ok){toast(data.error);return;} toast('Post cloned as draft: '+data.post.id); allPosts=[]; renderPosts(); }
+
+async function resetLikes(id) {
+  if (!confirm('Reset all likes for this post? This cannot be undone.')) return;
+  const data = await blogPost('/admin/reset-likes', { postId: id });
+  if (!data.ok) { toast(data.error); return; }
+  toast('Likes reset'); allPosts=[]; renderPosts();
 }
 
-async function togglePin(id){
-  const data=await blogPost('/admin/pin-post',{id});
-  if(!data.ok){toast(data.error);return;}
-  toast(data.pinned?'Post pinned':'Post unpinned');
-  allPosts=[]; renderPosts();
+async function nukeComments(id) {
+  if (!confirm('Delete ALL comments on this post? This is irreversible.')) return;
+  if (!confirm('Are you absolutely sure? All comments and replies will be gone.')) return;
+  const data = await blogPost('/admin/nuke-comments', { postId: id });
+  if (!data.ok) { toast(data.error); return; }
+  toast('All comments deleted'); allPosts=[]; renderPosts();
 }
 
-async function toggleLock(id){
-  const data=await blogPost('/admin/lock-post',{id});
-  if(!data.ok){toast(data.error);return;}
-  toast(data.locked?'Comments locked':'Comments unlocked');
-  allPosts=[]; renderPosts();
+async function deletePost(id) {
+  if (!confirm(`Delete post "${id}"? This cannot be undone.`)) return;
+  const data = await blogPost('/admin/delete-post', { id });
+  if (!data.ok) { toast(data.error); return; }
+  toast('Post deleted'); allPosts=[]; renderPosts();
 }
 
-async function resetLikes(id){
-  if(!confirm(`Reset all likes for this post? This cannot be undone.`)) return;
-  const data=await blogPost('/admin/reset-likes',{postId:id});
-  if(!data.ok){toast(data.error);return;}
-  toast('Likes reset');
-  allPosts=[]; renderPosts();
-}
-
-async function nukeComments(id){
-  if(!confirm(`Delete ALL comments on this post? This is irreversible.`)) return;
-  if(!confirm(`Are you absolutely sure? All comments and replies will be gone.`)) return;
-  const data=await blogPost('/admin/nuke-comments',{postId:id});
-  if(!data.ok){toast(data.error);return;}
-  toast('All comments deleted');
-  allPosts=[]; renderPosts();
-}
-
-async function deletePost(id){
-  if(!confirm(`Delete post "${id}"? This cannot be undone.`)) return;
-  const data=await blogPost('/admin/delete-post',{id});
-  if(!data.ok){toast(data.error);return;}
-  toast('Post deleted');
-  allPosts=[]; renderPosts();
-}
-
-function showLikes(id){
-  const p=allPosts.find(x=>x.id===id);
-  if(!p){toast('Post not found');return;}
-  const ips=p.likeIps||[];
-  document.getElementById('likesModalBody').innerHTML=`
-    <p style="color:var(--text2);font-size:0.82rem;margin-bottom:0.8rem">
-      <strong style="color:var(--text)">${ips.length}</strong> unique IPs liked "<em>${esc(p.title)}</em>"
-    </p>
+function showLikes(id) {
+  const p = allPosts.find(x=>x.id===id);
+  if (!p) { toast('Post not found'); return; }
+  const ips = p.likeIps||[];
+  document.getElementById('likesModalBody').innerHTML = `
+    <p style="color:var(--text2);font-size:0.82rem;margin-bottom:0.8rem"><strong style="color:var(--text)">${ips.length}</strong> unique IPs liked "<em>${esc(p.title)}</em>"</p>
     ${ips.length?`<div class="ip-list">${ips.map(ip=>`<span class="ip-tag">${esc(ip)}</span>`).join('')}</div>`:'<div class="empty" style="padding:1rem 0">No likes yet</div>'}`;
   openModal('likesModal');
 }
 
-async function renderComments(){
-  if(!allPosts.length){
-    const data=await blogGet('/admin/posts?');
-    allPosts=data.posts||[];
-  }
-  document.getElementById('mainContent').innerHTML=`
+async function renderComments() {
+  if (!allPosts.length) { const data = await blogGet('/admin/posts?'); allPosts = data.posts||[]; }
+  document.getElementById('mainContent').innerHTML = `
     <p style="color:var(--text2);font-size:0.85rem;margin-bottom:1.2rem">Click "Manage" to open comment moderation for any post.</p>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>Post</th><th>Date</th><th>Comments</th><th>Status</th><th></th></tr></thead>
-        <tbody>${allPosts.map(p=>`
-          <tr>
-            <td class="td-title">${esc(p.title)}</td>
-            <td>${fmt(p.ts)}</td>
-            <td>${p.commentCount||0}</td>
-            <td>
-              ${p.locked?'<span class="badge badge-locked">Locked</span>':'<span class="badge badge-pub">Open</span>'}
-            </td>
-            <td class="td-actions">
-              <button class="btn btn-ghost btn-sm" onclick="showComments('${p.id}')">Manage</button>
-              <button class="btn btn-warning btn-sm" onclick="toggleLock('${p.id}')">${p.locked?'Unlock':'Lock'}</button>
-              <button class="btn btn-danger btn-sm" onclick="nukeComments('${p.id}')">Nuke All</button>
-            </td>
-          </tr>`).join('')}
-        </tbody>
-      </table>
-    </div>`;
+    <div class="table-wrap"><table>
+      <thead><tr><th>Post</th><th>Date</th><th>Comments</th><th>Status</th><th></th></tr></thead>
+      <tbody>${allPosts.map(p=>`<tr>
+        <td class="td-title">${esc(p.title)}</td>
+        <td>${fmt(p.ts)}</td>
+        <td>${p.commentCount||0}</td>
+        <td>${p.locked?'<span class="badge badge-locked">Locked</span>':'<span class="badge badge-pub">Open</span>'}</td>
+        <td class="td-actions">
+          <button class="btn btn-ghost btn-sm" onclick="showComments('${p.id}')">Manage</button>
+          <button class="btn btn-warning btn-sm" onclick="toggleLock('${p.id}')">${p.locked?'Unlock':'Lock'}</button>
+          <button class="btn btn-danger btn-sm" onclick="nukeComments('${p.id}')">Nuke All</button>
+        </td>
+      </tr>`).join('')}
+      </tbody>
+    </table></div>`;
 }
 
 let _currentCommentPostId = null;
-async function showComments(postId){
+async function showComments(postId) {
   _currentCommentPostId = postId;
-  document.getElementById('commentsModalBody').innerHTML='<div class="spinner"></div>';
+  document.getElementById('commentsModalBody').innerHTML = '<div class="spinner"></div>';
   openModal('commentsModal');
-  const data=await blogGet(`/admin/comments?postId=${postId}&`);
-  const comments=data.comments||[];
-  const post=allPosts.find(p=>p.id===postId);
-  document.getElementById('commentsModalBody').innerHTML=`
-    <p style="color:var(--text3);font-size:0.78rem;margin-bottom:1rem">
-      Post: <strong style="color:var(--text)">${esc(post?.title||postId)}</strong> · ${comments.length} total comment entries
-    </p>
+  const data = await blogGet(`/admin/comments?postId=${postId}&`);
+  const comments = data.comments||[];
+  const post = allPosts.find(p=>p.id===postId);
+  document.getElementById('commentsModalBody').innerHTML = `
+    <p style="color:var(--text3);font-size:0.78rem;margin-bottom:1rem">Post: <strong style="color:var(--text)">${esc(post?.title||postId)}</strong> · ${comments.length} total comment entries</p>
     <div id="commentsList">${renderAdminComments(comments, postId)}</div>`;
 }
 
-function renderAdminComments(comments, postId){
-  if(!comments.length) return '<div class="empty">No comments yet</div>';
-  return comments.map(c=>`
+function renderAdminComments(comments, postId) {
+  if (!comments.length) return '<div class="empty">No comments yet</div>';
+  return comments.map(c => `
     <div class="comment-item ${c.deleted?'deleted':''}" id="ac-${c.id}">
       <div class="comment-meta">
         <span class="comment-meta-name">${esc(c.deleted?'[deleted]':c.name)}</span>
@@ -852,18 +753,17 @@ function renderAdminComments(comments, postId){
       </div>
       <div class="comment-text ${c.deleted?'deleted-msg':''}">${esc(c.body)}</div>
       <div style="display:flex;gap:0.4rem;margin-top:0.5rem;flex-wrap:wrap">
-        ${!c.deleted?`
-          <button class="btn btn-warning btn-sm" onclick="softDeleteComment('${postId}','${c.id}')">Soft Delete</button>
-          <button class="btn btn-ghost btn-sm" onclick="openEditComment('${postId}','${c.id}',null,'${esc(c.body).replace(/'/g,"\\'")}')">Edit</button>
-        `:''}
+        ${!c.deleted?`<button class="btn btn-warning btn-sm" onclick="softDeleteComment('${postId}','${c.id}')">Soft Delete</button>
+          <button class="btn btn-ghost btn-sm" onclick="openEditComment('${postId}','${c.id}',null,'${esc(c.body).replace(/'/g,"\\'")}')">Edit</button>`:''}
         <button class="btn btn-danger btn-sm" onclick="hardDeleteComment('${postId}','${c.id}')">Hard Delete</button>
-        ${!c.deleted?`<button class="btn btn-yellow btn-sm" onclick="banByIp('${esc(c.ip||'')}')">Ban IP</button>`:''}
+        ${!c.deleted?`<button class="btn btn-yellow btn-sm" onclick="banByIp('${esc(c.ip||'')}')">Ban IP</button>
+          <button class="btn btn-success btn-sm" onclick="quickTagUser('${esc(c.name||'')}')">Tag User</button>`:''}
       </div>
       ${(c.replies||[]).length?`<div class="reply-indent">${c.replies.map(r=>replyAdminHTML(r,c.id,postId)).join('')}</div>`:''}
     </div>`).join('');
 }
 
-function replyAdminHTML(r, parentId, postId){
+function replyAdminHTML(r, parentId, postId) {
   return `<div class="comment-item ${r.deleted?'deleted':''}" style="margin-bottom:0.5rem;background:var(--surface)" id="ar-${r.id}">
     <div class="comment-meta">
       <span class="comment-meta-name" style="font-size:0.75rem">${esc(r.deleted?'[deleted]':r.name)}</span>
@@ -876,40 +776,42 @@ function replyAdminHTML(r, parentId, postId){
     </div>
     <div class="comment-text ${r.deleted?'deleted-msg':''}">${esc(r.body)}</div>
     <div style="display:flex;gap:0.4rem;margin-top:0.4rem;flex-wrap:wrap">
-      ${!r.deleted?`
-        <button class="btn btn-warning btn-sm" onclick="softDeleteComment('${postId}','${parentId}','${r.id}')">Soft Delete</button>
-        <button class="btn btn-ghost btn-sm" onclick="openEditComment('${postId}','${parentId}','${r.id}','${esc(r.body).replace(/'/g,"\\'")}')">Edit</button>
-      `:''}
+      ${!r.deleted?`<button class="btn btn-warning btn-sm" onclick="softDeleteComment('${postId}','${parentId}','${r.id}')">Soft Delete</button>
+        <button class="btn btn-ghost btn-sm" onclick="openEditComment('${postId}','${parentId}','${r.id}','${esc(r.body).replace(/'/g,"\\'")}')">Edit</button>`:''}
       <button class="btn btn-danger btn-sm" onclick="hardDeleteComment('${postId}','${parentId}','${r.id}')">Hard Delete</button>
-      ${!r.deleted?`<button class="btn btn-yellow btn-sm" onclick="banByIp('${esc(r.ip||'')}')">Ban IP</button>`:''}
+      ${!r.deleted?`<button class="btn btn-yellow btn-sm" onclick="banByIp('${esc(r.ip||'')}')">Ban IP</button>
+        <button class="btn btn-success btn-sm" onclick="quickTagUser('${esc(r.name||'')}')">Tag User</button>`:''}
     </div>
   </div>`;
 }
 
-async function softDeleteComment(postId, commentId, replyId){
-  if(!confirm('Soft delete: marks as [deleted by moderator], still visible as placeholder.')) return;
-  const data=await blogPost('/admin/delete-comment',{postId,commentId,replyId:replyId||undefined});
-  if(!data.ok){toast(data.error);return;}
-  toast('Soft deleted');
-  showComments(postId);
+async function quickTagUser(name) {
+  if (!name) { toast('No name'); return; }
+  const tag = prompt(`Assign tag to "${name}":\n\nOptions: deluxe, gold, developer\nLeave empty to remove tag:`,'');
+  if (tag === null) return;
+  const data = await blogPost('/admin/set-user-tag', { name, tag: tag.trim() || null });
+  if (!data.ok) { toast(data.error, true); return; }
+  toast(tag ? `Tagged ${name} as ${tag}` : `Removed tag from ${name}`);
 }
 
-async function hardDeleteComment(postId, commentId, replyId){
-  if(!confirm('Hard delete: completely removes the comment. Cannot be undone.')) return;
-  const data=await blogPost('/admin/hard-delete-comment',{postId,commentId,replyId:replyId||undefined});
-  if(!data.ok){toast(data.error);return;}
-  toast('Hard deleted');
-  allPosts=[];
-  showComments(postId);
+async function softDeleteComment(postId, commentId, replyId) {
+  if (!confirm('Soft delete: marks as [deleted by moderator], still visible as placeholder.')) return;
+  const data = await blogPost('/admin/delete-comment', { postId, commentId, replyId: replyId||undefined });
+  if (!data.ok) { toast(data.error); return; }
+  toast('Soft deleted'); showComments(postId);
 }
 
-function openEditComment(postId, commentId, replyId, currentBody){
-  document.getElementById('editCommentBody').innerHTML=`
+async function hardDeleteComment(postId, commentId, replyId) {
+  if (!confirm('Hard delete: completely removes the comment. Cannot be undone.')) return;
+  const data = await blogPost('/admin/hard-delete-comment', { postId, commentId, replyId: replyId||undefined });
+  if (!data.ok) { toast(data.error); return; }
+  toast('Hard deleted'); allPosts = []; showComments(postId);
+}
+
+function openEditComment(postId, commentId, replyId, currentBody) {
+  document.getElementById('editCommentBody').innerHTML = `
     <div class="form-grid">
-      <div class="form-group">
-        <label class="form-label">Edit body</label>
-        <textarea class="input textarea" id="editCommentText" style="min-height:120px">${currentBody}</textarea>
-      </div>
+      <div class="form-group"><label class="form-label">Edit body</label><textarea class="input textarea" id="editCommentText" style="min-height:120px">${currentBody}</textarea></div>
       <p style="font-size:0.72rem;color:var(--text3)">This will mark the comment as "edited by mod" for all users.</p>
       <div style="display:flex;gap:0.6rem">
         <button class="btn btn-primary" onclick="saveEditComment('${postId}','${commentId}','${replyId||''}')">Save</button>
@@ -919,31 +821,103 @@ function openEditComment(postId, commentId, replyId, currentBody){
   openModal('editCommentModal');
 }
 
-async function saveEditComment(postId, commentId, replyId){
-  const newBody=document.getElementById('editCommentText').value.trim();
-  if(!newBody){toast('Body cannot be empty');return;}
-  const payload={postId,commentId,newBody};
-  if(replyId) payload.replyId=replyId;
-  const data=await blogPost('/admin/edit-comment',payload);
-  if(!data.ok){toast(data.error);return;}
-  toast('Comment edited');
-  closeModal('editCommentModal');
-  showComments(postId);
+async function saveEditComment(postId, commentId, replyId) {
+  const newBody = document.getElementById('editCommentText').value.trim();
+  if (!newBody) { toast('Body cannot be empty'); return; }
+  const payload = { postId, commentId, newBody };
+  if (replyId) payload.replyId = replyId;
+  const data = await blogPost('/admin/edit-comment', payload);
+  if (!data.ok) { toast(data.error); return; }
+  toast('Comment edited'); closeModal('editCommentModal'); showComments(postId);
 }
 
-function banByIp(ip){
-  if(!ip){toast('No IP available');return;}
-  const hours=prompt(`Ban IP: ${ip}\nDuration in hours (default 24):`, '24');
-  if(hours===null) return;
-  const reason=prompt('Ban reason (optional):','Violation of community guidelines')||'Violation of community guidelines';
-  blogPost('/admin/ban-identity',{ip,reason,durationHours:parseInt(hours)||24}).then(data=>{
-    if(!data.ok){toast(data.error);return;}
+function banByIp(ip) {
+  if (!ip) { toast('No IP available'); return; }
+  const hours = prompt(`Ban IP: ${ip}\nDuration in hours (default 24):`, '24');
+  if (hours === null) return;
+  const reason = prompt('Ban reason (optional):', 'Violation of community guidelines') || 'Violation of community guidelines';
+  blogPost('/admin/ban-identity', { ip, reason, durationHours: parseInt(hours)||24 }).then(data => {
+    if (!data.ok) { toast(data.error); return; }
     toast(`IP ${ip} banned for ${hours}h`);
   });
 }
 
-function renderTools(){
-  document.getElementById('mainContent').innerHTML=`
+async function renderTags() {
+  const c = document.getElementById('mainContent');
+  c.innerHTML = '<div class="spinner"></div>';
+  const data = await fetch(BLOG_WORKER+'/admin/list-tags?adminKey='+encodeURIComponent(ADMIN_KEY)).then(r=>r.json());
+  const tags = data.tags || [];
+
+  c.innerHTML = `<div style="max-width:720px">
+    <div class="action-group" style="margin-bottom:1.5rem">
+      <div class="action-group-title">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+        Assign User Tag
+      </div>
+      <p style="font-size:0.78rem;color:var(--text3);margin-bottom:1rem">Tags are shown on all comments by that user across all posts.</p>
+      <div class="form-grid">
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Username (exact)</label><input class="input" id="tagName" placeholder="username"></div>
+          <div class="form-group">
+            <label class="form-label">Tag</label>
+            <select class="input" id="tagValue">
+              <option value="">None (remove tag)</option>
+              <option value="deluxe">✦ Deluxe (Rainbow)</option>
+              <option value="gold">★ Gold (Shiny)</option>
+              <option value="developer">⌨ Developer (Cool)</option>
+            </select>
+          </div>
+        </div>
+        <div style="display:flex;gap:0.6rem">
+          <button class="btn btn-primary" onclick="assignTag()">Assign Tag</button>
+          <button class="btn btn-ghost" onclick="renderTags()">Refresh</button>
+        </div>
+      </div>
+      <div style="margin-top:1.2rem">
+        <div class="form-label" style="margin-bottom:0.6rem">Tag Previews</div>
+        <div style="display:flex;gap:0.8rem;flex-wrap:wrap;align-items:center">
+          <span class="tag-badge tag-deluxe">✦ DELUXE</span>
+          <span class="tag-badge tag-gold">★ GOLD</span>
+          <span class="tag-badge tag-developer">⌨ DEV</span>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header"><span class="card-title">Tagged Users (${tags.length})</span></div>
+      ${tags.length ? tags.map(t=>`
+        <div class="tag-list-item">
+          <div style="display:flex;align-items:center;gap:0.7rem">
+            <span style="font-weight:600;color:var(--text)">${esc(t.name)}</span>
+            ${tagBadgeHTML(t.tag)}
+          </div>
+          <div style="display:flex;align-items:center;gap:0.5rem">
+            <span style="font-size:0.7rem;color:var(--text3)">${t.assignedAt ? fmt(t.assignedAt) : ''}</span>
+            <button class="btn btn-danger btn-sm" onclick="removeTag('${esc(t.name)}')">Remove</button>
+          </div>
+        </div>`).join('') : '<div class="empty" style="padding:2rem 0">No tagged users yet</div>'}
+    </div>
+  </div>`;
+}
+
+async function assignTag() {
+  const name = document.getElementById('tagName').value.trim();
+  const tag = document.getElementById('tagValue').value;
+  if (!name) { toast('Username required'); return; }
+  const data = await blogPost('/admin/tag-by-name', { name, tag: tag || null });
+  if (!data.ok) { toast(data.error); return; }
+  toast(tag ? `Tagged "${name}" as ${tag} (${data.affectedEntries} comments updated)` : `Removed tag from "${name}"`);
+  renderTags();
+}
+
+async function removeTag(name) {
+  const data = await blogPost('/admin/set-user-tag', { name, tag: null });
+  if (!data.ok) { toast(data.error); return; }
+  toast(`Removed tag from "${name}"`);
+  renderTags();
+}
+
+function renderTools() {
+  document.getElementById('mainContent').innerHTML = `
     <div style="max-width:720px;display:flex;flex-direction:column;gap:1.2rem">
 
       <div class="action-group">
@@ -952,24 +926,10 @@ function renderTools(){
           Discord Announcement
         </div>
         <div class="form-grid">
-          <div class="form-group">
-            <label class="form-label">Title</label>
-            <input class="input" id="annTitle" placeholder="Announcement title (optional)">
-          </div>
-          <div class="form-group">
-            <label class="form-label">Message *</label>
-            <textarea class="input textarea" id="annMsg" style="min-height:80px" placeholder="Message to send to Discord..."></textarea>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Color (hex)</label>
-            <input class="input" id="annColor" placeholder="8b5cf6" value="8b5cf6" style="max-width:160px">
-          </div>
-          <div>
-            <button class="btn btn-primary" onclick="sendAnnouncement()">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-              Send to Discord
-            </button>
-          </div>
+          <div class="form-group"><label class="form-label">Title</label><input class="input" id="annTitle" placeholder="Announcement title (optional)"></div>
+          <div class="form-group"><label class="form-label">Message *</label><textarea class="input textarea" id="annMsg" style="min-height:80px" placeholder="Message to send to Discord..."></textarea></div>
+          <div class="form-group"><label class="form-label">Color (hex)</label><input class="input" id="annColor" placeholder="8b5cf6" value="8b5cf6" style="max-width:160px"></div>
+          <div><button class="btn btn-primary" onclick="sendAnnouncement()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Send to Discord</button></div>
         </div>
       </div>
 
@@ -980,19 +940,10 @@ function renderTools(){
         </div>
         <div class="form-grid">
           <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">IP Address</label>
-              <input class="input" id="banIp" placeholder="1.2.3.4">
-            </div>
-            <div class="form-group">
-              <label class="form-label">Duration (hours)</label>
-              <input class="input" id="banHours" type="number" value="24" min="1">
-            </div>
+            <div class="form-group"><label class="form-label">IP Address</label><input class="input" id="banIp" placeholder="1.2.3.4"></div>
+            <div class="form-group"><label class="form-label">Duration (hours)</label><input class="input" id="banHours" type="number" value="24" min="1"></div>
           </div>
-          <div class="form-group">
-            <label class="form-label">Reason</label>
-            <input class="input" id="banReason" value="Violation of community guidelines">
-          </div>
+          <div class="form-group"><label class="form-label">Reason</label><input class="input" id="banReason" value="Violation of community guidelines"></div>
           <div class="action-group-row">
             <button class="btn btn-danger" onclick="banIdentity()">Ban</button>
             <button class="btn btn-success" onclick="unbanIdentity()">Unban</button>
@@ -1005,21 +956,12 @@ function renderTools(){
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
           Reset User Name Binding
         </div>
-        <p style="font-size:0.78rem;color:var(--text3);margin-bottom:0.7rem">Allows a user to pick a new name by removing their identity binding.</p>
         <div class="form-grid">
           <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">IP Address</label>
-              <input class="input" id="resetIp" placeholder="1.2.3.4">
-            </div>
-            <div class="form-group">
-              <label class="form-label">Fingerprint (optional)</label>
-              <input class="input" id="resetFp" placeholder="browser fingerprint">
-            </div>
+            <div class="form-group"><label class="form-label">IP Address</label><input class="input" id="resetIp" placeholder="1.2.3.4"></div>
+            <div class="form-group"><label class="form-label">Fingerprint (optional)</label><input class="input" id="resetFp" placeholder="browser fingerprint"></div>
           </div>
-          <div>
-            <button class="btn btn-warning" onclick="resetUserName()">Reset Name</button>
-          </div>
+          <div><button class="btn btn-warning" onclick="resetUserName()">Reset Name</button></div>
         </div>
       </div>
 
@@ -1029,10 +971,7 @@ function renderTools(){
           Bulk Post Actions
         </div>
         <div class="form-grid">
-          <div class="form-group">
-            <label class="form-label">Post ID</label>
-            <input class="input" id="bulkPostId" placeholder="post-id-here">
-          </div>
+          <div class="form-group"><label class="form-label">Post ID</label><input class="input" id="bulkPostId" placeholder="post-id-here"></div>
           <div class="action-group-row">
             <button class="btn btn-yellow btn-sm" onclick="bulkAction('lock')">Lock Comments</button>
             <button class="btn btn-ghost btn-sm" onclick="bulkAction('unlock')">Unlock Comments</button>
@@ -1042,56 +981,116 @@ function renderTools(){
         </div>
       </div>
 
+      <div class="action-group">
+        <div class="action-group-title">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          Override Post Stats
+        </div>
+        <div class="form-grid">
+          <div class="form-group"><label class="form-label">Post ID</label><input class="input" id="statsPostId" placeholder="post-id-here"></div>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">Set Views to</label><input class="input" id="statsViews" type="number" min="0" placeholder="0"></div>
+            <div class="form-group"><label class="form-label">Set Likes to</label><input class="input" id="statsLikes" type="number" min="0" placeholder="0"></div>
+          </div>
+          <div class="action-group-row">
+            <button class="btn btn-primary btn-sm" onclick="overrideViews()">Set Views</button>
+            <button class="btn btn-primary btn-sm" onclick="overrideLikes()">Set Likes</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="action-group">
+        <div class="action-group-title">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/></svg>
+          Transfer Comments Between Posts
+        </div>
+        <div class="form-grid">
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">From Post ID</label><input class="input" id="transferFrom" placeholder="source-post-id"></div>
+            <div class="form-group"><label class="form-label">To Post ID</label><input class="input" id="transferTo" placeholder="destination-post-id"></div>
+          </div>
+          <div><button class="btn btn-warning" onclick="transferComments()">Transfer Comments</button></div>
+        </div>
+      </div>
+
     </div>`;
 }
 
-async function renderBroadcasts(){
+async function overrideViews() {
+  const postId = document.getElementById('statsPostId').value.trim();
+  const views = document.getElementById('statsViews').value;
+  if (!postId) { toast('Post ID required'); return; }
+  const data = await blogPost('/admin/update-views', { postId, views: parseInt(views)||0 });
+  if (!data.ok) { toast(data.error); return; }
+  toast(`Views set to ${data.views}`);
+}
+
+async function overrideLikes() {
+  const postId = document.getElementById('statsPostId').value.trim();
+  const likes = document.getElementById('statsLikes').value;
+  if (!postId) { toast('Post ID required'); return; }
+  const data = await blogPost('/admin/update-likes', { postId, likes: parseInt(likes)||0 });
+  if (!data.ok) { toast(data.error); return; }
+  toast(`Likes set to ${data.likes}`);
+}
+
+async function transferComments() {
+  const fromPostId = document.getElementById('transferFrom').value.trim();
+  const toPostId = document.getElementById('transferTo').value.trim();
+  if (!fromPostId || !toPostId) { toast('Both IDs required'); return; }
+  if (!confirm(`Transfer all comments from "${fromPostId}" to "${toPostId}"?`)) return;
+  const data = await blogPost('/admin/transfer-comments', { fromPostId, toPostId });
+  if (!data.ok) { toast(data.error); return; }
+  toast(`Transferred ${data.transferred} comments`);
+}
+
+async function renderBroadcasts() {
   const c = document.getElementById('mainContent');
   c.innerHTML = '<div class="spinner"></div>';
-
-  let banners = [];
-  let warning = null;
-
+  let banners = [], warning = null;
   try {
     const data = await fetch(BLOG_WORKER + '/broadcasts').then(r=>r.json());
-    if(data.ok){
-      banners = data.banners || [];
-      warning = data.warning || null;
-    }
+    if (data.ok) { banners = data.banners||[]; warning = data.warning||null; }
   } catch(_) {}
 
-  c.innerHTML = `<div style="max-width:760px;display:flex;flex-direction:column;gap:1.4rem">
+  const presetIcons = [
+    { label: '🔔 Alert', svg: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>' },
+    { label: '⚙ Update', svg: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M4.93 19.07l1.41-1.41M19.07 19.07l-1.41-1.41M12 2v2M12 20v2M2 12h2M20 12h2"/></svg>' },
+    { label: '🎉 Event', svg: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>' },
+    { label: '⚡ News', svg: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>' },
+    { label: '🔧 Maintenance', svg: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>' },
+    { label: '💜 Welcome', svg: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>' },
+    { label: '🎁 Giveaway', svg: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><path d="M12 22V7"/></svg>' },
+    { label: '📢 Announce', svg: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 11.8"/></svg>' },
+  ];
 
+  c.innerHTML = `<div style="max-width:760px;display:flex;flex-direction:column;gap:1.4rem">
     <div class="action-group">
       <div class="action-group-title">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
         Persistent Banners
       </div>
-      <p style="font-size:0.78rem;color:var(--text3);margin-bottom:1rem">These appear as colored banners at the top of the blog. You can have multiple.</p>
-
+      <p style="font-size:0.78rem;color:var(--text3);margin-bottom:1rem">Colored banners that appear at the top of the blog.</p>
       <div class="form-grid" style="margin-bottom:1rem">
-        <div class="form-group">
-          <label class="form-label">Banner Text *</label>
-          <input class="input" id="bannerText" placeholder="Maintenance scheduled for tonight...">
-        </div>
+        <div class="form-group"><label class="form-label">Banner Text *</label><input class="input" id="bannerText" placeholder="Maintenance scheduled for tonight..."></div>
         <div class="form-row">
           <div class="form-group">
             <label class="form-label">Color (hex)</label>
-            <input class="input" id="bannerColor" value="#8b5cf6" placeholder="#8b5cf6">
+            <div style="display:flex;gap:0.4rem;flex-wrap:wrap;margin-top:0.3rem">
+              ${['#8b5cf6','#22c55e','#ef4444','#f59e0b','#3b82f6','#ec4899','#06b6d4'].map(col=>`<div onclick="document.getElementById('bannerColor').value='${col}'" style="width:20px;height:20px;border-radius:50%;background:${col};cursor:pointer;border:2px solid rgba(255,255,255,0.15)" title="${col}"></div>`).join('')}
+            </div>
+            <input class="input" id="bannerColor" value="#8b5cf6" placeholder="#8b5cf6" style="margin-top:0.4rem">
           </div>
           <div class="form-group">
-            <label class="form-label">Icon SVG (optional)</label>
-            <input class="input" id="bannerIcon" placeholder='&lt;svg...&gt;...&lt;/svg&gt;'>
+            <label class="form-label">Icon (preset or custom SVG)</label>
+            <div class="icon-presets">
+              ${presetIcons.map(p=>`<button class="icon-preset-btn" onclick="document.getElementById('bannerIcon').value=${JSON.stringify(p.svg)}" title="${p.label}">${p.svg} ${p.label}</button>`).join('')}
+            </div>
+            <input class="input" id="bannerIcon" placeholder='Custom SVG or leave empty' style="margin-top:0.4rem">
           </div>
         </div>
-        <div>
-          <button class="btn btn-primary" onclick="addBanner()">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            Add Banner
-          </button>
-        </div>
+        <div><button class="btn btn-primary" onclick="addBanner()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add Banner</button></div>
       </div>
-
       <div id="bannerList">
         ${banners.length ? banners.map((b,i)=>`
           <div class="banner-card">
@@ -1110,159 +1109,138 @@ async function renderBroadcasts(){
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
         Live Warning (Real-time)
       </div>
-      <p style="font-size:0.78rem;color:var(--text3);margin-bottom:1rem">Sends an immediate pop-up to everyone viewing the blog. Appears as a white modal in the center of the screen.</p>
-
+      <p style="font-size:0.78rem;color:var(--text3);margin-bottom:1rem">Sends an immediate pop-up to everyone viewing the blog.</p>
       ${warning ? `<div style="background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);border-radius:8px;padding:0.8rem 1rem;margin-bottom:1rem;font-size:0.82rem;color:#f59e0b;display:flex;align-items:center;justify-content:space-between;gap:1rem">
         <span>Active: <strong>${esc(warning.message)}</strong></span>
         <button class="btn btn-danger btn-sm" onclick="clearLiveWarning()">Clear</button>
       </div>` : ''}
-
       <div class="form-grid">
-        <div class="form-group">
-          <label class="form-label">Message *</label>
-          <input class="input" id="warningMsg" placeholder="Server going down in 5 minutes...">
-        </div>
+        <div class="form-group"><label class="form-label">Message *</label><input class="input" id="warningMsg" placeholder="Server going down in 5 minutes..."></div>
         <div class="form-group">
           <label class="form-label">Display Duration (seconds)</label>
           <input class="input" id="warningDuration" type="number" value="10" min="3" max="120" style="max-width:160px">
-          <span class="form-hint">How long the warning stays on screen before auto-closing (3–120s)</span>
+          <span class="form-hint">3–120s</span>
         </div>
-        <div>
-          <button class="btn btn-warning" onclick="sendLiveWarning()">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-            Send Live Warning
-          </button>
-        </div>
+        <div><button class="btn btn-warning" onclick="sendLiveWarning()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Send Live Warning</button></div>
       </div>
     </div>
-
   </div>`;
 }
 
-async function addBanner(){
+async function addBanner() {
   const text = document.getElementById('bannerText').value.trim();
   const color = document.getElementById('bannerColor').value.trim() || '#8b5cf6';
   const icon = document.getElementById('bannerIcon').value.trim();
-  if(!text){ toast('Banner text is required'); return; }
-
+  if (!text) { toast('Banner text is required'); return; }
   const data = await blogPost('/admin/broadcasts/banner-add', { text, color, icon: icon||null });
-  if(!data.ok){ toast(data.error); return; }
-  toast('Banner added');
-  renderBroadcasts();
+  if (!data.ok) { toast(data.error); return; }
+  toast('Banner added'); renderBroadcasts();
 }
 
-async function deleteBanner(index){
+async function deleteBanner(index) {
   const data = await blogPost('/admin/broadcasts/banner-delete', { index });
-  if(!data.ok){ toast(data.error); return; }
-  toast('Banner removed');
-  renderBroadcasts();
+  if (!data.ok) { toast(data.error); return; }
+  toast('Banner removed'); renderBroadcasts();
 }
 
-async function sendLiveWarning(){
+async function sendLiveWarning() {
   const message = document.getElementById('warningMsg').value.trim();
   const duration = parseInt(document.getElementById('warningDuration').value) || 10;
-  if(!message){ toast('Message is required'); return; }
-  if(duration < 3 || duration > 120){ toast('Duration must be between 3 and 120 seconds'); return; }
-
+  if (!message) { toast('Message is required'); return; }
+  if (duration < 3 || duration > 120) { toast('Duration must be between 3 and 120 seconds'); return; }
   const data = await blogPost('/admin/broadcasts/live-warning', { message, duration });
-  if(!data.ok){ toast(data.error); return; }
-  toast('Live warning sent!');
-  renderBroadcasts();
+  if (!data.ok) { toast(data.error); return; }
+  toast('Live warning sent!'); renderBroadcasts();
 }
 
-async function clearLiveWarning(){
+async function clearLiveWarning() {
   const data = await blogPost('/admin/broadcasts/clear-warning', {});
-  if(!data.ok){ toast(data.error); return; }
-  toast('Live warning cleared');
-  renderBroadcasts();
+  if (!data.ok) { toast(data.error); return; }
+  toast('Live warning cleared'); renderBroadcasts();
 }
 
-async function sendAnnouncement(){
-  const message=document.getElementById('annMsg').value.trim();
-  const title=document.getElementById('annTitle').value.trim();
-  const colorStr=document.getElementById('annColor').value.trim().replace('#','');
-  const color=parseInt(colorStr,16)||0x8b5cf6;
-  if(!message){toast('Message is required');return;}
-  const data=await blogPost('/admin/announce',{message,title,color});
-  if(!data.ok){toast(data.error);return;}
+async function sendAnnouncement() {
+  const message = document.getElementById('annMsg').value.trim();
+  const title = document.getElementById('annTitle').value.trim();
+  const colorStr = document.getElementById('annColor').value.trim().replace('#','');
+  const color = parseInt(colorStr, 16) || 0x8b5cf6;
+  if (!message) { toast('Message is required'); return; }
+  const data = await blogPost('/admin/announce', { message, title, color });
+  if (!data.ok) { toast(data.error); return; }
   toast('Announcement sent');
 }
 
-async function banIdentity(){
-  const ip=document.getElementById('banIp').value.trim();
-  const hours=parseInt(document.getElementById('banHours').value)||24;
-  const reason=document.getElementById('banReason').value.trim();
-  if(!ip){toast('IP is required');return;}
-  const data=await blogPost('/admin/ban-identity',{ip,reason,durationHours:hours});
-  if(!data.ok){toast(data.error);return;}
+async function banIdentity() {
+  const ip = document.getElementById('banIp').value.trim();
+  const hours = parseInt(document.getElementById('banHours').value) || 24;
+  const reason = document.getElementById('banReason').value.trim();
+  if (!ip) { toast('IP is required'); return; }
+  const data = await blogPost('/admin/ban-identity', { ip, reason, durationHours: hours });
+  if (!data.ok) { toast(data.error); return; }
   toast(`Banned ${ip} for ${hours}h`);
 }
 
-async function unbanIdentity(){
-  const ip=document.getElementById('banIp').value.trim();
-  if(!ip){toast('IP is required');return;}
-  const data=await blogPost('/admin/unban-identity',{ip});
-  if(!data.ok){toast(data.error);return;}
+async function unbanIdentity() {
+  const ip = document.getElementById('banIp').value.trim();
+  if (!ip) { toast('IP is required'); return; }
+  const data = await blogPost('/admin/unban-identity', { ip });
+  if (!data.ok) { toast(data.error); return; }
   toast(`Unbanned ${ip}`);
 }
 
-async function resetUserName(){
-  const ip=document.getElementById('resetIp').value.trim();
-  const fp=document.getElementById('resetFp').value.trim();
-  if(!ip&&!fp){toast('IP or fingerprint required');return;}
-  const data=await blogPost('/admin/reset-name',{ip,fp});
-  if(!data.ok){toast(data.error);return;}
+async function resetUserName() {
+  const ip = document.getElementById('resetIp').value.trim();
+  const fp = document.getElementById('resetFp').value.trim();
+  if (!ip && !fp) { toast('IP or fingerprint required'); return; }
+  const data = await blogPost('/admin/reset-name', { ip, fp });
+  if (!data.ok) { toast(data.error); return; }
   toast('Name binding reset');
 }
 
-async function bulkAction(action){
-  const postId=document.getElementById('bulkPostId').value.trim();
-  if(!postId){toast('Post ID is required');return;}
-
-  if(action==='lock'||action==='unlock'){
-    const data=await blogPost('/admin/lock-post',{id:postId});
-    if(!data.ok){toast(data.error);return;}
+async function bulkAction(action) {
+  const postId = document.getElementById('bulkPostId').value.trim();
+  if (!postId) { toast('Post ID is required'); return; }
+  if (action==='lock'||action==='unlock') {
+    const data = await blogPost('/admin/lock-post', { id: postId });
+    if (!data.ok) { toast(data.error); return; }
     toast(data.locked?'Locked':'Unlocked');
-  } else if(action==='reset-likes'){
-    if(!confirm(`Reset likes for "${postId}"?`)) return;
-    const data=await blogPost('/admin/reset-likes',{postId});
-    if(!data.ok){toast(data.error);return;}
+  } else if (action==='reset-likes') {
+    if (!confirm(`Reset likes for "${postId}"?`)) return;
+    const data = await blogPost('/admin/reset-likes', { postId });
+    if (!data.ok) { toast(data.error); return; }
     toast('Likes reset');
-  } else if(action==='nuke'){
-    if(!confirm(`Nuke ALL comments for "${postId}"? Cannot undo.`)) return;
-    if(!confirm('Are you sure?')) return;
-    const data=await blogPost('/admin/nuke-comments',{postId});
-    if(!data.ok){toast(data.error);return;}
+  } else if (action==='nuke') {
+    if (!confirm(`Nuke ALL comments for "${postId}"? Cannot undo.`)) return;
+    if (!confirm('Are you sure?')) return;
+    const data = await blogPost('/admin/nuke-comments', { postId });
+    if (!data.ok) { toast(data.error); return; }
     toast('Nuked');
   }
-  allPosts=[];
+  allPosts = [];
 }
 
-function fmtTimeLeft(ms){
-  if(ms<=0) return 'Ended';
-  const h=Math.floor(ms/3600000); const m=Math.floor((ms%3600000)/60000);
-  if(h>24) return Math.floor(h/24)+'d left';
-  if(h>0) return h+'h '+m+'m left';
+function fmtTimeLeft(ms) {
+  if (ms<=0) return 'Ended';
+  const h = Math.floor(ms/3600000); const m = Math.floor((ms%3600000)/60000);
+  if (h>24) return Math.floor(h/24)+'d left';
+  if (h>0) return h+'h '+m+'m left';
   return m+'m left';
 }
 
-async function renderGiveaways(){
-  const c=document.getElementById('mainContent');
-  c.innerHTML='<div class="spinner"></div>';
-  try{
-    const ids=JSON.parse(localStorage.getItem('gw_ids')||'[]');
-    if(!ids.length){c.innerHTML='<div class="empty">No giveaways yet. <a href="#" onclick="showView(\'giveaway-new\')">Create one</a></div>';return;}
-    const results=await Promise.all(ids.map(id=>gwGet(`/giveaway?id=${id}`).catch(()=>null)));
-    gwList=results.filter(r=>r&&r.ok).map(r=>r.giveaway);
-    c.innerHTML=`<div style="display:flex;flex-direction:column;gap:0.8rem">
+async function renderGiveaways() {
+  const c = document.getElementById('mainContent');
+  c.innerHTML = '<div class="spinner"></div>';
+  try {
+    const ids = JSON.parse(localStorage.getItem('gw_ids')||'[]');
+    if (!ids.length) { c.innerHTML='<div class="empty">No giveaways yet. <a href="#" onclick="showView(\'giveaway-new\')">Create one</a></div>'; return; }
+    const results = await Promise.all(ids.map(id=>gwGet(`/giveaway?id=${id}`).catch(()=>null)));
+    gwList = results.filter(r=>r&&r.ok).map(r=>r.giveaway);
+    c.innerHTML = `<div style="display:flex;flex-direction:column;gap:0.8rem">
       ${gwList.map(g=>{
-        const ended=!g.active||Date.now()>g.endsAt;
-        const timeLeft=ended?'Ended':fmtTimeLeft(g.endsAt-Date.now());
+        const ended = !g.active||Date.now()>g.endsAt;
+        const timeLeft = ended?'Ended':fmtTimeLeft(g.endsAt-Date.now());
         return `<div class="gw-card">
-          <div class="gw-info">
-            <div class="gw-title">${esc(g.title)}</div>
-            <div class="gw-meta">${g.entryCount||0} entries · ${timeLeft}${g.winner?' · Winner: '+esc(g.winner):''}</div>
-          </div>
+          <div class="gw-info"><div class="gw-title">${esc(g.title)}</div><div class="gw-meta">${g.entryCount||0} entries · ${timeLeft}${g.winner?' · Winner: '+esc(g.winner):''}</div></div>
           <div class="gw-actions">
             <a class="btn btn-ghost btn-sm" href="${GW_URL}?id=${g.id}" target="_blank">View</a>
             ${!ended?`<button class="btn btn-danger btn-sm" onclick="endGiveaway('${g.id}')">End</button>`:''}
@@ -1271,87 +1249,65 @@ async function renderGiveaways(){
         </div>`;
       }).join('')}
     </div>`;
-  } catch(e){ c.innerHTML='<div class="empty">Failed to load giveaways.</div>'; }
+  } catch(e) { c.innerHTML = '<div class="empty">Failed to load giveaways.</div>'; }
 }
 
-function renderGiveawayNew(){
-  document.getElementById('mainContent').innerHTML=`
+function renderGiveawayNew() {
+  document.getElementById('mainContent').innerHTML = `
     <div class="card" style="max-width:560px">
       <div class="card-header"><span class="card-title">Create Giveaway</span></div>
       <div class="form-grid">
         <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">ID *</label>
-            <input class="input" id="gwId" placeholder="my-giveaway">
-            <span class="form-hint">URL-safe identifier</span>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Duration (hours)</label>
-            <input class="input" id="gwHours" type="number" value="24" min="1">
-          </div>
+          <div class="form-group"><label class="form-label">ID *</label><input class="input" id="gwId" placeholder="my-giveaway"><span class="form-hint">URL-safe identifier</span></div>
+          <div class="form-group"><label class="form-label">Duration (hours)</label><input class="input" id="gwHours" type="number" value="24" min="1"></div>
         </div>
-        <div class="form-group">
-          <label class="form-label">Title *</label>
-          <input class="input" id="gwTitle" placeholder="Giveaway title">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Description</label>
-          <textarea class="input textarea" id="gwDesc" placeholder="What are you giving away?" style="min-height:100px"></textarea>
-        </div>
-        <div>
-          <button class="btn btn-primary" onclick="createGiveaway()" id="gwCreateBtn">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><path d="M12 22V7"/></svg>
-            Create Giveaway
-          </button>
-        </div>
+        <div class="form-group"><label class="form-label">Title *</label><input class="input" id="gwTitle" placeholder="Giveaway title"></div>
+        <div class="form-group"><label class="form-label">Description</label><textarea class="input textarea" id="gwDesc" placeholder="What are you giving away?" style="min-height:100px"></textarea></div>
+        <div><button class="btn btn-primary" onclick="createGiveaway()" id="gwCreateBtn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><path d="M12 22V7"/></svg> Create Giveaway</button></div>
       </div>
     </div>`;
 }
 
-async function createGiveaway(){
-  const id=document.getElementById('gwId').value.trim().replace(/[^a-zA-Z0-9_-]/g,'');
-  const title=document.getElementById('gwTitle').value.trim();
-  const desc=document.getElementById('gwDesc').value.trim();
-  const hours=Number(document.getElementById('gwHours').value)||24;
-  if(!id||!title){toast('ID and title are required');return;}
-  const btn=document.getElementById('gwCreateBtn');
+async function createGiveaway() {
+  const id = document.getElementById('gwId').value.trim().replace(/[^a-zA-Z0-9_-]/g,'');
+  const title = document.getElementById('gwTitle').value.trim();
+  const desc = document.getElementById('gwDesc').value.trim();
+  const hours = Number(document.getElementById('gwHours').value) || 24;
+  if (!id||!title) { toast('ID and title are required'); return; }
+  const btn = document.getElementById('gwCreateBtn');
   btn.disabled=true; btn.textContent='Creating...';
-  try{
-    const r=await gwPost('/admin/create',{adminKey:ADMIN_KEY,id,title,description:desc,hours});
-    if(r.ok){
-      const ids=JSON.parse(localStorage.getItem('gw_ids')||'[]');
-      if(!ids.includes(id)) ids.push(id);
-      localStorage.setItem('gw_ids',JSON.stringify(ids));
-      toast('Giveaway created');
-      showView('giveaways');
+  try {
+    const r = await gwPost('/admin/create', { adminKey: ADMIN_KEY, id, title, description: desc, hours });
+    if (r.ok) {
+      const ids = JSON.parse(localStorage.getItem('gw_ids')||'[]');
+      if (!ids.includes(id)) ids.push(id);
+      localStorage.setItem('gw_ids', JSON.stringify(ids));
+      toast('Giveaway created'); showView('giveaways');
     } else {
       toast(r.error||'Failed to create');
       btn.disabled=false; btn.textContent='Create Giveaway';
     }
-  } catch(e){
-    toast('Network error');
-    btn.disabled=false; btn.textContent='Create Giveaway';
-  }
+  } catch(e) { toast('Network error'); btn.disabled=false; btn.textContent='Create Giveaway'; }
 }
 
-async function pickWinner(id){
-  if(!confirm(`Pick a winner for "${id}"?`)) return;
-  const r=await gwPost('/admin/winner',{adminKey:ADMIN_KEY,giveawayId:id});
-  if(r.ok){toast('Winner: '+r.winner);renderGiveaways();}
+async function pickWinner(id) {
+  if (!confirm(`Pick a winner for "${id}"?`)) return;
+  const r = await gwPost('/admin/winner', { adminKey: ADMIN_KEY, giveawayId: id });
+  if (r.ok) { toast('Winner: '+r.winner); renderGiveaways(); }
   else toast(r.error||'Failed');
 }
 
-async function endGiveaway(id){
-  if(!confirm(`End giveaway "${id}"?`)) return;
-  const r=await gwPost('/admin/end',{adminKey:ADMIN_KEY,giveawayId:id});
-  if(r.ok){toast('Giveaway ended');renderGiveaways();}
+async function endGiveaway(id) {
+  if (!confirm(`End giveaway "${id}"?`)) return;
+  const r = await gwPost('/admin/end', { adminKey: ADMIN_KEY, giveawayId: id });
+  if (r.ok) { toast('Giveaway ended'); renderGiveaways(); }
   else toast(r.error||'Failed');
 }
 
-function openModal(id){ document.getElementById(id).classList.remove('hidden'); }
-function closeModal(id){ document.getElementById(id).classList.add('hidden'); }
-document.addEventListener('keydown',e=>{ if(e.key==='Escape') document.querySelectorAll('.modal-overlay').forEach(m=>m.classList.add('hidden')); });
-document.querySelectorAll('.modal-overlay').forEach(m=>m.addEventListener('click',e=>{ if(e.target===m) m.classList.add('hidden'); }));
+function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
+function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+document.addEventListener('keydown', e => { if (e.key==='Escape') document.querySelectorAll('.modal-overlay').forEach(m=>m.classList.add('hidden')); });
+document.querySelectorAll('.modal-overlay').forEach(m => m.addEventListener('click', e => { if (e.target===m) m.classList.add('hidden'); }));
 </script>
 </body>
 </html>
