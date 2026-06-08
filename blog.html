@@ -1227,10 +1227,76 @@ async function renderPost(id){
 
 function tagBadge(tag) {
   if (!tag) return '';
-  const labels = { deluxe: 'Professional', gold: 'Start', developer: 'Administrator' };
+
+  const labels = {
+    deluxe: 'Professional',
+    gold: 'Star',
+    developer: 'Administrator'
+  };
+
   const label = labels[tag] || tag;
+
+  if (tag === 'developer') {
+    return `
+      <span class="user-tag developer">
+        <img src="https://raton.lol/img/bigdonator.png" alt="">
+        ${label}
+      </span>
+    `;
+  }
+
   return `<span class="user-tag ${tag}">${label}</span>`;
 }
+
+document.querySelectorAll('.user-tag.developer').forEach(badge => {
+
+  badge.addEventListener('mouseenter', () => {
+
+    for(let i = 0; i < 10; i++){
+
+      const rat = document.createElement('img');
+
+      rat.src = 'https://raton.lol/img/RATA.png';
+
+      rat.style.position = 'absolute';
+      rat.style.left = '50%';
+      rat.style.top = '50%';
+      rat.style.width = '10px';
+      rat.style.height = '10px';
+      rat.style.pointerEvents = 'none';
+      rat.style.zIndex = '9999';
+
+      badge.appendChild(rat);
+
+      const angle = (Math.PI * 2 * i) / 10;
+      const distance = 25 + Math.random() * 20;
+
+      const x = Math.cos(angle) * distance;
+      const y = Math.sin(angle) * distance;
+
+      rat.animate(
+        [
+          {
+            transform:'translate(-50%,-50%) scale(.4)',
+            opacity:1
+          },
+          {
+            transform:`translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) rotate(${Math.random()*360}deg) scale(1)`,
+            opacity:0
+          }
+        ],
+        {
+          duration:600,
+          easing:'cubic-bezier(.2,.8,.2,1)'
+        }
+      );
+
+      setTimeout(() => rat.remove(), 600);
+    }
+
+  });
+
+});
 
 function renderCommentsHTML(comments, postId, locked){
   const savedName = identityBoundName || commentAuthorName;
