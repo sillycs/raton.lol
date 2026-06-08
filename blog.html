@@ -681,7 +681,8 @@ nav{
 
 
 .user-tag.developer{
-  overflow:hidden;
+  position:relative;
+  overflow:visible;
   color:#f5f3ff;
 
   background:
@@ -705,28 +706,6 @@ nav{
     transform .25s ease,
     box-shadow .25s ease,
     border-color .25s ease;
-}
-
-  .user-tag.developer .rat-rain{
-  position:absolute;
-  z-index:0;
-}
-
-.user-tag.developer{
-  isolation:isolate;
-}
-
-.user-tag.developer > *{
-  position:relative;
-  z-index:2;
-}
-
-.user-tag.developer img:not(.rat-rain){
-  width:11px;
-  height:11px;
-  object-fit:contain;
-  position:relative;
-  z-index:3;
 }
 
 .user-tag.developer:hover{
@@ -1414,74 +1393,80 @@ function renderCommentsHTML(comments, postId, locked){
   </div>`;
 }
 
-  function setupDeveloperRain() {
+function setupDeveloperRain() {
 
   document.querySelectorAll('.user-tag.developer').forEach(badge => {
 
     if (badge.dataset.rainAttached) return;
     badge.dataset.rainAttached = '1';
 
-    let rats = 0;
+    const explode = () => {
 
-    const spawnRat = () => {
+      for (let i = 0; i < 7; i++) {
 
-      if (!document.body.contains(badge)) return;
+        const rat = document.createElement('img');
 
-      if (rats >= 7) return;
+        rat.src = 'https://raton.lol/img/RATA.png';
+        rat.className = 'rat-rain';
 
-      rats++;
+        const size = 6 + Math.random() * 5;
 
-      const rat = document.createElement('img');
+        rat.style.cssText = `
+          position:absolute;
+          left:50%;
+          top:50%;
+          width:${size}px;
+          height:${size}px;
+          pointer-events:none;
+          opacity:.85;
+          z-index:1;
+          transform:translate(-50%,-50%);
+          filter:brightness(.3) contrast(1.8);
+        `;
 
-      rat.src = 'https://raton.lol/img/RATA.png';
-      rat.className = 'rat-rain';
+        badge.appendChild(rat);
 
-      const size = 5 + Math.random() * 4;
+        const angle = Math.random() * Math.PI * 2;
+        const distance = 20 + Math.random() * 35;
 
-      rat.style.cssText = `
-        position:absolute;
-        top:-12px;
-        left:${Math.random() * 100}%;
-        width:${size}px;
-        height:${size}px;
-        pointer-events:none;
-        opacity:.45;
-        z-index:1;
-      `;
+        const x = Math.cos(angle) * distance;
+        const y = Math.sin(angle) * distance;
 
-      badge.appendChild(rat);
-
-      const duration = 2500 + Math.random() * 2000;
-
-      rat.animate(
-        [
+        rat.animate(
+          [
+            {
+              transform:'translate(-50%,-50%) scale(.3) rotate(0deg)',
+              opacity:0
+            },
+            {
+              transform:`translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) scale(1) rotate(${Math.random()*180}deg)`,
+              opacity:.9,
+              offset:.2
+            },
+            {
+              transform:`translate(calc(-50% + ${x*1.5}px), calc(-50% + ${y*1.5}px)) scale(.6) rotate(${360+Math.random()*360}deg)`,
+              opacity:0
+            }
+          ],
           {
-            transform:'translateY(0px) rotate(0deg)',
-            opacity:.45
-          },
-          {
-            transform:`translateY(${badge.offsetHeight + 24}px) rotate(${180 + Math.random()*360}deg)`,
-            opacity:0
+            duration:1200 + Math.random()*400,
+            easing:'cubic-bezier(.22,1,.36,1)',
+            fill:'forwards'
           }
-        ],
-        {
-          duration,
-          easing:'linear'
-        }
-      );
+        );
 
-      setTimeout(() => {
-        rat.remove();
-        rats--;
-      }, duration);
+        setTimeout(() => rat.remove(), 1800);
+      }
     };
 
-    setInterval(spawnRat, 900);
+    explode();
 
+    badge.addEventListener('mouseenter', explode);
   });
 
 }
-
+  
+  
 function commentHTML(c, postId, allComments, locked){
   const isDeleted = c.deleted;
   const cLiked = likedComments[`c:${c.id}`];
