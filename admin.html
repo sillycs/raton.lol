@@ -876,9 +876,6 @@ async function renderTags() {
       <div style="margin-top:1.2rem">
         <div class="form-label" style="margin-bottom:0.6rem">Tag Previews</div>
         <div style="display:flex;gap:0.8rem;flex-wrap:wrap;align-items:center">
-          <span class="tag-badge tag-deluxe">✦ DELUXE</span>
-          <span class="tag-badge tag-gold">★ GOLD</span>
-          <span class="tag-badge tag-developer">⌨ DEV</span>
         </div>
       </div>
     </div>
@@ -1084,7 +1081,7 @@ async function renderBroadcasts() {
           <div class="form-group">
             <label class="form-label">Icon (preset or custom SVG)</label>
             <div class="icon-presets">
-              ${presetIcons.map(p=>`<button class="icon-preset-btn" onclick="document.getElementById('bannerIcon').value=${JSON.stringify(p.svg)}" title="${p.label}">${p.svg} ${p.label}</button>`).join('')}
+              ${presetIcons.map(p=>`<button class="icon-preset-btn" onclick='document.getElementById("bannerIcon").value=${JSON.stringify(JSON.stringify(p.svg))}' title="${p.label}">${p.svg} ${p.label}</button>`).join('')}
             </div>
             <input class="input" id="bannerIcon" placeholder='Custom SVG or leave empty' style="margin-top:0.4rem">
           </div>
@@ -1289,7 +1286,9 @@ async function createGiveaway() {
     }
   } catch(e) { toast('Network error'); btn.disabled=false; btn.textContent='Create Giveaway'; }
 }
-
+function selectPresetIcon(index){
+  document.getElementById('bannerIcon').value = presetIcons[index].svg;
+}
 async function pickWinner(id) {
   if (!confirm(`Pick a winner for "${id}"?`)) return;
   const r = await gwPost('/admin/winner', { adminKey: ADMIN_KEY, giveawayId: id });
