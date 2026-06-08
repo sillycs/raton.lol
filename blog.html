@@ -93,6 +93,108 @@ nav{
   margin-bottom:0.8rem;
 }
 .blog-hero p{color:var(--text2);font-size:1rem;max-width:460px;margin:0 auto;}
+
+.broadcast-banner{
+  position:relative;z-index:1;
+  margin:0 2rem;
+  margin-top:1.5rem;
+  border-radius:12px;
+  overflow:hidden;
+  animation:bannerFadeIn 0.5s ease;
+}
+@keyframes bannerFadeIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.broadcast-banner-inner{
+  display:flex;align-items:center;gap:12px;
+  padding:0.85rem 1.2rem;
+  font-size:0.875rem;
+  line-height:1.4;
+}
+.broadcast-banner-icon{
+  flex-shrink:0;
+  width:32px;height:32px;
+  display:flex;align-items:center;justify-content:center;
+}
+.broadcast-banner-icon svg{width:20px;height:20px}
+.broadcast-banner-text{flex:1;color:inherit}
+
+.live-warning-overlay{
+  position:fixed;
+  top:0;left:0;right:0;bottom:0;
+  z-index:9000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  pointer-events:none;
+  opacity:0;
+  transition:opacity 0.35s ease;
+}
+.live-warning-overlay.show{
+  opacity:1;
+  pointer-events:auto;
+}
+.live-warning-backdrop{
+  position:absolute;inset:0;
+  background:rgba(0,0,0,0.65);
+  backdrop-filter:blur(6px);
+}
+.live-warning-box{
+  position:relative;z-index:1;
+  background:#fff;
+  color:#0a0a0a;
+  border-radius:16px;
+  padding:2rem 2.4rem;
+  max-width:520px;
+  width:90%;
+  box-shadow:0 32px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(0,0,0,0.1);
+  transform:scale(0.92) translateY(10px);
+  transition:transform 0.35s cubic-bezier(.22,1,.36,1);
+}
+.live-warning-overlay.show .live-warning-box{
+  transform:scale(1) translateY(0);
+}
+.live-warning-label{
+  font-size:0.65rem;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  font-weight:800;
+  color:#6b7280;
+  margin-bottom:0.6rem;
+  display:flex;align-items:center;gap:6px;
+}
+.live-warning-label::before{
+  content:'';
+  display:inline-block;
+  width:7px;height:7px;
+  border-radius:50%;
+  background:#ef4444;
+  animation:livePulse 1.2s ease-in-out infinite;
+}
+@keyframes livePulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(0.85)}}
+.live-warning-msg{
+  font-size:1.05rem;
+  font-weight:500;
+  line-height:1.5;
+  color:#111;
+}
+.live-warning-timer{
+  margin-top:1rem;
+  font-size:0.72rem;
+  color:#9ca3af;
+}
+.live-warning-bar{
+  margin-top:0.5rem;
+  height:3px;
+  background:#e5e7eb;
+  border-radius:99px;
+  overflow:hidden;
+}
+.live-warning-bar-fill{
+  height:100%;
+  background:#0a0a0a;
+  border-radius:99px;
+  transition:width linear;
+}
+
 .blog-wrap{
   flex:1;max-width:900px;width:100%;
   margin:0 auto;padding:3rem 2rem;
@@ -228,20 +330,18 @@ nav{
   font-size:0.82rem;font-weight:500;color:var(--text2);
   transition:.2s;
 }
-  .footer-note {
+.footer-note{
   display:flex;
   align-items:center;
   justify-content:center;
   gap:6px;
-
   margin-top:1rem;
-
   font-size:0.72rem;
   color:var(--text3);
   text-decoration:none;
   padding-top:0.5rem;
 }
-.footer-note:hover { color: var(--text2); }
+.footer-note:hover{color:var(--text2);}
 .action-btn:hover{background:rgba(255,255,255,0.1);color:var(--text)}
 .action-btn.liked{background:var(--purple-dim);border-color:var(--purple);color:var(--purple2)}
 .action-btn.liked svg{fill:var(--purple2)}
@@ -327,6 +427,7 @@ nav{
 }
 .comment-like:hover{background:var(--purple-dim);color:var(--purple2)}
 .comment-like.liked{color:var(--purple2)}
+.comment-like.liked svg{fill:var(--purple2)}
 .reply-toggle{
   background:none;border:none;
   font-size:0.73rem;color:var(--text3);
@@ -405,6 +506,7 @@ footer{
   .single-wrap{padding:2rem 1.2rem}
   .form-row{flex-direction:column}
   .post-card-img{height:160px}
+  .broadcast-banner{margin:0 1.2rem;margin-top:1rem}
 }
 </style>
 </head>
@@ -433,10 +535,20 @@ footer{
 
 <div id="app"></div>
 
-  <a class="footer-note" href="https://raton.lol">
-    <img src="https://raton.lol/img/RATA.png" width="13" height="13" alt="" onerror="this.style.display='none'">
-    © 2026 SillyCS. All rights reserved
-  </a>
+<div class="live-warning-overlay" id="liveWarningOverlay">
+  <div class="live-warning-backdrop" onclick="dismissLiveWarning()"></div>
+  <div class="live-warning-box">
+    <div class="live-warning-label">Message from administrator</div>
+    <div class="live-warning-msg" id="liveWarningMsg"></div>
+    <div class="live-warning-timer" id="liveWarningTimer"></div>
+    <div class="live-warning-bar"><div class="live-warning-bar-fill" id="liveWarningBar" style="width:100%"></div></div>
+  </div>
+</div>
+
+<a class="footer-note" href="https://raton.lol">
+  <img src="https://raton.lol/img/RATA.png" width="13" height="13" alt="" onerror="this.style.display='none'">
+  © 2026 SillyCS. All rights reserved
+</a>
 
 <div class="toast" id="toast"></div>
 
@@ -456,15 +568,13 @@ const SITE   = window.location.origin + window.location.pathname;
     bg.appendChild(img);
   });
 })();
-  
+
 function getFingerprint() {
   const stored = sessionStorage.getItem('_rfp') || localStorage.getItem('_rfp');
   if (stored) return stored;
-
   const canvas = document.createElement('canvas');
   const gl = canvas.getContext('webgl');
   const glInfo = gl ? gl.getParameter(gl.RENDERER) + gl.getParameter(gl.VENDOR) : '';
-
   const data = [
     navigator.userAgent,
     navigator.language,
@@ -475,7 +585,6 @@ function getFingerprint() {
     glInfo,
     navigator.platform || '',
   ].join('|');
-
   let hash = 0;
   for (let i = 0; i < data.length; i++) {
     hash = ((hash << 5) - hash) + data.charCodeAt(i);
@@ -570,8 +679,111 @@ function setUrl(params){
   history.pushState({},'',u);
 }
 
+let liveWarningDismissed = {};
+let liveWarningTimer = null;
+
+function showLiveWarning(warning) {
+  if (liveWarningDismissed[warning.id]) return;
+  const overlay = document.getElementById('liveWarningOverlay');
+  const msgEl = document.getElementById('liveWarningMsg');
+  const timerEl = document.getElementById('liveWarningTimer');
+  const barEl = document.getElementById('liveWarningBar');
+
+  msgEl.textContent = warning.message;
+  overlay.classList.add('show');
+
+  const durationMs = (warning.duration || 10) * 1000;
+  let remaining = warning.duration || 10;
+
+  timerEl.textContent = `Closing in ${remaining}s`;
+  barEl.style.transition = 'none';
+  barEl.style.width = '100%';
+
+  clearInterval(liveWarningTimer);
+
+  setTimeout(() => {
+    barEl.style.transition = `width ${durationMs}ms linear`;
+    barEl.style.width = '0%';
+  }, 50);
+
+  liveWarningTimer = setInterval(() => {
+    remaining--;
+    if (remaining <= 0) {
+      clearInterval(liveWarningTimer);
+      dismissLiveWarning();
+    } else {
+      timerEl.textContent = `Closing in ${remaining}s`;
+    }
+  }, 1000);
+}
+
+function dismissLiveWarning() {
+  const overlay = document.getElementById('liveWarningOverlay');
+  overlay.classList.remove('show');
+  clearInterval(liveWarningTimer);
+}
+
+let lastSeenWarningId = localStorage.getItem('last_seen_warning') || '';
+let broadcastPollInterval = null;
+
+async function pollBroadcasts() {
+  try {
+    const data = await fetch(WORKER + '/broadcasts').then(r => r.json());
+    if (!data.ok) return;
+
+    if (data.warning && data.warning.id && data.warning.id !== lastSeenWarningId) {
+      lastSeenWarningId = data.warning.id;
+      localStorage.setItem('last_seen_warning', data.warning.id);
+      showLiveWarning(data.warning);
+    }
+
+    renderBroadcastBanner(data.banners || []);
+  } catch(_) {}
+}
+
+function renderBroadcastBanner(banners) {
+  const heroEl = document.querySelector('.blog-hero');
+  if (!heroEl) return;
+
+  const existing = document.getElementById('broadcastBannersWrap');
+  if (existing) existing.remove();
+
+  const active = banners.filter(b => b && b.text);
+  if (!active.length) return;
+
+  const wrap = document.createElement('div');
+  wrap.id = 'broadcastBannersWrap';
+  wrap.style.cssText = 'display:flex;flex-direction:column;gap:0.5rem;position:relative;z-index:1;padding:0 2rem;padding-top:1.5rem;max-width:900px;margin:0 auto;width:100%';
+
+  active.forEach(b => {
+    const color = b.color || '#8b5cf6';
+    const div = document.createElement('div');
+    div.className = 'broadcast-banner';
+    div.style.cssText = `background:${hexToRgba(color,0.1)};border:1px solid ${hexToRgba(color,0.3)}`;
+    div.innerHTML = `<div class="broadcast-banner-inner" style="color:${color}">
+      ${b.icon ? `<div class="broadcast-banner-icon">${b.icon}</div>` : ''}
+      <div class="broadcast-banner-text">${escHtml(b.text)}</div>
+    </div>`;
+    wrap.appendChild(div);
+  });
+
+  heroEl.after(wrap);
+}
+
+function hexToRgba(hex, alpha) {
+  const clean = hex.replace('#','');
+  const r = parseInt(clean.slice(0,2),16);
+  const g = parseInt(clean.slice(2,4),16);
+  const b = parseInt(clean.slice(4,6),16);
+  return `rgba(${r},${g},${b},${alpha})`;
+}
+
 async function route(){
   await loadIdentity();
+  pollBroadcasts();
+  clearInterval(broadcastPollInterval);
+  broadcastPollInterval = setInterval(pollBroadcasts, 8000);
+
   const postId = getUrlParam('post');
   const page = parseInt(getUrlParam('page')||'1');
   currentPage = page;
@@ -817,7 +1029,7 @@ function renderCommentsHTML(comments, postId, locked){
     <div class="form-row">
       <input class="form-input" id="cName" placeholder="Your name" maxlength="32"
         value="${escHtml(savedName)}"
-        ${nameIsLocked?'readonly':''} 
+        ${nameIsLocked?'readonly':''}
         oninput="${nameIsLocked?'':''} handleNameInput(this.value)">
     </div>
     ${!nameIsLocked&&savedName?`<p class="name-locked-hint">Commenting as <strong>${escHtml(savedName)}</strong>. <a href="#" onclick="clearName(event)" style="color:var(--purple2)">Change</a></p>`:''}
@@ -904,7 +1116,7 @@ function clearName(e){
   const postId = currentPostId;
   if(postId){
     api(`/comments?postId=${postId}`).then(cData=>{
-      const p_locked = document.querySelector('.single-header')?.querySelector('.locked-notice') !== null;
+      const p_locked = document.querySelector('.locked-notice') !== null;
       document.getElementById('commentsSection').innerHTML = renderCommentsHTML(cData.comments||[], postId, p_locked);
     });
   }
@@ -975,11 +1187,15 @@ async function likeComment(e, postId, type, commentId, replyId){
   if(!data.ok){ showToast(data.error, true); return; }
   const lKey = type==='reply'?`r:${replyId}`:`c:${commentId}`;
   likedComments[lKey]=data.liked; saveLikedComments();
+
   const countEl = document.getElementById(type==='reply'?`rl-${replyId}`:`cl-${commentId}`);
   if(countEl) countEl.textContent=data.count;
+
   const btn = e.currentTarget;
   btn.classList.toggle('liked',data.liked);
-  btn.querySelector('svg').setAttribute('fill',data.liked?'currentColor':'none');
+  const svg = btn.querySelector('svg');
+  if(svg) svg.setAttribute('fill', data.liked ? 'currentColor' : 'none');
+
   showToast(data.liked?' Liked':'Unliked');
 }
 
