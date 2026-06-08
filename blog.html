@@ -1269,7 +1269,7 @@ async function renderPost(id){
   currentPostId = id;
   const app = document.getElementById('app');
   app.innerHTML = `<div class="single-wrap" style="position:relative;z-index:1"><div class="spinner"></div></div>`;
-
+setupDeveloperRain();
   showLoading('Loading post...');
 
   await api('/view',{
@@ -1343,14 +1343,6 @@ function tagBadge(tag) {
 
   const label = labels[tag] || tag;
 
-  if (tag === 'developer') {
-    return `
-      <span class="user-tag developer">
-        <img src="https://raton.lol/img/bigdonator.png" alt="">
-        ${label}
-      </span>
-    `;
-  }
 
   if (tag === 'gold') {
     return `
@@ -1540,6 +1532,7 @@ function clearName(e){
     api(`/comments?postId=${postId}`).then(cData=>{
       const isLocked = !!document.querySelector('.locked-notice');
       document.getElementById('commentsSection').innerHTML = renderCommentsHTML(cData.comments||[], postId, isLocked);
+      setupDeveloperRain();
     });
   }
 }
@@ -1614,6 +1607,7 @@ async function submitComment(parentId, postId){
   hideLoading();
   const isLocked = !!document.querySelector('.locked-notice');
   document.getElementById('commentsSection').innerHTML = renderCommentsHTML(cData.comments||[], postId, isLocked);
+  setupDeveloperRain();
 }
 
 async function likeComment(e, postId, type, commentId, replyId){
