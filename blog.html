@@ -460,18 +460,29 @@ nav{
 }
 @keyframes spin{to{transform:rotate(360deg)}}
 .toast{
-  position:fixed;bottom:1.5rem;right:1.5rem;
-  background:var(--surface);border:1px solid var(--border2);
-  border-radius:10px;padding:0.7rem 1.1rem;
-  font-size:0.82rem;color:var(--text);
+  position:fixed;
+  bottom:1.5rem;
+  left:50%;
+  transform:translateX(-50%) translateY(12px);
+
+  background:var(--surface);
+  border:1px solid var(--border2);
+  border-radius:10px;
+  padding:0.7rem 1.1rem;
+  font-size:0.82rem;
+  color:var(--text);
   box-shadow:0 8px 24px rgba(0,0,0,0.4);
-  z-index:9999;transform:translateY(12px);opacity:0;
+  z-index:9999;
+  opacity:0;
   transition:.3s cubic-bezier(.22,1,.36,1);
   pointer-events:none;
 }
-.toast.show{transform:translateY(0);opacity:1}
+
+.toast.show{
+  transform:translateX(-50%) translateY(0);
+  opacity:1;
+}
 .toast.error{border-color:rgba(239,68,68,0.4);color:#fca5a5}
-/* Loading overlay for actions */
 .action-loading{
   position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(12px);
   background:var(--surface);border:1px solid var(--border2);
@@ -489,7 +500,6 @@ nav{
   border-top-color:var(--purple2);border-radius:50%;
   animation:spin .6s linear infinite;flex-shrink:0;
 }
-/* User tag badges */
 .user-tag{
   display:inline-flex;align-items:center;gap:3px;
   padding:1px 6px;border-radius:99px;
@@ -589,7 +599,6 @@ footer{
   © 2026 SillyCS. All rights reserved
 </a>
 
-<!-- Loading indicator for async actions -->
 <div class="action-loading" id="actionLoading">
   <div class="mini-spin"></div>
   <span id="actionLoadingMsg">Loading...</span>
@@ -666,14 +675,12 @@ function getCookie(name) {
 const CLIENT_FP = getFingerprint();
 const SESSION_ID = getSessionId();
 
-// ── Loading indicator ──────────────────────────────────────────────
 let loadingTimer = null;
 function showLoading(msg = 'Loading...') {
   const el = document.getElementById('actionLoading');
   const msgEl = document.getElementById('actionLoadingMsg');
   msgEl.textContent = msg;
   el.classList.add('show');
-  // Safety timeout so it never gets stuck
   clearTimeout(loadingTimer);
   loadingTimer = setTimeout(() => hideLoading(), 12000);
 }
