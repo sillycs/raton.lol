@@ -223,13 +223,16 @@ nav{
   cursor:url('https://raton.lol/img/handpointing.png') 0 0,pointer;
   position:relative;
 }
-.post-card.pinned::before{
-  content:' Pinned';
-  position:absolute;top:10px;right:10px;
-  background:var(--purple-dim);border:1px solid rgba(139,92,246,0.4);
-  color:var(--purple2);font-size:0.65rem;font-weight:700;letter-spacing:0.08em;
-  padding:2px 8px;border-radius:99px;z-index:2;
+/* Pin image badge - replaces text */
+.post-card.pinned .pin-badge{
+  position:absolute;top:8px;right:8px;
+  width:28px;height:28px;
+  z-index:2;
+  filter:drop-shadow(0 1px 3px rgba(0,0,0,0.6));
+  transform:rotate(8deg);
+  transition:transform 0.2s;
 }
+.post-card.pinned:hover .pin-badge{transform:rotate(0deg) scale(1.1)}
 .post-card:hover{
   border-color:rgba(139,92,246,0.4);
   transform:translateY(-2px);
@@ -342,6 +345,7 @@ nav{
 .action-btn:hover{background:rgba(255,255,255,0.1);color:var(--text)}
 .action-btn.liked{background:var(--purple-dim);border-color:var(--purple);color:var(--purple2)}
 .action-btn.liked svg{fill:var(--purple2)}
+.action-btn:disabled{opacity:0.5;pointer-events:none}
 .locked-notice{
   display:flex;align-items:center;gap:8px;
   background:rgba(245,158,11,0.08);
@@ -467,6 +471,44 @@ nav{
 }
 .toast.show{transform:translateY(0);opacity:1}
 .toast.error{border-color:rgba(239,68,68,0.4);color:#fca5a5}
+/* Loading overlay for actions */
+.action-loading{
+  position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(12px);
+  background:var(--surface);border:1px solid var(--border2);
+  border-radius:10px;padding:0.6rem 1.1rem;
+  font-size:0.82rem;color:var(--text2);
+  box-shadow:0 8px 24px rgba(0,0,0,0.4);
+  z-index:9998;opacity:0;
+  transition:.25s cubic-bezier(.22,1,.36,1);
+  pointer-events:none;
+  display:flex;align-items:center;gap:8px;
+}
+.action-loading.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.action-loading .mini-spin{
+  width:13px;height:13px;border:1.5px solid var(--border2);
+  border-top-color:var(--purple2);border-radius:50%;
+  animation:spin .6s linear infinite;flex-shrink:0;
+}
+/* User tag badges */
+.user-tag{
+  display:inline-flex;align-items:center;gap:3px;
+  padding:1px 6px;border-radius:99px;
+  font-size:0.6rem;font-weight:700;letter-spacing:0.06em;
+  text-transform:uppercase;margin-left:4px;
+  vertical-align:middle;
+}
+.user-tag.deluxe{
+  background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.35);
+  color:#818cf8;
+}
+.user-tag.gold{
+  background:rgba(245,158,11,0.12);border:1px solid rgba(245,158,11,0.3);
+  color:#fbbf24;
+}
+.user-tag.developer{
+  background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.3);
+  color:#34d399;
+}
 .rata-bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
 .rata-sprite{
   position:absolute;opacity:0;
@@ -547,6 +589,12 @@ footer{
   © 2026 SillyCS. All rights reserved
 </a>
 
+<!-- Loading indicator for async actions -->
+<div class="action-loading" id="actionLoading">
+  <div class="mini-spin"></div>
+  <span id="actionLoadingMsg">Loading...</span>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -618,6 +666,22 @@ function getCookie(name) {
 const CLIENT_FP = getFingerprint();
 const SESSION_ID = getSessionId();
 
+// ── Loading indicator ──────────────────────────────────────────────
+let loadingTimer = null;
+function showLoading(msg = 'Loading...') {
+  const el = document.getElementById('actionLoading');
+  const msgEl = document.getElementById('actionLoadingMsg');
+  msgEl.textContent = msg;
+  el.classList.add('show');
+  // Safety timeout so it never gets stuck
+  clearTimeout(loadingTimer);
+  loadingTimer = setTimeout(() => hideLoading(), 12000);
+}
+function hideLoading() {
+  clearTimeout(loadingTimer);
+  document.getElementById('actionLoading').classList.remove('show');
+}
+
 function showToast(msg, isError = false, dur = 2800) {
   const t = document.getElementById('toast');
   t.textContent = msg;
@@ -646,7 +710,10 @@ let identityBoundName = null;
 
 function saveLikedPosts(){ localStorage.setItem('liked_posts',JSON.stringify(likedPosts)); }
 function saveLikedComments(){ localStorage.setItem('liked_comments',JSON.stringify(likedComments)); }
-function saveAuthorName(n){ commentAuthorName=n; localStorage.setItem('comment_author_name',n); }
+function saveAuthorName(n){
+  commentAuthorName=n;
+  localStorage.setItem('comment_author_name',n);
+}
 
 async function api(path, opts={}){
   opts.headers = opts.headers || {};
@@ -657,13 +724,21 @@ async function api(path, opts={}){
 
 async function loadIdentity() {
   try {
+    showLoading('Checking identity...');
     const data = await api('/my-identity');
     if (data.ok && data.name) {
       identityBoundName = data.name;
       commentAuthorName = data.name;
       saveAuthorName(data.name);
+    } else {
+      // Identity was reset server-side — clear local storage too
+      if (commentAuthorName && !data.name) {
+        saveAuthorName('');
+        identityBoundName = null;
+      }
     }
   } catch(_) {}
+  finally { hideLoading(); }
 }
 
 function getUrlParam(k){ return new URLSearchParams(window.location.search).get(k); }
@@ -816,7 +891,9 @@ async function renderList(){
 
 async function loadAndRender(){
   if(!allPostsCache.length){
+    showLoading('Loading posts...');
     const data = await api(`/posts?page=1&limit=100`);
+    hideLoading();
     if(!data.ok){ document.getElementById('postsGrid').innerHTML='<div class="empty">Failed to load posts.</div>'; return; }
     allPostsCache = (data.posts||[]).filter(p=>p.published);
     allPostsCache.sort((a, b) => {
@@ -870,6 +947,7 @@ function cardHTML(p){
   const liked = likedPosts[p.id];
   const tags = (p.tags||[]).map(t=>`<span class="post-tag">${escHtml(t)}</span>`).join('');
   return `<a class="post-card${p.pinned?' pinned':''}" href="#" onclick="openPost('${p.id}',event)">
+    ${p.pinned ? `<img class="pin-badge" src="https://raton.lol/img/office-push-pin.png" alt="Pinned" title="Pinned post">` : ''}
     ${p.imageUrl?`<img class="post-card-img" src="${escHtml(p.imageUrl)}" alt="" loading="lazy">`:''}
     <div class="post-card-body">
       <div class="post-meta">
@@ -923,11 +1001,13 @@ function goPage(p){ currentPage=p; setUrl({page:p}); applySearchAndRender(); scr
 
 async function likePost(e, id){
   e.preventDefault(); e.stopPropagation();
+  showLoading('Sending like...');
   const data = await api('/like',{
     method:'POST',
     headers:{'Content-Type':'application/json'},
     body:JSON.stringify({postId:id,type:'post'})
   });
+  hideLoading();
   if(!data.ok){ showToast(data.error, true); return; }
   likedPosts[id]=data.liked; saveLikedPosts();
   const btn = document.getElementById(`like-${id}`);
@@ -954,6 +1034,8 @@ async function renderPost(id){
   const app = document.getElementById('app');
   app.innerHTML = `<div class="single-wrap" style="position:relative;z-index:1"><div class="spinner"></div></div>`;
 
+  showLoading('Loading post...');
+
   await api('/view',{
     method:'POST',
     headers:{'Content-Type':'application/json'},
@@ -964,6 +1046,8 @@ async function renderPost(id){
     api(`/post?id=${id}`),
     api(`/comments?postId=${id}`)
   ]);
+
+  hideLoading();
 
   if(!pData.ok){ app.innerHTML='<div class="single-wrap" style="position:relative;z-index:1"><div class="empty">This post was deleted by an administrator or it doesnt exist anymore</div></div>'; return; }
   const p = pData.post;
@@ -983,7 +1067,7 @@ async function renderPost(id){
         <span>${fmtDate(p.ts)}</span>
         ${p.editedAt?`<span class="dot"></span><span style="color:var(--text3);font-style:italic">edited ${timeAgo(p.editedAt)}</span>`:''}
         ${tags?`<span class="dot"></span>${tags}`:''}
-        ${p.pinned?`<span class="dot"></span><span style="color:var(--purple2)"> Pinned</span>`:''}
+        ${p.pinned?`<span class="dot"></span><img src="https://raton.lol/img/office-push-pin.png" width="14" height="14" style="vertical-align:middle;margin-right:2px;display:inline" alt=""> <span style="color:var(--purple2);vertical-align:middle">Pinned</span>`:''}
         ${p.locked?`<span class="dot"></span><span style="color:#f59e0b">Comments locked</span>`:''}
       </div>
       <h1>${escHtml(p.title)}</h1>
@@ -1012,6 +1096,14 @@ async function renderPost(id){
   </div>`;
 }
 
+// Generate tag badge HTML
+function tagBadge(tag) {
+  if (!tag) return '';
+  const labels = { deluxe: '✦ Deluxe', gold: '★ Gold', developer: '⌨ Dev' };
+  const label = labels[tag] || tag;
+  return `<span class="user-tag ${tag}">${label}</span>`;
+}
+
 function renderCommentsHTML(comments, postId, locked){
   const savedName = identityBoundName || commentAuthorName;
   const nameIsLocked = !!identityBoundName;
@@ -1037,7 +1129,7 @@ function renderCommentsHTML(comments, postId, locked){
     ${!nameIsLocked&&savedName?`<p class="name-locked-hint">Commenting as <strong>${escHtml(savedName)}</strong>. <a href="#" onclick="clearName(event)" style="color:var(--purple2)">Change</a></p>`:''}
     <textarea class="form-input form-textarea" id="cBody" placeholder="Write a comment..." maxlength="1000"></textarea>
     <div class="form-row-submit">
-      <button class="submit-btn" onclick="submitComment(null,'${postId}')">
+      <button class="submit-btn" id="submitCommentBtn" onclick="submitComment(null,'${postId}')">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
         Post Comment
       </button>
@@ -1065,7 +1157,7 @@ function commentHTML(c, postId, allComments, locked){
   return `<div class="comment ${isDeleted?'deleted':''}" id="comment-${c.id}">
     <div class="comment-header">
       <div class="comment-avatar">${(c.name||'?')[0].toUpperCase()}</div>
-      <span class="comment-name">${escHtml(isDeleted?'deleted':c.name)}</span>
+      <span class="comment-name">${escHtml(isDeleted?'deleted':c.name)}${!isDeleted&&c.userTag?tagBadge(c.userTag):''}</span>
       ${c.editedByAdmin&&!isDeleted?`<span class="comment-edited">[edited by a moderator]</span>`:''}
       <span class="comment-ts">${timeAgo(c.ts)}</span>
     </div>
@@ -1093,7 +1185,7 @@ function replyHTML(r, parentId, postId, locked){
   return `<div class="comment reply ${isDeleted?'deleted':''}" id="reply-${r.id}">
     <div class="comment-header">
       <div class="comment-avatar" style="width:20px;height:20px;font-size:0.6rem">${(r.name||'?')[0].toUpperCase()}</div>
-      <span class="comment-name">${escHtml(isDeleted?'deleted':r.name)}</span>
+      <span class="comment-name">${escHtml(isDeleted?'deleted':r.name)}${!isDeleted&&r.userTag?tagBadge(r.userTag):''}</span>
       ${r.editedByAdmin&&!isDeleted?`<span class="comment-edited">[edited by a moderator]</span>`:''}
       <span class="comment-ts">${timeAgo(r.ts)}</span>
     </div>
@@ -1139,7 +1231,7 @@ function toggleReplyForm(commentId, postId){
     ${savedName?`<p class="name-locked-hint">Replying as <strong>${escHtml(savedName)}</strong>${nameIsLocked?' (Your name)':''}</p>`:''}
     <textarea class="form-input form-textarea" id="rBody-${commentId}" placeholder="Write a reply..." style="min-height:60px" maxlength="500"></textarea>
     <div class="form-row-submit">
-      <button class="submit-btn" onclick="submitComment('${commentId}','${postId}')">
+      <button class="submit-btn" id="replyBtn-${commentId}" onclick="submitComment('${commentId}','${postId}')">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 17 4 12 9 7"/><path d="M20 18v-2a4 4 0 0 0-4-4H4"/></svg>
         Reply
       </button>
@@ -1150,35 +1242,55 @@ function toggleReplyForm(commentId, postId){
 async function submitComment(parentId, postId){
   const nameEl = document.getElementById(parentId?`rName-${parentId}`:'cName');
   const bodyEl = document.getElementById(parentId?`rBody-${parentId}`:'cBody');
+  const btnEl = document.getElementById(parentId?`replyBtn-${parentId}`:'submitCommentBtn');
   const name = (identityBoundName || nameEl?.value || '').trim();
   const body = bodyEl?.value.trim();
   if(!name||name.length<2){ showToast('Name must be at least 2 characters', true); return; }
   if(!body||body.length<2){ showToast('Comment must be at least 2 characters', true); return; }
+
+  if(btnEl){ btnEl.disabled=true; btnEl.textContent='Checking...'; }
+  showLoading('Checking name availability...');
 
   const nameCheck = await api('/check-name',{
     method:'POST',
     headers:{'Content-Type':'application/json'},
     body:JSON.stringify({postId,name})
   });
-  if(!nameCheck.ok){ showToast(nameCheck.error, true); return; }
+
+  if(!nameCheck.ok){
+    hideLoading();
+    if(btnEl){ btnEl.disabled=false; btnEl.innerHTML=parentId?'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 17 4 12 9 7"/><path d="M20 18v-2a4 4 0 0 0-4-4H4"/></svg> Reply':'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Post Comment'; }
+    showToast(nameCheck.error, true); return;
+  }
+
+  if(btnEl){ btnEl.textContent='Posting...'; }
+  showLoading('Posting comment...');
 
   const data = await api('/comment',{
     method:'POST',
     headers:{'Content-Type':'application/json'},
     body:JSON.stringify({postId,name,body,parentId})
   });
+
+  hideLoading();
+  if(btnEl){ btnEl.disabled=false; btnEl.innerHTML=parentId?'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 17 4 12 9 7"/><path d="M20 18v-2a4 4 0 0 0-4-4H4"/></svg> Reply':'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Post Comment'; }
+
   if(!data.ok){ showToast(data.error, true); return; }
 
   identityBoundName = name;
   saveAuthorName(name);
-  showToast('Comment posted');
+  showToast('Comment posted!');
+
+  showLoading('Refreshing comments...');
   const cData = await api(`/comments?postId=${postId}`);
+  hideLoading();
   const isLocked = !!document.querySelector('.locked-notice');
   document.getElementById('commentsSection').innerHTML = renderCommentsHTML(cData.comments||[], postId, isLocked);
 }
 
 async function likeComment(e, postId, type, commentId, replyId){
   e.stopPropagation();
+  showLoading('Sending like...');
   const body = {postId,type,commentId};
   if(replyId) body.replyId=replyId;
   const data = await api('/like',{
@@ -1186,6 +1298,7 @@ async function likeComment(e, postId, type, commentId, replyId){
     headers:{'Content-Type':'application/json'},
     body:JSON.stringify(body)
   });
+  hideLoading();
   if(!data.ok){ showToast(data.error, true); return; }
 
   const lKey = type==='reply'?`r:${replyId}`:`c:${commentId}`;
@@ -1208,14 +1321,18 @@ async function likeComment(e, postId, type, commentId, replyId){
 }
 
 async function likePostSingle(id){
+  const btn = document.getElementById('post-like-btn');
+  if(btn) btn.disabled=true;
+  showLoading('Sending like...');
   const data = await api('/like',{
     method:'POST',
     headers:{'Content-Type':'application/json'},
     body:JSON.stringify({postId:id,type:'post'})
   });
+  hideLoading();
+  if(btn) btn.disabled=false;
   if(!data.ok){ showToast(data.error, true); return; }
   likedPosts[id]=data.liked; saveLikedPosts();
-  const btn = document.getElementById('post-like-btn');
   const cnt = document.getElementById('single-lc');
   if(btn){
     btn.classList.toggle('liked', data.liked);
