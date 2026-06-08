@@ -714,33 +714,8 @@ nav{
     scale(1.04);
 
   border-color:rgba(139,92,246,.65);
-
-  box-shadow:
-    0 8px 18px rgba(139,92,246,.22),
-    0 0 35px rgba(139,92,246,.18);
 }
 
-.user-tag.developer::after{
-  content:"";
-  position:absolute;
-  inset:0;
-
-  background:linear-gradient(
-    120deg,
-    transparent,
-    rgba(255,255,255,.15),
-    transparent
-  );
-
-  transform:translateX(-140%);
-  transition:transform .6s ease;
-
-  pointer-events:none;
-}
-
-.user-tag.developer:hover::after{
-  transform:translateX(140%);
-}
 .rata-bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
 .rata-sprite{
   position:absolute;opacity:0;
@@ -1409,7 +1384,7 @@ function setupDeveloperRain() {
         rat.src = 'https://raton.lol/img/RATA.png';
         rat.className = 'rat-rain';
 
-        const size = 6 + Math.random() * 5;
+        const size = 9 + Math.random() * 5;
 
         rat.style.cssText = `
           position:absolute;
@@ -1421,7 +1396,6 @@ function setupDeveloperRain() {
           opacity:.85;
           z-index:1;
           transform:translate(-50%,-50%);
-          filter:brightness(.3) contrast(1.8);
         `;
 
         badge.appendChild(rat);
