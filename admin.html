@@ -535,7 +535,7 @@ async function renderPosts(forceRefresh = true) {
           <button class="btn btn-warning btn-sm" onclick="toggleLock('${p.id}')">${p.locked?'Unlock':'Lock'}</button>
           <button class="btn btn-ghost btn-sm" onclick="clonePost('${p.id}')">Clone</button>
           <button class="btn btn-warning btn-sm" onclick="resetLikes('${p.id}')">Reset Likes</button>
-          <button class="btn btn-danger btn-sm" onclick="nukeComments('${p.id}')">Nuke Cmnts</button>
+          <button class="btn btn-danger btn-sm" onclick="nukeComments('${p.id}')">Nuke</button>
           <button class="btn btn-danger btn-sm" onclick="deletePost('${p.id}')">Delete</button>
         </td>
       </tr>`).join('')}
