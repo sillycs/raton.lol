@@ -221,7 +221,6 @@ nav{
   cursor:url('https://raton.lol/img/handpointing.png') 0 0,pointer;
   position:relative;
 }
-/* Pin image badge - replaces text */
 .post-card.pinned .pin-badge{
   position:absolute;top:8px;right:8px;
   width:28px;height:28px;
@@ -404,7 +403,7 @@ nav{
   margin-left:1.5rem;
   padding:0.8rem 1rem;
 }
-.comment-header{display:flex;align-items:center;gap:0.6rem;margin-bottom:0.4rem}
+.comment-header{display:flex;align-items:center;gap:0.6rem;margin-bottom:0.4rem;flex-wrap:wrap;}
 .comment-avatar{
   width:26px;height:26px;border-radius:50%;
   background:var(--purple-dim);border:1px solid rgba(139,92,246,0.3);
@@ -458,28 +457,16 @@ nav{
 }
 @keyframes spin{to{transform:rotate(360deg)}}
 .toast{
-  position:fixed;
-  bottom:1.5rem;
-  left:50%;
+  position:fixed;bottom:1.5rem;left:50%;
   transform:translateX(-50%) translateY(12px);
-
-  background:var(--surface);
-  border:1px solid var(--border2);
-  border-radius:10px;
-  padding:0.7rem 1.1rem;
-  font-size:0.82rem;
-  color:var(--text);
+  background:var(--surface);border:1px solid var(--border2);
+  border-radius:10px;padding:0.7rem 1.1rem;
+  font-size:0.82rem;color:var(--text);
   box-shadow:0 8px 24px rgba(0,0,0,0.4);
-  z-index:9999;
-  opacity:0;
-  transition:.3s cubic-bezier(.22,1,.36,1);
-  pointer-events:none;
+  z-index:9999;opacity:0;
+  transition:.3s cubic-bezier(.22,1,.36,1);pointer-events:none;
 }
-
-.toast.show{
-  transform:translateX(-50%) translateY(0);
-  opacity:1;
-}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
 .toast.error{border-color:rgba(239,68,68,0.4);color:#fca5a5}
 .action-loading{
   position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(12px);
@@ -489,8 +476,7 @@ nav{
   box-shadow:0 8px 24px rgba(0,0,0,0.4);
   z-index:9998;opacity:0;
   transition:.25s cubic-bezier(.22,1,.36,1);
-  pointer-events:none;
-  display:flex;align-items:center;gap:8px;
+  pointer-events:none;display:flex;align-items:center;gap:8px;
 }
 .action-loading.show{opacity:1;transform:translateX(-50%) translateY(0)}
 .action-loading .mini-spin{
@@ -498,224 +484,90 @@ nav{
   border-top-color:var(--purple2);border-radius:50%;
   animation:spin .6s linear infinite;flex-shrink:0;
 }
+
+/* ── User tag base ───────────────────────────────────────────────────────── */
 .user-tag{
-  display:inline-flex;
-  align-items:center;
-  gap:4px;
+  display:inline-flex;align-items:center;gap:4px;
   padding:2px 8px;
-  margin-left:10px;
+  margin-left:6px;
   position:relative;
   vertical-align:middle;
   overflow:hidden;
   border-radius:4px;
-  font-size:0.6rem;
-  font-weight:700;
-  letter-spacing:.06em;
-  text-transform:uppercase;
-  transition:.2s ease;
-  color:#fff;
+  font-size:0.6rem;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase;
+  transition:.2s ease;color:#fff;
 }
 
+/* ── OP tag — plain purple, no effects ──────────────────────────────────── */
+.user-tag.op{
+  background:var(--purple);
+  border:1px solid rgba(139,92,246,0.5);
+  color:#fff;
+  overflow:hidden; /* keep it boring on purpose */
+}
 
+/* ── Deluxe ─────────────────────────────────────────────────────────────── */
 .user-tag.deluxe{
-  background:linear-gradient(
-    90deg,
-    #7a0050,
-    #945800,
-    #00685b,
-    #003f8f,
-    #5425a8,
-    #7a0050
-  );
+  background:linear-gradient(90deg,#7a0050,#945800,#00685b,#003f8f,#5425a8,#7a0050);
   background-size:400% 100%;
   border:1px solid rgba(255,255,255,.12);
   text-shadow:0 1px 2px rgba(0,0,0,.9);
   animation:rainbowMove 7s linear infinite;
 }
-
 .user-tag.deluxe:hover{
   transform:scale(1.08);
-  box-shadow:
-    0 0 12px rgba(255,255,255,.12),
-    0 0 24px rgba(255,255,255,.08);
+  box-shadow:0 0 12px rgba(255,255,255,.12),0 0 24px rgba(255,255,255,.08);
 }
+@keyframes rainbowMove{from{background-position:0% 50%}to{background-position:400% 50%}}
 
-@keyframes rainbowMove{
-  from{
-    background-position:0% 50%;
-  }
-  to{
-    background-position:400% 50%;
-  }
-}
-
+/* ── Gold ───────────────────────────────────────────────────────────────── */
 .user-tag.gold{
   overflow:visible;
-  background:linear-gradient(
-    180deg,
-    #9c7000,
-    #c89600,
-    #a87900
-  );
+  background:linear-gradient(180deg,#9c7000,#c89600,#a87900);
   border:1px solid rgba(255,215,0,.35);
   color:#fff8d6;
   text-shadow:0 1px 2px rgba(0,0,0,.6);
-  box-shadow:
-    inset 0 1px rgba(255,255,255,.12),
-    0 0 10px rgba(255,215,0,.12);
+  box-shadow:inset 0 1px rgba(255,255,255,.12),0 0 10px rgba(255,215,0,.12);
   animation:goldGlow 3s ease-in-out infinite;
 }
-
-.user-tag.gold .gold-shine{
-  position:absolute;
-  inset:0;
-  overflow:hidden;
-  pointer-events:none;
-}
-
+.user-tag.gold .gold-shine{position:absolute;inset:0;overflow:hidden;pointer-events:none;}
 .user-tag.gold .gold-shine::after{
-  content:"";
-  position:absolute;
-  top:-80%;
-  left:-180%;
-  width:45%;
-  height:260%;
-  transform:rotate(22deg);
-
-  background:linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(255,255,255,.05) 20%,
-    rgba(255,255,255,.75) 50%,
-    rgba(255,255,255,.05) 80%,
-    transparent 100%
-  );
-
+  content:"";position:absolute;top:-80%;left:-180%;width:45%;height:260%;transform:rotate(22deg);
+  background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,.05) 20%,rgba(255,255,255,.75) 50%,rgba(255,255,255,.05) 80%,transparent 100%);
   animation:goldPassiveShine 4.5s cubic-bezier(.25,.1,.25,1) infinite;
 }
-
-.user-tag.gold::before,
-.user-tag.gold::after{
-  content:"✦";
-  position:absolute;
-  color:#fff9d4;
-  font-size:10px;
-  opacity:0;
-  pointer-events:none;
-  text-shadow:
-    0 0 5px #fff,
-    0 0 10px #ffd700,
-    0 0 15px #ffd700;
+.user-tag.gold::before,.user-tag.gold::after{
+  content:"✦";position:absolute;color:#fff9d4;font-size:10px;opacity:0;pointer-events:none;
+  text-shadow:0 0 5px #fff,0 0 10px #ffd700,0 0 15px #ffd700;
 }
-
-.user-tag.gold:hover::before{
-  top:-6px;
-  left:-5px;
-  animation:sparkle .8s ease;
-}
-
-.user-tag.gold:hover::after{
-  bottom:-6px;
-  right:-5px;
-  animation:sparkle .8s ease .12s;
-}
-
+.user-tag.gold:hover::before{top:-6px;left:-5px;animation:sparkle .8s ease;}
+.user-tag.gold:hover::after{bottom:-6px;right:-5px;animation:sparkle .8s ease .12s;}
 @keyframes goldPassiveShine{
-
-  0%{
-    left:-180%;
-    opacity:0;
-  }
-
-  8%{
-    opacity:1;
-  }
-
-  45%{
-    opacity:1;
-  }
-
-  55%{
-    left:220%;
-    opacity:0;
-  }
-
-  100%{
-    left:220%;
-    opacity:0;
-  }
-
+  0%{left:-180%;opacity:0}8%{opacity:1}45%{opacity:1}55%{left:220%;opacity:0}100%{left:220%;opacity:0}
 }
-
 @keyframes goldGlow{
-
-  0%,100%{
-    box-shadow:
-      inset 0 1px rgba(255,255,255,.12),
-      0 0 10px rgba(255,215,0,.12);
-  }
-
-  50%{
-    box-shadow:
-      inset 0 1px rgba(255,255,255,.18),
-      0 0 18px rgba(255,215,0,.22),
-      0 0 30px rgba(255,215,0,.12);
-  }
-
+  0%,100%{box-shadow:inset 0 1px rgba(255,255,255,.12),0 0 10px rgba(255,215,0,.12);}
+  50%{box-shadow:inset 0 1px rgba(255,255,255,.18),0 0 18px rgba(255,215,0,.22),0 0 30px rgba(255,215,0,.12);}
 }
-  
 @keyframes sparkle{
-  0%{
-    opacity:0;
-    transform:scale(.2) rotate(0deg);
-  }
-  35%{
-    opacity:1;
-    transform:scale(1.6) rotate(90deg);
-  }
-  100%{
-    opacity:0;
-    transform:scale(2.5) rotate(180deg);
-  }
+  0%{opacity:0;transform:scale(.2) rotate(0deg)}
+  35%{opacity:1;transform:scale(1.6) rotate(90deg)}
+  100%{opacity:0;transform:scale(2.5) rotate(180deg)}
 }
 
-
+/* ── Developer ──────────────────────────────────────────────────────────── */
 .user-tag.developer{
-  position:relative;
-  overflow:visible;
-  color:#f5f3ff;
-
-  background:
-    linear-gradient(
-      180deg,
-      #6d47c7,
-      #4c2f99,
-      #2e1b5f
-    );
-
+  position:relative;overflow:visible;color:#f5f3ff;
+  background:linear-gradient(180deg,#6d47c7,#4c2f99,#2e1b5f);
   border:1px solid rgba(139,92,246,.35);
-
-  text-shadow:
-    0 1px 2px rgba(0,0,0,.5);
-
-  box-shadow:
-    inset 0 1px rgba(255,255,255,.08),
-    0 0 12px rgba(139,92,246,.12);
-
-  transition:
-    transform .25s ease,
-    box-shadow .25s ease,
-    border-color .25s ease;
+  text-shadow:0 1px 2px rgba(0,0,0,.5);
+  box-shadow:inset 0 1px rgba(255,255,255,.08),0 0 12px rgba(139,92,246,.12);
+  transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease;
 }
+.user-tag.developer:hover{transform:translateY(-2px) scale(1.04);border-color:rgba(139,92,246,.65);}
 
-.user-tag.developer:hover{
-  transform:
-    translateY(-2px)
-    scale(1.04);
-
-  border-color:rgba(139,92,246,.65);
-}
-
+/* ── Background rats ────────────────────────────────────────────────────── */
 .rata-bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
 .rata-sprite{
   position:absolute;opacity:0;
@@ -731,11 +583,7 @@ nav{
   92%{opacity:0.18}
   100%{opacity:0;transform:translateY(-55px) rotate(-4deg) scale(0.95)}
 }
-footer{
-  position:relative;z-index:1;
-  border-top:1px solid var(--border);
-  padding:1.5rem 3rem;text-align:center;
-}
+footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:1.5rem 3rem;text-align:center;}
 .footer-bottom{font-size:0.75rem;color:var(--text3)}
 @media(max-width:768px){
   nav{padding:0 1.2rem}
@@ -827,23 +675,16 @@ function getFingerprint() {
   const gl = canvas.getContext('webgl');
   const glInfo = gl ? gl.getParameter(gl.RENDERER) + gl.getParameter(gl.VENDOR) : '';
   const data = [
-    navigator.userAgent,
-    navigator.language,
+    navigator.userAgent, navigator.language,
     screen.width + 'x' + screen.height + 'x' + screen.colorDepth,
     new Date().getTimezoneOffset(),
-    navigator.hardwareConcurrency || 0,
-    navigator.deviceMemory || 0,
-    glInfo,
-    navigator.platform || '',
+    navigator.hardwareConcurrency || 0, navigator.deviceMemory || 0,
+    glInfo, navigator.platform || '',
   ].join('|');
   let hash = 0;
-  for (let i = 0; i < data.length; i++) {
-    hash = ((hash << 5) - hash) + data.charCodeAt(i);
-    hash |= 0;
-  }
+  for (let i = 0; i < data.length; i++) { hash = ((hash << 5) - hash) + data.charCodeAt(i); hash |= 0; }
   const fp = Math.abs(hash).toString(36) + Date.now().toString(36).slice(-4);
-  localStorage.setItem('_rfp', fp);
-  sessionStorage.setItem('_rfp', fp);
+  localStorage.setItem('_rfp', fp); sessionStorage.setItem('_rfp', fp);
   return fp;
 }
 
@@ -851,21 +692,17 @@ function getSessionId() {
   let sid = getCookie('_rsid') || localStorage.getItem('_rsid');
   if (!sid) {
     sid = Math.random().toString(36).slice(2) + Date.now().toString(36);
-    setCookie('_rsid', sid, 90);
-    localStorage.setItem('_rsid', sid);
+    setCookie('_rsid', sid, 90); localStorage.setItem('_rsid', sid);
   }
   return sid;
 }
-
 function setCookie(name, val, days) {
   const exp = new Date(Date.now() + days * 864e5).toUTCString();
   document.cookie = `${name}=${val};expires=${exp};path=/;SameSite=Lax`;
 }
-
 function getCookie(name) {
   return document.cookie.split('; ').reduce((r, c) => {
-    const [k, v] = c.split('=');
-    return k === name ? v : r;
+    const [k, v] = c.split('='); return k === name ? v : r;
   }, null);
 }
 
@@ -875,8 +712,7 @@ const SESSION_ID = getSessionId();
 let loadingTimer = null;
 function showLoading(msg = 'Loading...') {
   const el = document.getElementById('actionLoading');
-  const msgEl = document.getElementById('actionLoadingMsg');
-  msgEl.textContent = msg;
+  document.getElementById('actionLoadingMsg').textContent = msg;
   el.classList.add('show');
   clearTimeout(loadingTimer);
   loadingTimer = setTimeout(() => hideLoading(), 12000);
@@ -894,9 +730,7 @@ function showToast(msg, isError = false, dur = 2800) {
   setTimeout(() => t.classList.remove('show'), dur);
 }
 
-function fmtDate(ts){
-  return new Date(ts).toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'});
-}
+function fmtDate(ts){ return new Date(ts).toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'}); }
 function timeAgo(ts){
   const s = Math.floor((Date.now()-ts)/1000);
   if(s<60) return 'just now';
@@ -906,18 +740,17 @@ function timeAgo(ts){
 }
 
 let currentPage=1, currentPostId=null, searchQuery='';
-const likedPosts = JSON.parse(localStorage.getItem('liked_posts')||'{}');
+const likedPosts    = JSON.parse(localStorage.getItem('liked_posts')||'{}');
 const likedComments = JSON.parse(localStorage.getItem('liked_comments')||'{}');
 
-let commentAuthorName = localStorage.getItem('comment_author_name') || '';
-let identityBoundName = null;
+let commentAuthorName  = localStorage.getItem('comment_author_name') || '';
+let identityBoundName  = null;
+// Author of the currently-viewed post — used for OP badge
+let currentPostAuthor  = null;
 
 function saveLikedPosts(){ localStorage.setItem('liked_posts',JSON.stringify(likedPosts)); }
 function saveLikedComments(){ localStorage.setItem('liked_comments',JSON.stringify(likedComments)); }
-function saveAuthorName(n){
-  commentAuthorName=n;
-  localStorage.setItem('comment_author_name',n);
-}
+function saveAuthorName(n){ commentAuthorName=n; localStorage.setItem('comment_author_name',n); }
 
 async function api(path, opts={}){
   opts.headers = opts.headers || {};
@@ -935,11 +768,7 @@ async function loadIdentity() {
       commentAuthorName = data.name;
       saveAuthorName(data.name);
     } else {
-      // Identity was reset server-side — clear local storage too
-      if (commentAuthorName && !data.name) {
-        saveAuthorName('');
-        identityBoundName = null;
-      }
+      if (commentAuthorName && !data.name) { saveAuthorName(''); identityBoundName = null; }
     }
   } catch(_) {}
   finally { hideLoading(); }
@@ -948,10 +777,7 @@ async function loadIdentity() {
 function getUrlParam(k){ return new URLSearchParams(window.location.search).get(k); }
 function setUrl(params){
   const u = new URL(window.location);
-  Object.keys(params).forEach(k=>{
-    if(params[k]!=null) u.searchParams.set(k,params[k]);
-    else u.searchParams.delete(k);
-  });
+  Object.keys(params).forEach(k=>{ if(params[k]!=null) u.searchParams.set(k,params[k]); else u.searchParams.delete(k); });
   history.pushState({},'',u);
 }
 
@@ -961,42 +787,24 @@ let liveWarningTimer = null;
 function showLiveWarning(warning) {
   if (liveWarningDismissed[warning.id]) return;
   const overlay = document.getElementById('liveWarningOverlay');
-  const msgEl = document.getElementById('liveWarningMsg');
-  const timerEl = document.getElementById('liveWarningTimer');
-  const barEl = document.getElementById('liveWarningBar');
-
-  msgEl.textContent = warning.message;
+  document.getElementById('liveWarningMsg').textContent = warning.message;
   overlay.classList.add('show');
-
   const durationMs = (warning.duration || 10) * 1000;
   let remaining = warning.duration || 10;
-
+  const timerEl = document.getElementById('liveWarningTimer');
+  const barEl   = document.getElementById('liveWarningBar');
   timerEl.textContent = `Closing in ${remaining}s`;
-  barEl.style.transition = 'none';
-  barEl.style.width = '100%';
-
+  barEl.style.transition = 'none'; barEl.style.width = '100%';
   clearInterval(liveWarningTimer);
-
-  setTimeout(() => {
-    barEl.style.transition = `width ${durationMs}ms linear`;
-    barEl.style.width = '0%';
-  }, 50);
-
+  setTimeout(() => { barEl.style.transition = `width ${durationMs}ms linear`; barEl.style.width = '0%'; }, 50);
   liveWarningTimer = setInterval(() => {
     remaining--;
-    if (remaining <= 0) {
-      clearInterval(liveWarningTimer);
-      liveWarningDismissed[warning.id] = true;
-      dismissLiveWarning();
-    } else {
-      timerEl.textContent = `Closing in ${remaining}s`;
-    }
+    if (remaining <= 0) { clearInterval(liveWarningTimer); liveWarningDismissed[warning.id]=true; dismissLiveWarning(); }
+    else timerEl.textContent = `Closing in ${remaining}s`;
   }, 1000);
 }
-
 function dismissLiveWarning() {
-  const overlay = document.getElementById('liveWarningOverlay');
-  overlay.classList.remove('show');
+  document.getElementById('liveWarningOverlay').classList.remove('show');
   clearInterval(liveWarningTimer);
 }
 
@@ -1007,13 +815,11 @@ async function pollBroadcasts() {
   try {
     const data = await fetch(WORKER + '/broadcasts').then(r => r.json());
     if (!data.ok) return;
-
     if (data.warning && data.warning.id && data.warning.id !== lastSeenWarningId) {
       lastSeenWarningId = data.warning.id;
       localStorage.setItem('last_seen_warning', data.warning.id);
       showLiveWarning(data.warning);
     }
-
     renderBroadcastBanner(data.banners || []);
   } catch(_) {}
 }
@@ -1021,17 +827,13 @@ async function pollBroadcasts() {
 function renderBroadcastBanner(banners) {
   const heroEl = document.querySelector('.blog-hero');
   if (!heroEl) return;
-
   const existing = document.getElementById('broadcastBannersWrap');
   if (existing) existing.remove();
-
   const active = banners.filter(b => b && b.text);
   if (!active.length) return;
-
   const wrap = document.createElement('div');
   wrap.id = 'broadcastBannersWrap';
   wrap.style.cssText = 'display:flex;flex-direction:column;gap:0.5rem;position:relative;z-index:1;padding:0 2rem;padding-top:1.5rem;max-width:900px;margin:0 auto;width:100%';
-
   active.forEach(b => {
     const color = b.color || '#8b5cf6';
     const div = document.createElement('div');
@@ -1043,15 +845,12 @@ function renderBroadcastBanner(banners) {
     </div>`;
     wrap.appendChild(div);
   });
-
   heroEl.after(wrap);
 }
 
 function hexToRgba(hex, alpha) {
   const clean = hex.replace('#','');
-  const r = parseInt(clean.slice(0,2),16);
-  const g = parseInt(clean.slice(2,4),16);
-  const b = parseInt(clean.slice(4,6),16);
+  const r = parseInt(clean.slice(0,2),16), g = parseInt(clean.slice(2,4),16), b = parseInt(clean.slice(4,6),16);
   return `rgba(${r},${g},${b},${alpha})`;
 }
 
@@ -1060,12 +859,10 @@ async function route(){
   pollBroadcasts();
   clearInterval(broadcastPollInterval);
   broadcastPollInterval = setInterval(pollBroadcasts, 8000);
-
   const postId = getUrlParam('post');
-  const page = parseInt(getUrlParam('page')||'1');
-  currentPage = page;
-  if(postId){ renderPost(postId); }
-  else { renderList(); }
+  const page   = parseInt(getUrlParam('page')||'1');
+  currentPage  = page;
+  if(postId){ renderPost(postId); } else { renderList(); }
 }
 window.addEventListener('popstate', route);
 
@@ -1073,7 +870,8 @@ let allPostsCache = [];
 let searchDebounce = null;
 
 async function renderList(){
-  currentPostId = null;
+  currentPostId    = null;
+  currentPostAuthor = null;
   const app = document.getElementById('app');
   app.innerHTML = `
     <div class="blog-hero" style="position:relative;z-index:1">
@@ -1089,7 +887,6 @@ async function renderList(){
       <div class="posts-grid" id="postsGrid"><div class="spinner"></div></div>
       <div class="pagination" id="pagination"></div>
     </div>`;
-
   await loadAndRender();
 }
 
@@ -1112,31 +909,20 @@ async function loadAndRender(){
 function handleSearch(val){
   searchQuery = val;
   clearTimeout(searchDebounce);
-  searchDebounce = setTimeout(()=>{
-    currentPage=1;
-    setUrl({page:null});
-    applySearchAndRender();
-  }, 250);
+  searchDebounce = setTimeout(()=>{ currentPage=1; setUrl({page:null}); applySearchAndRender(); }, 250);
 }
 
 function applySearchAndRender(){
   const q = searchQuery.trim().toLowerCase();
   const filtered = q
     ? allPostsCache.filter(p=>
-        (p.title||'').toLowerCase().includes(q)||
-        (p.excerpt||'').toLowerCase().includes(q)||
-        (p.author||'').toLowerCase().includes(q)||
-        (p.tags||[]).some(t=>t.toLowerCase().includes(q))
-      )
+        (p.title||'').toLowerCase().includes(q)||(p.excerpt||'').toLowerCase().includes(q)||
+        (p.author||'').toLowerCase().includes(q)||(p.tags||[]).some(t=>t.toLowerCase().includes(q)))
     : allPostsCache;
-
-  const limit = 8;
-  const total = filtered.length;
+  const limit = 8, total = filtered.length;
   const pages = Math.ceil(total/limit);
-  const page = Math.min(currentPage, Math.max(1, pages));
-  const slice = filtered.slice((page-1)*limit, page*limit);
-
-  renderCards(slice);
+  const page  = Math.min(currentPage, Math.max(1, pages));
+  renderCards(filtered.slice((page-1)*limit, page*limit));
   renderPagination(total, page, limit);
 }
 
@@ -1149,15 +935,14 @@ function renderCards(posts){
 
 function cardHTML(p){
   const liked = likedPosts[p.id];
-  const tags = (p.tags||[]).map(t=>`<span class="post-tag">${escHtml(t)}</span>`).join('');
+  const tags  = (p.tags||[]).map(t=>`<span class="post-tag">${escHtml(t)}</span>`).join('');
   return `<a class="post-card${p.pinned?' pinned':''}" href="#" onclick="openPost('${p.id}',event)">
     ${p.pinned ? `<img class="pin-badge" src="https://raton.lol/img/office-push-pin.png" alt="Pinned" title="Pinned post">` : ''}
     ${p.imageUrl?`<img class="post-card-img" src="${escHtml(p.imageUrl)}" alt="" loading="lazy">`:''}
     <div class="post-card-body">
       <div class="post-meta">
         <span>${escHtml(p.author||'Admin')}</span>
-        <span class="dot"></span>
-        <span>${fmtDate(p.ts)}</span>
+        <span class="dot"></span><span>${fmtDate(p.ts)}</span>
         ${tags?`<span class="dot"></span>${tags}`:''}
         ${p.locked?`<span class="dot"></span><span style="color:#f59e0b;font-size:0.67rem"> Locked</span>`:''}
       </div>
@@ -1192,9 +977,7 @@ function renderPagination(total, page, limit){
   html+=`<button class="page-btn" onclick="goPage(${page-1})" ${page<=1?'disabled':''}>
     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg> Prev
   </button>`;
-  for(let i=1;i<=pages;i++){
-    html+=`<button class="page-btn ${i===page?'active':''}" onclick="goPage(${i})">${i}</button>`;
-  }
+  for(let i=1;i<=pages;i++) html+=`<button class="page-btn ${i===page?'active':''}" onclick="goPage(${i})">${i}</button>`;
   html+=`<button class="page-btn" onclick="goPage(${page+1})" ${page>=pages?'disabled':''}>Next
     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
   </button>`;
@@ -1206,21 +989,13 @@ function goPage(p){ currentPage=p; setUrl({page:p}); applySearchAndRender(); scr
 async function likePost(e, id){
   e.preventDefault(); e.stopPropagation();
   showLoading('Sending like...');
-  const data = await api('/like',{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({postId:id,type:'post'})
-  });
+  const data = await api('/like',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({postId:id,type:'post'})});
   hideLoading();
   if(!data.ok){ showToast(data.error, true); return; }
   likedPosts[id]=data.liked; saveLikedPosts();
   const btn = document.getElementById(`like-${id}`);
   const cnt = document.getElementById(`lc-${id}`);
-  if(btn){
-    btn.classList.toggle('liked', data.liked);
-    const svg = btn.querySelector('svg');
-    if(svg) svg.setAttribute('fill', data.liked ? 'currentColor' : 'none');
-  }
+  if(btn){ btn.classList.toggle('liked', data.liked); const svg=btn.querySelector('svg'); if(svg) svg.setAttribute('fill', data.liked?'currentColor':'none'); }
   if(cnt) cnt.textContent=data.count;
   showToast(data.liked?' Liked':'Unliked');
 }
@@ -1239,24 +1014,19 @@ async function renderPost(id){
   app.innerHTML = `<div class="single-wrap" style="position:relative;z-index:1"><div class="spinner"></div></div>`;
   showLoading('Loading post...');
 
-  await api('/view',{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({postId:id})
-  });
+  await api('/view',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({postId:id})});
 
-  const [pData, cData] = await Promise.all([
-    api(`/post?id=${id}`),
-    api(`/comments?postId=${id}`)
-  ]);
-
+  const [pData, cData] = await Promise.all([api(`/post?id=${id}`), api(`/comments?postId=${id}`)]);
   hideLoading();
 
   if(!pData.ok){ app.innerHTML='<div class="single-wrap" style="position:relative;z-index:1"><div class="empty">This post was deleted by an administrator or it doesnt exist anymore</div></div>'; return; }
   const p = pData.post;
+
+  currentPostAuthor = (p.author || '').trim();
+
   const comments = cData.comments||[];
   const liked = likedPosts[p.id];
-  const tags = (p.tags||[]).map(t=>`<span class="post-tag">${escHtml(t)}</span>`).join('');
+  const tags  = (p.tags||[]).map(t=>`<span class="post-tag">${escHtml(t)}</span>`).join('');
 
   app.innerHTML = `<div class="single-wrap" style="position:relative;z-index:1">
     <a class="post-back" href="#" onclick="goList(event)">
@@ -1266,8 +1036,7 @@ async function renderPost(id){
     <div class="single-header">
       <div class="post-meta">
         <span>@${escHtml(p.author||'Silly')}</span>
-        <span class="dot"></span>
-        <span>${fmtDate(p.ts)}</span>
+        <span class="dot"></span><span>${fmtDate(p.ts)}</span>
         ${p.editedAt?`<span class="dot"></span><span style="color:var(--text3);font-style:italic">edited ${timeAgo(p.editedAt)}</span>`:''}
         ${tags?`<span class="dot"></span>${tags}`:''}
         ${p.pinned?`<span class="dot"></span><img src="https://raton.lol/img/office-push-pin.png" width="14" height="14" style="vertical-align:middle;margin-right:2px;display:inline" alt=""> <span style="color:var(--purple2);vertical-align:middle">Pinned</span>`:''}
@@ -1300,32 +1069,30 @@ async function renderPost(id){
   setupDeveloperRain();
 }
 
-function tagBadge(tag) {
-  if (!tag) return '';
+function tagBadge(tag, name) {
+  let html = '';
 
-  const labels = {
-    deluxe: 'Professional',
-    gold: 'Star',
-    developer: 'Administrator'
-  };
-
-  const label = labels[tag] || tag;
-
-
-  if (tag === 'gold') {
-    return `
-      <span class="user-tag gold">
-        ${label}
-        <span class="gold-shine"></span>
-      </span>
-    `;
+  if (tag) {
+    const labels = { deluxe: 'Professional', gold: 'Star', developer: 'Administrator' };
+    const label  = labels[tag] || tag;
+    if (tag === 'gold') {
+      html += `<span class="user-tag gold">${label}<span class="gold-shine"></span></span>`;
+    } else {
+      html += `<span class="user-tag ${escHtml(tag)}">${escHtml(label)}</span>`;
+    }
   }
 
-  return `<span class="user-tag ${tag}">${label}</span>`;
+  if (currentPostAuthor && name &&
+      name.trim().toLowerCase() === currentPostAuthor.toLowerCase()) {
+    html += `<span class="user-tag op">OP</span>`;
+  }
+
+  return html;
 }
+// ─────────────────────────────────────────────────────────────────────────────
 
 function renderCommentsHTML(comments, postId, locked){
-  const savedName = identityBoundName || commentAuthorName;
+  const savedName   = identityBoundName || commentAuthorName;
   const nameIsLocked = !!identityBoundName;
 
   const lockedNotice = locked ? `<div class="locked-notice">
@@ -1369,88 +1136,43 @@ function renderCommentsHTML(comments, postId, locked){
 }
 
 function setupDeveloperRain() {
-
   document.querySelectorAll('.user-tag.developer').forEach(badge => {
-
     if (badge.dataset.rainAttached) return;
     badge.dataset.rainAttached = '1';
-
     const explode = () => {
-
       for (let i = 0; i < 7; i++) {
-
         const rat = document.createElement('img');
-
         rat.src = 'https://raton.lol/img/RATA.png';
         rat.className = 'rat-rain';
-
         const size = 20 + Math.random() * 5;
-
-        rat.style.cssText = `
-          position:absolute;
-          left:50%;
-          top:50%;
-          width:${size}px;
-          height:${size}px;
-          pointer-events:none;
-          opacity:.85;
-          z-index:1;
-          transform:translate(-50%,-50%);
-        `;
-
+        rat.style.cssText = `position:absolute;left:50%;top:50%;width:${size}px;height:${size}px;pointer-events:none;opacity:.85;z-index:1;transform:translate(-50%,-50%);`;
         badge.appendChild(rat);
-
         const angle = Math.random() * Math.PI * 2;
         const distance = 20 + Math.random() * 35;
-
-        const x = Math.cos(angle) * distance;
-        const y = Math.sin(angle) * distance;
-
-        rat.animate(
-          [
-            {
-              transform:'translate(-50%,-50%) scale(.3) rotate(0deg)',
-              opacity:0
-            },
-            {
-              transform:`translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) scale(1) rotate(${Math.random()*180}deg)`,
-              opacity:.9,
-              offset:.2
-            },
-            {
-              transform:`translate(calc(-50% + ${x*1.5}px), calc(-50% + ${y*1.5}px)) scale(.6) rotate(${360+Math.random()*360}deg)`,
-              opacity:0
-            }
-          ],
-          {
-            duration:1200 + Math.random()*400,
-            easing:'cubic-bezier(.22,1,.36,1)',
-            fill:'forwards'
-          }
-        );
-
+        const x = Math.cos(angle) * distance, y = Math.sin(angle) * distance;
+        rat.animate([
+          {transform:'translate(-50%,-50%) scale(.3) rotate(0deg)',opacity:0},
+          {transform:`translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) scale(1) rotate(${Math.random()*180}deg)`,opacity:.9,offset:.2},
+          {transform:`translate(calc(-50% + ${x*1.5}px), calc(-50% + ${y*1.5}px)) scale(.6) rotate(${360+Math.random()*360}deg)`,opacity:0}
+        ],{duration:1200+Math.random()*400,easing:'cubic-bezier(.22,1,.36,1)',fill:'forwards'});
         setTimeout(() => rat.remove(), 1800);
       }
     };
-
     explode();
-
     badge.addEventListener('mouseenter', explode);
   });
-
 }
-  
-  
+
 function commentHTML(c, postId, allComments, locked){
-  const isDeleted = c.deleted;
-  const cLiked = likedComments[`c:${c.id}`];
-  const replies = (c.replies||[]);
+  const isDeleted  = c.deleted;
+  const cLiked     = likedComments[`c:${c.id}`];
+  const replies    = (c.replies||[]);
   const canInteract = !isDeleted && !c.hardDeleted;
 
   return `<div class="comment ${isDeleted?'deleted':''}" id="comment-${c.id}">
     <div class="comment-header">
       <div class="comment-avatar">${(c.name||'?')[0].toUpperCase()}</div>
-      <span class="comment-name">${escHtml(isDeleted?'deleted':c.name)}${!isDeleted&&c.userTag?tagBadge(c.userTag):''}</span>
+      <span class="comment-name">${escHtml(isDeleted?'deleted':c.name)}${!isDeleted ? tagBadge(c.userTag, c.name) : ''}</span>
       ${c.editedByAdmin&&!isDeleted?`<span class="comment-edited">[edited by a moderator]</span>`:''}
       <span class="comment-ts">${timeAgo(c.ts)}</span>
     </div>
@@ -1471,14 +1193,14 @@ function commentHTML(c, postId, allComments, locked){
 }
 
 function replyHTML(r, parentId, postId, locked){
-  const isDeleted = r.deleted;
-  const rLiked = likedComments[`r:${r.id}`];
+  const isDeleted  = r.deleted;
+  const rLiked     = likedComments[`r:${r.id}`];
   const canInteract = !isDeleted && !r.hardDeleted;
 
   return `<div class="comment reply ${isDeleted?'deleted':''}" id="reply-${r.id}">
     <div class="comment-header">
       <div class="comment-avatar" style="width:20px;height:20px;font-size:0.6rem">${(r.name||'?')[0].toUpperCase()}</div>
-      <span class="comment-name">${escHtml(isDeleted?'deleted':r.name)}${!isDeleted&&r.userTag?tagBadge(r.userTag):''}</span>
+      <span class="comment-name">${escHtml(isDeleted?'deleted':r.name)}${!isDeleted ? tagBadge(r.userTag, r.name) : ''}</span>
       ${r.editedByAdmin&&!isDeleted?`<span class="comment-edited">[edited by a moderator]</span>`:''}
       <span class="comment-ts">${timeAgo(r.ts)}</span>
     </div>
@@ -1492,9 +1214,7 @@ function replyHTML(r, parentId, postId, locked){
   </div>`;
 }
 
-function handleNameInput(val){
-  if (!identityBoundName) commentAuthorName = val;
-}
+function handleNameInput(val){ if (!identityBoundName) commentAuthorName = val; }
 
 function clearName(e){
   e&&e.preventDefault();
@@ -1513,7 +1233,7 @@ function clearName(e){
 function toggleReplyForm(commentId, postId){
   const el = document.getElementById(`replyForm-${commentId}`);
   if(el.innerHTML){el.innerHTML='';return;}
-  const savedName = identityBoundName || commentAuthorName;
+  const savedName   = identityBoundName || commentAuthorName;
   const nameIsLocked = !!identityBoundName;
   el.innerHTML=`<div class="reply-form">
     <div class="form-row">
@@ -1536,20 +1256,16 @@ function toggleReplyForm(commentId, postId){
 async function submitComment(parentId, postId){
   const nameEl = document.getElementById(parentId?`rName-${parentId}`:'cName');
   const bodyEl = document.getElementById(parentId?`rBody-${parentId}`:'cBody');
-  const btnEl = document.getElementById(parentId?`replyBtn-${parentId}`:'submitCommentBtn');
-  const name = (identityBoundName || nameEl?.value || '').trim();
-  const body = bodyEl?.value.trim();
+  const btnEl  = document.getElementById(parentId?`replyBtn-${parentId}`:'submitCommentBtn');
+  const name   = (identityBoundName || nameEl?.value || '').trim();
+  const body   = bodyEl?.value.trim();
   if(!name||name.length<2){ showToast('Name must be at least 2 characters', true); return; }
   if(!body||body.length<2){ showToast('Comment must be at least 2 characters', true); return; }
 
   if(btnEl){ btnEl.disabled=true; btnEl.textContent='Checking...'; }
   showLoading('Checking name availability...');
 
-  const nameCheck = await api('/check-name',{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({postId,name})
-  });
+  const nameCheck = await api('/check-name',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({postId,name})});
 
   if(!nameCheck.ok){
     hideLoading();
@@ -1560,19 +1276,12 @@ async function submitComment(parentId, postId){
   if(btnEl){ btnEl.textContent='Posting...'; }
   showLoading('Posting comment...');
 
-  const data = await api('/comment',{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({postId,name,body,parentId})
-  });
-
+  const data = await api('/comment',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({postId,name,body,parentId})});
   hideLoading();
   if(btnEl){ btnEl.disabled=false; btnEl.innerHTML=parentId?'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 17 4 12 9 7"/><path d="M20 18v-2a4 4 0 0 0-4-4H4"/></svg> Reply':'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Post Comment'; }
 
   if(!data.ok){ showToast(data.error, true); return; }
-
-  identityBoundName = name;
-  saveAuthorName(name);
+  identityBoundName = name; saveAuthorName(name);
   showToast('Comment posted!');
 
   showLoading('Refreshing comments...');
@@ -1588,30 +1297,17 @@ async function likeComment(e, postId, type, commentId, replyId){
   showLoading('Sending like...');
   const body = {postId,type,commentId};
   if(replyId) body.replyId=replyId;
-  const data = await api('/like',{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify(body)
-  });
+  const data = await api('/like',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
   hideLoading();
   if(!data.ok){ showToast(data.error, true); return; }
-
   const lKey = type==='reply'?`r:${replyId}`:`c:${commentId}`;
   likedComments[lKey]=data.liked; saveLikedComments();
-
-  const btnId = type==='reply' ? `rlbtn-${replyId}` : `clbtn-${commentId}`;
-  const countId = type==='reply' ? `rl-${replyId}` : `cl-${commentId}`;
-
+  const btnId   = type==='reply' ? `rlbtn-${replyId}` : `clbtn-${commentId}`;
+  const countId = type==='reply' ? `rl-${replyId}`    : `cl-${commentId}`;
   const btn = document.getElementById(btnId);
   const countEl = document.getElementById(countId);
-
-  if(btn){
-    btn.classList.toggle('liked', data.liked);
-    const svg = btn.querySelector('svg');
-    if(svg) svg.setAttribute('fill', data.liked ? 'currentColor' : 'none');
-  }
+  if(btn){ btn.classList.toggle('liked', data.liked); const svg=btn.querySelector('svg'); if(svg) svg.setAttribute('fill', data.liked?'currentColor':'none'); }
   if(countEl) countEl.textContent = data.count;
-
   showToast(data.liked?' Liked':'Unliked');
 }
 
@@ -1619,21 +1315,13 @@ async function likePostSingle(id){
   const btn = document.getElementById('post-like-btn');
   if(btn) btn.disabled=true;
   showLoading('Sending like...');
-  const data = await api('/like',{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({postId:id,type:'post'})
-  });
+  const data = await api('/like',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({postId:id,type:'post'})});
   hideLoading();
   if(btn) btn.disabled=false;
   if(!data.ok){ showToast(data.error, true); return; }
   likedPosts[id]=data.liked; saveLikedPosts();
   const cnt = document.getElementById('single-lc');
-  if(btn){
-    btn.classList.toggle('liked', data.liked);
-    const svg = btn.querySelector('svg');
-    if(svg) svg.setAttribute('fill', data.liked ? 'currentColor' : 'none');
-  }
+  if(btn){ btn.classList.toggle('liked', data.liked); const svg=btn.querySelector('svg'); if(svg) svg.setAttribute('fill', data.liked?'currentColor':'none'); }
   if(cnt) cnt.textContent=data.count;
   showToast(data.liked?' Liked':'Unliked');
 }
@@ -1643,7 +1331,7 @@ function copyLink(id){
   navigator.clipboard.writeText(url).then(()=>showToast(' Link copied!'));
 }
 
-function goList(e){ e&&e.preventDefault(); currentPostId=null; allPostsCache=[]; setUrl({post:null,page:null}); renderList(); scrollTo({top:0}); }
+function goList(e){ e&&e.preventDefault(); currentPostId=null; currentPostAuthor=null; allPostsCache=[]; setUrl({post:null,page:null}); renderList(); scrollTo({top:0}); }
 
 function renderMarkdown(md){
   if(!md) return '';
@@ -1664,7 +1352,6 @@ function escHtml(s){
   if(typeof s !== 'string') return '';
   return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
-
 
 route();
 setupDeveloperRain();
