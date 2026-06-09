@@ -1010,7 +1010,7 @@ async function newCaptcha(canvasId, inputId, formId) {
 }
 
 function drawCaptcha(canvas, chars) {
-  const W = canvas.width  = 180;
+  const W = canvas.width = 180;
   const H = canvas.height = 52;
   const ctx = canvas.getContext('2d');
 
@@ -1025,6 +1025,7 @@ function drawCaptcha(canvas, chars) {
     const ny = Math.random() * H;
     const nr = Math.random() * 1.1;
     const na = Math.random() * 0.35 + 0.05;
+
     ctx.beginPath();
     ctx.arc(nx, ny, nr, 0, Math.PI * 2);
     ctx.fillStyle = `rgba(${rnd(120,220)},${rnd(80,160)},${rnd(200,255)},${na.toFixed(2)})`;
@@ -1034,18 +1035,21 @@ function drawCaptcha(canvas, chars) {
   for (let i = 0; i < 5; i++) {
     ctx.beginPath();
     ctx.moveTo(Math.random() * W, Math.random() * H);
-    let x = Math.random() * W;
-    let y = Math.random() * H;
+
     ctx.quadraticCurveTo(
-      Math.random() * W, Math.random() * H,
-      x, y
+      Math.random() * W,
+      Math.random() * H,
+      Math.random() * W,
+      Math.random() * H
     );
-    ctx.strokeStyle = `rgba(${rnd(100,200)},${rnd(60,140)},${rnd(180,255)},${(Math.random()*0.25+0.08).toFixed(2)})`;
+
+    ctx.strokeStyle = `rgba(${rnd(100,200)},${rnd(60,140)},${rnd(180,255)},${(Math.random() * 0.25 + 0.08).toFixed(2)})`;
     ctx.lineWidth = Math.random() * 1.2 + 0.4;
     ctx.stroke();
   }
 
   const charW = W / (CAPTCHA_LEN + 0.8);
+
   for (let i = 0; i < chars.length; i++) {
     const ch = chars[i];
     const cx = charW * (i + 0.7);
@@ -1063,15 +1067,15 @@ function drawCaptcha(canvas, chars) {
     const fontSize = rnd(20, 27);
     ctx.font = `bold ${fontSize}px 'Courier New', monospace`;
     ctx.textBaseline = 'middle';
-    ctx.textAlign    = 'center';
+    ctx.textAlign = 'center';
 
     const hue = rnd(240, 310);
     const sat = rnd(60, 90);
     const lig = rnd(68, 85);
-    ctx.fillStyle = `hsl(${hue},${sat}%,${lig}%)`;
 
-    ctx.shadowColor  = `hsla(${hue},${sat}%,30%,0.7)`;
-    ctx.shadowBlur   = 3;
+    ctx.fillStyle = `hsl(${hue},${sat}%,${lig}%)`;
+    ctx.shadowColor = `hsla(${hue},${sat}%,30%,0.7)`;
+    ctx.shadowBlur = 3;
     ctx.shadowOffsetX = 1;
     ctx.shadowOffsetY = 1;
 
@@ -1084,33 +1088,52 @@ function drawCaptcha(canvas, chars) {
     ctx.fillRect(0, y, W, 1);
   }
 
-  for (let i = 0; i < 2; i++) {
-  ctx.beginPath();
-  ctx.moveTo(Math.random() * W, Math.random() * H);
+  for (let i = 0; i < 3; i++) {
+    ctx.beginPath();
+    ctx.moveTo(-10, rnd(0, H));
 
-  ctx.bezierCurveTo(
-    Math.random() * W, Math.random() * H,
-    Math.random() * W, Math.random() * H,
-    Math.random() * W, Math.random() * H
-  );
+    ctx.bezierCurveTo(
+      rnd(0, W), rnd(0, H),
+      rnd(0, W), rnd(0, H),
+      W + 10, rnd(0, H)
+    );
 
-  ctx.strokeStyle = `rgba(255,255,255,${Math.random() * 0.12 + 0.05})`;
-  ctx.lineWidth = Math.random() * 1.2 + 0.6;
-  ctx.stroke();
-}
+    ctx.strokeStyle = `rgba(255,255,255,${Math.random() * 0.18 + 0.12})`;
+    ctx.lineWidth = Math.random() * 1.5 + 1.2;
+    ctx.stroke();
+  }
 
-  for (let i = 0; i < 12; i++) {
-  ctx.beginPath();
-  ctx.arc(
-    Math.random() * W,
-    Math.random() * H,
-    Math.random() * 1.8 + 0.5,
-    0,
-    Math.PI * 2
-  );
-  ctx.fillStyle = `rgba(255,255,255,${Math.random() * 0.18 + 0.05})`;
-  ctx.fill();
-}
+  for (let i = 0; i < 25; i++) {
+    ctx.beginPath();
+    ctx.arc(
+      Math.random() * W,
+      Math.random() * H,
+      Math.random() * 2.2 + 0.7,
+      0,
+      Math.PI * 2
+    );
+
+    ctx.fillStyle = `rgba(255,255,255,${Math.random() * 0.22 + 0.08})`;
+    ctx.fill();
+  }
+
+  for (let i = 0; i < 8; i++) {
+    const x = Math.random() * W;
+    const y = Math.random() * H;
+
+    ctx.strokeStyle = `rgba(255,255,255,${Math.random() * 0.15 + 0.08})`;
+    ctx.lineWidth = Math.random() * 1.2 + 0.8;
+
+    ctx.beginPath();
+    ctx.moveTo(x - 4, y);
+    ctx.lineTo(x + 4, y);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(x, y - 4);
+    ctx.lineTo(x, y + 4);
+    ctx.stroke();
+  }
 }
 
 function rnd(a, b) { return Math.floor(Math.random() * (b - a + 1)) + a; }
