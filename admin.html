@@ -60,6 +60,8 @@ a:hover{text-decoration:underline}
 .btn-success:hover{background:rgba(34,197,94,0.2)}
 .btn-yellow{background:var(--yellow-dim);border:1px solid rgba(245,158,11,0.3);color:var(--yellow)}
 .btn-yellow:hover{background:rgba(245,158,11,0.2)}
+.btn-clown{background:rgba(251,146,60,0.12);border:1px solid rgba(251,146,60,0.3);color:#fb923c}
+.btn-clown:hover{background:rgba(251,146,60,0.22)}
 .btn-sm{padding:0.35rem 0.7rem;font-size:0.73rem}
 .btn:disabled{opacity:.45;pointer-events:none}
 .card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.4rem}
@@ -86,6 +88,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
 .badge-del{background:var(--red-dim);color:var(--red);border:1px solid rgba(239,68,68,0.25)}
 .badge-locked{background:var(--yellow-dim);color:var(--yellow);border:1px solid rgba(245,158,11,0.25)}
 .badge-pinned{background:var(--purple-dim);color:var(--purple2);border:1px solid rgba(139,92,246,0.25)}
+.badge-ragebait{background:rgba(251,146,60,0.12);color:#fb923c;border:1px solid rgba(251,146,60,0.3)}
 .form-grid{display:grid;gap:1rem}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
 .form-group{display:flex;flex-direction:column;gap:0.4rem}
@@ -105,6 +108,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
 .modal-close:hover{color:var(--text)}
 .comment-item{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:0.9rem 1rem;margin-bottom:0.7rem}
 .comment-item.deleted{opacity:.5}
+.comment-item.ragebait{border-color:rgba(251,146,60,0.35);background:rgba(251,146,60,0.04)}
 .comment-meta{display:flex;align-items:center;gap:0.5rem;margin-bottom:0.4rem;flex-wrap:wrap}
 .comment-meta-name{font-weight:600;color:var(--text);font-size:0.82rem}
 .comment-meta-ts{font-size:0.7rem;color:var(--text3)}
@@ -300,16 +304,16 @@ function saveSession(key) {
   localStorage.setItem('admin_expiry', String(expiry));
 }
 
-    const presetIcons = [
-    { label: 'Alert', svg: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>' },
-    { label: 'Update', svg: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M4.93 19.07l1.41-1.41M19.07 19.07l-1.41-1.41M12 2v2M12 20v2M2 12h2M20 12h2"/></svg>' },
-    { label: 'Event', svg: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>' },
-    { label: 'News', svg: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>' },
-    { label: 'Maintenance', svg: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>' },
-    { label: 'Welcome', svg: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>' },
-    { label: 'Giveaway', svg: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><path d="M12 22V7"/></svg>' },
-    { label: 'Announce', svg: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 11.8"/></svg>' },
-  ];
+const presetIcons = [
+  { label: 'Alert', svg: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>' },
+  { label: 'Update', svg: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M4.93 19.07l1.41-1.41M19.07 19.07l-1.41-1.41M12 2v2M12 20v2M2 12h2M20 12h2"/></svg>' },
+  { label: 'Event', svg: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>' },
+  { label: 'News', svg: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>' },
+  { label: 'Maintenance', svg: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>' },
+  { label: 'Welcome', svg: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>' },
+  { label: 'Giveaway', svg: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><path d="M12 22V7"/></svg>' },
+  { label: 'Announce', svg: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 11.8"/></svg>' },
+];
 
 function loadSession() {
   const key = sessionStorage.getItem('admin_key') || localStorage.getItem('admin_key');
@@ -752,15 +756,16 @@ async function showComments(postId) {
 function renderAdminComments(comments, postId) {
   if (!comments.length) return '<div class="empty">No comments yet</div>';
   return comments.map(c => `
-    <div class="comment-item ${c.deleted?'deleted':''}" id="ac-${c.id}">
+    <div class="comment-item ${c.deleted?'deleted':''} ${c.rageBait?'ragebait':''}" id="ac-${c.id}">
       <div class="comment-meta">
-        <span class="comment-meta-name">${esc(c.deleted?'[deleted]':c.name)}</span>
+        <span class="comment-meta-name">${c.rageBait ? '🤡 ' : ''}${esc(c.deleted?'[deleted]':c.name)}</span>
         <span class="comment-meta-ts">${timeAgo(c.ts)}</span>
         ${!c.deleted?`<span class="comment-meta-ip" title="IP">${esc(c.ip||'?')}</span>`:''}
         ${c.fp?`<span class="comment-meta-fp" title="Fingerprint">fp:${esc(c.fp.slice(0,8))}</span>`:''}
         ${c.deleted?'<span class="badge badge-del">Soft Deleted</span>':''}
+        ${c.rageBait?'<span class="badge badge-ragebait">🤡 Rage Bait</span>':''}
         ${c.editedByAdmin&&!c.deleted?'<span class="badge" style="background:var(--purple-dim);color:var(--purple2);border:1px solid rgba(139,92,246,0.25)">Edited by mod</span>':''}
-        <span style="margin-left:auto;font-size:0.72rem;color:var(--text3)">${c.likes||0} likes · ID: ${esc(c.id)}</span>
+        <span style="margin-left:auto;font-size:0.72rem;color:var(--text3)">${c.likes||0} likes · ${c.dislikes||0} dislikes · ID: ${esc(c.id)}</span>
       </div>
       <div class="comment-text ${c.deleted?'deleted-msg':''}">${esc(c.body)}</div>
       <div style="display:flex;gap:0.4rem;margin-top:0.5rem;flex-wrap:wrap">
@@ -768,22 +773,24 @@ function renderAdminComments(comments, postId) {
           <button class="btn btn-ghost btn-sm" onclick="openEditComment('${postId}','${c.id}',null,'${esc(c.body).replace(/'/g,"\\'")}')">Edit</button>`:''}
         <button class="btn btn-danger btn-sm" onclick="hardDeleteComment('${postId}','${c.id}')">Hard Delete</button>
         ${!c.deleted?`<button class="btn btn-yellow btn-sm" onclick="banByIp('${esc(c.ip||'')}')">Ban IP</button>
-          <button class="btn btn-success btn-sm" onclick="quickTagUser('${esc(c.name||'')}')">Tag User</button>`:''}
+          <button class="btn btn-success btn-sm" onclick="quickTagUser('${esc(c.name||'')}')">Tag User</button>
+          <button class="btn btn-clown btn-sm" onclick="toggleRageBait('${postId}','${c.id}')">${c.rageBait ? '✅ Un-RageBait' : '🤡 Rage Bait'}</button>`:''}
       </div>
       ${(c.replies||[]).length?`<div class="reply-indent">${c.replies.map(r=>replyAdminHTML(r,c.id,postId)).join('')}</div>`:''}
     </div>`).join('');
 }
 
 function replyAdminHTML(r, parentId, postId) {
-  return `<div class="comment-item ${r.deleted?'deleted':''}" style="margin-bottom:0.5rem;background:var(--surface)" id="ar-${r.id}">
+  return `<div class="comment-item ${r.deleted?'deleted':''} ${r.rageBait?'ragebait':''}" style="margin-bottom:0.5rem;background:var(--surface)" id="ar-${r.id}">
     <div class="comment-meta">
-      <span class="comment-meta-name" style="font-size:0.75rem">${esc(r.deleted?'[deleted]':r.name)}</span>
+      <span class="comment-meta-name" style="font-size:0.75rem">${r.rageBait ? '🤡 ' : ''}${esc(r.deleted?'[deleted]':r.name)}</span>
       <span class="comment-meta-ts">${timeAgo(r.ts)}</span>
       ${!r.deleted?`<span class="comment-meta-ip">${esc(r.ip||'?')}</span>`:''}
       ${r.fp?`<span class="comment-meta-fp">fp:${esc(r.fp.slice(0,8))}</span>`:''}
       ${r.deleted?'<span class="badge badge-del">Soft Deleted</span>':''}
+      ${r.rageBait?'<span class="badge badge-ragebait">🤡 Rage Bait</span>':''}
       ${r.editedByAdmin&&!r.deleted?'<span class="badge" style="background:var(--purple-dim);color:var(--purple2);border:1px solid rgba(139,92,246,0.25)">Edited</span>':''}
-      <span style="margin-left:auto;font-size:0.72rem;color:var(--text3)">${r.likes||0} likes</span>
+      <span style="margin-left:auto;font-size:0.72rem;color:var(--text3)">${r.likes||0} likes · ${r.dislikes||0} dislikes</span>
     </div>
     <div class="comment-text ${r.deleted?'deleted-msg':''}">${esc(r.body)}</div>
     <div style="display:flex;gap:0.4rem;margin-top:0.4rem;flex-wrap:wrap">
@@ -791,9 +798,17 @@ function replyAdminHTML(r, parentId, postId) {
         <button class="btn btn-ghost btn-sm" onclick="openEditComment('${postId}','${parentId}','${r.id}','${esc(r.body).replace(/'/g,"\\'")}')">Edit</button>`:''}
       <button class="btn btn-danger btn-sm" onclick="hardDeleteComment('${postId}','${parentId}','${r.id}')">Hard Delete</button>
       ${!r.deleted?`<button class="btn btn-yellow btn-sm" onclick="banByIp('${esc(r.ip||'')}')">Ban IP</button>
-        <button class="btn btn-success btn-sm" onclick="quickTagUser('${esc(r.name||'')}')">Tag User</button>`:''}
+        <button class="btn btn-success btn-sm" onclick="quickTagUser('${esc(r.name||'')}')">Tag User</button>
+        <button class="btn btn-clown btn-sm" onclick="toggleRageBait('${postId}','${parentId}','${r.id}')">${r.rageBait ? '✅ Un-RageBait' : '🤡 Rage Bait'}</button>`:''}
     </div>
   </div>`;
+}
+
+async function toggleRageBait(postId, commentId, replyId) {
+  const data = await blogPost('/admin/rage-bait', { postId, commentId, replyId: replyId || undefined });
+  if (!data.ok) { toast(data.error); return; }
+  toast(data.rageBait ? '🤡 Marked as rage bait' : '✅ Rage bait removed');
+  showComments(postId);
 }
 
 async function quickTagUser(name) {
@@ -882,11 +897,6 @@ async function renderTags() {
         <div style="display:flex;gap:0.6rem">
           <button class="btn btn-primary" onclick="assignTag()">Assign Tag</button>
           <button class="btn btn-ghost" onclick="renderTags()">Refresh</button>
-        </div>
-      </div>
-      <div style="margin-top:1.2rem">
-        <div class="form-label" style="margin-bottom:0.6rem">Tag Previews</div>
-        <div style="display:flex;gap:0.8rem;flex-wrap:wrap;align-items:center">
         </div>
       </div>
     </div>
@@ -1080,16 +1090,9 @@ async function renderBroadcasts() {
           </div>
           <div class="form-group">
             <label class="form-label">Icon (preset or custom SVG)</label>
-<div class="icon-presets">
-  ${presetIcons.map((p,i)=>`
-    <button
-      class="icon-preset-btn"
-      onclick="selectPresetIcon(${i})"
-      title="${p.label}">
-      ${p.svg} ${p.label}
-    </button>
-  `).join('')}
-</div>
+            <div class="icon-presets">
+              ${presetIcons.map((p,i)=>`<button class="icon-preset-btn" onclick="selectPresetIcon(${i})" title="${p.label}">${p.svg} ${p.label}</button>`).join('')}
+            </div>
             <input class="input" id="bannerIcon" placeholder='Custom SVG or leave empty' style="margin-top:0.4rem">
           </div>
         </div>
@@ -1293,9 +1296,11 @@ async function createGiveaway() {
     }
   } catch(e) { toast('Network error'); btn.disabled=false; btn.textContent='Create Giveaway'; }
 }
+
 function selectPresetIcon(index){
   document.getElementById('bannerIcon').value = presetIcons[index].svg;
 }
+
 async function pickWinner(id) {
   if (!confirm(`Pick a winner for "${id}"?`)) return;
   const r = await gwPost('/admin/winner', { adminKey: ADMIN_KEY, giveawayId: id });
