@@ -1338,39 +1338,45 @@ function inlineFormat(s){
 
 function renderMarkdown(md){
   if(!md) return '';
-  const escaped = md
+ 
+  let s = md
     .replace(/&/g,'&amp;')
     .replace(/</g,'&lt;')
     .replace(/>/g,'&gt;');
-  const lines = escaped.split('\n');
-  let out = '';
-  let inList = false;
-  for(let i = 0; i < lines.length; i++){
-    const line = lines[i];
-    const h3 = line.match(/^### (.+)$/);
-    const h2 = line.match(/^## (.+)$/);
-    const li = line.match(/^- (.+)$/);
-    if(h3){
-      if(inList){ out += '</ul>'; inList = false; }
-      out += `<h3>${inlineFormat(h3[1])}</h3>`;
-    } else if(h2){
-      if(inList){ out += '</ul>'; inList = false; }
-      out += `<h2>${inlineFormat(h2[1])}</h2>`;
-    } else if(li){
-      if(!inList){ out += '<ul>'; inList = true; }
-      out += `<li>${inlineFormat(li[1])}</li>`;
-    } else {
-      if(inList){ out += '</ul>'; inList = false; }
-      if(line.trim() === ''){
-        out += '<br>';
-      } else {
-        out += inlineFormat(line) + '<br>';
-      }
+ 
+  s = s
+    .replace(/^### (.+)$/gm,'<h3>$1</h3>')
+    .replace(/^## (.+)$/gm,'<h2>$1</h2>');
+ 
+  s = s.replace(/((?:^- .+\n?)+)/gm, (block) => {
+    const items = block
+      .split('\n')
+      .filter(l => l.trim().startsWith('- '))
+      .map(l => `<li>${l.replace(/^- /, '').trim()}</li>`)
+      .join('');
+    return `<ul style="margin:.5em 0 .8em 1.4em;padding:0">${items}</ul>\n`;
+  });
+ 
+  s = s
+    .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g,'<em>$1</em>')
+    .replace(/`(.+?)`/g,'<code>$1</code>')
+    .replace(/!\[([^\]]*)\]\(([^)]+)\)/g,'<img src="$2" alt="$1">')
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g,'<a href="$2" target="_blank" rel="noopener">$1</a>');
+ 
+  const blocks = s.split(/\n{2,}/);
+  const rendered = blocks.map(block => {
+    const trimmed = block.trim();
+    if (!trimmed) return '';
+    if (/^<(h[1-6]|ul|ol|li|pre|blockquote)[\s>]/.test(trimmed)) {
+      return trimmed;
     }
-  }
-  if(inList) out += '</ul>';
-  return out;
+    return '<p>' + trimmed.replace(/\n/g, '<br>') + '</p>';
+  });
+ 
+  return rendered.filter(Boolean).join('\n');
 }
+ 
 
 function escHtml(s){
   if(typeof s !== 'string') return '';
