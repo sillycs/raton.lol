@@ -461,11 +461,12 @@ nav{
 }
 .reply-toggle:hover{background:rgba(255,255,255,0.06);color:var(--text)}
 
-/* Reactions */
 .reactions-bar{
-  display:flex;align-items:center;gap:4px;
-  margin-top:4px;
-  flex-wrap:wrap;
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  margin-top:0;
+  flex-wrap:nowrap;
 }
 .reaction-btn{
   display:inline-flex;align-items:center;gap:3px;
@@ -1527,7 +1528,6 @@ function renderCommentBody(body) {
   });
 }
 
-// ─── COMMENT HTML ─────────────────────────────────────────────────────────────
 
 function commentHTML(c, postId, allComments, locked){
   const isDeleted  = c.deleted;
@@ -1551,7 +1551,7 @@ function commentHTML(c, postId, allComments, locked){
       <span class="comment-ts">${timeAgo(c.ts)}</span>
     </div>
     <div class="comment-body ${isDeleted?'deleted-msg':''}">${isDeleted?escHtml(c.body):renderCommentBody(c.body)}</div>
-    ${canInteract ? reactionsHTML(c.id, 'comment', null, c.reactions||{}) : ''}
+
     <div class="comment-actions">
       ${canInteract ? `<button class="comment-like ${cLiked?'liked':''}" id="clbtn-${c.id}" onclick="likeComment(event,'${postId}','comment','${c.id}')">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="${cLiked?'currentColor':'none'}" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
@@ -1560,12 +1560,18 @@ function commentHTML(c, postId, allComments, locked){
       <button class="comment-dislike ${cDisliked?'disliked':''}" id="dlbtn-${c.id}" onclick="dislikeComment(event,'${postId}','comment','${c.id}')">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="${cDisliked?'currentColor':'none'}" stroke="currentColor" stroke-width="2"><path d="M3.15 19.39a5.5 5.5 0 0 0 7.78 0L12 18.33l1.06 1.06a5.5 5.5 0 0 0 7.78-7.78l-1.06-1.06L12 2.77 4.22 10.55 3.15 11.61a5.5 5.5 0 0 0 0 7.78z"/></svg>
         <span id="dl-${c.id}">${c.dislikes||0}</span>
-      </button>` : ''}
+      </button>
+
+      ${canInteract ? reactionsHTML(c.id, 'comment', null, c.reactions||{}) : ''}
+
+      ` : ''}
+
       ${canInteract&&!locked?`<button class="reply-toggle" onclick="toggleReplyForm('${c.id}','${postId}')">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 17 4 12 9 7"/><path d="M20 18v-2a4 4 0 0 0-4-4H4"/></svg>
         Reply
       </button>`:''}
     </div>
+
     <div id="replyForm-${c.id}"></div>
     ${replies.length?`<div class="reply-list" id="replies-${c.id}">${replies.map(r=>replyHTML(r,c.id,postId,locked)).join('')}</div>`:`<div id="replies-${c.id}"></div>`}
   </div>`;
