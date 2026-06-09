@@ -758,12 +758,12 @@ function renderAdminComments(comments, postId) {
   return comments.map(c => `
     <div class="comment-item ${c.deleted?'deleted':''} ${c.rageBait?'ragebait':''}" id="ac-${c.id}">
       <div class="comment-meta">
-        <span class="comment-meta-name">${c.rageBait ? '🤡 ' : ''}${esc(c.deleted?'[deleted]':c.name)}</span>
+        <span class="comment-meta-name">${c.rageBait ? '' : ''}${esc(c.deleted?'[deleted]':c.name)}</span>
         <span class="comment-meta-ts">${timeAgo(c.ts)}</span>
         ${!c.deleted?`<span class="comment-meta-ip" title="IP">${esc(c.ip||'?')}</span>`:''}
         ${c.fp?`<span class="comment-meta-fp" title="Fingerprint">fp:${esc(c.fp.slice(0,8))}</span>`:''}
         ${c.deleted?'<span class="badge badge-del">Soft Deleted</span>':''}
-        ${c.rageBait?'<span class="badge badge-ragebait">🤡 Rage Bait</span>':''}
+        ${c.rageBait?'<span class="badge badge-ragebait">Ragebait</span>':''}
         ${c.editedByAdmin&&!c.deleted?'<span class="badge" style="background:var(--purple-dim);color:var(--purple2);border:1px solid rgba(139,92,246,0.25)">Edited by mod</span>':''}
         <span style="margin-left:auto;font-size:0.72rem;color:var(--text3)">${c.likes||0} likes · ${c.dislikes||0} dislikes · ID: ${esc(c.id)}</span>
       </div>
@@ -774,7 +774,7 @@ function renderAdminComments(comments, postId) {
         <button class="btn btn-danger btn-sm" onclick="hardDeleteComment('${postId}','${c.id}')">Hard Delete</button>
         ${!c.deleted?`<button class="btn btn-yellow btn-sm" onclick="banByIp('${esc(c.ip||'')}')">Ban IP</button>
           <button class="btn btn-success btn-sm" onclick="quickTagUser('${esc(c.name||'')}')">Tag User</button>
-          <button class="btn btn-clown btn-sm" onclick="toggleRageBait('${postId}','${c.id}')">${c.rageBait ? '✅ Un-RageBait' : '🤡 Rage Bait'}</button>`:''}
+          <button class="btn btn-clown btn-sm" onclick="toggleRageBait('${postId}','${c.id}')">${c.rageBait ? '✅ UnRagebait' : 'Ragebait'}</button>`:''}
       </div>
       ${(c.replies||[]).length?`<div class="reply-indent">${c.replies.map(r=>replyAdminHTML(r,c.id,postId)).join('')}</div>`:''}
     </div>`).join('');
@@ -799,7 +799,7 @@ function replyAdminHTML(r, parentId, postId) {
       <button class="btn btn-danger btn-sm" onclick="hardDeleteComment('${postId}','${parentId}','${r.id}')">Hard Delete</button>
       ${!r.deleted?`<button class="btn btn-yellow btn-sm" onclick="banByIp('${esc(r.ip||'')}')">Ban IP</button>
         <button class="btn btn-success btn-sm" onclick="quickTagUser('${esc(r.name||'')}')">Tag User</button>
-        <button class="btn btn-clown btn-sm" onclick="toggleRageBait('${postId}','${parentId}','${r.id}')">${r.rageBait ? '✅ Un-RageBait' : '🤡 Rage Bait'}</button>`:''}
+        <button class="btn btn-clown btn-sm" onclick="toggleRageBait('${postId}','${parentId}','${r.id}')">${r.rageBait ? 'Unragebait' : 'Ragebait'}</button>`:''}
     </div>
   </div>`;
 }
@@ -807,7 +807,7 @@ function replyAdminHTML(r, parentId, postId) {
 async function toggleRageBait(postId, commentId, replyId) {
   const data = await blogPost('/admin/rage-bait', { postId, commentId, replyId: replyId || undefined });
   if (!data.ok) { toast(data.error); return; }
-  toast(data.rageBait ? '🤡 Marked as rage bait' : '✅ Rage bait removed');
+  toast(data.rageBait ? '🤡' : 'Rage bait removed');
   showComments(postId);
 }
 
