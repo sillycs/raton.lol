@@ -410,12 +410,47 @@ nav{
   border:1px solid var(--border);
   border-radius:12px;
   padding:1rem 1.1rem;
+  position:relative;
+  overflow:visible;
 }
 .comment.deleted{opacity:.55}
+
+/* ── RAGEBAIT: crema oscuro + clown girando en esquina ── */
+.comment.ragebait{
+  background:#f5eedf !important;
+  border-color:rgba(180,140,60,0.35) !important;
+  color:#2a2010;
+}
+.comment.ragebait .comment-name{color:#2a2010}
+.comment.ragebait .comment-body{color:#4a3c20}
+.comment.ragebait .comment-ts{color:#7a6840}
+.comment.ragebait .comment-upvote,
+.comment.ragebait .comment-downvote,
+.comment.ragebait .reply-toggle,
+.comment.ragebait .reaction-picker-btn{color:#7a6840}
 .comment.ragebait .comment-avatar{
   background:none !important;
   border:none !important;
 }
+/* clown en la esquina del borde */
+.comment.ragebait::after{
+  content:'';
+  position:absolute;
+  top:-14px;
+  right:-14px;
+  width:28px;
+  height:28px;
+  background:url('https://raton.lol/img/clown.png') center/contain no-repeat;
+  animation:ragebaitSpin 3s linear infinite;
+  pointer-events:none;
+  z-index:5;
+  filter:drop-shadow(0 1px 3px rgba(0,0,0,0.4));
+}
+@keyframes ragebaitSpin{
+  from{transform:rotate(0deg)}
+  to{transform:rotate(360deg)}
+}
+
 .comment.reply{
   background:rgba(255,255,255,0.02);
   border-color:rgba(255,255,255,0.05);
@@ -423,6 +458,11 @@ nav{
   margin-top:0.7rem;
   margin-left:1.5rem;
   padding:0.8rem 1rem;
+}
+/* reply ragebait también crema */
+.comment.reply.ragebait{
+  background:#f5eedf !important;
+  border-color:rgba(180,140,60,0.35) !important;
 }
 .comment-header{display:flex;align-items:center;gap:0.6rem;margin-bottom:0.4rem;flex-wrap:wrap;}
 .comment-avatar{
@@ -765,7 +805,10 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:1.
 const WORKER = 'https://bold-glitter-3cd0.sillycro.workers.dev';
 const SITE   = window.location.origin + window.location.pathname;
 
+// ── REACTIONS: heart y fire primero, luego las demás ──
 const REACTIONS = [
+  { id:'heart', img:'https://raton.lol/img/heart.png', label:'❤️' },
+  { id:'fire',  img:'https://raton.lol/img/fire.png',  label:'🔥' },
   { id:'laugh', img:'https://raton.lol/img/laugh.png', label:'😂' },
   { id:'angry', img:'https://raton.lol/img/angry.png', label:'😡' },
   { id:'sad',   img:'https://raton.lol/img/sad.png',   label:'😢' },
@@ -1303,6 +1346,10 @@ function setupDeveloperRain() {
   });
 }
 
+// ── reactionsHTML: para comments y para replies ───────────────────────────────
+// En replies el orden en la UI es: reacciones | upvote | downvote
+// En comments el orden es: upvote | downvote | reacciones | reply
+// Esta función solo genera la barra de reacciones; el orden lo pone commentHTML/replyHTML
 function reactionsHTML(commentId, type, parentId, reactionsData) {
   const rd = reactionsData || {};
   const rKey = type === 'reply' ? `r:${commentId}` : `c:${commentId}`;
@@ -1523,6 +1570,7 @@ function commentHTML(c, postId, allComments, locked){
       ? `<img src="https://raton.lol/img/clown.png" alt="clown">`
       : `<span>${(c.name||'?')[0].toUpperCase()}</span>`;
 
+  // Orden en comments: upvote | downvote | reactions | reply
   return `<div class="comment ${isDeleted?'deleted':''} ${isRagebait?'ragebait':''}" id="comment-${c.id}">
     <div class="comment-header">
       <div class="comment-avatar">${avatarContent}</div>
@@ -1566,6 +1614,7 @@ function replyHTML(r, parentId, postId, locked){
       ? `<img src="https://raton.lol/img/clown.png" alt="clown">`
       : `<span>${(r.name||'?')[0].toUpperCase()}</span>`;
 
+  // Orden en replies: reactions | upvote | downvote  (reacciones van antes de los votos)
   return `<div class="comment reply ${isDeleted?'deleted':''} ${isRagebait?'ragebait':''}" id="reply-${r.id}">
     <div class="comment-header">
       <div class="comment-avatar" style="width:20px;height:20px;font-size:0.6rem">${avatarContent}</div>
