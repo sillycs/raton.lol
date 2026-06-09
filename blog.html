@@ -1083,6 +1083,34 @@ function drawCaptcha(canvas, chars) {
     ctx.fillStyle = 'rgba(0,0,0,0.08)';
     ctx.fillRect(0, y, W, 1);
   }
+
+  for (let i = 0; i < 2; i++) {
+  ctx.beginPath();
+  ctx.moveTo(Math.random() * W, Math.random() * H);
+
+  ctx.bezierCurveTo(
+    Math.random() * W, Math.random() * H,
+    Math.random() * W, Math.random() * H,
+    Math.random() * W, Math.random() * H
+  );
+
+  ctx.strokeStyle = `rgba(255,255,255,${Math.random() * 0.12 + 0.05})`;
+  ctx.lineWidth = Math.random() * 1.2 + 0.6;
+  ctx.stroke();
+}
+
+  for (let i = 0; i < 12; i++) {
+  ctx.beginPath();
+  ctx.arc(
+    Math.random() * W,
+    Math.random() * H,
+    Math.random() * 1.8 + 0.5,
+    0,
+    Math.PI * 2
+  );
+  ctx.fillStyle = `rgba(255,255,255,${Math.random() * 0.18 + 0.05})`;
+  ctx.fill();
+}
 }
 
 function rnd(a, b) { return Math.floor(Math.random() * (b - a + 1)) + a; }
@@ -1119,7 +1147,7 @@ function captchaHTML(formId) {
   const canvasId = `captchaCanvas-${formId}`;
   const inputId  = `captchaInput-${formId}`;
   return `<div class="captcha-wrap" id="captchaWrap-${formId}">
-    <div class="captcha-label">Human verification</div>
+    <div class="captcha-label">R U HUMAN?! v1</div>
     <div class="captcha-row">
       <div class="captcha-canvas-wrap">
         <canvas class="captcha-canvas" id="${canvasId}" width="180" height="52"></canvas>
@@ -1139,7 +1167,7 @@ function captchaHTML(formId) {
           oninput="captchaInputLive(this)"
           onkeydown="if(event.key==='Enter'){event.preventDefault()}"
         >
-        <span class="captcha-hint">Type the <b>${CAPTCHA_LEN} characters</b> you see · case-insensitive</span>
+        <span class="captcha-hint">u r not a robot? then type the <b>${CAPTCHA_LEN} characters</b> you see</span>
       </div>
     </div>
   </div>`;
