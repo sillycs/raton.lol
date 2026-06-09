@@ -615,7 +615,7 @@ nav{
 @keyframes spin{to{transform:rotate(360deg)}}
 #toastContainer{
   position:fixed;bottom:1.5rem;left:50%;
-  transform:translateX(-50%);
+  transform:translateX(-50%));
   display:flex;flex-direction:column;gap:8px;
   align-items:center;
   z-index:9999;pointer-events:none;
@@ -737,6 +737,131 @@ nav{
 }
 footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:1.5rem 3rem;text-align:center;}
 .footer-bottom{font-size:0.75rem;color:var(--text3)}
+
+/* ── CAPTCHA ─────────────────────────────────────────────────────────── */
+.captcha-wrap{
+  margin-top:0.7rem;
+  background:var(--surface2);
+  border:1px solid var(--border2);
+  border-radius:10px;
+  padding:0.75rem 0.9rem;
+  display:flex;
+  flex-direction:column;
+  gap:0.55rem;
+}
+.captcha-row{
+  display:flex;
+  align-items:center;
+  gap:0.7rem;
+  flex-wrap:wrap;
+}
+.captcha-label{
+  font-size:0.7rem;
+  color:var(--text3);
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  font-weight:600;
+  margin-bottom:2px;
+}
+.captcha-canvas-wrap{
+  position:relative;
+  flex-shrink:0;
+}
+.captcha-canvas{
+  display:block;
+  border-radius:7px;
+  border:1px solid var(--border2);
+  background:#0a0a0a;
+}
+.captcha-refresh{
+  position:absolute;
+  top:3px;right:3px;
+  background:rgba(0,0,0,0.55);
+  border:none;
+  border-radius:5px;
+  padding:3px 5px;
+  color:var(--text3);
+  font-size:0.65rem;
+  display:flex;align-items:center;
+  transition:.15s;
+  gap:3px;
+}
+.captcha-refresh:hover{color:var(--text);background:rgba(0,0,0,0.8);}
+.captcha-refresh svg{transition:transform .35s}
+.captcha-refresh:hover svg{transform:rotate(180deg)}
+.captcha-input-wrap{
+  flex:1;
+  min-width:100px;
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+.captcha-input{
+  width:100%;
+  background:var(--surface3);
+  border:1px solid var(--border2);
+  border-radius:7px;
+  padding:0.45rem 0.7rem;
+  color:var(--text);
+  font-family:monospace;
+  font-size:1rem;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  outline:none;
+  transition:.2s;
+}
+.captcha-input:focus{border-color:var(--purple);box-shadow:0 0 0 2px rgba(139,92,246,0.15)}
+.captcha-input.captcha-ok{border-color:var(--upvote);box-shadow:0 0 0 2px rgba(125,220,139,0.12)}
+.captcha-input.captcha-err{border-color:var(--downvote);box-shadow:0 0 0 2px rgba(255,138,138,0.12)}
+.captcha-hint{font-size:0.67rem;color:var(--text3)}
+.captcha-hint b{color:var(--purple2)}
+
+/* inline captcha modal for likes/reactions when suspicious */
+.captcha-modal-backdrop{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,0.7);
+  backdrop-filter:blur(8px);
+  z-index:8000;
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;
+  transition:opacity .25s;
+}
+.captcha-modal-backdrop.show{opacity:1;pointer-events:auto}
+.captcha-modal{
+  background:var(--surface);
+  border:1px solid var(--border2);
+  border-radius:16px;
+  padding:1.8rem 2rem;
+  max-width:380px;width:90%;
+  box-shadow:0 24px 64px rgba(0,0,0,0.6);
+  transform:scale(0.93) translateY(8px);
+  transition:transform .3s cubic-bezier(.22,1,.36,1);
+}
+.captcha-modal-backdrop.show .captcha-modal{transform:scale(1) translateY(0)}
+.captcha-modal-title{
+  font-family:var(--font-display);
+  font-size:1rem;font-weight:800;
+  color:var(--text);margin-bottom:0.3rem;letter-spacing:0.04em;
+}
+.captcha-modal-sub{font-size:0.78rem;color:var(--text2);margin-bottom:1.1rem}
+.captcha-modal-actions{
+  display:flex;gap:0.6rem;margin-top:1rem;justify-content:flex-end;
+}
+.captcha-modal-cancel{
+  background:none;border:1px solid var(--border2);
+  border-radius:8px;padding:0.4rem 0.9rem;
+  font-size:0.8rem;color:var(--text3);transition:.15s;
+}
+.captcha-modal-cancel:hover{color:var(--text);border-color:var(--border2)}
+.captcha-modal-confirm{
+  background:var(--purple);color:#fff;
+  border:none;border-radius:8px;
+  padding:0.4rem 1rem;font-size:0.8rem;font-weight:600;
+  transition:.15s;
+}
+.captcha-modal-confirm:hover{background:#7c3aed}
+.captcha-modal-confirm:disabled{opacity:.5;pointer-events:none}
+
 @media(max-width:768px){
   nav{padding:0 1.2rem}
   .nav-links{display:none}
@@ -753,6 +878,7 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:1.
   .form-row{flex-direction:column}
   .post-card-img{height:160px}
   .broadcast-banner{margin:0 1.2rem;margin-top:1rem}
+  .captcha-row{flex-direction:column;align-items:flex-start}
 }
 </style>
 </head>
@@ -780,6 +906,19 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:1.
 </nav>
 
 <div id="app"></div>
+
+<!-- captcha modal for suspicious likes/reactions -->
+<div class="captcha-modal-backdrop" id="captchaModalBackdrop">
+  <div class="captcha-modal">
+    <div class="captcha-modal-title">Human check</div>
+    <div class="captcha-modal-sub" id="captchaModalSub">Please solve the captcha to continue</div>
+    <div id="captchaModalBody"></div>
+    <div class="captcha-modal-actions">
+      <button class="captcha-modal-cancel" onclick="dismissCaptchaModal()">Cancel</button>
+      <button class="captcha-modal-confirm" id="captchaModalConfirm" onclick="confirmCaptchaModal()">Confirm</button>
+    </div>
+  </div>
+</div>
 
 <div class="live-warning-overlay" id="liveWarningOverlay">
   <div class="live-warning-backdrop" onclick="dismissLiveWarning()"></div>
@@ -829,6 +968,218 @@ const REACTIONS = [
   });
 })();
 
+/* ════════════════════════════════════════════════════════════════
+   CAPTCHA ENGINE
+   Generates a distorted SVG challenge in-browser
+   The answer is sent to the backend as { token, answer }
+   where token = HMAC(secret, challenge+ts) stored in backend
+   session so we never expose the answer client-side
+                       made by silly!
+════════════════════════════════════════════════════════════════ */
+
+const CAPTCHA_CHARS = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+const CAPTCHA_LEN   = 5;
+
+let _captchaInstances = {};
+
+async function newCaptcha(canvasId, inputId, formId) {
+  const canvas  = document.getElementById(canvasId);
+  const input   = document.getElementById(inputId);
+  if (!canvas || !input) return null;
+
+  let tokenData = null;
+  try {
+    const res = await fetch(WORKER + '/captcha/new', {
+      headers: { 'X-Client-FP': CLIENT_FP }
+    });
+    tokenData = await res.json();
+  } catch(_) {
+    return null;
+  }
+  if (!tokenData || !tokenData.ok) return null;
+
+  const { token, chars } = tokenData;
+  _captchaInstances[formId] = { token, chars };
+
+  drawCaptcha(canvas, chars);
+
+  input.value = '';
+  input.classList.remove('captcha-ok', 'captcha-err');
+
+  return token;
+}
+
+function drawCaptcha(canvas, chars) {
+  const W = canvas.width  = 180;
+  const H = canvas.height = 52;
+  const ctx = canvas.getContext('2d');
+
+  const bg = ctx.createLinearGradient(0, 0, W, H);
+  bg.addColorStop(0, '#0f0f18');
+  bg.addColorStop(1, '#12101f');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+
+  for (let i = 0; i < 320; i++) {
+    const nx = Math.random() * W;
+    const ny = Math.random() * H;
+    const nr = Math.random() * 1.1;
+    const na = Math.random() * 0.35 + 0.05;
+    ctx.beginPath();
+    ctx.arc(nx, ny, nr, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(${rnd(120,220)},${rnd(80,160)},${rnd(200,255)},${na.toFixed(2)})`;
+    ctx.fill();
+  }
+
+  for (let i = 0; i < 5; i++) {
+    ctx.beginPath();
+    ctx.moveTo(Math.random() * W, Math.random() * H);
+    let x = Math.random() * W;
+    let y = Math.random() * H;
+    ctx.quadraticCurveTo(
+      Math.random() * W, Math.random() * H,
+      x, y
+    );
+    ctx.strokeStyle = `rgba(${rnd(100,200)},${rnd(60,140)},${rnd(180,255)},${(Math.random()*0.25+0.08).toFixed(2)})`;
+    ctx.lineWidth = Math.random() * 1.2 + 0.4;
+    ctx.stroke();
+  }
+
+  const charW = W / (CAPTCHA_LEN + 0.8);
+  for (let i = 0; i < chars.length; i++) {
+    const ch = chars[i];
+    const cx = charW * (i + 0.7);
+    const cy = H / 2 + rnd(-3, 3);
+
+    ctx.save();
+    ctx.translate(cx, cy);
+
+    const rot = (Math.random() * 36 - 18) * Math.PI / 180;
+    ctx.rotate(rot);
+
+    const scale = 0.82 + Math.random() * 0.28;
+    ctx.scale(scale, scale + (Math.random() - 0.5) * 0.18);
+
+    const fontSize = rnd(20, 27);
+    ctx.font = `bold ${fontSize}px 'Courier New', monospace`;
+    ctx.textBaseline = 'middle';
+    ctx.textAlign    = 'center';
+
+    const hue = rnd(240, 310);
+    const sat = rnd(60, 90);
+    const lig = rnd(68, 85);
+    ctx.fillStyle = `hsl(${hue},${sat}%,${lig}%)`;
+
+    ctx.shadowColor  = `hsla(${hue},${sat}%,30%,0.7)`;
+    ctx.shadowBlur   = 3;
+    ctx.shadowOffsetX = 1;
+    ctx.shadowOffsetY = 1;
+
+    ctx.fillText(ch, 0, 0);
+    ctx.restore();
+  }
+
+  for (let y = 0; y < H; y += 3) {
+    ctx.fillStyle = 'rgba(0,0,0,0.08)';
+    ctx.fillRect(0, y, W, 1);
+  }
+}
+
+function rnd(a, b) { return Math.floor(Math.random() * (b - a + 1)) + a; }
+
+function captchaInputLive(input) {
+  input.classList.remove('captcha-ok', 'captcha-err');
+}
+
+function getCaptchaPayload(formId) {
+  const inst = _captchaInstances[formId];
+  if (!inst) return null;
+  const inputId = `captchaInput-${formId}`;
+  const input = document.getElementById(inputId);
+  if (!input) return null;
+  const answer = input.value.trim().toUpperCase();
+  if (answer.length < CAPTCHA_LEN) return null;
+  return { captchaToken: inst.token, captchaAnswer: answer };
+}
+
+function markCaptchaError(formId) {
+  const inputId = `captchaInput-${formId}`;
+  const input = document.getElementById(inputId);
+  if (input) { input.classList.add('captcha-err'); input.classList.remove('captcha-ok'); }
+  setTimeout(() => newCaptcha(`captchaCanvas-${formId}`, inputId, formId), 600);
+}
+
+function markCaptchaOk(formId) {
+  const inputId = `captchaInput-${formId}`;
+  const input = document.getElementById(inputId);
+  if (input) { input.classList.add('captcha-ok'); input.classList.remove('captcha-err'); }
+}
+
+function captchaHTML(formId) {
+  const canvasId = `captchaCanvas-${formId}`;
+  const inputId  = `captchaInput-${formId}`;
+  return `<div class="captcha-wrap" id="captchaWrap-${formId}">
+    <div class="captcha-label">Human verification</div>
+    <div class="captcha-row">
+      <div class="captcha-canvas-wrap">
+        <canvas class="captcha-canvas" id="${canvasId}" width="180" height="52"></canvas>
+        <button class="captcha-refresh" type="button" onclick="newCaptcha('${canvasId}','${inputId}','${formId}')" title="New captcha">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+          New
+        </button>
+      </div>
+      <div class="captcha-input-wrap">
+        <input
+          class="captcha-input form-input"
+          id="${inputId}"
+          maxlength="${CAPTCHA_LEN}"
+          autocomplete="off"
+          spellcheck="false"
+          placeholder="Type the code"
+          oninput="captchaInputLive(this)"
+          onkeydown="if(event.key==='Enter'){event.preventDefault()}"
+        >
+        <span class="captcha-hint">Type the <b>${CAPTCHA_LEN} characters</b> you see · case-insensitive</span>
+      </div>
+    </div>
+  </div>`;
+}
+
+/* ── captcha modal (for suspicious likes/reactions) ── */
+let _modalPendingAction = null;
+
+function showCaptchaModal(sub, onConfirm) {
+  const body = document.getElementById('captchaModalBody');
+  const sub_ = document.getElementById('captchaModalSub');
+  if (sub_) sub_.textContent = sub || 'Please solve the captcha to continue.';
+  if (body) body.innerHTML = captchaHTML('modal');
+  // Load captcha async
+  setTimeout(() => newCaptcha('captchaCanvas-modal', 'captchaInput-modal', 'modal'), 80);
+  document.getElementById('captchaModalBackdrop').classList.add('show');
+  _modalPendingAction = onConfirm;
+}
+
+function dismissCaptchaModal() {
+  document.getElementById('captchaModalBackdrop').classList.remove('show');
+  _modalPendingAction = null;
+}
+
+async function confirmCaptchaModal() {
+  const btn = document.getElementById('captchaModalConfirm');
+  const payload = getCaptchaPayload('modal');
+  if (!payload) { showToast('Please type the captcha code', true); return; }
+  if (btn) btn.disabled = true;
+  if (_modalPendingAction) {
+    await _modalPendingAction(payload);
+  }
+  if (btn) btn.disabled = false;
+  dismissCaptchaModal();
+}
+
+/* ════════════════════════════════════════════════════════════════
+   IDENTITY / SESSION
+════════════════════════════════════════════════════════════════ */
+
 function getFingerprint() {
   const stored = sessionStorage.getItem('_rfp') || localStorage.getItem('_rfp');
   if (stored) return stored;
@@ -867,7 +1218,7 @@ function getCookie(name) {
   }, null);
 }
 
-const CLIENT_FP = getFingerprint();
+const CLIENT_FP  = getFingerprint();
 const SESSION_ID = getSessionId();
 
 let loadingTimer = null;
@@ -1157,11 +1508,25 @@ function renderPagination(total, page, limit){
 
 function goPage(p){ currentPage=p; setUrl({page:p}); applySearchAndRender(); scrollTo({top:0,behavior:'smooth'}); }
 
+/* ── like with suspicious-check ── */
 async function likePost(e, id){
   e.preventDefault(); e.stopPropagation();
+  await doLikePost(id, null);
+}
+
+async function doLikePost(id, captchaPayload) {
   showLoading('Sending like...');
-  const data = await api('/like',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({postId:id,type:'post'})});
+  const body = { postId: id, type: 'post', ...(captchaPayload||{}) };
+  const data = await api('/like',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
   hideLoading();
+
+  if (data.needsCaptcha) {
+    showCaptchaModal('Too many likes too fast — prove you\'re human 🐭', async (cp) => {
+      await doLikePost(id, cp);
+    });
+    return;
+  }
+  if (data.captchaFailed) { markCaptchaError('modal'); showToast('Wrong captcha, try again', true); return; }
   if(!data.ok){ showToast(data.error, true); return; }
   likedPosts[id]=data.liked; saveLikedPosts();
   const btn = document.getElementById(`like-${id}`);
@@ -1242,6 +1607,8 @@ async function renderPost(id){
   </div>`;
   setupDeveloperRain();
   setupMentionAutocomplete();
+  // Load captcha for main comment form
+  setTimeout(() => newCaptcha('captchaCanvas-main', 'captchaInput-main', 'main'), 100);
 }
 
 function collectCommenters(comments) {
@@ -1304,6 +1671,7 @@ function renderCommentsHTML(comments, postId, locked){
       <textarea class="form-input form-textarea" id="cBody" placeholder="Write a comment... Use @name to mention someone" maxlength="1000" oninput="handleMentionInput(this,'cBody-autocomplete')" onkeydown="handleMentionKeydown(event,this,'cBody-autocomplete')"></textarea>
       <div class="mention-autocomplete" id="cBody-autocomplete"></div>
     </div>
+    ${captchaHTML('main')}
     <div class="form-row-submit">
       <button class="submit-btn" id="submitCommentBtn" onclick="submitComment(null,'${postId}')">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
@@ -1406,8 +1774,11 @@ document.addEventListener('click', () => {
 async function toggleReaction(e, postId, commentId, replyId, reactionId, type) {
   e.stopPropagation();
   document.querySelectorAll('.reaction-picker-menu.open').forEach(m => m.classList.remove('open'));
+  await doToggleReaction(postId, commentId, replyId, reactionId, type, null);
+}
 
-  const payload = { postId, commentId, type, reactionId };
+async function doToggleReaction(postId, commentId, replyId, reactionId, type, captchaPayload) {
+  const payload = { postId, commentId, type, reactionId, ...(captchaPayload||{}) };
   if (replyId) payload.replyId = replyId;
 
   showLoading('Reacting...');
@@ -1417,6 +1788,14 @@ async function toggleReaction(e, postId, commentId, replyId, reactionId, type) {
     body: JSON.stringify(payload)
   });
   hideLoading();
+
+  if (data.needsCaptcha) {
+    showCaptchaModal('Whoa, slow down! Prove you\'re not a bot 🤖', async (cp) => {
+      await doToggleReaction(postId, commentId, replyId, reactionId, type, cp);
+    });
+    return;
+  }
+  if (data.captchaFailed) { markCaptchaError('modal'); showToast('Wrong captcha, try again', true); return; }
   if (!data.ok) { showToast(data.error, true); return; }
 
   const rKey = type==='reply' ? `r:${replyId||commentId}` : `c:${commentId}`;
@@ -1652,6 +2031,7 @@ function clearName(e){
       document.getElementById('commentsSection').innerHTML = renderCommentsHTML(cData.comments||[], postId, isLocked);
       setupDeveloperRain();
       setupMentionAutocomplete();
+      setTimeout(() => newCaptcha('captchaCanvas-main', 'captchaInput-main', 'main'), 100);
     });
   }
 }
@@ -1663,6 +2043,7 @@ function toggleReplyForm(commentId, postId){
   const nameIsLocked = !!identityBoundName;
   const taId = `rBody-${commentId}`;
   const acId = `${taId}-autocomplete`;
+  const replyFormId = `reply-${commentId}`;
   el.innerHTML=`<div class="reply-form">
     <div class="form-row">
       <input class="form-input" id="rName-${commentId}" placeholder="Your name" maxlength="32"
@@ -1675,6 +2056,7 @@ function toggleReplyForm(commentId, postId){
       <textarea class="form-input form-textarea" id="${taId}" placeholder="Write a reply... Use @name to mention someone" style="min-height:60px" maxlength="500" oninput="handleMentionInput(this,'${acId}')" onkeydown="handleMentionKeydown(event,this,'${acId}')"></textarea>
       <div class="mention-autocomplete" id="${acId}"></div>
     </div>
+    ${captchaHTML(replyFormId)}
     <div class="form-row-submit">
       <button class="submit-btn" id="replyBtn-${commentId}" onclick="submitComment('${commentId}','${postId}')">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 17 4 12 9 7"/><path d="M20 18v-2a4 4 0 0 0-4-4H4"/></svg>
@@ -1682,16 +2064,29 @@ function toggleReplyForm(commentId, postId){
       </button>
     </div>
   </div>`;
+  // Load captcha for this reply form
+  setTimeout(() => newCaptcha(`captchaCanvas-${replyFormId}`, `captchaInput-${replyFormId}`, replyFormId), 80);
 }
 
 async function submitComment(parentId, postId){
   const nameEl = document.getElementById(parentId?`rName-${parentId}`:'cName');
   const bodyEl = document.getElementById(parentId?`rBody-${parentId}`:'cBody');
   const btnEl  = document.getElementById(parentId?`replyBtn-${parentId}`:'submitCommentBtn');
+
+  const formId = parentId ? `reply-${parentId}` : 'main';
+
   const name   = (identityBoundName || nameEl?.value || '').trim();
   const body   = bodyEl?.value.trim();
   if(!name||name.length<2){ showToast('Name must be at least 2 characters', true); return; }
   if(!body||body.length<2){ showToast('Comment must be at least 2 characters', true); return; }
+
+  // Validate captcha client-side first
+  const captchaPayload = getCaptchaPayload(formId);
+  if (!captchaPayload) {
+    showToast('Please complete the captcha', true);
+    document.getElementById(`captchaInput-${formId}`)?.focus();
+    return;
+  }
 
   if(btnEl){ btnEl.disabled=true; btnEl.textContent='Checking...'; }
   showLoading('Checking name availability...');
@@ -1707,11 +2102,18 @@ async function submitComment(parentId, postId){
   if(btnEl){ btnEl.textContent='Posting...'; }
   showLoading('Posting comment...');
 
-  const data = await api('/comment',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({postId,name,body,parentId})});
+  const data = await api('/comment',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({postId,name,body,parentId,...captchaPayload})});
   hideLoading();
   if(btnEl){ btnEl.disabled=false; btnEl.innerHTML=parentId?'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 17 4 12 9 7"/><path d="M20 18v-2a4 4 0 0 0-4-4H4"/></svg> Reply':'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Post Comment'; }
 
+  if (data.captchaFailed) {
+    markCaptchaError(formId);
+    showToast('Wrong captcha — try again', true);
+    return;
+  }
   if(!data.ok){ showToast(data.error, true); return; }
+
+  markCaptchaOk(formId);
   identityBoundName = name; saveAuthorName(name);
   showToast('Comment posted!');
 
@@ -1723,6 +2125,7 @@ async function submitComment(parentId, postId){
   document.getElementById('commentsSection').innerHTML = renderCommentsHTML(cData.comments||[], postId, isLocked);
   setupDeveloperRain();
   setupMentionAutocomplete();
+  setTimeout(() => newCaptcha('captchaCanvas-main', 'captchaInput-main', 'main'), 100);
 }
 
 async function likeComment(e, postId, type, commentId, replyId){
@@ -1745,13 +2148,27 @@ async function likeComment(e, postId, type, commentId, replyId){
 async function likePostSingle(id){
   const btn = document.getElementById('post-like-btn');
   if(btn) btn.disabled=true;
-  showLoading('Sending like...');
-  const data = await api('/like',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({postId:id,type:'post'})});
-  hideLoading();
+  await doLikePostSingle(id, null);
   if(btn) btn.disabled=false;
+}
+
+async function doLikePostSingle(id, captchaPayload) {
+  showLoading('Sending like...');
+  const body = { postId: id, type: 'post', ...(captchaPayload||{}) };
+  const data = await api('/like',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  hideLoading();
+
+  if (data.needsCaptcha) {
+    showCaptchaModal('Too many likes too fast — prove you\'re human 🐭', async (cp) => {
+      await doLikePostSingle(id, cp);
+    });
+    return;
+  }
+  if (data.captchaFailed) { markCaptchaError('modal'); showToast('Wrong captcha, try again', true); return; }
   if(!data.ok){ showToast(data.error, true); return; }
   likedPosts[id]=data.liked; saveLikedPosts();
   const cnt = document.getElementById('single-lc');
+  const btn = document.getElementById('post-like-btn');
   if(btn){ btn.classList.toggle('liked', data.liked); const svg=btn.querySelector('svg'); if(svg) svg.setAttribute('fill', data.liked?'currentColor':'none'); }
   if(cnt) cnt.textContent=data.count;
   showToast(data.liked?' Liked':'Unliked');
