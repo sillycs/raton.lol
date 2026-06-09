@@ -4,17 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Blog</title>
-  <meta name="description" content="The latest from Raton: updates, guides, and community posts">
-<meta property="og:type"        content="website">
-<meta property="og:site_name"   content="Raton">
-<meta property="og:title"       content="The Raton Forum">
+<meta name="description" content="The latest from Raton: updates, guides, and community posts">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Raton">
+<meta property="og:title" content="The Raton Forum">
 <meta property="og:description" content="The latest from Raton: updates, guides, and community posts">
-<meta property="og:image"       content="https://raton.lol/img/RATA.png">
-<meta property="og:url"         content="https://raton.lol/blog">
-<meta name="twitter:card"        content="summary">
-<meta name="twitter:title"       content="The Raton Forum">
+<meta property="og:image" content="https://raton.lol/img/RATA.png">
+<meta property="og:url" content="https://raton.lol/blog">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="The Raton Forum">
 <meta name="twitter:description" content="The latest from Raton: updates, guides, and community posts">
-<meta name="twitter:image"       content="https://raton.lol/img/RATA.png">
+<meta name="twitter:image" content="https://raton.lol/img/RATA.png">
 <link rel="icon" type="image/png" href="https://raton.lol/img/RATA.png">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <link href="https://fonts.cdnfonts.com/css/kunal" rel="stylesheet">
@@ -414,8 +414,6 @@ nav{
   overflow:visible;
 }
 .comment.deleted{opacity:.55}
-
-/* ── RAGEBAIT: crema oscuro + clown girando en esquina ── */
 .comment.ragebait{
   background:#f5eedf !important;
   border-color:rgba(180,140,60,0.35) !important;
@@ -432,7 +430,6 @@ nav{
   background:none !important;
   border:none !important;
 }
-/* clown en la esquina del borde */
 .comment.ragebait::after{
   content:'';
   position:absolute;
@@ -450,7 +447,6 @@ nav{
   from{transform:rotate(0deg)}
   to{transform:rotate(360deg)}
 }
-
 .comment.reply{
   background:rgba(255,255,255,0.02);
   border-color:rgba(255,255,255,0.05);
@@ -459,7 +455,6 @@ nav{
   margin-left:1.5rem;
   padding:0.8rem 1rem;
 }
-/* reply ragebait también crema */
 .comment.reply.ragebait{
   background:#f5eedf !important;
   border-color:rgba(180,140,60,0.35) !important;
@@ -618,17 +613,24 @@ nav{
   margin:2rem auto;
 }
 @keyframes spin{to{transform:rotate(360deg)}}
-.toast{
+#toastContainer{
   position:fixed;bottom:1.5rem;left:50%;
-  transform:translateX(-50%) translateY(12px);
+  transform:translateX(-50%);
+  display:flex;flex-direction:column;gap:8px;
+  align-items:center;
+  z-index:9999;pointer-events:none;
+}
+.toast{
   background:var(--surface);border:1px solid var(--border2);
   border-radius:10px;padding:0.7rem 1.1rem;
   font-size:0.82rem;color:var(--text);
   box-shadow:0 8px 24px rgba(0,0,0,0.4);
-  z-index:9999;opacity:0;
+  opacity:0;
+  transform:translateY(12px);
   transition:.3s cubic-bezier(.22,1,.36,1);pointer-events:none;
+  white-space:nowrap;
 }
-.toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
+.toast.show{transform:translateY(0);opacity:1;}
 .toast.error{border-color:rgba(239,68,68,0.4);color:#fca5a5}
 .action-loading{
   position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(12px);
@@ -799,13 +801,12 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:1.
   <span id="actionLoadingMsg">Loading...</span>
 </div>
 
-<div class="toast" id="toast"></div>
+<div id="toastContainer"></div>
 
 <script>
 const WORKER = 'https://bold-glitter-3cd0.sillycro.workers.dev';
 const SITE   = window.location.origin + window.location.pathname;
 
-// ── REACTIONS: heart y fire primero, luego las demás ──
 const REACTIONS = [
   { id:'heart', img:'https://raton.lol/img/heart.png', label:'❤️' },
   { id:'fire',  img:'https://raton.lol/img/fire.png',  label:'🔥' },
@@ -883,11 +884,16 @@ function hideLoading() {
 }
 
 function showToast(msg, isError = false, dur = 2800) {
-  const t = document.getElementById('toast');
+  const container = document.getElementById('toastContainer');
+  const t = document.createElement('div');
+  t.className = 'toast' + (isError ? ' error' : '');
   t.textContent = msg;
-  t.classList.toggle('error', isError);
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), dur);
+  container.appendChild(t);
+  requestAnimationFrame(() => { requestAnimationFrame(() => { t.classList.add('show'); }); });
+  setTimeout(() => {
+    t.classList.remove('show');
+    setTimeout(() => t.remove(), 350);
+  }, dur);
 }
 
 function fmtDate(ts){ return new Date(ts).toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'}); }
@@ -1346,10 +1352,6 @@ function setupDeveloperRain() {
   });
 }
 
-// ── reactionsHTML: para comments y para replies ───────────────────────────────
-// En replies el orden en la UI es: reacciones | upvote | downvote
-// En comments el orden es: upvote | downvote | reacciones | reply
-// Esta función solo genera la barra de reacciones; el orden lo pone commentHTML/replyHTML
 function reactionsHTML(commentId, type, parentId, reactionsData) {
   const rd = reactionsData || {};
   const rKey = type === 'reply' ? `r:${commentId}` : `c:${commentId}`;
@@ -1570,7 +1572,6 @@ function commentHTML(c, postId, allComments, locked){
       ? `<img src="https://raton.lol/img/clown.png" alt="clown">`
       : `<span>${(c.name||'?')[0].toUpperCase()}</span>`;
 
-  // Orden en comments: upvote | downvote | reactions | reply
   return `<div class="comment ${isDeleted?'deleted':''} ${isRagebait?'ragebait':''}" id="comment-${c.id}">
     <div class="comment-header">
       <div class="comment-avatar">${avatarContent}</div>
@@ -1614,7 +1615,6 @@ function replyHTML(r, parentId, postId, locked){
       ? `<img src="https://raton.lol/img/clown.png" alt="clown">`
       : `<span>${(r.name||'?')[0].toUpperCase()}</span>`;
 
-  // Orden en replies: reactions | upvote | downvote  (reacciones van antes de los votos)
   return `<div class="comment reply ${isDeleted?'deleted':''} ${isRagebait?'ragebait':''}" id="reply-${r.id}">
     <div class="comment-header">
       <div class="comment-avatar" style="width:20px;height:20px;font-size:0.6rem">${avatarContent}</div>
@@ -1738,7 +1738,6 @@ async function likeComment(e, postId, type, commentId, replyId){
   const btnId   = type==='reply' ? `rlbtn-${replyId}` : `clbtn-${commentId}`;
   const countId = type==='reply' ? `rl-${replyId}`    : `cl-${commentId}`;
   const btn = document.getElementById(btnId);
-  const countEl = document.getElementById(countId);
   if(btn){ btn.classList.toggle('upvoted', data.liked); btn.innerHTML = (data.liked ? UPVOTE_SVG_ON : UPVOTE_SVG_OFF) + `<span id="${countId}">${data.count}</span>`; }
   showToast(data.liked?' Upvoted':'Removed upvote');
 }
