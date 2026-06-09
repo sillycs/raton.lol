@@ -38,6 +38,10 @@
   --font-logo:'kunal',sans-serif;
   --font-body:'DM Sans',sans-serif;
   --radius:14px;
+  --upvote:#7ddc8b;
+  --upvote-dim:rgba(125,220,139,0.15);
+  --downvote:#7193ff;
+  --downvote-dim:rgba(113,147,255,0.15);
 }
 ::-webkit-scrollbar{width:6px}
 ::-webkit-scrollbar-track{background:#0d0d0d}
@@ -442,25 +446,24 @@ nav{
 }
 .comment-edited{font-size:0.67rem;color:var(--text3);font-style:italic;margin-left:4px}
 .comment-actions{display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;}
-.comment-like,.comment-dislike{
+.comment-upvote,.comment-downvote{
   display:inline-flex;align-items:center;gap:4px;
   background:none;border:none;
   font-size:0.73rem;color:var(--text3);
   padding:3px 7px;border-radius:6px;transition:.2s;
 }
-.comment-like:hover{background:var(--purple-dim);color:var(--purple2)}
-.comment-like.liked{color:var(--purple2)}
-.comment-like.liked svg{fill:var(--purple2)}
-.comment-dislike:hover{background:rgba(239,68,68,0.1);color:#f87171}
-.comment-dislike.disliked{color:#f87171}
-.comment-dislike.disliked svg{fill:#f87171}
+.comment-upvote:hover{background:var(--upvote-dim);color:var(--upvote)}
+.comment-upvote.upvoted{color:var(--upvote)}
+.comment-upvote.upvoted svg{fill:var(--upvote);stroke:var(--upvote)}
+.comment-downvote:hover{background:var(--downvote-dim);color:var(--downvote)}
+.comment-downvote.downvoted{color:var(--downvote)}
+.comment-downvote.downvoted svg{fill:var(--downvote);stroke:var(--downvote)}
 .reply-toggle{
   background:none;border:none;
   font-size:0.73rem;color:var(--text3);
   padding:3px 7px;border-radius:6px;transition:.2s;
 }
 .reply-toggle:hover{background:rgba(255,255,255,0.06);color:var(--text)}
-
 .reactions-bar{
   display:inline-flex;
   align-items:center;
@@ -522,8 +525,6 @@ nav{
 }
 .reaction-picker-menu button:hover{background:rgba(255,255,255,0.08);transform:scale(1.15);}
 .reaction-picker-menu img{width:22px;height:22px;object-fit:contain;}
-
-/* Mention autocomplete */
 .mention-autocomplete{
   position:absolute;
   background:var(--surface2);
@@ -552,10 +553,7 @@ nav{
   flex-shrink:0;overflow:hidden;
 }
 .mention-item-avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
-
-/* Textarea wrapper for autocomplete positioning */
 .textarea-wrap{position:relative;}
-
 .reply-form{
   margin-top:0.8rem;margin-left:1.5rem;
   background:var(--surface2);
@@ -608,7 +606,6 @@ nav{
   border-top-color:var(--purple2);border-radius:50%;
   animation:spin .6s linear infinite;flex-shrink:0;
 }
-
 .user-tag{
   display:inline-flex;align-items:center;gap:4px;
   padding:2px 8px;
@@ -621,14 +618,12 @@ nav{
   letter-spacing:.06em;text-transform:uppercase;
   transition:.2s ease;color:#fff;
 }
-
 .user-tag.op{
   background:var(--purple);
   border:1px solid rgba(139,92,246,0.5);
   color:#fff;
   overflow:hidden;
 }
-
 .user-tag.deluxe{
   background:linear-gradient(90deg,#7a0050,#945800,#00685b,#003f8f,#5425a8,#7a0050);
   background-size:400% 100%;
@@ -641,7 +636,6 @@ nav{
   box-shadow:0 0 12px rgba(255,255,255,.12),0 0 24px rgba(255,255,255,.08);
 }
 @keyframes rainbowMove{from{background-position:0% 50%}to{background-position:400% 50%}}
-
 .user-tag.gold{
   overflow:visible;
   background:linear-gradient(180deg,#9c7000,#c89600,#a87900);
@@ -675,7 +669,6 @@ nav{
   35%{opacity:1;transform:scale(1.6) rotate(90deg)}
   100%{opacity:0;transform:scale(2.5) rotate(180deg)}
 }
-
 .user-tag.developer{
   position:relative;overflow:visible;color:#f5f3ff;
   background:linear-gradient(180deg,#6d47c7,#4c2f99,#2e1b5f);
@@ -685,7 +678,6 @@ nav{
   transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease;
 }
 .user-tag.developer:hover{transform:translateY(-2px) scale(1.04);border-color:rgba(139,92,246,.65);}
-
 .rata-bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
 .rata-sprite{
   position:absolute;opacity:0;
@@ -874,7 +866,6 @@ let commentAuthorName  = localStorage.getItem('comment_author_name') || '';
 let identityBoundName  = null;
 let currentPostAuthor  = null;
 
-// All known names from comments (for mention autocomplete)
 let knownCommenters = [];
 
 function saveLikedPosts(){ localStorage.setItem('liked_posts',JSON.stringify(likedPosts)); }
@@ -1157,7 +1148,6 @@ async function renderPost(id){
 
   const comments = cData.comments||[];
 
-  // Collect all unique commenter names for mention autocomplete
   knownCommenters = collectCommenters(comments);
 
   const liked = likedPosts[p.id];
@@ -1313,10 +1303,7 @@ function setupDeveloperRain() {
   });
 }
 
-// ─── REACTIONS ────────────────────────────────────────────────────────────────
-
 function reactionsHTML(commentId, type, parentId, reactionsData) {
-  // reactionsData: { laugh: N, angry: N, sad: N, clown: N }
   const rd = reactionsData || {};
   const rKey = type === 'reply' ? `r:${commentId}` : `c:${commentId}`;
   const myR = myReactions[rKey] || {};
@@ -1359,19 +1346,16 @@ function toggleReactionPicker(pickerId, e) {
   const menu = document.getElementById(pickerId + '-menu');
   if (!menu) return;
   const isOpen = menu.classList.contains('open');
-  // Close all open pickers
   document.querySelectorAll('.reaction-picker-menu.open').forEach(m => m.classList.remove('open'));
   if (!isOpen) menu.classList.add('open');
 }
 
-// Close pickers on outside click
 document.addEventListener('click', () => {
   document.querySelectorAll('.reaction-picker-menu.open').forEach(m => m.classList.remove('open'));
 });
 
 async function toggleReaction(e, postId, commentId, replyId, reactionId, type) {
   e.stopPropagation();
-  // Close picker
   document.querySelectorAll('.reaction-picker-menu.open').forEach(m => m.classList.remove('open'));
 
   const payload = { postId, commentId, type, reactionId };
@@ -1392,7 +1376,6 @@ async function toggleReaction(e, postId, commentId, replyId, reactionId, type) {
   else delete myReactions[rKey][reactionId];
   saveMyReactions();
 
-  // Refresh just the reactions bar
   const bar = document.getElementById(`rxbar-${rKey}`);
   if (bar) {
     const cid = type==='reply' ? (replyId||commentId) : commentId;
@@ -1400,8 +1383,6 @@ async function toggleReaction(e, postId, commentId, replyId, reactionId, type) {
     bar.outerHTML = reactionsHTML(cid, type, pid, data.reactions);
   }
 }
-
-// ─── DISLIKE ──────────────────────────────────────────────────────────────────
 
 async function dislikeComment(e, postId, type, commentId, replyId){
   e.stopPropagation();
@@ -1417,14 +1398,12 @@ async function dislikeComment(e, postId, type, commentId, replyId){
   const countId = type==='reply' ? `dl-${replyId}`    : `dl-${commentId}`;
   const btn = document.getElementById(btnId);
   const countEl = document.getElementById(countId);
-  if(btn){ btn.classList.toggle('disliked', data.disliked); const svg=btn.querySelector('svg'); if(svg) svg.setAttribute('fill', data.disliked?'currentColor':'none'); }
+  if(btn){ btn.classList.toggle('downvoted', data.disliked); const svg=btn.querySelector('svg'); if(svg) svg.setAttribute('fill', data.disliked?'currentColor':'none'); }
   if(countEl) countEl.textContent = data.count;
-  showToast(data.disliked?' Disliked':'Removed dislike');
+  showToast(data.disliked?' Downvoted':'Removed downvote');
 }
 
-// ─── MENTION AUTOCOMPLETE ────────────────────────────────────────────────────
-
-let _mentionState = {}; // per-textarea state
+let _mentionState = {};
 
 function handleMentionInput(textarea, dropdownId) {
   const val = textarea.value;
@@ -1488,7 +1467,6 @@ function insertMention(e, dropdownId) {
   const idx = parseInt(e.currentTarget.dataset.idx);
   const state = _mentionState[dropdownId];
   if (!state) return;
-  // find the textarea — dropdownId is "cBody-autocomplete" or "rBody-X-autocomplete"
   const textareaId = dropdownId.replace('-autocomplete','');
   const textarea = document.getElementById(textareaId);
   if (!textarea) return;
@@ -1511,7 +1489,6 @@ function commitMention(textarea, dropdownId, name) {
 }
 
 function setupMentionAutocomplete() {
-  // Close dropdowns on outside click
   document.addEventListener('click', e => {
     if (!e.target.closest('.textarea-wrap')) {
       document.querySelectorAll('.mention-autocomplete.open').forEach(d => d.classList.remove('open'));
@@ -1519,7 +1496,6 @@ function setupMentionAutocomplete() {
   }, { capture: true });
 }
 
-// Render comment body with mentions highlighted
 function renderCommentBody(body) {
   if (!body) return '';
   const escaped = escHtml(body);
@@ -1528,6 +1504,10 @@ function renderCommentBody(body) {
   });
 }
 
+const UPVOTE_SVG_ON  = `<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>`;
+const UPVOTE_SVG_OFF = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>`;
+const DOWNVOTE_SVG_ON  = `<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>`;
+const DOWNVOTE_SVG_OFF = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>`;
 
 function commentHTML(c, postId, allComments, locked){
   const isDeleted  = c.deleted;
@@ -1551,27 +1531,23 @@ function commentHTML(c, postId, allComments, locked){
       <span class="comment-ts">${timeAgo(c.ts)}</span>
     </div>
     <div class="comment-body ${isDeleted?'deleted-msg':''}">${isDeleted?escHtml(c.body):renderCommentBody(c.body)}</div>
-
     <div class="comment-actions">
-      ${canInteract ? `<button class="comment-like ${cLiked?'liked':''}" id="clbtn-${c.id}" onclick="likeComment(event,'${postId}','comment','${c.id}')">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="${cLiked?'currentColor':'none'}" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      ${canInteract ? `
+      <button class="comment-upvote ${cLiked?'upvoted':''}" id="clbtn-${c.id}" onclick="likeComment(event,'${postId}','comment','${c.id}')">
+        ${cLiked ? UPVOTE_SVG_ON : UPVOTE_SVG_OFF}
         <span id="cl-${c.id}">${c.likes||0}</span>
       </button>
-      <button class="comment-dislike ${cDisliked?'disliked':''}" id="dlbtn-${c.id}" onclick="dislikeComment(event,'${postId}','comment','${c.id}')">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="${cDisliked?'currentColor':'none'}" stroke="currentColor" stroke-width="2"><path d="M3.15 19.39a5.5 5.5 0 0 0 7.78 0L12 18.33l1.06 1.06a5.5 5.5 0 0 0 7.78-7.78l-1.06-1.06L12 2.77 4.22 10.55 3.15 11.61a5.5 5.5 0 0 0 0 7.78z"/></svg>
+      <button class="comment-downvote ${cDisliked?'downvoted':''}" id="dlbtn-${c.id}" onclick="dislikeComment(event,'${postId}','comment','${c.id}')">
+        ${cDisliked ? DOWNVOTE_SVG_ON : DOWNVOTE_SVG_OFF}
         <span id="dl-${c.id}">${c.dislikes||0}</span>
       </button>
-
-      ${canInteract ? reactionsHTML(c.id, 'comment', null, c.reactions||{}) : ''}
-
+      ${reactionsHTML(c.id, 'comment', null, c.reactions||{})}
       ` : ''}
-
       ${canInteract&&!locked?`<button class="reply-toggle" onclick="toggleReplyForm('${c.id}','${postId}')">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 17 4 12 9 7"/><path d="M20 18v-2a4 4 0 0 0-4-4H4"/></svg>
         Reply
       </button>`:''}
     </div>
-
     <div id="replyForm-${c.id}"></div>
     ${replies.length?`<div class="reply-list" id="replies-${c.id}">${replies.map(r=>replyHTML(r,c.id,postId,locked)).join('')}</div>`:`<div id="replies-${c.id}"></div>`}
   </div>`;
@@ -1598,18 +1574,18 @@ function replyHTML(r, parentId, postId, locked){
       <span class="comment-ts">${timeAgo(r.ts)}</span>
     </div>
     <div class="comment-body ${isDeleted?'deleted-msg':''}">${isDeleted?escHtml(r.body):renderCommentBody(r.body)}</div>
-
     <div class="comment-actions">
-      ${canInteract ? reactionsHTML(r.id, 'reply', parentId, r.reactions||{}) : ''}
-
-      ${canInteract ? `<button class="comment-like ${rLiked?'liked':''}" id="rlbtn-${r.id}" onclick="likeComment(event,'${postId}','reply','${parentId}','${r.id}')">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="${rLiked?'currentColor':'none'}" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      ${canInteract ? `
+      ${reactionsHTML(r.id, 'reply', parentId, r.reactions||{})}
+      <button class="comment-upvote ${rLiked?'upvoted':''}" id="rlbtn-${r.id}" onclick="likeComment(event,'${postId}','reply','${parentId}','${r.id}')">
+        ${rLiked ? UPVOTE_SVG_ON : UPVOTE_SVG_OFF}
         <span id="rl-${r.id}">${r.likes||0}</span>
       </button>
-      <button class="comment-dislike ${rDisliked?'disliked':''}" id="dlbtn-${r.id}" onclick="dislikeComment(event,'${postId}','reply','${parentId}','${r.id}')">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="${rDisliked?'currentColor':'none'}" stroke="currentColor" stroke-width="2"><path d="M3.15 19.39a5.5 5.5 0 0 0 7.78 0L12 18.33l1.06 1.06a5.5 5.5 0 0 0 7.78-7.78l-1.06-1.06L12 2.77 4.22 10.55 3.15 11.61a5.5 5.5 0 0 0 0 7.78z"/></svg>
+      <button class="comment-downvote ${rDisliked?'downvoted':''}" id="dlbtn-${r.id}" onclick="dislikeComment(event,'${postId}','reply','${parentId}','${r.id}')">
+        ${rDisliked ? DOWNVOTE_SVG_ON : DOWNVOTE_SVG_OFF}
         <span id="dl-${r.id}">${r.dislikes||0}</span>
-      </button>` : ''}
+      </button>
+      ` : ''}
     </div>
   </div>`;
 }
@@ -1702,7 +1678,7 @@ async function submitComment(parentId, postId){
 
 async function likeComment(e, postId, type, commentId, replyId){
   e.stopPropagation();
-  showLoading('Sending like...');
+  showLoading('Sending...');
   const body = {postId,type,commentId};
   if(replyId) body.replyId=replyId;
   const data = await api('/like',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
@@ -1714,9 +1690,8 @@ async function likeComment(e, postId, type, commentId, replyId){
   const countId = type==='reply' ? `rl-${replyId}`    : `cl-${commentId}`;
   const btn = document.getElementById(btnId);
   const countEl = document.getElementById(countId);
-  if(btn){ btn.classList.toggle('liked', data.liked); const svg=btn.querySelector('svg'); if(svg) svg.setAttribute('fill', data.liked?'currentColor':'none'); }
-  if(countEl) countEl.textContent = data.count;
-  showToast(data.liked?' Liked':'Unliked');
+  if(btn){ btn.classList.toggle('upvoted', data.liked); btn.innerHTML = (data.liked ? UPVOTE_SVG_ON : UPVOTE_SVG_OFF) + `<span id="${countId}">${data.count}</span>`; }
+  showToast(data.liked?' Upvoted':'Removed upvote');
 }
 
 async function likePostSingle(id){
