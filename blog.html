@@ -250,7 +250,44 @@ nav{
   transform:translateY(-2px);
   box-shadow:0 12px 40px rgba(0,0,0,0.4),0 0 0 1px rgba(139,92,246,0.15);
 }
-.post-card-img{width:100%;height:220px;object-fit:cover;display:block;border-bottom:1px solid var(--border);}
+.post-card-img-wrap{
+  position:relative;
+  width:100%;
+  height:220px;
+  overflow:hidden;
+  border-bottom:1px solid var(--border);
+}
+.post-card-img{
+  width:100%;height:100%;
+  object-fit:cover;
+  object-position:center;
+  display:block;
+  transition:transform 0.35s ease;
+}
+.post-card:hover .post-card-img{transform:scale(1.04)}
+.post-card-img-overlay{
+  position:absolute;inset:0;
+  background:rgba(0,0,0,0);
+  display:flex;align-items:center;justify-content:center;
+  transition:background 0.25s;
+}
+.post-card-img-overlay span{
+  opacity:0;
+  transform:translateY(6px);
+  transition:opacity 0.2s,transform 0.2s;
+  background:rgba(0,0,0,0.72);
+  color:#fff;
+  font-size:0.78rem;
+  font-weight:600;
+  letter-spacing:0.06em;
+  padding:0.4rem 0.9rem;
+  border-radius:99px;
+  border:1px solid rgba(255,255,255,0.18);
+  backdrop-filter:blur(4px);
+  display:flex;align-items:center;gap:6px;
+}
+.post-card:hover .post-card-img-overlay{background:rgba(0,0,0,0.28)}
+.post-card:hover .post-card-img-overlay span{opacity:1;transform:translateY(0)}
 .post-card-body{padding:1.4rem 1.6rem 1.2rem}
 .post-meta{
   display:flex;align-items:center;gap:0.75rem;
@@ -312,12 +349,47 @@ nav{
   margin-bottom:0.8rem;
 }
 .single-header .post-meta{margin-bottom:0}
-.single-hero-img{
-  width:100%;border-radius:var(--radius);
+.single-hero-img-wrap{
+  position:relative;
+  width:100%;
+  height:420px;
+  border-radius:var(--radius);
+  overflow:hidden;
   border:1px solid var(--border);
   margin-bottom:2rem;
-  max-height:420px;object-fit:cover;
 }
+.single-hero-img{
+  width:100%;height:100%;
+  object-fit:cover;
+  object-position:center;
+  display:block;
+  transition:transform 0.35s ease;
+}
+.single-hero-img-wrap:hover .single-hero-img{transform:scale(1.03)}
+.single-hero-img-overlay{
+  position:absolute;inset:0;
+  background:rgba(0,0,0,0);
+  display:flex;align-items:flex-end;justify-content:flex-end;
+  padding:1rem;
+  transition:background 0.25s;
+}
+.single-hero-img-overlay span{
+  opacity:0;
+  transform:translateY(4px);
+  transition:opacity 0.2s,transform 0.2s;
+  background:rgba(0,0,0,0.72);
+  color:#fff;
+  font-size:0.75rem;
+  font-weight:600;
+  letter-spacing:0.06em;
+  padding:0.35rem 0.8rem;
+  border-radius:99px;
+  border:1px solid rgba(255,255,255,0.18);
+  backdrop-filter:blur(4px);
+  display:flex;align-items:center;gap:5px;
+}
+.single-hero-img-wrap:hover .single-hero-img-overlay{background:rgba(0,0,0,0.2)}
+.single-hero-img-wrap:hover .single-hero-img-overlay span{opacity:1;transform:translateY(0)}
 .post-body{color:var(--text2);line-height:1.8;font-size:1rem;}
 .post-body p{margin-bottom:1.1em}
 .post-body h2{font-family:var(--font-display);color:var(--text);font-size:1.4rem;font-weight:800;margin:1.8em 0 0.6em;}
@@ -414,7 +486,6 @@ nav{
   overflow:visible;
 }
 .comment.deleted{opacity:.55}
-
 .comment.ragebait{
   background:#f5eedf !important;
   border-color:rgba(180,140,60,0.35) !important;
@@ -448,7 +519,6 @@ nav{
   from{transform:rotate(0deg)}
   to{transform:rotate(360deg)}
 }
-
 .comment.administrator{
   background:rgba(139,92,246,0.07) !important;
   border-color:rgba(139,92,246,0.35) !important;
@@ -477,7 +547,6 @@ nav{
   z-index:5;
   filter:drop-shadow(0 0 6px rgba(139,92,246,0.7)) brightness(1.1);
 }
-
 .comment.reply{
   background:rgba(255,255,255,0.02);
   border-color:rgba(255,255,255,0.05);
@@ -494,7 +563,6 @@ nav{
   background:rgba(139,92,246,0.06) !important;
   border-color:rgba(139,92,246,0.25) !important;
 }
-
 .comment-header{display:flex;align-items:center;gap:0.6rem;margin-bottom:0.4rem;flex-wrap:wrap;}
 .comment-avatar{
   width:26px;height:26px;border-radius:50%;
@@ -546,7 +614,7 @@ nav{
   display:inline-flex;align-items:center;gap:3px;
   background:rgba(255,255,255,0.04);
   border:1px solid var(--border);
-  border-radius:99px;
+  border-radius:6px;
   padding:2px 8px 2px 4px;
   font-size:0.72rem;
   color:var(--text3);
@@ -651,7 +719,7 @@ nav{
 @keyframes spin{to{transform:rotate(360deg)}}
 #toastContainer{
   position:fixed;bottom:1.5rem;left:50%;
-  transform:translateX(-50%));
+  transform:translateX(-50%);
   display:flex;flex-direction:column;gap:8px;
   align-items:center;
   z-index:9999;pointer-events:none;
@@ -773,7 +841,6 @@ nav{
 }
 footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:1.5rem 3rem;text-align:center;}
 .footer-bottom{font-size:0.75rem;color:var(--text3)}
-
 .captcha-wrap{
   margin-top:0.7rem;
   background:var(--surface2);
@@ -845,7 +912,6 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:1.
 .captcha-input.captcha-err{border-color:var(--downvote);box-shadow:0 0 0 2px rgba(255,138,138,0.12)}
 .captcha-hint{font-size:0.67rem;color:var(--text3)}
 .captcha-hint b{color:var(--purple2)}
-
 .captcha-modal-backdrop{
   position:fixed;inset:0;
   background:rgba(0,0,0,0.7);
@@ -890,7 +956,36 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:1.
 }
 .captcha-modal-confirm:hover{background:#7c3aed}
 .captcha-modal-confirm:disabled{opacity:.5;pointer-events:none}
-
+.photo-lightbox{
+  position:fixed;inset:0;
+  z-index:10000;
+  background:rgba(0,0,0,0.92);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;
+  transition:opacity .25s;
+  backdrop-filter:blur(8px);
+}
+.photo-lightbox.show{opacity:1;pointer-events:auto}
+.photo-lightbox img{
+  max-width:92vw;
+  max-height:90vh;
+  border-radius:10px;
+  box-shadow:0 32px 80px rgba(0,0,0,0.8);
+  transform:scale(0.95);
+  transition:transform .3s cubic-bezier(.22,1,.36,1);
+  object-fit:contain;
+}
+.photo-lightbox.show img{transform:scale(1)}
+.photo-lightbox-close{
+  position:absolute;top:1.2rem;right:1.4rem;
+  background:rgba(255,255,255,0.1);
+  border:1px solid rgba(255,255,255,0.15);
+  border-radius:50%;width:36px;height:36px;
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:1.1rem;
+  transition:.2s;
+}
+.photo-lightbox-close:hover{background:rgba(255,255,255,0.2)}
 @media(max-width:768px){
   nav{padding:0 1.2rem}
   .nav-links{display:none}
@@ -905,7 +1000,7 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:1.
   .blog-wrap{padding:2rem 1.2rem}
   .single-wrap{padding:2rem 1.2rem}
   .form-row{flex-direction:column}
-  .post-card-img{height:160px}
+  .post-card-img-wrap{height:160px}
   .broadcast-banner{margin:0 1.2rem;margin-top:1rem}
   .captcha-row{flex-direction:column;align-items:flex-start}
 }
@@ -936,7 +1031,6 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:1.
 
 <div id="app"></div>
 
-<!-- captcha modal for suspicious likes/reactions -->
 <div class="captcha-modal-backdrop" id="captchaModalBackdrop">
   <div class="captcha-modal">
     <div class="captcha-modal-title">Human check</div>
@@ -957,6 +1051,13 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:1.
     <div class="live-warning-timer" id="liveWarningTimer"></div>
     <div class="live-warning-bar"><div class="live-warning-bar-fill" id="liveWarningBar" style="width:100%"></div></div>
   </div>
+</div>
+
+<div class="photo-lightbox" id="photoLightbox" onclick="closeLightbox(event)">
+  <button class="photo-lightbox-close" onclick="closeLightboxBtn()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+  <img id="photoLightboxImg" src="" alt="">
 </div>
 
 <a class="footer-note" href="https://raton.lol">
@@ -1002,9 +1103,21 @@ const CUSTOM_AVATARS = {
   });
 })();
 
-/* ════════════════════════════════════════════════════════════════
-   CAPTCHA ENGINE
-════════════════════════════════════════════════════════════════ */
+function openLightbox(src) {
+  const lb = document.getElementById('photoLightbox');
+  const img = document.getElementById('photoLightboxImg');
+  img.src = src;
+  lb.classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox(e) {
+  if (e.target === document.getElementById('photoLightbox')) closeLightboxBtn();
+}
+function closeLightboxBtn() {
+  document.getElementById('photoLightbox').classList.remove('show');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if(e.key === 'Escape') closeLightboxBtn(); });
 
 const CAPTCHA_CHARS = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
 const CAPTCHA_LEN   = 5;
@@ -1054,7 +1167,6 @@ function drawCaptcha(canvas, chars) {
     const ny = Math.random() * H;
     const nr = Math.random() * 1.1;
     const na = Math.random() * 0.35 + 0.05;
-
     ctx.beginPath();
     ctx.arc(nx, ny, nr, 0, Math.PI * 2);
     ctx.fillStyle = `rgba(${rnd(120,220)},${rnd(80,160)},${rnd(200,255)},${na.toFixed(2)})`;
@@ -1064,14 +1176,10 @@ function drawCaptcha(canvas, chars) {
   for (let i = 0; i < 5; i++) {
     ctx.beginPath();
     ctx.moveTo(Math.random() * W, Math.random() * H);
-
     ctx.quadraticCurveTo(
-      Math.random() * W,
-      Math.random() * H,
-      Math.random() * W,
-      Math.random() * H
+      Math.random() * W, Math.random() * H,
+      Math.random() * W, Math.random() * H
     );
-
     ctx.strokeStyle = `rgba(${rnd(100,200)},${rnd(60,140)},${rnd(180,255)},${(Math.random() * 0.25 + 0.08).toFixed(2)})`;
     ctx.lineWidth = Math.random() * 1.2 + 0.4;
     ctx.stroke();
@@ -1117,50 +1225,88 @@ function drawCaptcha(canvas, chars) {
     ctx.fillRect(0, y, W, 1);
   }
 
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < 4; i++) {
     ctx.beginPath();
     ctx.moveTo(-10, rnd(0, H));
-
     ctx.bezierCurveTo(
       rnd(0, W), rnd(0, H),
       rnd(0, W), rnd(0, H),
       W + 10, rnd(0, H)
     );
-
-    ctx.strokeStyle = `rgba(255,255,255,${Math.random() * 0.18 + 0.12})`;
-    ctx.lineWidth = Math.random() * 1.5 + 1.2;
+    ctx.strokeStyle = `rgba(255,255,255,${Math.random() * 0.22 + 0.14})`;
+    ctx.lineWidth = Math.random() * 1.8 + 1.2;
     ctx.stroke();
   }
 
-  for (let i = 0; i < 25; i++) {
+  for (let i = 0; i < 30; i++) {
     ctx.beginPath();
     ctx.arc(
-      Math.random() * W,
-      Math.random() * H,
+      Math.random() * W, Math.random() * H,
       Math.random() * 2.2 + 0.7,
-      0,
-      Math.PI * 2
+      0, Math.PI * 2
     );
-
     ctx.fillStyle = `rgba(255,255,255,${Math.random() * 0.22 + 0.08})`;
     ctx.fill();
   }
 
-  for (let i = 0; i < 8; i++) {
+  for (let i = 0; i < 10; i++) {
     const x = Math.random() * W;
     const y = Math.random() * H;
-
-    ctx.strokeStyle = `rgba(255,255,255,${Math.random() * 0.15 + 0.08})`;
+    ctx.strokeStyle = `rgba(255,255,255,${Math.random() * 0.18 + 0.08})`;
     ctx.lineWidth = Math.random() * 1.2 + 0.8;
-
     ctx.beginPath();
     ctx.moveTo(x - 4, y);
     ctx.lineTo(x + 4, y);
     ctx.stroke();
-
     ctx.beginPath();
     ctx.moveTo(x, y - 4);
     ctx.lineTo(x, y + 4);
+    ctx.stroke();
+  }
+
+  for (let i = 0; i < 6; i++) {
+    const rx = Math.random() * W;
+    const ry = Math.random() * H;
+    const rw = rnd(8, 28);
+    const rh = rnd(4, 14);
+    const angle = (Math.random() * 60 - 30) * Math.PI / 180;
+    ctx.save();
+    ctx.translate(rx, ry);
+    ctx.rotate(angle);
+    ctx.strokeStyle = `rgba(${rnd(160,255)},${rnd(80,180)},${rnd(200,255)},${(Math.random()*0.18+0.08).toFixed(2)})`;
+    ctx.lineWidth = Math.random() * 1.2 + 0.5;
+    ctx.strokeRect(-rw/2, -rh/2, rw, rh);
+    ctx.restore();
+  }
+
+  for (let i = 0; i < 4; i++) {
+    const tx = rnd(10, W - 10);
+    const ty = rnd(6, H - 6);
+    const decoyChar = CAPTCHA_CHARS[rnd(0, CAPTCHA_CHARS.length - 1)];
+    ctx.save();
+    ctx.translate(tx, ty);
+    ctx.rotate((Math.random() * 60 - 30) * Math.PI / 180);
+    ctx.font = `bold ${rnd(8, 14)}px 'Courier New', monospace`;
+    ctx.textBaseline = 'middle';
+    ctx.textAlign = 'center';
+    ctx.fillStyle = `rgba(${rnd(100,200)},${rnd(80,160)},${rnd(180,255)},${(Math.random()*0.22+0.10).toFixed(2)})`;
+    ctx.fillText(decoyChar, 0, 0);
+    ctx.restore();
+  }
+
+  const overlayGrad = ctx.createLinearGradient(0, 0, W, H);
+  overlayGrad.addColorStop(0, 'rgba(80,40,160,0.06)');
+  overlayGrad.addColorStop(0.5, 'rgba(200,100,255,0.04)');
+  overlayGrad.addColorStop(1, 'rgba(40,80,200,0.06)');
+  ctx.fillStyle = overlayGrad;
+  ctx.fillRect(0, 0, W, H);
+
+  for (let i = 0; i < 18; i++) {
+    ctx.beginPath();
+    ctx.moveTo(Math.random() * W, Math.random() * H);
+    ctx.lineTo(Math.random() * W, Math.random() * H);
+    ctx.strokeStyle = `rgba(${rnd(80,180)},${rnd(60,140)},${rnd(180,255)},${(Math.random()*0.12+0.04).toFixed(2)})`;
+    ctx.lineWidth = Math.random() * 0.8 + 0.2;
     ctx.stroke();
   }
 }
@@ -1199,7 +1345,7 @@ function captchaHTML(formId) {
   const canvasId = `captchaCanvas-${formId}`;
   const inputId  = `captchaInput-${formId}`;
   return `<div class="captcha-wrap" id="captchaWrap-${formId}">
-    <div class="captcha-label">r u human?!/div>
+    <div class="captcha-label">r u human?!</div>
     <div class="captcha-row">
       <div class="captcha-canvas-wrap">
         <canvas class="captcha-canvas" id="${canvasId}" width="180" height="52"></canvas>
@@ -1254,10 +1400,6 @@ async function confirmCaptchaModal() {
   dismissCaptchaModal();
 }
 
-/* ════════════════════════════════════════════════════════════════
-   IDENTITY / SESSION
-════════════════════════════════════════════════════════════════ */
-
 function getFingerprint() {
   const stored = sessionStorage.getItem('_rfp') || localStorage.getItem('_rfp');
   if (stored) return stored;
@@ -1300,9 +1442,9 @@ const CLIENT_FP  = getFingerprint();
 const SESSION_ID = getSessionId();
 
 let loadingTimer = null;
-function showLoading(msg = 'Loading...') {
+function showLoading(msg) {
   const el = document.getElementById('actionLoading');
-  document.getElementById('actionLoadingMsg').textContent = msg;
+  document.getElementById('actionLoadingMsg').textContent = msg || 'Loading...';
   el.classList.add('show');
   clearTimeout(loadingTimer);
   loadingTimer = setTimeout(() => hideLoading(), 12000);
@@ -1312,7 +1454,7 @@ function hideLoading() {
   document.getElementById('actionLoading').classList.remove('show');
 }
 
-function showToast(msg, isError = false, dur = 2800) {
+function showToast(msg, isError, dur) {
   const container = document.getElementById('toastContainer');
   const t = document.createElement('div');
   t.className = 'toast' + (isError ? ' error' : '');
@@ -1322,7 +1464,7 @@ function showToast(msg, isError = false, dur = 2800) {
   setTimeout(() => {
     t.classList.remove('show');
     setTimeout(() => t.remove(), 350);
-  }, dur);
+  }, dur || 2800);
 }
 
 function fmtDate(ts){ return new Date(ts).toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'}); }
@@ -1352,7 +1494,8 @@ function saveDislikedComments(){ localStorage.setItem('disliked_comments',JSON.s
 function saveMyReactions(){ localStorage.setItem('my_reactions',JSON.stringify(myReactions)); }
 function saveAuthorName(n){ commentAuthorName=n; localStorage.setItem('comment_author_name',n); }
 
-async function api(path, opts={}){
+async function api(path, opts){
+  opts = opts || {};
   opts.headers = opts.headers || {};
   opts.headers['X-Client-FP'] = CLIENT_FP;
   const r = await fetch(WORKER+path, opts);
@@ -1536,9 +1679,18 @@ function renderCards(posts){
 function cardHTML(p){
   const liked = likedPosts[p.id];
   const tags  = (p.tags||[]).map(t=>`<span class="post-tag">${escHtml(t)}</span>`).join('');
+  const imgBlock = p.imageUrl ? `<div class="post-card-img-wrap">
+    <img class="post-card-img" src="${escHtml(p.imageUrl)}" alt="" loading="lazy">
+    <div class="post-card-img-overlay" onclick="openLightbox('${escHtml(p.imageUrl)}');event.preventDefault();event.stopPropagation();">
+      <span>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        View full photo
+      </span>
+    </div>
+  </div>` : '';
   return `<a class="post-card${p.pinned?' pinned':''}" href="#" onclick="openPost('${p.id}',event)">
     ${p.pinned ? `<img class="pin-badge" src="https://raton.lol/img/office-push-pin.png" alt="Pinned" title="Pinned post">` : ''}
-    ${p.imageUrl?`<img class="post-card-img" src="${escHtml(p.imageUrl)}" alt="" loading="lazy">`:''}
+    ${imgBlock}
     <div class="post-card-body">
       <div class="post-meta">
         <span>${escHtml(p.author||'Admin')}</span>
@@ -1586,7 +1738,6 @@ function renderPagination(total, page, limit){
 
 function goPage(p){ currentPage=p; setUrl({page:p}); applySearchAndRender(); scrollTo({top:0,behavior:'smooth'}); }
 
-/* ── like with suspicious-check ── */
 async function likePost(e, id){
   e.preventDefault(); e.stopPropagation();
   await doLikePost(id, null);
@@ -1639,11 +1790,20 @@ async function renderPost(id){
   currentPostAuthor = (p.author || '').trim();
 
   const comments = cData.comments||[];
-
   knownCommenters = collectCommenters(comments);
 
   const liked = likedPosts[p.id];
   const tags  = (p.tags||[]).map(t=>`<span class="post-tag">${escHtml(t)}</span>`).join('');
+
+  const heroImgBlock = p.imageUrl ? `<div class="single-hero-img-wrap">
+    <img class="single-hero-img" src="${escHtml(p.imageUrl)}" alt="">
+    <div class="single-hero-img-overlay" onclick="openLightbox('${escHtml(p.imageUrl)}')">
+      <span>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        View full photo
+      </span>
+    </div>
+  </div>` : '';
 
   app.innerHTML = `<div class="single-wrap" style="position:relative;z-index:1">
     <a class="post-back" href="#" onclick="goList(event)">
@@ -1661,7 +1821,7 @@ async function renderPost(id){
       </div>
       <h1>${escHtml(p.title)}</h1>
     </div>
-    ${p.imageUrl?`<img class="single-hero-img" src="${escHtml(p.imageUrl)}" alt="">`:''}
+    ${heroImgBlock}
     <div class="post-body">${renderMarkdown(p.body)}</div>
     <div class="post-actions">
       <button class="action-btn ${liked?'liked':''}" id="post-like-btn" onclick="likePostSingle('${p.id}')">
@@ -1728,7 +1888,6 @@ function getAvatarHTML(name, isDeleted, isRagebait, userTag) {
   if (isRagebait) {
     return `<img src="https://raton.lol/img/clown.png" alt="clown">`;
   }
-
   if (name && CUSTOM_AVATARS[name]) {
     return `<img src="${CUSTOM_AVATARS[name]}" alt="${escHtml(name)}">`;
   }
