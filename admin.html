@@ -89,6 +89,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
 .badge-locked{background:var(--yellow-dim);color:var(--yellow);border:1px solid rgba(245,158,11,0.25)}
 .badge-pinned{background:var(--purple-dim);color:var(--purple2);border:1px solid rgba(139,92,246,0.25)}
 .badge-ragebait{background:rgba(251,146,60,0.12);color:#fb923c;border:1px solid rgba(251,146,60,0.3)}
+.badge-auth{background:rgba(34,197,94,0.1);color:var(--green);border:1px solid rgba(34,197,94,0.2)}
 .form-grid{display:grid;gap:1rem}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
 .form-group{display:flex;flex-direction:column;gap:0.4rem}
@@ -109,6 +110,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
 .comment-item{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:0.9rem 1rem;margin-bottom:0.7rem}
 .comment-item.deleted{opacity:.5}
 .comment-item.ragebait{border-color:rgba(251,146,60,0.35);background:rgba(251,146,60,0.04)}
+.comment-item.pinned-comment{border-color:rgba(139,92,246,0.35);background:rgba(139,92,246,0.04)}
 .comment-meta{display:flex;align-items:center;gap:0.5rem;margin-bottom:0.4rem;flex-wrap:wrap}
 .comment-meta-name{font-weight:600;color:var(--text);font-size:0.82rem}
 .comment-meta-ts{font-size:0.7rem;color:var(--text3)}
@@ -148,6 +150,11 @@ tr:hover td{background:rgba(255,255,255,0.02)}
 .tag-gold{background:linear-gradient(90deg,#ffd700,#ffb347);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;border:1px solid rgba(255,215,0,0.4)}
 .tag-developer{background:linear-gradient(90deg,#00d2ff,#3a7bd5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;border:1px solid rgba(0,210,255,0.4)}
 .tag-list-item{display:flex;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:0.7rem 1rem;margin-bottom:0.5rem}
+.user-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;display:flex;align-items:center;gap:1rem;margin-bottom:0.6rem;flex-wrap:wrap}
+.user-card-info{flex:1;min-width:0}
+.user-card-name{font-weight:600;color:var(--text);font-size:0.9rem}
+.user-card-meta{font-size:0.7rem;color:var(--text3);margin-top:2px}
+.user-card-actions{display:flex;gap:0.4rem;flex-wrap:wrap;flex-shrink:0}
 @media(max-width:900px){.sidebar{display:none}.form-row{grid-template-columns:1fr}}
 </style>
 </head>
@@ -196,6 +203,10 @@ tr:hover td{background:rgba(255,255,255,0.02)}
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
         User Tags
       </div>
+      <div class="sidebar-item" id="nav-accounts" onclick="showView('accounts')">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        Accounts
+      </div>
       <div class="sidebar-item" id="nav-tools" onclick="showView('tools')">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
         Tools
@@ -241,6 +252,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
   </div>
 </div>
 
+<!-- Modals -->
 <div class="modal-overlay hidden" id="postModal">
   <div class="modal">
     <div class="modal-header">
@@ -281,6 +293,17 @@ tr:hover td{background:rgba(255,255,255,0.02)}
   </div>
 </div>
 
+<!-- NEW: Edit Account Modal -->
+<div class="modal-overlay hidden" id="editAccountModal">
+  <div class="modal" style="max-width:480px">
+    <div class="modal-header">
+      <span class="modal-title">Edit Account</span>
+      <button class="modal-close" onclick="closeModal('editAccountModal')">&#x2715;</button>
+    </div>
+    <div id="editAccountBody"></div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -318,17 +341,13 @@ const presetIcons = [
 function loadSession() {
   const key = sessionStorage.getItem('admin_key') || localStorage.getItem('admin_key');
   const expiry = parseInt(sessionStorage.getItem('admin_expiry') || localStorage.getItem('admin_expiry') || '0');
-  if (key && expiry && Date.now() < expiry) {
-    return { key, expiry };
-  }
+  if (key && expiry && Date.now() < expiry) return { key, expiry };
   return null;
 }
 
 function clearSession() {
-  sessionStorage.removeItem('admin_key');
-  sessionStorage.removeItem('admin_expiry');
-  localStorage.removeItem('admin_key');
-  localStorage.removeItem('admin_expiry');
+  sessionStorage.removeItem('admin_key'); sessionStorage.removeItem('admin_expiry');
+  localStorage.removeItem('admin_key'); localStorage.removeItem('admin_expiry');
 }
 
 function startSessionTimer(expiry) {
@@ -337,8 +356,7 @@ function startSessionTimer(expiry) {
   sessionTimerInterval = setInterval(() => {
     const rem = sessionExpiry - Date.now();
     if (rem <= 0) { logout(); return; }
-    const h = Math.floor(rem / 3600000);
-    const m = Math.floor((rem % 3600000) / 60000);
+    const h = Math.floor(rem / 3600000), m = Math.floor((rem % 3600000) / 60000);
     const el = document.getElementById('sessionTimer');
     if (el) el.textContent = `Session: ${h}h ${m}m left`;
   }, 30000);
@@ -351,32 +369,23 @@ async function login() {
   const errEl = document.getElementById('loginErr');
   errEl.textContent = '';
   if (!k) { errEl.textContent = 'Enter your password'; return; }
-
   const btn = document.getElementById('loginBtn');
   btn.disabled = true; btn.textContent = 'Checking...';
-
   try {
-    const r = await fetch(BLOG_WORKER + '/admin/login-check', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ adminKey: k })
-    });
+    const r = await fetch(BLOG_WORKER + '/admin/login-check', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({adminKey:k}) });
     const data = await r.json();
-
     if (!data.ok) {
       errEl.textContent = data.error;
       btn.disabled = false;
       btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Login';
       if (data.rateLimited) {
-        btn.disabled = true;
-        btn.textContent = `Blocked (${Math.ceil(data.resetIn / 60)} min)`;
-        setTimeout(() => { btn.disabled = false; btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Login'; }, Math.min(data.resetIn * 1000, 30000));
+        btn.disabled = true; btn.textContent = `Blocked (${Math.ceil(data.resetIn/60)} min)`;
+        setTimeout(()=>{ btn.disabled=false; btn.innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Login'; }, Math.min(data.resetIn*1000,30000));
       }
       return;
     }
-
     await initApp(k);
-  } catch (e) {
+  } catch(e) {
     errEl.textContent = 'Network error...';
     btn.disabled = false;
     btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Login';
@@ -387,10 +396,8 @@ async function initApp(k) {
   ADMIN_KEY = k;
   const expiry = Date.now() + SESSION_TTL;
   saveSession(k);
-
-  const postsData = await fetch(BLOG_WORKER + '/admin/posts?adminKey=' + encodeURIComponent(k)).then(r => r.json());
+  const postsData = await fetch(BLOG_WORKER+'/admin/posts?adminKey='+encodeURIComponent(k)).then(r=>r.json());
   allPosts = postsData.posts || [];
-
   document.getElementById('loginWrap').style.display = 'none';
   document.getElementById('appWrap').style.display = 'flex';
   startSessionTimer(expiry);
@@ -403,17 +410,10 @@ window.addEventListener('load', async () => {
     const btn = document.getElementById('loginBtn');
     btn.disabled = true; btn.textContent = 'Resuming session...';
     try {
-      const r = await fetch(BLOG_WORKER + '/admin/login-check', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ adminKey: session.key })
-      });
+      const r = await fetch(BLOG_WORKER+'/admin/login-check', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({adminKey:session.key}) });
       const data = await r.json();
-      if (data.ok) {
-        await initApp(session.key);
-        return;
-      }
-    } catch (_) {}
+      if (data.ok) { await initApp(session.key); return; }
+    } catch(_) {}
     clearSession();
     btn.disabled = false;
     btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Login';
@@ -421,8 +421,7 @@ window.addEventListener('load', async () => {
 });
 
 function logout() {
-  clearSession();
-  clearInterval(sessionTimerInterval);
+  clearSession(); clearInterval(sessionTimerInterval);
   ADMIN_KEY = ''; allPosts = [];
   document.getElementById('appWrap').style.display = 'none';
   document.getElementById('loginWrap').style.display = 'flex';
@@ -433,35 +432,35 @@ function logout() {
   btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Login';
 }
 
-function toast(msg, dur = 2800) {
+function toast(msg, dur=2800) {
   const t = document.getElementById('toast');
   t.textContent = msg; t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), dur);
+  setTimeout(()=>t.classList.remove('show'), dur);
 }
 
-function esc(s) { if (typeof s !== 'string') return ''; return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-function fmt(ts) { return new Date(ts).toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' }); }
+function esc(s) { if(typeof s!=='string') return ''; return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function fmt(ts) { return new Date(ts).toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'}); }
 function timeAgo(ts) { const s=Math.floor((Date.now()-ts)/1000); if(s<60)return'just now'; if(s<3600)return Math.floor(s/60)+'m ago'; if(s<86400)return Math.floor(s/3600)+'h ago'; return Math.floor(s/86400)+'d ago'; }
 
-async function api(worker, path, opts = {}) { const r = await fetch(worker+path, opts); return r.json(); }
+async function api(worker, path, opts={}) { const r=await fetch(worker+path,opts); return r.json(); }
 async function blogGet(path) { return api(BLOG_WORKER, path+'&adminKey='+encodeURIComponent(ADMIN_KEY)); }
-async function blogPost(path, body) { return api(BLOG_WORKER, path, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ adminKey: ADMIN_KEY, ...body }) }); }
-async function gwPost(path, body) { return api(GW_WORKER, path, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ adminKey: ADMIN_KEY, ...body }) }); }
+async function blogPost(path, body) { return api(BLOG_WORKER, path, {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({adminKey:ADMIN_KEY,...body})}); }
+async function gwPost(path, body) { return api(GW_WORKER, path, {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({adminKey:ADMIN_KEY,...body})}); }
 async function gwGet(path) { return api(GW_WORKER, path); }
 
 function tagBadgeHTML(tag) {
   if (!tag) return '';
-  if (tag === 'deluxe') return `<span class="tag-badge tag-deluxe">✦ DELUXE</span>`;
-  if (tag === 'gold') return `<span class="tag-badge tag-gold">★ GOLD</span>`;
-  if (tag === 'developer') return `<span class="tag-badge tag-developer">⌨ DEV</span>`;
+  if (tag==='deluxe') return `<span class="tag-badge tag-deluxe">✦ DELUXE</span>`;
+  if (tag==='gold') return `<span class="tag-badge tag-gold">★ GOLD</span>`;
+  if (tag==='developer') return `<span class="tag-badge tag-developer">⌨ DEV</span>`;
   return '';
 }
 
 function showView(v) {
-  document.querySelectorAll('.sidebar-item').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.sidebar-item').forEach(el=>el.classList.remove('active'));
   const navEl = document.getElementById(`nav-${v}`);
   if (navEl) navEl.classList.add('active');
-  const titles = { dashboard:'Dashboard', posts:'All Posts', new:'New Post', comments:'Moderation', tags:'User Tags', tools:'Admin Tools', broadcasts:'Broadcasts & Live Warnings', giveaways:'Giveaways', 'giveaway-new':'New Giveaway' };
+  const titles = {dashboard:'Dashboard',posts:'All Posts',new:'New Post',comments:'Moderation',tags:'User Tags',accounts:'Accounts',tools:'Admin Tools',broadcasts:'Broadcasts & Live Warnings',giveaways:'Giveaways','giveaway-new':'New Giveaway'};
   document.getElementById('topbarTitle').textContent = titles[v] || v;
   const c = document.getElementById('mainContent');
   c.innerHTML = '<div class="spinner"></div>';
@@ -470,22 +469,23 @@ function showView(v) {
   else if (v==='new') renderNew();
   else if (v==='comments') renderComments();
   else if (v==='tags') renderTags();
+  else if (v==='accounts') renderAccounts();
   else if (v==='tools') renderTools();
   else if (v==='broadcasts') renderBroadcasts();
   else if (v==='giveaways') renderGiveaways();
   else if (v==='giveaway-new') renderGiveawayNew();
 }
 
+// ── DASHBOARD ────────────────────────────────────────────────────────────────
 async function renderDashboard() {
-  if (!allPosts.length) { const data = await blogGet('/admin/posts?'); allPosts = data.posts||[]; }
+  if (!allPosts.length) { const data=await blogGet('/admin/posts?'); allPosts=data.posts||[]; }
   const posts = allPosts;
-  const totalLikes = posts.reduce((a,p)=>a+(p.likes||0), 0);
-  const totalComments = posts.reduce((a,p)=>a+(p.commentCount||0), 0);
-  const totalViews = posts.reduce((a,p)=>a+(p.views||0), 0);
+  const totalLikes = posts.reduce((a,p)=>a+(p.likes||0),0);
+  const totalComments = posts.reduce((a,p)=>a+(p.commentCount||0),0);
+  const totalViews = posts.reduce((a,p)=>a+(p.views||0),0);
   const published = posts.filter(p=>p.published).length;
   const pinned = posts.filter(p=>p.pinned).length;
   const locked = posts.filter(p=>p.locked).length;
-
   document.getElementById('mainContent').innerHTML = `
     <div class="stats-row">
       <div class="stat-card"><div class="stat-label">Total Posts</div><div class="stat-value">${posts.length}</div><div class="stat-sub">${published} published · ${pinned} pinned · ${locked} locked</div></div>
@@ -507,10 +507,9 @@ async function renderDashboard() {
 }
 
 let postSearch = '';
-async function renderPosts(forceRefresh = true) {
-  if (forceRefresh || !allPosts.length) { const data = await blogGet('/admin/posts?'); allPosts = data.posts||[]; }
+async function renderPosts(forceRefresh=true) {
+  if (forceRefresh || !allPosts.length) { const data=await blogGet('/admin/posts?'); allPosts=data.posts||[]; }
   const filtered = postSearch ? allPosts.filter(p=>p.title.toLowerCase().includes(postSearch.toLowerCase())||p.id.toLowerCase().includes(postSearch.toLowerCase())) : allPosts;
-
   document.getElementById('mainContent').innerHTML = `
     <div class="search-bar">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -548,6 +547,7 @@ async function renderPosts(forceRefresh = true) {
     </table></div>`;
 }
 
+// ── NEW POST ─────────────────────────────────────────────────────────────────
 let pendingImageBase64 = null, pendingImageMime = null;
 
 function handleImageFile(file, previewId, labelId) {
@@ -615,16 +615,16 @@ async function createPost() {
   btn.disabled = true; btn.textContent = 'Publishing...';
   let imageUrl = null;
   if (pendingImageBase64) {
-    const upRes = await blogPost('/admin/upload-image', { imageData: pendingImageBase64, mimeType: pendingImageMime });
+    const upRes = await blogPost('/admin/upload-image', {imageData:pendingImageBase64,mimeType:pendingImageMime});
     if (!upRes.ok) { toast('Image upload failed: '+upRes.error); btn.disabled=false; btn.textContent='Publish Post'; return; }
     imageUrl = upRes.url;
   }
-  const data = await blogPost('/admin/post', { title, body, excerpt, author, tags, imageUrl, published, pinned });
+  const data = await blogPost('/admin/post', {title,body,excerpt,author,tags,imageUrl,published,pinned});
   if (!data.ok) { toast(data.error); btn.disabled=false; btn.textContent='Publish Post'; return; }
   toast('Post published — ID: '+data.post.id);
   pendingImageBase64 = null; pendingImageMime = null;
   allPosts = [];
-  setTimeout(() => showView('posts'), 1000);
+  setTimeout(()=>showView('posts'), 1000);
 }
 
 function editPost(id) {
@@ -661,7 +661,7 @@ function editPost(id) {
 async function saveEdit(id) {
   let imageUrl = undefined;
   if (pendingImageBase64) {
-    const upRes = await blogPost('/admin/upload-image', { imageData: pendingImageBase64, mimeType: pendingImageMime });
+    const upRes = await blogPost('/admin/upload-image', {imageData:pendingImageBase64,mimeType:pendingImageMime});
     if (!upRes.ok) { toast('Image upload failed: '+upRes.error); return; }
     imageUrl = upRes.url;
   }
@@ -682,14 +682,14 @@ async function saveEdit(id) {
   allPosts = []; renderPosts();
 }
 
-async function togglePublish(id) { const data = await blogPost('/admin/toggle-publish',{id}); if(!data.ok){toast(data.error);return;} toast(data.published?'Published':'Unpublished'); allPosts=[]; renderPosts(); }
-async function togglePin(id) { const data = await blogPost('/admin/pin-post',{id}); if(!data.ok){toast(data.error);return;} toast(data.pinned?'Post pinned':'Post unpinned'); allPosts=[]; renderPosts(); }
-async function toggleLock(id) { const data = await blogPost('/admin/lock-post',{id}); if(!data.ok){toast(data.error);return;} toast(data.locked?'Comments locked':'Comments unlocked'); allPosts=[]; renderPosts(); }
-async function clonePost(id) { const data = await blogPost('/admin/clone-post',{id}); if(!data.ok){toast(data.error);return;} toast('Post cloned as draft: '+data.post.id); allPosts=[]; renderPosts(); }
+async function togglePublish(id) { const data=await blogPost('/admin/toggle-publish',{id}); if(!data.ok){toast(data.error);return;} toast(data.published?'Published':'Unpublished'); allPosts=[]; renderPosts(); }
+async function togglePin(id) { const data=await blogPost('/admin/pin-post',{id}); if(!data.ok){toast(data.error);return;} toast(data.pinned?'Post pinned':'Post unpinned'); allPosts=[]; renderPosts(); }
+async function toggleLock(id) { const data=await blogPost('/admin/lock-post',{id}); if(!data.ok){toast(data.error);return;} toast(data.locked?'Comments locked':'Comments unlocked'); allPosts=[]; renderPosts(); }
+async function clonePost(id) { const data=await blogPost('/admin/clone-post',{id}); if(!data.ok){toast(data.error);return;} toast('Post cloned as draft: '+data.post.id); allPosts=[]; renderPosts(); }
 
 async function resetLikes(id) {
   if (!confirm('Reset all likes for this post? This cannot be undone.')) return;
-  const data = await blogPost('/admin/reset-likes', { postId: id });
+  const data = await blogPost('/admin/reset-likes', {postId:id});
   if (!data.ok) { toast(data.error); return; }
   toast('Likes reset'); allPosts=[]; renderPosts();
 }
@@ -697,14 +697,14 @@ async function resetLikes(id) {
 async function nukeComments(id) {
   if (!confirm('Delete ALL comments on this post? This is irreversible.')) return;
   if (!confirm('Are you absolutely sure? All comments and replies will be gone.')) return;
-  const data = await blogPost('/admin/nuke-comments', { postId: id });
+  const data = await blogPost('/admin/nuke-comments', {postId:id});
   if (!data.ok) { toast(data.error); return; }
   toast('All comments deleted'); allPosts=[]; renderPosts();
 }
 
 async function deletePost(id) {
   if (!confirm(`Delete post "${id}"? This cannot be undone.`)) return;
-  const data = await blogPost('/admin/delete-post', { id });
+  const data = await blogPost('/admin/delete-post', {id});
   if (!data.ok) { toast(data.error); return; }
   toast('Post deleted'); allPosts=[]; renderPosts();
 }
@@ -719,8 +719,9 @@ function showLikes(id) {
   openModal('likesModal');
 }
 
+// ── COMMENTS ─────────────────────────────────────────────────────────────────
 async function renderComments() {
-  if (!allPosts.length) { const data = await blogGet('/admin/posts?'); allPosts = data.posts||[]; }
+  if (!allPosts.length) { const data=await blogGet('/admin/posts?'); allPosts=data.posts||[]; }
   document.getElementById('mainContent').innerHTML = `
     <p style="color:var(--text2);font-size:0.85rem;margin-bottom:1.2rem">Click "Manage" to open comment moderation for any post.</p>
     <div class="table-wrap"><table>
@@ -755,26 +756,37 @@ async function showComments(postId) {
 
 function renderAdminComments(comments, postId) {
   if (!comments.length) return '<div class="empty">No comments yet</div>';
-  return comments.map(c => `
-    <div class="comment-item ${c.deleted?'deleted':''} ${c.rageBait?'ragebait':''}" id="ac-${c.id}">
+  // Sort: pinned first, then by timestamp
+  const sorted = [...comments].sort((a,b) => {
+    if (a.pinned && !b.pinned) return -1;
+    if (!a.pinned && b.pinned) return 1;
+    return a.ts - b.ts;
+  });
+  return sorted.map(c => `
+    <div class="comment-item ${c.deleted?'deleted':''} ${c.rageBait?'ragebait':''} ${c.pinned?'pinned-comment':''}" id="ac-${c.id}">
       <div class="comment-meta">
-        <span class="comment-meta-name">${c.rageBait ? '' : ''}${esc(c.deleted?'[deleted]':c.name)}</span>
+        <span class="comment-meta-name">${esc(c.deleted?'[deleted]':c.name)}</span>
         <span class="comment-meta-ts">${timeAgo(c.ts)}</span>
         ${!c.deleted?`<span class="comment-meta-ip" title="IP">${esc(c.ip||'?')}</span>`:''}
         ${c.fp?`<span class="comment-meta-fp" title="Fingerprint">fp:${esc(c.fp.slice(0,8))}</span>`:''}
+        ${c.authenticated?'<span class="badge badge-auth">Registered</span>':''}
         ${c.deleted?'<span class="badge badge-del">Soft Deleted</span>':''}
         ${c.rageBait?'<span class="badge badge-ragebait">Ragebait</span>':''}
+        ${c.pinned?'<span class="badge badge-pinned">📌 Pinned</span>':''}
         ${c.editedByAdmin&&!c.deleted?'<span class="badge" style="background:var(--purple-dim);color:var(--purple2);border:1px solid rgba(139,92,246,0.25)">Edited by mod</span>':''}
         <span style="margin-left:auto;font-size:0.72rem;color:var(--text3)">${c.likes||0} likes · ${c.dislikes||0} dislikes · ID: ${esc(c.id)}</span>
       </div>
       <div class="comment-text ${c.deleted?'deleted-msg':''}">${esc(c.body)}</div>
       <div style="display:flex;gap:0.4rem;margin-top:0.5rem;flex-wrap:wrap">
-        ${!c.deleted?`<button class="btn btn-warning btn-sm" onclick="softDeleteComment('${postId}','${c.id}')">Soft Delete</button>
+        ${!c.deleted?`
+          <button class="btn btn-purple btn-sm" style="background:var(--purple-dim);border:1px solid rgba(139,92,246,0.3);color:var(--purple2)" onclick="togglePinComment('${postId}','${c.id}')">${c.pinned?'📌 Unpin':'📌 Pin'}</button>
+          <button class="btn btn-warning btn-sm" onclick="softDeleteComment('${postId}','${c.id}')">Soft Delete</button>
           <button class="btn btn-ghost btn-sm" onclick="openEditComment('${postId}','${c.id}',null,'${esc(c.body).replace(/'/g,"\\'")}')">Edit</button>`:''}
         <button class="btn btn-danger btn-sm" onclick="hardDeleteComment('${postId}','${c.id}')">Hard Delete</button>
-        ${!c.deleted?`<button class="btn btn-yellow btn-sm" onclick="banByIp('${esc(c.ip||'')}')">Ban IP</button>
+        ${!c.deleted?`
+          <button class="btn btn-yellow btn-sm" onclick="banByIp('${esc(c.ip||'')}')">Ban IP</button>
           <button class="btn btn-success btn-sm" onclick="quickTagUser('${esc(c.name||'')}')">Tag User</button>
-          <button class="btn btn-clown btn-sm" onclick="toggleRageBait('${postId}','${c.id}')">${c.rageBait ? '✅ UnRagebait' : 'Ragebait'}</button>`:''}
+          <button class="btn btn-clown btn-sm" onclick="toggleRageBait('${postId}','${c.id}')">${c.rageBait?'✅ UnRagebait':'Ragebait'}</button>`:''}
       </div>
       ${(c.replies||[]).length?`<div class="reply-indent">${c.replies.map(r=>replyAdminHTML(r,c.id,postId)).join('')}</div>`:''}
     </div>`).join('');
@@ -783,10 +795,11 @@ function renderAdminComments(comments, postId) {
 function replyAdminHTML(r, parentId, postId) {
   return `<div class="comment-item ${r.deleted?'deleted':''} ${r.rageBait?'ragebait':''}" style="margin-bottom:0.5rem;background:var(--surface)" id="ar-${r.id}">
     <div class="comment-meta">
-      <span class="comment-meta-name" style="font-size:0.75rem">${r.rageBait ? '🤡 ' : ''}${esc(r.deleted?'[deleted]':r.name)}</span>
+      <span class="comment-meta-name" style="font-size:0.75rem">${r.rageBait?'🤡 ':''}${esc(r.deleted?'[deleted]':r.name)}</span>
       <span class="comment-meta-ts">${timeAgo(r.ts)}</span>
       ${!r.deleted?`<span class="comment-meta-ip">${esc(r.ip||'?')}</span>`:''}
       ${r.fp?`<span class="comment-meta-fp">fp:${esc(r.fp.slice(0,8))}</span>`:''}
+      ${r.authenticated?'<span class="badge badge-auth">Registered</span>':''}
       ${r.deleted?'<span class="badge badge-del">Soft Deleted</span>':''}
       ${r.rageBait?'<span class="badge badge-ragebait">🤡 Rage Bait</span>':''}
       ${r.editedByAdmin&&!r.deleted?'<span class="badge" style="background:var(--purple-dim);color:var(--purple2);border:1px solid rgba(139,92,246,0.25)">Edited</span>':''}
@@ -799,13 +812,21 @@ function replyAdminHTML(r, parentId, postId) {
       <button class="btn btn-danger btn-sm" onclick="hardDeleteComment('${postId}','${parentId}','${r.id}')">Hard Delete</button>
       ${!r.deleted?`<button class="btn btn-yellow btn-sm" onclick="banByIp('${esc(r.ip||'')}')">Ban IP</button>
         <button class="btn btn-success btn-sm" onclick="quickTagUser('${esc(r.name||'')}')">Tag User</button>
-        <button class="btn btn-clown btn-sm" onclick="toggleRageBait('${postId}','${parentId}','${r.id}')">${r.rageBait ? 'Unragebait' : 'Ragebait'}</button>`:''}
+        <button class="btn btn-clown btn-sm" onclick="toggleRageBait('${postId}','${parentId}','${r.id}')">${r.rageBait?'Unragebait':'Ragebait'}</button>`:''}
     </div>
   </div>`;
 }
 
+// ── PIN COMMENT ───────────────────────────────────────────────────────────────
+async function togglePinComment(postId, commentId) {
+  const data = await blogPost('/admin/pin-comment', {postId, commentId});
+  if (!data.ok) { toast(data.error); return; }
+  toast(data.pinned ? '📌 Comment pinned' : 'Comment unpinned');
+  showComments(postId);
+}
+
 async function toggleRageBait(postId, commentId, replyId) {
-  const data = await blogPost('/admin/rage-bait', { postId, commentId, replyId: replyId || undefined });
+  const data = await blogPost('/admin/rage-bait', {postId, commentId, replyId: replyId||undefined});
   if (!data.ok) { toast(data.error); return; }
   toast(data.rageBait ? '🤡' : 'Rage bait removed');
   showComments(postId);
@@ -813,25 +834,25 @@ async function toggleRageBait(postId, commentId, replyId) {
 
 async function quickTagUser(name) {
   if (!name) { toast('No name'); return; }
-  const tag = prompt(`Assign tag to "${name}":\n\nOptions: deluxe, gold, developer\nLeave empty to remove tag:`,'');
+  const tag = prompt(`Assign tag to "${name}":\n\nOptions: deluxe, gold, developer\nLeave empty to remove tag:`, '');
   if (tag === null) return;
-  const data = await blogPost('/admin/set-user-tag', { name, tag: tag.trim() || null });
-  if (!data.ok) { toast(data.error, true); return; }
+  const data = await blogPost('/admin/set-user-tag', {name, tag: tag.trim()||null});
+  if (!data.ok) { toast(data.error); return; }
   toast(tag ? `Tagged ${name} as ${tag}` : `Removed tag from ${name}`);
 }
 
 async function softDeleteComment(postId, commentId, replyId) {
   if (!confirm('Soft delete: marks as [deleted by moderator], still visible as placeholder.')) return;
-  const data = await blogPost('/admin/delete-comment', { postId, commentId, replyId: replyId||undefined });
+  const data = await blogPost('/admin/delete-comment', {postId, commentId, replyId: replyId||undefined});
   if (!data.ok) { toast(data.error); return; }
   toast('Soft deleted'); showComments(postId);
 }
 
 async function hardDeleteComment(postId, commentId, replyId) {
   if (!confirm('Hard delete: completely removes the comment. Cannot be undone.')) return;
-  const data = await blogPost('/admin/hard-delete-comment', { postId, commentId, replyId: replyId||undefined });
+  const data = await blogPost('/admin/hard-delete-comment', {postId, commentId, replyId: replyId||undefined});
   if (!data.ok) { toast(data.error); return; }
-  toast('Hard deleted'); allPosts = []; showComments(postId);
+  toast('Hard deleted'); allPosts=[]; showComments(postId);
 }
 
 function openEditComment(postId, commentId, replyId, currentBody) {
@@ -850,7 +871,7 @@ function openEditComment(postId, commentId, replyId, currentBody) {
 async function saveEditComment(postId, commentId, replyId) {
   const newBody = document.getElementById('editCommentText').value.trim();
   if (!newBody) { toast('Body cannot be empty'); return; }
-  const payload = { postId, commentId, newBody };
+  const payload = {postId, commentId, newBody};
   if (replyId) payload.replyId = replyId;
   const data = await blogPost('/admin/edit-comment', payload);
   if (!data.ok) { toast(data.error); return; }
@@ -862,18 +883,18 @@ function banByIp(ip) {
   const hours = prompt(`Ban IP: ${ip}\nDuration in hours (default 24):`, '24');
   if (hours === null) return;
   const reason = prompt('Ban reason (optional):', 'Violation of community guidelines') || 'Violation of community guidelines';
-  blogPost('/admin/ban-identity', { ip, reason, durationHours: parseInt(hours)||24 }).then(data => {
+  blogPost('/admin/ban-identity', {ip, reason, durationHours: parseInt(hours)||24}).then(data => {
     if (!data.ok) { toast(data.error); return; }
     toast(`IP ${ip} banned for ${hours}h`);
   });
 }
 
+// ── USER TAGS ─────────────────────────────────────────────────────────────────
 async function renderTags() {
   const c = document.getElementById('mainContent');
   c.innerHTML = '<div class="spinner"></div>';
   const data = await fetch(BLOG_WORKER+'/admin/list-tags?adminKey='+encodeURIComponent(ADMIN_KEY)).then(r=>r.json());
   const tags = data.tags || [];
-
   c.innerHTML = `<div style="max-width:720px">
     <div class="action-group" style="margin-bottom:1.5rem">
       <div class="action-group-title">
@@ -909,7 +930,7 @@ async function renderTags() {
             ${tagBadgeHTML(t.tag)}
           </div>
           <div style="display:flex;align-items:center;gap:0.5rem">
-            <span style="font-size:0.7rem;color:var(--text3)">${t.assignedAt ? fmt(t.assignedAt) : ''}</span>
+            <span style="font-size:0.7rem;color:var(--text3)">${t.assignedAt?fmt(t.assignedAt):''}</span>
             <button class="btn btn-danger btn-sm" onclick="removeTag('${esc(t.name)}')">Remove</button>
           </div>
         </div>`).join('') : '<div class="empty" style="padding:2rem 0">No tagged users yet</div>'}
@@ -921,19 +942,175 @@ async function assignTag() {
   const name = document.getElementById('tagName').value.trim();
   const tag = document.getElementById('tagValue').value;
   if (!name) { toast('Username required'); return; }
-  const data = await blogPost('/admin/tag-by-name', { name, tag: tag || null });
+  const data = await blogPost('/admin/tag-by-name', {name, tag: tag||null});
   if (!data.ok) { toast(data.error); return; }
   toast(tag ? `Tagged "${name}" as ${tag} (${data.affectedEntries} comments updated)` : `Removed tag from "${name}"`);
   renderTags();
 }
 
 async function removeTag(name) {
-  const data = await blogPost('/admin/set-user-tag', { name, tag: null });
+  const data = await blogPost('/admin/set-user-tag', {name, tag:null});
   if (!data.ok) { toast(data.error); return; }
   toast(`Removed tag from "${name}"`);
   renderTags();
 }
 
+// ── ACCOUNTS ──────────────────────────────────────────────────────────────────
+async function renderAccounts() {
+  const c = document.getElementById('mainContent');
+  c.innerHTML = '<div class="spinner"></div>';
+  const data = await fetch(BLOG_WORKER+'/admin/list-users?adminKey='+encodeURIComponent(ADMIN_KEY)).then(r=>r.json());
+  const users = data.users || [];
+
+  c.innerHTML = `<div style="max-width:760px">
+    <div class="card" style="margin-bottom:1.5rem">
+      <div class="card-header">
+        <span class="card-title">Registered Accounts (${users.length})</span>
+        <button class="btn btn-ghost btn-sm" onclick="renderAccounts()">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-.88-3.86"/></svg>
+          Refresh
+        </button>
+      </div>
+      ${users.length ? users.map(u => `
+        <div class="user-card">
+          <div class="user-card-info">
+            <div class="user-card-name">
+              ${esc(u.username)}
+              ${tagBadgeHTML(u.tag)}
+            </div>
+            <div class="user-card-meta">
+              Created ${fmt(u.createdAt)}
+              ${u.lastLogin ? ` · Last login ${timeAgo(u.lastLogin)}` : ''}
+            </div>
+          </div>
+          <div class="user-card-actions">
+            <button class="btn btn-ghost btn-sm" onclick="openEditAccount('${esc(u.username)}','${esc(u.tag||'')}')">Edit</button>
+            <button class="btn btn-danger btn-sm" onclick="deleteAccount('${esc(u.username)}')">Delete</button>
+          </div>
+        </div>`).join('') : '<div class="empty" style="padding:2rem 0">No registered accounts yet</div>'}
+    </div>
+
+    <div class="action-group">
+      <div class="action-group-title">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        Lookup Account
+      </div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Username</label>
+          <input class="input" id="lookupUsername" placeholder="Exact username">
+        </div>
+        <div><button class="btn btn-primary" onclick="lookupAccount()">Lookup</button></div>
+        <div id="lookupResult"></div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function openEditAccount(username, currentTag) {
+  document.getElementById('editAccountBody').innerHTML = `
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label">Username</label>
+        <input class="input" value="${esc(username)}" disabled style="opacity:.6">
+        <span class="form-hint">Username cannot be changed here — use "Change Username" below.</span>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Change Username</label>
+        <div style="display:flex;gap:0.5rem">
+          <input class="input" id="editAccNewUsername" placeholder="New username">
+          <button class="btn btn-warning btn-sm" style="white-space:nowrap" onclick="changeUsername('${esc(username)}')">Rename</button>
+        </div>
+        <span class="form-hint">This updates all comments and reservations. Use carefully.</span>
+      </div>
+      <div class="form-group">
+        <label class="form-label">New Password</label>
+        <div style="display:flex;gap:0.5rem">
+          <input class="input" id="editAccPassword" type="password" placeholder="New password (min 6 chars)">
+          <button class="btn btn-warning btn-sm" style="white-space:nowrap" onclick="changePassword('${esc(username)}')">Set Password</button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">User Tag</label>
+        <div style="display:flex;gap:0.5rem;align-items:center">
+          <select class="input" id="editAccTag">
+            <option value="" ${!currentTag?'selected':''}>None</option>
+            <option value="deluxe" ${currentTag==='deluxe'?'selected':''}>✦ Deluxe</option>
+            <option value="gold" ${currentTag==='gold'?'selected':''}>★ Gold</option>
+            <option value="developer" ${currentTag==='developer'?'selected':''}>⌨ Developer</option>
+          </select>
+          <button class="btn btn-primary btn-sm" style="white-space:nowrap" onclick="updateAccountTag('${esc(username)}')">Set Tag</button>
+        </div>
+      </div>
+      <div style="display:flex;gap:0.6rem;margin-top:0.5rem">
+        <button class="btn btn-danger" onclick="deleteAccount('${esc(username)}')">Delete Account</button>
+        <button class="btn btn-ghost" onclick="closeModal('editAccountModal')">Close</button>
+      </div>
+    </div>`;
+  openModal('editAccountModal');
+}
+
+async function changeUsername(oldUsername) {
+  const newUsername = document.getElementById('editAccNewUsername').value.trim();
+  if (!newUsername) { toast('New username required'); return; }
+  if (!confirm(`Rename "${oldUsername}" to "${newUsername}"? This will update all their comments and name reservations.`)) return;
+  const data = await blogPost('/admin/update-user', {username: oldUsername, newUsername});
+  if (!data.ok) { toast(data.error); return; }
+  toast(`Renamed to "${newUsername}"`);
+  closeModal('editAccountModal');
+  renderAccounts();
+}
+
+async function changePassword(username) {
+  const newPassword = document.getElementById('editAccPassword').value.trim();
+  if (!newPassword) { toast('Password required'); return; }
+  if (newPassword.length < 6) { toast('Password must be at least 6 characters'); return; }
+  const data = await blogPost('/admin/update-user', {username, newPassword});
+  if (!data.ok) { toast(data.error); return; }
+  toast(`Password updated for "${username}"`);
+  document.getElementById('editAccPassword').value = '';
+}
+
+async function updateAccountTag(username) {
+  const tag = document.getElementById('editAccTag').value;
+  const data = await blogPost('/admin/set-user-tag', {name: username, tag: tag||null});
+  if (!data.ok) { toast(data.error); return; }
+  toast(tag ? `Tagged "${username}" as ${tag}` : `Removed tag from "${username}"`);
+}
+
+async function deleteAccount(username) {
+  if (!confirm(`Delete account "${username}"?\n\nThis will:\n• Remove the account and password\n• Free the username reservation\n• Their comments remain but will appear as unregistered\n\nThis cannot be undone.`)) return;
+  if (!confirm(`Confirm: permanently delete "${username}"?`)) return;
+  const data = await blogPost('/admin/delete-user', {username});
+  if (!data.ok) { toast(data.error); return; }
+  toast(`Account "${username}" deleted`);
+  closeModal('editAccountModal');
+  renderAccounts();
+}
+
+async function lookupAccount() {
+  const username = document.getElementById('lookupUsername').value.trim();
+  if (!username) { toast('Username required'); return; }
+  const data = await fetch(BLOG_WORKER+'/admin/get-user?adminKey='+encodeURIComponent(ADMIN_KEY)+'&username='+encodeURIComponent(username)).then(r=>r.json());
+  const el = document.getElementById('lookupResult');
+  if (!data.ok || !data.user) {
+    el.innerHTML = `<div style="color:var(--red);font-size:0.82rem;padding:0.8rem 0">User "${esc(username)}" not found.</div>`;
+    return;
+  }
+  const u = data.user;
+  el.innerHTML = `<div class="user-card" style="margin-top:0.5rem">
+    <div class="user-card-info">
+      <div class="user-card-name">${esc(u.username)} ${tagBadgeHTML(u.tag)}</div>
+      <div class="user-card-meta">Created ${fmt(u.createdAt)} · Last login ${u.lastLogin?timeAgo(u.lastLogin):'never'}</div>
+    </div>
+    <div class="user-card-actions">
+      <button class="btn btn-ghost btn-sm" onclick="openEditAccount('${esc(u.username)}','${esc(u.tag||'')}')">Edit</button>
+      <button class="btn btn-danger btn-sm" onclick="deleteAccount('${esc(u.username)}')">Delete</button>
+    </div>
+  </div>`;
+}
+
+// ── TOOLS ─────────────────────────────────────────────────────────────────────
 function renderTools() {
   document.getElementById('mainContent').innerHTML = `
     <div style="max-width:720px;display:flex;flex-direction:column;gap:1.2rem">
@@ -1038,7 +1215,7 @@ async function overrideViews() {
   const postId = document.getElementById('statsPostId').value.trim();
   const views = document.getElementById('statsViews').value;
   if (!postId) { toast('Post ID required'); return; }
-  const data = await blogPost('/admin/update-views', { postId, views: parseInt(views)||0 });
+  const data = await blogPost('/admin/update-views', {postId, views: parseInt(views)||0});
   if (!data.ok) { toast(data.error); return; }
   toast(`Views set to ${data.views}`);
 }
@@ -1047,7 +1224,7 @@ async function overrideLikes() {
   const postId = document.getElementById('statsPostId').value.trim();
   const likes = document.getElementById('statsLikes').value;
   if (!postId) { toast('Post ID required'); return; }
-  const data = await blogPost('/admin/update-likes', { postId, likes: parseInt(likes)||0 });
+  const data = await blogPost('/admin/update-likes', {postId, likes: parseInt(likes)||0});
   if (!data.ok) { toast(data.error); return; }
   toast(`Likes set to ${data.likes}`);
 }
@@ -1057,18 +1234,19 @@ async function transferComments() {
   const toPostId = document.getElementById('transferTo').value.trim();
   if (!fromPostId || !toPostId) { toast('Both IDs required'); return; }
   if (!confirm(`Transfer all comments from "${fromPostId}" to "${toPostId}"?`)) return;
-  const data = await blogPost('/admin/transfer-comments', { fromPostId, toPostId });
+  const data = await blogPost('/admin/transfer-comments', {fromPostId, toPostId});
   if (!data.ok) { toast(data.error); return; }
   toast(`Transferred ${data.transferred} comments`);
 }
 
+// ── BROADCASTS ────────────────────────────────────────────────────────────────
 async function renderBroadcasts() {
   const c = document.getElementById('mainContent');
   c.innerHTML = '<div class="spinner"></div>';
   let banners = [], warning = null;
   try {
-    const data = await fetch(BLOG_WORKER + '/broadcasts').then(r=>r.json());
-    if (data.ok) { banners = data.banners||[]; warning = data.warning||null; }
+    const data = await fetch(BLOG_WORKER+'/broadcasts').then(r=>r.json());
+    if (data.ok) { banners=data.banners||[]; warning=data.warning||null; }
   } catch(_) {}
 
   c.innerHTML = `<div style="max-width:760px;display:flex;flex-direction:column;gap:1.4rem">
@@ -1139,13 +1317,13 @@ async function addBanner() {
   const color = document.getElementById('bannerColor').value.trim() || '#8b5cf6';
   const icon = document.getElementById('bannerIcon').value.trim();
   if (!text) { toast('Banner text is required'); return; }
-  const data = await blogPost('/admin/broadcasts/banner-add', { text, color, icon: icon||null });
+  const data = await blogPost('/admin/broadcasts/banner-add', {text, color, icon: icon||null});
   if (!data.ok) { toast(data.error); return; }
   toast('Banner added'); renderBroadcasts();
 }
 
 async function deleteBanner(index) {
-  const data = await blogPost('/admin/broadcasts/banner-delete', { index });
+  const data = await blogPost('/admin/broadcasts/banner-delete', {index});
   if (!data.ok) { toast(data.error); return; }
   toast('Banner removed'); renderBroadcasts();
 }
@@ -1155,7 +1333,7 @@ async function sendLiveWarning() {
   const duration = parseInt(document.getElementById('warningDuration').value) || 10;
   if (!message) { toast('Message is required'); return; }
   if (duration < 3 || duration > 120) { toast('Duration must be between 3 and 120 seconds'); return; }
-  const data = await blogPost('/admin/broadcasts/live-warning', { message, duration });
+  const data = await blogPost('/admin/broadcasts/live-warning', {message, duration});
   if (!data.ok) { toast(data.error); return; }
   toast('Live warning sent!'); renderBroadcasts();
 }
@@ -1172,7 +1350,7 @@ async function sendAnnouncement() {
   const colorStr = document.getElementById('annColor').value.trim().replace('#','');
   const color = parseInt(colorStr, 16) || 0x8b5cf6;
   if (!message) { toast('Message is required'); return; }
-  const data = await blogPost('/admin/announce', { message, title, color });
+  const data = await blogPost('/admin/announce', {message, title, color});
   if (!data.ok) { toast(data.error); return; }
   toast('Announcement sent');
 }
@@ -1182,7 +1360,7 @@ async function banIdentity() {
   const hours = parseInt(document.getElementById('banHours').value) || 24;
   const reason = document.getElementById('banReason').value.trim();
   if (!ip) { toast('IP is required'); return; }
-  const data = await blogPost('/admin/ban-identity', { ip, reason, durationHours: hours });
+  const data = await blogPost('/admin/ban-identity', {ip, reason, durationHours: hours});
   if (!data.ok) { toast(data.error); return; }
   toast(`Banned ${ip} for ${hours}h`);
 }
@@ -1190,7 +1368,7 @@ async function banIdentity() {
 async function unbanIdentity() {
   const ip = document.getElementById('banIp').value.trim();
   if (!ip) { toast('IP is required'); return; }
-  const data = await blogPost('/admin/unban-identity', { ip });
+  const data = await blogPost('/admin/unban-identity', {ip});
   if (!data.ok) { toast(data.error); return; }
   toast(`Unbanned ${ip}`);
 }
@@ -1199,7 +1377,7 @@ async function resetUserName() {
   const ip = document.getElementById('resetIp').value.trim();
   const fp = document.getElementById('resetFp').value.trim();
   if (!ip && !fp) { toast('IP or fingerprint required'); return; }
-  const data = await blogPost('/admin/reset-name', { ip, fp });
+  const data = await blogPost('/admin/reset-name', {ip, fp});
   if (!data.ok) { toast(data.error); return; }
   toast('Name binding reset');
 }
@@ -1208,27 +1386,28 @@ async function bulkAction(action) {
   const postId = document.getElementById('bulkPostId').value.trim();
   if (!postId) { toast('Post ID is required'); return; }
   if (action==='lock'||action==='unlock') {
-    const data = await blogPost('/admin/lock-post', { id: postId });
+    const data = await blogPost('/admin/lock-post', {id: postId});
     if (!data.ok) { toast(data.error); return; }
     toast(data.locked?'Locked':'Unlocked');
   } else if (action==='reset-likes') {
     if (!confirm(`Reset likes for "${postId}"?`)) return;
-    const data = await blogPost('/admin/reset-likes', { postId });
+    const data = await blogPost('/admin/reset-likes', {postId});
     if (!data.ok) { toast(data.error); return; }
     toast('Likes reset');
   } else if (action==='nuke') {
     if (!confirm(`Nuke ALL comments for "${postId}"? Cannot undo.`)) return;
     if (!confirm('Are you sure?')) return;
-    const data = await blogPost('/admin/nuke-comments', { postId });
+    const data = await blogPost('/admin/nuke-comments', {postId});
     if (!data.ok) { toast(data.error); return; }
     toast('Nuked');
   }
   allPosts = [];
 }
 
+// ── GIVEAWAYS ─────────────────────────────────────────────────────────────────
 function fmtTimeLeft(ms) {
   if (ms<=0) return 'Ended';
-  const h = Math.floor(ms/3600000); const m = Math.floor((ms%3600000)/60000);
+  const h=Math.floor(ms/3600000); const m=Math.floor((ms%3600000)/60000);
   if (h>24) return Math.floor(h/24)+'d left';
   if (h>0) return h+'h '+m+'m left';
   return m+'m left';
@@ -1256,7 +1435,7 @@ async function renderGiveaways() {
         </div>`;
       }).join('')}
     </div>`;
-  } catch(e) { c.innerHTML = '<div class="empty">Failed to load giveaways.</div>'; }
+  } catch(e) { c.innerHTML='<div class="empty">Failed to load giveaways.</div>'; }
 }
 
 function renderGiveawayNew() {
@@ -1284,7 +1463,7 @@ async function createGiveaway() {
   const btn = document.getElementById('gwCreateBtn');
   btn.disabled=true; btn.textContent='Creating...';
   try {
-    const r = await gwPost('/admin/create', { adminKey: ADMIN_KEY, id, title, description: desc, hours });
+    const r = await gwPost('/admin/create', {adminKey:ADMIN_KEY, id, title, description:desc, hours});
     if (r.ok) {
       const ids = JSON.parse(localStorage.getItem('gw_ids')||'[]');
       if (!ids.includes(id)) ids.push(id);
@@ -1297,28 +1476,26 @@ async function createGiveaway() {
   } catch(e) { toast('Network error'); btn.disabled=false; btn.textContent='Create Giveaway'; }
 }
 
-function selectPresetIcon(index){
-  document.getElementById('bannerIcon').value = presetIcons[index].svg;
-}
+function selectPresetIcon(index){ document.getElementById('bannerIcon').value = presetIcons[index].svg; }
 
 async function pickWinner(id) {
   if (!confirm(`Pick a winner for "${id}"?`)) return;
-  const r = await gwPost('/admin/winner', { adminKey: ADMIN_KEY, giveawayId: id });
+  const r = await gwPost('/admin/winner', {adminKey:ADMIN_KEY, giveawayId:id});
   if (r.ok) { toast('Winner: '+r.winner); renderGiveaways(); }
   else toast(r.error||'Failed');
 }
 
 async function endGiveaway(id) {
   if (!confirm(`End giveaway "${id}"?`)) return;
-  const r = await gwPost('/admin/end', { adminKey: ADMIN_KEY, giveawayId: id });
+  const r = await gwPost('/admin/end', {adminKey:ADMIN_KEY, giveawayId:id});
   if (r.ok) { toast('Giveaway ended'); renderGiveaways(); }
   else toast(r.error||'Failed');
 }
 
 function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
 function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
-document.addEventListener('keydown', e => { if (e.key==='Escape') document.querySelectorAll('.modal-overlay').forEach(m=>m.classList.add('hidden')); });
-document.querySelectorAll('.modal-overlay').forEach(m => m.addEventListener('click', e => { if (e.target===m) m.classList.add('hidden'); }));
+document.addEventListener('keydown', e => { if(e.key==='Escape') document.querySelectorAll('.modal-overlay').forEach(m=>m.classList.add('hidden')); });
+document.querySelectorAll('.modal-overlay').forEach(m => m.addEventListener('click', e => { if(e.target===m) m.classList.add('hidden'); }));
 </script>
 </body>
 </html>
