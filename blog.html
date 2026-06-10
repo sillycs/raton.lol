@@ -186,10 +186,28 @@ nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-co
 .submit-btn:disabled{opacity:.5;pointer-events:none}
 .comment-list{display:flex;flex-direction:column;gap:1rem}
 
-/* ── PINNED COMMENT ── */
 .comment.pinned-comment{border-color:rgba(139,92,246,0.4);background:rgba(139,92,246,0.04)}
-.pinned-comment-badge{display:inline-flex;align-items:center;gap:4px;font-size:0.65rem;font-weight:700;letter-spacing:0.08em;color:var(--purple2);background:var(--purple-dim);border:1px solid rgba(139,92,246,0.25);border-radius:99px;padding:1px 7px;margin-left:6px}
+.pinned-comment-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  font-size:0.65rem;
+  font-weight:700;
+  letter-spacing:0.08em;
+  color:var(--purple2);
+  background:var(--purple-dim);
+  border:1px solid rgba(139,92,246,0.25);
+  border-radius:99px;
+  padding:1px 7px;
+  margin-left:6px;
+}
 
+.pinned-comment-badge img{
+  width:12px;
+  height:12px;
+  object-fit:contain;
+  flex-shrink:0;
+}
 .comment{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem 1.1rem;position:relative;overflow:visible}
 .comment.deleted{opacity:.55}
 .comment.ragebait{background:#f5eedf!important;border-color:rgba(180,140,60,0.35)!important;color:#2a2010}
@@ -756,7 +774,6 @@ async function loadIdentity(){
     } catch(_) { clearStoredSession(); }
     finally { hideLoading(); }
   }
-  // Fall back to IP/FP binding
   try {
     showLoading('Checking identity...');
     const data = await api('/my-identity');
@@ -858,7 +875,6 @@ function renderCommentsHTML(comments,postId,locked){
   const form=locked?'':
     `<div class="comment-form">${identityNotice}${authPrompt}<div class="form-row"><input class="form-input" id="cName" placeholder="Your name" maxlength="32" value="${escHtml(savedName)}" ${nameIsLocked?'readonly':''} oninput="${nameIsLocked?'':'handleNameInput(this.value)'}"></div>${!nameIsLocked&&savedName?`<p class="name-locked-hint">Commenting as <strong>${escHtml(savedName)}</strong>. <a href="#" onclick="clearName(event)" style="color:var(--purple2)">Change</a></p>`:''}<div class="textarea-wrap"><textarea class="form-input form-textarea" id="cBody" placeholder="Write a comment... Use @name to mention someone" maxlength="1000" oninput="handleMentionInput(this,'cBody-autocomplete')" onkeydown="handleMentionKeydown(event,this,'cBody-autocomplete')"></textarea><div class="mention-autocomplete" id="cBody-autocomplete"></div></div>${captchaHTML('main')}<div class="form-row-submit"><button class="submit-btn" id="submitCommentBtn" onclick="submitComment(null,'${postId}')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>Post Comment</button></div></div>`;
 
-  // Sort: pinned first, then by time
   const topLevel = comments.filter(c=>!c.parentId);
   const pinnedFirst = [...topLevel.filter(c=>c.pinned), ...topLevel.filter(c=>!c.pinned)];
 
@@ -891,8 +907,7 @@ const DOWNVOTE_SVG_OFF=`<svg width="12" height="12" viewBox="0 0 24 24" fill="no
 function commentHTML(c,postId,allComments,locked){
   const isDeleted=c.deleted,cLiked=likedComments[`c:${c.id}`],cDisliked=dislikedComments[`c:${c.id}`],replies=(c.replies||[]),canInteract=!isDeleted&&!c.hardDeleted,isRagebait=!!c.rageBait,isAdmin=!isDeleted&&c.userTag==='developer',isPinned=!!c.pinned;
   const avatarContent=getAvatarHTML(c.name,isDeleted,isRagebait,c.userTag);
-  const pinnedBadge=isPinned?`<span class="pinned-comment-badge"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="17" x2="12" y2="22"/><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V17z"/></svg>Pinned</span>`:''
-  return`<div class="comment ${isDeleted?'deleted':''} ${isRagebait?'ragebait':''} ${isAdmin?'administrator':''} ${isPinned?'pinned-comment':''}" id="comment-${c.id}"><div class="comment-header"><div class="comment-avatar">${avatarContent}</div><span class="comment-name">${escHtml(isDeleted?'deleted':c.name)}${!isDeleted?tagBadge(c.userTag,c.name):''}${c.authenticated&&!isDeleted?'<span class="authenticated-badge">✓ registered</span>':''}${pinnedBadge}</span>${c.editedByAdmin&&!isDeleted?`<span class="comment-edited">[edited by a moderator]</span>`:''}<span class="comment-ts">${timeAgo(c.ts)}</span></div><div class="comment-body ${isDeleted?'deleted-msg':''}">${isDeleted?escHtml(c.body):renderCommentBody(c.body)}</div><div class="comment-actions">${canInteract?`<button class="comment-upvote ${cLiked?'upvoted':''}" id="clbtn-${c.id}" onclick="likeComment(event,'${postId}','comment','${c.id}')">${cLiked?UPVOTE_SVG_ON:UPVOTE_SVG_OFF}<span id="cl-${c.id}">${c.likes||0}</span></button><button class="comment-downvote ${cDisliked?'downvoted':''}" id="dlbtn-${c.id}" onclick="dislikeComment(event,'${postId}','comment','${c.id}')">${cDisliked?DOWNVOTE_SVG_ON:DOWNVOTE_SVG_OFF}<span id="dl-${c.id}">${c.dislikes||0}</span></button>${reactionsHTML(c.id,'comment',null,c.reactions||{})}`:''}`+(canInteract&&!locked?`<button class="reply-toggle" onclick="toggleReplyForm('${c.id}','${postId}')"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 17 4 12 9 7"/><path d="M20 18v-2a4 4 0 0 0-4-4H4"/></svg>Reply</button>`:'')+`</div><div id="replyForm-${c.id}"></div>${replies.length?`<div class="reply-list" id="replies-${c.id}">${replies.map(r=>replyHTML(r,c.id,postId,locked)).join('')}</div>`:`<div id="replies-${c.id}"></div>`}</div>`
+const pinnedBadge=isPinned?`<span class="pinned-comment-badge"><img src="https://raton.lol/img/office-push-pin.png" alt="">Pinned</span>`:'';  return`<div class="comment ${isDeleted?'deleted':''} ${isRagebait?'ragebait':''} ${isAdmin?'administrator':''} ${isPinned?'pinned-comment':''}" id="comment-${c.id}"><div class="comment-header"><div class="comment-avatar">${avatarContent}</div><span class="comment-name">${escHtml(isDeleted?'deleted':c.name)}${!isDeleted?tagBadge(c.userTag,c.name):''}${c.authenticated&&!isDeleted?'<span class="authenticated-badge">✓ registered</span>':''}${pinnedBadge}</span>${c.editedByAdmin&&!isDeleted?`<span class="comment-edited">[edited by a moderator]</span>`:''}<span class="comment-ts">${timeAgo(c.ts)}</span></div><div class="comment-body ${isDeleted?'deleted-msg':''}">${isDeleted?escHtml(c.body):renderCommentBody(c.body)}</div><div class="comment-actions">${canInteract?`<button class="comment-upvote ${cLiked?'upvoted':''}" id="clbtn-${c.id}" onclick="likeComment(event,'${postId}','comment','${c.id}')">${cLiked?UPVOTE_SVG_ON:UPVOTE_SVG_OFF}<span id="cl-${c.id}">${c.likes||0}</span></button><button class="comment-downvote ${cDisliked?'downvoted':''}" id="dlbtn-${c.id}" onclick="dislikeComment(event,'${postId}','comment','${c.id}')">${cDisliked?DOWNVOTE_SVG_ON:DOWNVOTE_SVG_OFF}<span id="dl-${c.id}">${c.dislikes||0}</span></button>${reactionsHTML(c.id,'comment',null,c.reactions||{})}`:''}`+(canInteract&&!locked?`<button class="reply-toggle" onclick="toggleReplyForm('${c.id}','${postId}')"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 17 4 12 9 7"/><path d="M20 18v-2a4 4 0 0 0-4-4H4"/></svg>Reply</button>`:'')+`</div><div id="replyForm-${c.id}"></div>${replies.length?`<div class="reply-list" id="replies-${c.id}">${replies.map(r=>replyHTML(r,c.id,postId,locked)).join('')}</div>`:`<div id="replies-${c.id}"></div>`}</div>`
 }
 
 function replyHTML(r,parentId,postId,locked){
