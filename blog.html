@@ -793,7 +793,6 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:1.
 .captcha-label{
   font-size:0.7rem;
   color:var(--text3);
-  text-transform:uppercase;
   font-weight:600;
   margin-bottom:2px;
 }
@@ -838,7 +837,6 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:1.
   padding:0.45rem 0.7rem;
   color:var(--text);
   font-size:1rem;
-  text-transform:uppercase;
   outline:none;
   transition:.2s;
 }
@@ -1201,7 +1199,7 @@ function captchaHTML(formId) {
   const canvasId = `captchaCanvas-${formId}`;
   const inputId  = `captchaInput-${formId}`;
   return `<div class="captcha-wrap" id="captchaWrap-${formId}">
-    <div class="captcha-label">R U HUMAN?! v1</div>
+    <div class="captcha-label">r u human?!/div>
     <div class="captcha-row">
       <div class="captcha-canvas-wrap">
         <canvas class="captcha-canvas" id="${canvasId}" width="180" height="52"></canvas>
