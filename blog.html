@@ -46,7 +46,6 @@ nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-co
 .nav-auth{display:flex;align-items:center;gap:0.6rem;flex-shrink:0}
 .nav-mobile-toggle{display:none;background:none;border:none;color:var(--text);padding:6px}
 
-/* ── AUTH BUTTONS ── */
 .auth-btn{display:inline-flex;align-items:center;gap:6px;padding:0.35rem 0.8rem;border-radius:8px;font-family:var(--font-body);font-size:0.75rem;font-weight:600;transition:.2s;border:none}
 .auth-btn-outline{background:none;border:1px solid var(--border2);color:var(--text2)}
 .auth-btn-outline:hover{border-color:var(--purple);color:var(--purple2);background:var(--purple-dim)}
@@ -57,7 +56,6 @@ nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-co
 .auth-btn-logout{background:none;border:1px solid rgba(239,68,68,0.3);color:#ef4444}
 .auth-btn-logout:hover{background:rgba(239,68,68,0.12)}
 
-/* ── AUTH MODAL ── */
 .auth-modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.72);backdrop-filter:blur(8px);z-index:9000;display:flex;align-items:center;justify-content:center;padding:1rem;opacity:0;pointer-events:none;transition:opacity .25s}
 .auth-modal-backdrop.show{opacity:1;pointer-events:auto}
 .auth-modal{background:var(--surface);border:1px solid var(--border2);border-radius:18px;padding:2rem 2.2rem;width:100%;max-width:400px;box-shadow:0 32px 80px rgba(0,0,0,0.6);transform:scale(0.94) translateY(10px);transition:transform .3s cubic-bezier(.22,1,.36,1)}
@@ -79,7 +77,6 @@ nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-co
 .auth-close{position:absolute;top:1rem;right:1rem;background:none;border:none;color:var(--text3);font-size:1.2rem;line-height:1;padding:4px;transition:color .2s}
 .auth-close:hover{color:var(--text)}
 
-/* ── BLOG ── */
 .blog-hero{position:relative;padding:4rem 2rem 3rem;text-align:center;border-bottom:1px solid var(--border);overflow:hidden}
 .blog-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 70% at 50% 0%,rgba(139,92,246,0.08) 0%,transparent 70%);pointer-events:none}
 .hero-eyebrow{display:inline-flex;align-items:center;gap:6px;font-size:0.72rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--purple2);font-weight:600;margin-bottom:1rem}
@@ -359,7 +356,6 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:1.
     <li><a href="#" class="active" id="blogNavLink">Forum</a></li>
   </ul>
   <div class="nav-auth" id="navAuth">
-    <!-- filled by JS -->
   </div>
   <button class="nav-mobile-toggle" onclick="document.getElementById('mainNav').classList.toggle('open')">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
@@ -368,7 +364,6 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:1.
 
 <div id="app"></div>
 
-<!-- ── AUTH MODAL ── -->
 <div class="auth-modal-backdrop" id="authModalBackdrop" onclick="if(event.target===this)closeAuthModal()">
   <div class="auth-modal" style="position:relative">
     <button class="auth-close" onclick="closeAuthModal()" style="position:absolute;top:1rem;right:1rem">✕</button>
@@ -453,13 +448,11 @@ const CUSTOM_AVATARS = {
   });
 })();
 
-// ─── LIGHTBOX ────────────────────────────────────────────────────────────────
 function openLightbox(src) { const lb=document.getElementById('photoLightbox'); document.getElementById('photoLightboxImg').src=src; lb.classList.add('show'); document.body.style.overflow='hidden'; }
 function closeLightbox(e) { if(e.target===document.getElementById('photoLightbox')) closeLightboxBtn(); }
 function closeLightboxBtn() { document.getElementById('photoLightbox').classList.remove('show'); document.body.style.overflow=''; }
 document.addEventListener('keydown', e => { if(e.key==='Escape') { closeLightboxBtn(); closeAuthModal(); } });
 
-// ─── AUTH STATE ───────────────────────────────────────────────────────────────
 let currentUser = null; // { username, tag, sessionToken, sessionExpiresAt }
 
 function getStoredSession() {
@@ -635,7 +628,6 @@ async function submitRegister() {
   } catch(e) { errEl.textContent = 'Network error'; btn.disabled=false; btn.textContent='Create Account'; }
 }
 
-// ─── CAPTCHA ─────────────────────────────────────────────────────────────────
 const CAPTCHA_CHARS = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
 const CAPTCHA_LEN   = 5;
 const CAPTCHA_TTL_MS = 5 * 60 * 1000;
@@ -688,7 +680,6 @@ function showCaptchaModal(sub,onConfirm){const body=document.getElementById('cap
 function dismissCaptchaModal(){document.getElementById('captchaModalBackdrop').classList.remove('show');_modalPendingAction=null}
 async function confirmCaptchaModal(){const btn=document.getElementById('captchaModalConfirm');const payload=getCaptchaPayload('modal');if(!payload){showToast('Please type the captcha code',true);return}if(btn)btn.disabled=true;if(_modalPendingAction)await _modalPendingAction(payload);if(btn)btn.disabled=false;dismissCaptchaModal()}
 
-// ─── IDENTITY & UTILS ─────────────────────────────────────────────────────────
 function getFingerprint(){
   const stored=sessionStorage.getItem('_rfp')||localStorage.getItem('_rfp');if(stored)return stored;
   const canvas=document.createElement('canvas'),gl=canvas.getContext('webgl'),glInfo=gl?gl.getParameter(gl.RENDERER)+gl.getParameter(gl.VENDOR):'';
@@ -741,7 +732,6 @@ async function api(path,opts={}){
 }
 
 async function loadIdentity(){
-  // First try session token from storage
   const stored = getStoredSession();
   if (stored) {
     try {
