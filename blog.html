@@ -774,7 +774,6 @@ nav{
 footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:1.5rem 3rem;text-align:center;}
 .footer-bottom{font-size:0.75rem;color:var(--text3)}
 
-/* ── CAPTCHA ─────────────────────────────────────────────────────────── */
 .captcha-wrap{
   margin-top:0.7rem;
   background:var(--surface2);
@@ -794,7 +793,6 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:1.
 .captcha-label{
   font-size:0.7rem;
   color:var(--text3);
-  letter-spacing:0.08em;
   text-transform:uppercase;
   font-weight:600;
   margin-bottom:2px;
@@ -839,9 +837,7 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:1.
   border-radius:7px;
   padding:0.45rem 0.7rem;
   color:var(--text);
-  font-family:monospace;
   font-size:1rem;
-  letter-spacing:0.18em;
   text-transform:uppercase;
   outline:none;
   transition:.2s;
@@ -852,7 +848,6 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:1.
 .captcha-hint{font-size:0.67rem;color:var(--text3)}
 .captcha-hint b{color:var(--purple2)}
 
-/* inline captcha modal for likes/reactions when suspicious */
 .captcha-modal-backdrop{
   position:fixed;inset:0;
   background:rgba(0,0,0,0.7);
@@ -1232,7 +1227,6 @@ function captchaHTML(formId) {
   </div>`;
 }
 
-/* ── captcha modal (for suspicious likes/reactions) ── */
 let _modalPendingAction = null;
 
 function showCaptchaModal(sub, onConfirm) {
