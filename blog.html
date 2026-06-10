@@ -41,7 +41,7 @@
   --upvote:#7ddc8b;
   --upvote-dim:rgba(125,220,139,0.15);
   --downvote:#ff8a8a;
-  --downvote-dim:rgba(255,138,138,0.15);
+  --downvote-dim:rgba(255,138,138,0.12);
 }
 ::-webkit-scrollbar{width:6px}
 ::-webkit-scrollbar-track{background:#0d0d0d}
@@ -414,6 +414,7 @@ nav{
   overflow:visible;
 }
 .comment.deleted{opacity:.55}
+
 .comment.ragebait{
   background:#f5eedf !important;
   border-color:rgba(180,140,60,0.35) !important;
@@ -447,6 +448,36 @@ nav{
   from{transform:rotate(0deg)}
   to{transform:rotate(360deg)}
 }
+
+.comment.administrator{
+  background:rgba(139,92,246,0.07) !important;
+  border-color:rgba(139,92,246,0.35) !important;
+}
+.comment.administrator .comment-name{color:var(--purple2)}
+.comment.administrator .comment-body{color:#c4b8f0}
+.comment.administrator .comment-ts{color:#7060a8}
+.comment.administrator .comment-upvote,
+.comment.administrator .comment-downvote,
+.comment.administrator .reply-toggle,
+.comment.administrator .reaction-picker-btn{color:#7060a8}
+.comment.administrator .comment-avatar{
+  background:var(--purple-dim) !important;
+  border-color:rgba(139,92,246,0.4) !important;
+}
+.comment.administrator::after{
+  content:'';
+  position:absolute;
+  top:-14px;
+  right:-14px;
+  width:28px;
+  height:28px;
+  background:url('https://raton.lol/img/RATA.png') center/contain no-repeat;
+  animation:ragebaitSpin 2.5s linear infinite;
+  pointer-events:none;
+  z-index:5;
+  filter:drop-shadow(0 0 6px rgba(139,92,246,0.7)) brightness(1.1);
+}
+
 .comment.reply{
   background:rgba(255,255,255,0.02);
   border-color:rgba(255,255,255,0.05);
@@ -459,6 +490,11 @@ nav{
   background:#f5eedf !important;
   border-color:rgba(180,140,60,0.35) !important;
 }
+.comment.reply.administrator{
+  background:rgba(139,92,246,0.06) !important;
+  border-color:rgba(139,92,246,0.25) !important;
+}
+
 .comment-header{display:flex;align-items:center;gap:0.6rem;margin-bottom:0.4rem;flex-wrap:wrap;}
 .comment-avatar{
   width:26px;height:26px;border-radius:50%;
@@ -955,6 +991,11 @@ const REACTIONS = [
   { id:'clown', img:'https://raton.lol/img/clown.png', label:'🤡' },
 ];
 
+const CUSTOM_AVATARS = {
+  'Silly':     'https://raton.lol/img/silly.png',
+  'Moizefala': 'https://raton.lol/img/moizefala.png',
+};
+
 (function(){
   var bg = document.getElementById('rataBg');
   [{x:5,y:8,s:56,d:20,dl:0},{x:18,y:22,s:48,d:24,dl:5},{x:32,y:5,s:64,d:18,dl:9},
@@ -970,11 +1011,6 @@ const REACTIONS = [
 
 /* ════════════════════════════════════════════════════════════════
    CAPTCHA ENGINE
-   Generates a distorted SVG challenge in-browser
-   The answer is sent to the backend as { token, answer }
-   where token = HMAC(secret, challenge+ts) stored in backend
-   session so we never expose the answer client-side
-                       made by silly!
 ════════════════════════════════════════════════════════════════ */
 
 const CAPTCHA_CHARS = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
@@ -1204,7 +1240,6 @@ function showCaptchaModal(sub, onConfirm) {
   const sub_ = document.getElementById('captchaModalSub');
   if (sub_) sub_.textContent = sub || 'Please solve the captcha to continue.';
   if (body) body.innerHTML = captchaHTML('modal');
-  // Load captcha async
   setTimeout(() => newCaptcha('captchaCanvas-modal', 'captchaInput-modal', 'modal'), 80);
   document.getElementById('captchaModalBackdrop').classList.add('show');
   _modalPendingAction = onConfirm;
@@ -1658,7 +1693,6 @@ async function renderPost(id){
   </div>`;
   setupDeveloperRain();
   setupMentionAutocomplete();
-  // Load captcha for main comment form
   setTimeout(() => newCaptcha('captchaCanvas-main', 'captchaInput-main', 'main'), 100);
 }
 
@@ -1693,6 +1727,20 @@ function tagBadge(tag, name) {
     html += `<span class="user-tag op">OP</span>`;
   }
   return html;
+}
+
+function getAvatarHTML(name, isDeleted, isRagebait, userTag) {
+  if (isDeleted) {
+    return `<span>${(name||'?')[0].toUpperCase()}</span>`;
+  }
+  if (isRagebait) {
+    return `<img src="https://raton.lol/img/clown.png" alt="clown">`;
+  }
+
+  if (name && CUSTOM_AVATARS[name]) {
+    return `<img src="${CUSTOM_AVATARS[name]}" alt="${escHtml(name)}">`;
+  }
+  return `<span>${(name||'?')[0].toUpperCase()}</span>`;
 }
 
 function renderCommentsHTML(comments, postId, locked){
@@ -1995,14 +2043,11 @@ function commentHTML(c, postId, allComments, locked){
   const replies    = (c.replies||[]);
   const canInteract = !isDeleted && !c.hardDeleted;
   const isRagebait = !!c.rageBait;
+  const isAdmin    = !isDeleted && c.userTag === 'developer';
 
-  const avatarContent = isDeleted
-    ? `<span>${(c.name||'?')[0].toUpperCase()}</span>`
-    : isRagebait
-      ? `<img src="https://raton.lol/img/clown.png" alt="clown">`
-      : `<span>${(c.name||'?')[0].toUpperCase()}</span>`;
+  const avatarContent = getAvatarHTML(c.name, isDeleted, isRagebait, c.userTag);
 
-  return `<div class="comment ${isDeleted?'deleted':''} ${isRagebait?'ragebait':''}" id="comment-${c.id}">
+  return `<div class="comment ${isDeleted?'deleted':''} ${isRagebait?'ragebait':''} ${isAdmin?'administrator':''}" id="comment-${c.id}">
     <div class="comment-header">
       <div class="comment-avatar">${avatarContent}</div>
       <span class="comment-name">${escHtml(isDeleted?'deleted':c.name)}${!isDeleted ? tagBadge(c.userTag, c.name) : ''}</span>
@@ -2038,14 +2083,11 @@ function replyHTML(r, parentId, postId, locked){
   const rDisliked  = dislikedComments[`r:${r.id}`];
   const canInteract = !isDeleted && !r.hardDeleted;
   const isRagebait = !!r.rageBait;
+  const isAdmin    = !isDeleted && r.userTag === 'developer';
 
-  const avatarContent = isDeleted
-    ? `<span>${(r.name||'?')[0].toUpperCase()}</span>`
-    : isRagebait
-      ? `<img src="https://raton.lol/img/clown.png" alt="clown">`
-      : `<span>${(r.name||'?')[0].toUpperCase()}</span>`;
+  const avatarContent = getAvatarHTML(r.name, isDeleted, isRagebait, r.userTag);
 
-  return `<div class="comment reply ${isDeleted?'deleted':''} ${isRagebait?'ragebait':''}" id="reply-${r.id}">
+  return `<div class="comment reply ${isDeleted?'deleted':''} ${isRagebait?'ragebait':''} ${isAdmin?'administrator':''}" id="reply-${r.id}">
     <div class="comment-header">
       <div class="comment-avatar" style="width:20px;height:20px;font-size:0.6rem">${avatarContent}</div>
       <span class="comment-name">${escHtml(isDeleted?'deleted':r.name)}${!isDeleted ? tagBadge(r.userTag, r.name) : ''}</span>
@@ -2115,7 +2157,6 @@ function toggleReplyForm(commentId, postId){
       </button>
     </div>
   </div>`;
-  // Load captcha for this reply form
   setTimeout(() => newCaptcha(`captchaCanvas-${replyFormId}`, `captchaInput-${replyFormId}`, replyFormId), 80);
 }
 
@@ -2131,7 +2172,6 @@ async function submitComment(parentId, postId){
   if(!name||name.length<2){ showToast('Name must be at least 2 characters', true); return; }
   if(!body||body.length<2){ showToast('Comment must be at least 2 characters', true); return; }
 
-  // Validate captcha client-side first
   const captchaPayload = getCaptchaPayload(formId);
   if (!captchaPayload) {
     showToast('Please complete the captcha', true);
