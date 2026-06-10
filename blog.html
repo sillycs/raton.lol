@@ -187,26 +187,12 @@ nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-co
 .comment-list{display:flex;flex-direction:column;gap:1rem}
 
 .comment.pinned-comment{border-color:rgba(139,92,246,0.4);background:rgba(139,92,246,0.04)}
-.pinned-comment-badge{
-  display:inline-flex;
-  align-items:center;
-  gap:4px;
-  font-size:0.65rem;
-  font-weight:700;
-  letter-spacing:0.08em;
-  color:var(--purple2);
-  background:var(--purple-dim);
-  border:1px solid rgba(139,92,246,0.25);
-  border-radius:99px;
-  padding:1px 7px;
-  margin-left:6px;
-}
-
-.pinned-comment-badge img{
-  width:12px;
-  height:12px;
+.pinned-comment-icon{
+  width:14px;
+  height:14px;
   object-fit:contain;
-  flex-shrink:0;
+  margin-left:6px;
+  vertical-align:middle;
 }
 .comment{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem 1.1rem;position:relative;overflow:visible}
 .comment.deleted{opacity:.55}
@@ -907,7 +893,8 @@ const DOWNVOTE_SVG_OFF=`<svg width="12" height="12" viewBox="0 0 24 24" fill="no
 function commentHTML(c,postId,allComments,locked){
   const isDeleted=c.deleted,cLiked=likedComments[`c:${c.id}`],cDisliked=dislikedComments[`c:${c.id}`],replies=(c.replies||[]),canInteract=!isDeleted&&!c.hardDeleted,isRagebait=!!c.rageBait,isAdmin=!isDeleted&&c.userTag==='developer',isPinned=!!c.pinned;
   const avatarContent=getAvatarHTML(c.name,isDeleted,isRagebait,c.userTag);
-const pinnedBadge=isPinned?`<span class="pinned-comment-badge"><img src="https://raton.lol/img/office-push-pin.png" alt="">Pinned</span>`:'';  return`<div class="comment ${isDeleted?'deleted':''} ${isRagebait?'ragebait':''} ${isAdmin?'administrator':''} ${isPinned?'pinned-comment':''}" id="comment-${c.id}"><div class="comment-header"><div class="comment-avatar">${avatarContent}</div><span class="comment-name">${escHtml(isDeleted?'deleted':c.name)}${!isDeleted?tagBadge(c.userTag,c.name):''}${c.authenticated&&!isDeleted?'<span class="authenticated-badge">✓ registered</span>':''}${pinnedBadge}</span>${c.editedByAdmin&&!isDeleted?`<span class="comment-edited">[edited by a moderator]</span>`:''}<span class="comment-ts">${timeAgo(c.ts)}</span></div><div class="comment-body ${isDeleted?'deleted-msg':''}">${isDeleted?escHtml(c.body):renderCommentBody(c.body)}</div><div class="comment-actions">${canInteract?`<button class="comment-upvote ${cLiked?'upvoted':''}" id="clbtn-${c.id}" onclick="likeComment(event,'${postId}','comment','${c.id}')">${cLiked?UPVOTE_SVG_ON:UPVOTE_SVG_OFF}<span id="cl-${c.id}">${c.likes||0}</span></button><button class="comment-downvote ${cDisliked?'downvoted':''}" id="dlbtn-${c.id}" onclick="dislikeComment(event,'${postId}','comment','${c.id}')">${cDisliked?DOWNVOTE_SVG_ON:DOWNVOTE_SVG_OFF}<span id="dl-${c.id}">${c.dislikes||0}</span></button>${reactionsHTML(c.id,'comment',null,c.reactions||{})}`:''}`+(canInteract&&!locked?`<button class="reply-toggle" onclick="toggleReplyForm('${c.id}','${postId}')"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 17 4 12 9 7"/><path d="M20 18v-2a4 4 0 0 0-4-4H4"/></svg>Reply</button>`:'')+`</div><div id="replyForm-${c.id}"></div>${replies.length?`<div class="reply-list" id="replies-${c.id}">${replies.map(r=>replyHTML(r,c.id,postId,locked)).join('')}</div>`:`<div id="replies-${c.id}"></div>`}</div>`
+  const pinnedBadge=isPinned?`<img class="pinned-comment-icon" src="https://raton.lol/img/office-push-pin.png" alt="">`:'';
+  return`<div class="comment ${isDeleted?'deleted':''} ${isRagebait?'ragebait':''} ${isAdmin?'administrator':''} ${isPinned?'pinned-comment':''}" id="comment-${c.id}"><div class="comment-header"><div class="comment-avatar">${avatarContent}</div><span class="comment-name">${escHtml(isDeleted?'deleted':c.name)}${!isDeleted?tagBadge(c.userTag,c.name):''}${c.authenticated&&!isDeleted?'<span class="authenticated-badge">✓ registered</span>':''}${pinnedBadge}</span>${c.editedByAdmin&&!isDeleted?`<span class="comment-edited">[edited by a moderator]</span>`:''}<span class="comment-ts">${timeAgo(c.ts)}</span></div><div class="comment-body ${isDeleted?'deleted-msg':''}">${isDeleted?escHtml(c.body):renderCommentBody(c.body)}</div><div class="comment-actions">${canInteract?`<button class="comment-upvote ${cLiked?'upvoted':''}" id="clbtn-${c.id}" onclick="likeComment(event,'${postId}','comment','${c.id}')">${cLiked?UPVOTE_SVG_ON:UPVOTE_SVG_OFF}<span id="cl-${c.id}">${c.likes||0}</span></button><button class="comment-downvote ${cDisliked?'downvoted':''}" id="dlbtn-${c.id}" onclick="dislikeComment(event,'${postId}','comment','${c.id}')">${cDisliked?DOWNVOTE_SVG_ON:DOWNVOTE_SVG_OFF}<span id="dl-${c.id}">${c.dislikes||0}</span></button>${reactionsHTML(c.id,'comment',null,c.reactions||{})}`:''}`+(canInteract&&!locked?`<button class="reply-toggle" onclick="toggleReplyForm('${c.id}','${postId}')"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 17 4 12 9 7"/><path d="M20 18v-2a4 4 0 0 0-4-4H4"/></svg>Reply</button>`:'')+`</div><div id="replyForm-${c.id}"></div>${replies.length?`<div class="reply-list" id="replies-${c.id}">${replies.map(r=>replyHTML(r,c.id,postId,locked)).join('')}</div>`:`<div id="replies-${c.id}"></div>`}</div>`
 }
 
 function replyHTML(r,parentId,postId,locked){
