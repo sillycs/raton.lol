@@ -578,7 +578,6 @@ async function submitLogin() {
     closeAuthModal();
     renderNavAuth();
     showToast(`Welcome back, ${data.username}!`);
-    // Refresh comments if on a post
     if (currentPostId) {
       const cData = await api(`/comments?postId=${currentPostId}`);
       knownCommenters = collectCommenters(cData.comments||[]);
@@ -647,6 +646,8 @@ async function newCaptcha(canvasId, inputId, formId) {
   drawCaptcha(canvas, chars);
   input.value = '';
   input.classList.remove('captcha-ok','captcha-err');
+  const hintEl = document.getElementById(`captchaHint-${formId}`);
+  if (hintEl) hintEl.innerHTML = `u r not a robot? then type the <b>${captchaLen || CAPTCHA_LEN} characters</b> you see`;
   return token;
 }
 
