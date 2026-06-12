@@ -653,19 +653,132 @@ async function newCaptcha(canvasId, inputId, formId) {
 function drawCaptcha(canvas, chars) {
   const W = canvas.width = 180, H = canvas.height = 52;
   const ctx = canvas.getContext('2d');
-  const bg = ctx.createLinearGradient(0,0,W,H); bg.addColorStop(0,'#0f0f18'); bg.addColorStop(1,'#12101f');
-  ctx.fillStyle = bg; ctx.fillRect(0,0,W,H);
-  for(let i=0;i<320;i++){const nx=Math.random()*W,ny=Math.random()*H,nr=Math.random()*1.1,na=Math.random()*0.35+0.05;ctx.beginPath();ctx.arc(nx,ny,nr,0,Math.PI*2);ctx.fillStyle=`rgba(${rnd(120,220)},${rnd(80,160)},${rnd(200,255)},${na.toFixed(2)})`;ctx.fill()}
-  for(let i=0;i<5;i++){ctx.beginPath();ctx.moveTo(Math.random()*W,Math.random()*H);ctx.quadraticCurveTo(Math.random()*W,Math.random()*H,Math.random()*W,Math.random()*H);ctx.strokeStyle=`rgba(${rnd(100,200)},${rnd(60,140)},${rnd(180,255)},${(Math.random()*0.25+0.08).toFixed(2)})`;ctx.lineWidth=Math.random()*1.2+0.4;ctx.stroke()}
-  const charW = W/(CAPTCHA_LEN+0.8);
-  for(let i=0;i<chars.length;i++){const ch=chars[i],cx=charW*(i+0.7),cy=H/2+rnd(-3,3);ctx.save();ctx.translate(cx,cy);ctx.rotate((Math.random()*36-18)*Math.PI/180);const sc=0.82+Math.random()*0.28;ctx.scale(sc,sc+(Math.random()-0.5)*0.18);const fs=rnd(20,27);ctx.font=`bold ${fs}px 'Courier New',monospace`;ctx.textBaseline='middle';ctx.textAlign='center';const hue=rnd(240,310),sat=rnd(60,90),lig=rnd(68,85);ctx.fillStyle=`hsl(${hue},${sat}%,${lig}%)`;ctx.shadowColor=`hsla(${hue},${sat}%,30%,0.7)`;ctx.shadowBlur=3;ctx.shadowOffsetX=1;ctx.shadowOffsetY=1;ctx.fillText(ch,0,0);ctx.restore()}
-  for(let y=0;y<H;y+=3){ctx.fillStyle='rgba(0,0,0,0.08)';ctx.fillRect(0,y,W,1)}
-  for(let i=0;i<4;i++){ctx.beginPath();ctx.moveTo(-10,rnd(0,H));ctx.bezierCurveTo(rnd(0,W),rnd(0,H),rnd(0,W),rnd(0,H),W+10,rnd(0,H));ctx.strokeStyle=`rgba(255,255,255,${Math.random()*0.22+0.14})`;ctx.lineWidth=Math.random()*1.8+1.2;ctx.stroke()}
-  for(let i=0;i<30;i++){ctx.beginPath();ctx.arc(Math.random()*W,Math.random()*H,Math.random()*2.2+0.7,0,Math.PI*2);ctx.fillStyle=`rgba(255,255,255,${Math.random()*0.22+0.08})`;ctx.fill()}
-  for(let i=0;i<10;i++){const x=Math.random()*W,y=Math.random()*H;ctx.strokeStyle=`rgba(255,255,255,${Math.random()*0.18+0.08})`;ctx.lineWidth=Math.random()*1.2+0.8;ctx.beginPath();ctx.moveTo(x-4,y);ctx.lineTo(x+4,y);ctx.stroke();ctx.beginPath();ctx.moveTo(x,y-4);ctx.lineTo(x,y+4);ctx.stroke()}
-  for(let i=0;i<4;i++){const tx=rnd(10,W-10),ty=rnd(6,H-6),dc=CAPTCHA_CHARS[rnd(0,CAPTCHA_CHARS.length-1)];ctx.save();ctx.translate(tx,ty);ctx.rotate((Math.random()*60-30)*Math.PI/180);ctx.font=`bold ${rnd(8,14)}px 'Courier New',monospace`;ctx.textBaseline='middle';ctx.textAlign='center';ctx.fillStyle=`rgba(${rnd(100,200)},${rnd(80,160)},${rnd(180,255)},${(Math.random()*0.22+0.10).toFixed(2)})`;ctx.fillText(dc,0,0);ctx.restore()}
-  const ov=ctx.createLinearGradient(0,0,W,H);ov.addColorStop(0,'rgba(80,40,160,0.06)');ov.addColorStop(0.5,'rgba(200,100,255,0.04)');ov.addColorStop(1,'rgba(40,80,200,0.06)');ctx.fillStyle=ov;ctx.fillRect(0,0,W,H);
-  for(let i=0;i<18;i++){ctx.beginPath();ctx.moveTo(Math.random()*W,Math.random()*H);ctx.lineTo(Math.random()*W,Math.random()*H);ctx.strokeStyle=`rgba(${rnd(80,180)},${rnd(60,140)},${rnd(180,255)},${(Math.random()*0.12+0.04).toFixed(2)})`;ctx.lineWidth=Math.random()*0.8+0.2;ctx.stroke()}
+
+  const bg = ctx.createLinearGradient(0,0,W,H);
+  bg.addColorStop(0,'#0f0f18');
+  bg.addColorStop(1,'#12101f');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0,0,W,H);
+
+  for(let i=0;i<320;i++){
+    const nx=Math.random()*W,ny=Math.random()*H,nr=Math.random()*1.1,na=Math.random()*0.35+0.05;
+    ctx.beginPath();
+    ctx.arc(nx,ny,nr,0,Math.PI*2);
+    ctx.fillStyle=`rgba(${rnd(120,220)},${rnd(80,160)},${rnd(200,255)},${na.toFixed(2)})`;
+    ctx.fill();
+  }
+
+  for(let i=0;i<5;i++){
+    ctx.beginPath();
+    ctx.moveTo(Math.random()*W,Math.random()*H);
+    ctx.quadraticCurveTo(Math.random()*W,Math.random()*H,Math.random()*W,Math.random()*H);
+    ctx.strokeStyle=`rgba(${rnd(100,200)},${rnd(60,140)},${rnd(180,255)},${(Math.random()*0.25+0.08).toFixed(2)})`;
+    ctx.lineWidth=Math.random()*1.2+0.4;
+    ctx.stroke();
+  }
+
+  const len = chars.length;
+  const charW = W / (len + 1);
+  const fontSize = Math.min(27, Math.max(12, (W * 0.75) / len));
+
+  for(let i=0;i<len;i++){
+    const ch=chars[i],cx=charW*(i+0.7),cy=H/2+rnd(-3,3);
+
+    ctx.save();
+    ctx.translate(cx,cy);
+    ctx.rotate((Math.random()*36-18)*Math.PI/180);
+
+    const sc=0.82+Math.random()*0.28;
+    ctx.scale(sc,sc+(Math.random()-0.5)*0.18);
+
+    const fs=rnd(
+      Math.max(10,fontSize-3),
+      Math.max(12,fontSize+2)
+    );
+
+    ctx.font=`bold ${fs}px 'Courier New',monospace`;
+    ctx.textBaseline='middle';
+    ctx.textAlign='center';
+
+    const hue=rnd(240,310),sat=rnd(60,90),lig=rnd(68,85);
+    ctx.fillStyle=`hsl(${hue},${sat}%,${lig}%)`;
+    ctx.shadowColor=`hsla(${hue},${sat}%,30%,0.7)`;
+    ctx.shadowBlur=3;
+    ctx.shadowOffsetX=1;
+    ctx.shadowOffsetY=1;
+
+    ctx.fillText(ch,0,0);
+    ctx.restore();
+  }
+
+  for(let y=0;y<H;y+=3){
+    ctx.fillStyle='rgba(0,0,0,0.08)';
+    ctx.fillRect(0,y,W,1);
+  }
+
+  for(let i=0;i<4;i++){
+    ctx.beginPath();
+    ctx.moveTo(-10,rnd(0,H));
+    ctx.bezierCurveTo(rnd(0,W),rnd(0,H),rnd(0,W),rnd(0,H),W+10,rnd(0,H));
+    ctx.strokeStyle=`rgba(255,255,255,${Math.random()*0.22+0.14})`;
+    ctx.lineWidth=Math.random()*1.8+1.2;
+    ctx.stroke();
+  }
+
+  for(let i=0;i<30;i++){
+    ctx.beginPath();
+    ctx.arc(Math.random()*W,Math.random()*H,Math.random()*2.2+0.7,0,Math.PI*2);
+    ctx.fillStyle=`rgba(255,255,255,${Math.random()*0.22+0.08})`;
+    ctx.fill();
+  }
+
+  for(let i=0;i<10;i++){
+    const x=Math.random()*W,y=Math.random()*H;
+    ctx.strokeStyle=`rgba(255,255,255,${Math.random()*0.18+0.08})`;
+    ctx.lineWidth=Math.random()*1.2+0.8;
+
+    ctx.beginPath();
+    ctx.moveTo(x-4,y);
+    ctx.lineTo(x+4,y);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(x,y-4);
+    ctx.lineTo(x,y+4);
+    ctx.stroke();
+  }
+
+  for(let i=0;i<4;i++){
+    const tx=rnd(10,W-10),ty=rnd(6,H-6),dc=CAPTCHA_CHARS[rnd(0,CAPTCHA_CHARS.length-1)];
+
+    ctx.save();
+    ctx.translate(tx,ty);
+    ctx.rotate((Math.random()*60-30)*Math.PI/180);
+
+    ctx.font=`bold ${rnd(8,14)}px 'Courier New',monospace`;
+    ctx.textBaseline='middle';
+    ctx.textAlign='center';
+    ctx.fillStyle=`rgba(${rnd(100,200)},${rnd(80,160)},${rnd(180,255)},${(Math.random()*0.22+0.10).toFixed(2)})`;
+
+    ctx.fillText(dc,0,0);
+    ctx.restore();
+  }
+
+  const ov=ctx.createLinearGradient(0,0,W,H);
+  ov.addColorStop(0,'rgba(80,40,160,0.06)');
+  ov.addColorStop(0.5,'rgba(200,100,255,0.04)');
+  ov.addColorStop(1,'rgba(40,80,200,0.06)');
+  ctx.fillStyle=ov;
+  ctx.fillRect(0,0,W,H);
+
+  for(let i=0;i<18;i++){
+    ctx.beginPath();
+    ctx.moveTo(Math.random()*W,Math.random()*H);
+    ctx.lineTo(Math.random()*W,Math.random()*H);
+    ctx.strokeStyle=`rgba(${rnd(80,180)},${rnd(60,140)},${rnd(180,255)},${(Math.random()*0.12+0.04).toFixed(2)})`;
+    ctx.lineWidth=Math.random()*0.8+0.2;
+    ctx.stroke();
+  }
 }
 function rnd(a,b){return Math.floor(Math.random()*(b-a+1))+a}
 function captchaInputLive(input){input.classList.remove('captcha-ok','captcha-err')}
