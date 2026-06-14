@@ -289,8 +289,8 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:1.
 .captcha-wrap{margin-top:0.7rem;background:var(--surface2);border:1px solid var(--border2);border-radius:10px;padding:0.75rem 0.9rem;display:flex;flex-direction:column;gap:0.55rem}
 .captcha-row{display:flex;align-items:center;gap:0.7rem;flex-wrap:wrap}
 .captcha-label{font-size:0.7rem;color:var(--text3);font-weight:600;margin-bottom:2px}
-.captcha-canvas-wrap{position:relative;flex-shrink:0}
-.captcha-canvas{display:block;border-radius:7px;border:1px solid var(--border2);background:#0a0a0a}
+.captcha-canvas{display:block;width:180px;height:52px;border-radius:7px;border:1px solid var(--border2);background:#0a0a0a;overflow:hidden}
+.captcha-canvas svg{display:block;width:100%;height:100%}
 .captcha-refresh{position:absolute;top:3px;right:3px;background:rgba(0,0,0,0.55);border:none;border-radius:5px;padding:3px 5px;color:var(--text3);font-size:0.65rem;display:flex;align-items:center;transition:.15s;gap:3px}
 .captcha-refresh:hover{color:var(--text);background:rgba(0,0,0,0.8)}
 .captcha-refresh svg{transition:transform .35s}
@@ -626,168 +626,36 @@ async function submitRegister() {
   } catch(e) { errEl.textContent = 'Network error'; btn.disabled=false; btn.textContent='Create Account'; }
 }
 
-const CAPTCHA_CHARS = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
 const CAPTCHA_LEN   = 5;
 const CAPTCHA_TTL_MS = 5 * 60 * 1000;
 let _captchaInstances = {};
 
 async function newCaptcha(canvasId, inputId, formId) {
-  const canvas = document.getElementById(canvasId);
+  const container = document.getElementById(canvasId);
   const input  = document.getElementById(inputId);
-  if (!canvas || !input) return null;
+  if (!container || !input) return null;
   let tokenData = null;
   try {
     const res = await fetch(WORKER + '/captcha/new', { headers: { 'X-Client-FP': CLIENT_FP } });
     tokenData = await res.json();
   } catch(_) { return null; }
   if (!tokenData || !tokenData.ok) return null;
-  const { token, chars, captchaLen } = tokenData;
-  _captchaInstances[formId] = { token, chars, captchaLen: captchaLen || 5 };
-  drawCaptcha(canvas, chars);
+  const { token, svg, captchaLen } = tokenData;
+  _captchaInstances[formId] = { token, captchaLen: captchaLen || 5 };
+  container.innerHTML = svg;
   input.value = '';
   input.classList.remove('captcha-ok','captcha-err');
   const hintEl = document.getElementById(`captchaHint-${formId}`);
   if (hintEl) hintEl.innerHTML = `u r not a robot? then type the <b>${captchaLen || CAPTCHA_LEN} characters</b> you see`;
   return token;
 }
-
-function drawCaptcha(canvas, chars) {
-  const W = canvas.width = 180, H = canvas.height = 52;
-  const ctx = canvas.getContext('2d');
-
-  const bg = ctx.createLinearGradient(0,0,W,H);
-  bg.addColorStop(0,'#0f0f18');
-  bg.addColorStop(1,'#12101f');
-  ctx.fillStyle = bg;
-  ctx.fillRect(0,0,W,H);
-
-  for(let i=0;i<320;i++){
-    const nx=Math.random()*W,ny=Math.random()*H,nr=Math.random()*1.1,na=Math.random()*0.35+0.05;
-    ctx.beginPath();
-    ctx.arc(nx,ny,nr,0,Math.PI*2);
-    ctx.fillStyle=`rgba(${rnd(120,220)},${rnd(80,160)},${rnd(200,255)},${na.toFixed(2)})`;
-    ctx.fill();
-  }
-
-  for(let i=0;i<5;i++){
-    ctx.beginPath();
-    ctx.moveTo(Math.random()*W,Math.random()*H);
-    ctx.quadraticCurveTo(Math.random()*W,Math.random()*H,Math.random()*W,Math.random()*H);
-    ctx.strokeStyle=`rgba(${rnd(100,200)},${rnd(60,140)},${rnd(180,255)},${(Math.random()*0.25+0.08).toFixed(2)})`;
-    ctx.lineWidth=Math.random()*1.2+0.4;
-    ctx.stroke();
-  }
-
-  const len = chars.length;
-  const charW = W / (len + 1);
-  const fontSize = Math.min(27, Math.max(12, (W * 0.75) / len));
-
-  for(let i=0;i<len;i++){
-    const ch=chars[i],cx=charW*(i+0.7),cy=H/2+rnd(-3,3);
-
-    ctx.save();
-    ctx.translate(cx,cy);
-    ctx.rotate((Math.random()*36-18)*Math.PI/180);
-
-    const sc=0.82+Math.random()*0.28;
-    ctx.scale(sc,sc+(Math.random()-0.5)*0.18);
-
-    const fs=rnd(
-      Math.max(10,fontSize-3),
-      Math.max(12,fontSize+2)
-    );
-
-    ctx.font=`bold ${fs}px 'Courier New',monospace`;
-    ctx.textBaseline='middle';
-    ctx.textAlign='center';
-
-    const hue=rnd(240,310),sat=rnd(60,90),lig=rnd(68,85);
-    ctx.fillStyle=`hsl(${hue},${sat}%,${lig}%)`;
-    ctx.shadowColor=`hsla(${hue},${sat}%,30%,0.7)`;
-    ctx.shadowBlur=3;
-    ctx.shadowOffsetX=1;
-    ctx.shadowOffsetY=1;
-
-    ctx.fillText(ch,0,0);
-    ctx.restore();
-  }
-
-  for(let y=0;y<H;y+=3){
-    ctx.fillStyle='rgba(0,0,0,0.08)';
-    ctx.fillRect(0,y,W,1);
-  }
-
-  for(let i=0;i<4;i++){
-    ctx.beginPath();
-    ctx.moveTo(-10,rnd(0,H));
-    ctx.bezierCurveTo(rnd(0,W),rnd(0,H),rnd(0,W),rnd(0,H),W+10,rnd(0,H));
-    ctx.strokeStyle=`rgba(255,255,255,${Math.random()*0.22+0.14})`;
-    ctx.lineWidth=Math.random()*1.8+1.2;
-    ctx.stroke();
-  }
-
-  for(let i=0;i<30;i++){
-    ctx.beginPath();
-    ctx.arc(Math.random()*W,Math.random()*H,Math.random()*2.2+0.7,0,Math.PI*2);
-    ctx.fillStyle=`rgba(255,255,255,${Math.random()*0.22+0.08})`;
-    ctx.fill();
-  }
-
-  for(let i=0;i<10;i++){
-    const x=Math.random()*W,y=Math.random()*H;
-    ctx.strokeStyle=`rgba(255,255,255,${Math.random()*0.18+0.08})`;
-    ctx.lineWidth=Math.random()*1.2+0.8;
-
-    ctx.beginPath();
-    ctx.moveTo(x-4,y);
-    ctx.lineTo(x+4,y);
-    ctx.stroke();
-
-    ctx.beginPath();
-    ctx.moveTo(x,y-4);
-    ctx.lineTo(x,y+4);
-    ctx.stroke();
-  }
-
-  for(let i=0;i<4;i++){
-    const tx=rnd(10,W-10),ty=rnd(6,H-6),dc=CAPTCHA_CHARS[rnd(0,CAPTCHA_CHARS.length-1)];
-
-    ctx.save();
-    ctx.translate(tx,ty);
-    ctx.rotate((Math.random()*60-30)*Math.PI/180);
-
-    ctx.font=`bold ${rnd(8,14)}px 'Courier New',monospace`;
-    ctx.textBaseline='middle';
-    ctx.textAlign='center';
-    ctx.fillStyle=`rgba(${rnd(100,200)},${rnd(80,160)},${rnd(180,255)},${(Math.random()*0.22+0.10).toFixed(2)})`;
-
-    ctx.fillText(dc,0,0);
-    ctx.restore();
-  }
-
-  const ov=ctx.createLinearGradient(0,0,W,H);
-  ov.addColorStop(0,'rgba(80,40,160,0.06)');
-  ov.addColorStop(0.5,'rgba(200,100,255,0.04)');
-  ov.addColorStop(1,'rgba(40,80,200,0.06)');
-  ctx.fillStyle=ov;
-  ctx.fillRect(0,0,W,H);
-
-  for(let i=0;i<18;i++){
-    ctx.beginPath();
-    ctx.moveTo(Math.random()*W,Math.random()*H);
-    ctx.lineTo(Math.random()*W,Math.random()*H);
-    ctx.strokeStyle=`rgba(${rnd(80,180)},${rnd(60,140)},${rnd(180,255)},${(Math.random()*0.12+0.04).toFixed(2)})`;
-    ctx.lineWidth=Math.random()*0.8+0.2;
-    ctx.stroke();
-  }
-}
+  
 function rnd(a,b){return Math.floor(Math.random()*(b-a+1))+a}
 function captchaInputLive(input){input.classList.remove('captcha-ok','captcha-err')}
 function getCaptchaPayload(formId){const inst=_captchaInstances[formId];if(!inst)return null;const input=document.getElementById(`captchaInput-${formId}`);if(!input)return null;const answer=input.value.trim().toUpperCase();const expectedLen=inst.captchaLen||CAPTCHA_LEN;if(answer.length<expectedLen)return null;return{captchaToken:inst.token,captchaAnswer:answer}}
 function markCaptchaError(formId){const input=document.getElementById(`captchaInput-${formId}`);if(input){input.classList.add('captcha-err');input.classList.remove('captcha-ok')}setTimeout(()=>newCaptcha(`captchaCanvas-${formId}`,`captchaInput-${formId}`,formId),600)}
 function markCaptchaOk(formId){const input=document.getElementById(`captchaInput-${formId}`);if(input){input.classList.add('captcha-ok');input.classList.remove('captcha-err')}}
-function captchaHTML(formId){const cid=`captchaCanvas-${formId}`,iid=`captchaInput-${formId}`;return`<div class="captcha-wrap" id="captchaWrap-${formId}"><div class="captcha-label">r u human?!</div><div class="captcha-row"><div class="captcha-canvas-wrap"><canvas class="captcha-canvas" id="${cid}" width="180" height="52"></canvas><button class="captcha-refresh" type="button" onclick="newCaptcha('${cid}','${iid}','${formId}')" title="New captcha"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>New</button></div><div class="captcha-input-wrap"><input class="captcha-input form-input" id="${iid}" maxlength="10" autocomplete="off" spellcheck="false" placeholder="Type the code" oninput="captchaInputLive(this)" onkeydown="if(event.key==='Enter'){event.preventDefault()}"><span class="captcha-hint" id="captchaHint-${formId}">u r not a robot? then type the <b>${CAPTCHA_LEN} characters</b> you see</span></div></div></div>`}
-
+function captchaHTML(formId){const cid=`captchaCanvas-${formId}`,iid=`captchaInput-${formId}`;return`<div class="captcha-wrap" id="captchaWrap-${formId}"><div class="captcha-label">r u human?!</div><div class="captcha-row"><div class="captcha-canvas-wrap"><div class="captcha-canvas" id="${cid}"></div><button class="captcha-refresh" type="button" onclick="newCaptcha('${cid}','${iid}','${formId}')" title="New captcha"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>New</button></div><div class="captcha-input-wrap"><input class="captcha-input form-input" id="${iid}" maxlength="10" autocomplete="off" spellcheck="false" placeholder="Type the code" oninput="captchaInputLive(this)" onkeydown="if(event.key==='Enter'){event.preventDefault()}"><span class="captcha-hint" id="captchaHint-${formId}">u r not a robot? then type the <b>${CAPTCHA_LEN} characters</b> you see</span></div></div></div>`}
 let _modalPendingAction = null;
 function showCaptchaModal(sub,onConfirm){const body=document.getElementById('captchaModalBody');const sub_=document.getElementById('captchaModalSub');if(sub_)sub_.textContent=sub||'Please solve the captcha to continue.';if(body)body.innerHTML=captchaHTML('modal');setTimeout(()=>newCaptcha('captchaCanvas-modal','captchaInput-modal','modal'),80);document.getElementById('captchaModalBackdrop').classList.add('show');_modalPendingAction=onConfirm}
 function dismissCaptchaModal(){document.getElementById('captchaModalBackdrop').classList.remove('show');_modalPendingAction=null}
