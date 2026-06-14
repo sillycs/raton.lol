@@ -183,6 +183,9 @@ tr:hover td{background:rgba(255,255,255,0.02)}
     </div>
     <div class="sidebar-section">
       <div class="sidebar-label">Blog</div>
+      <button class="btn btn-danger" onclick="exterminateBots()">
+  PANIC BUTTON
+</button>
       <div class="sidebar-item active" id="nav-dashboard" onclick="showView('dashboard')">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
         Dashboard
@@ -252,7 +255,6 @@ tr:hover td{background:rgba(255,255,255,0.02)}
   </div>
 </div>
 
-<!-- Modals -->
 <div class="modal-overlay hidden" id="postModal">
   <div class="modal">
     <div class="modal-header">
@@ -293,7 +295,6 @@ tr:hover td{background:rgba(255,255,255,0.02)}
   </div>
 </div>
 
-<!-- NEW: Edit Account Modal -->
 <div class="modal-overlay hidden" id="editAccountModal">
   <div class="modal" style="max-width:480px">
     <div class="modal-header">
@@ -1220,6 +1221,44 @@ async function overrideViews() {
   toast(`Views set to ${data.views}`);
 }
 
+async function exterminateBots() {
+  const ip = prompt("Target IP (leave blank for bot-name scan only):") || "";
+  const fp = prompt("Target Fingerprint (leave blank if none):") || "";
+  const banHours = parseInt(prompt("Ban duration in hours (0 = permanent):", "720"), 10) || 0;
+
+  if (!ip && !fp && !confirm("No IP or FP specified.\nThis will remove ALL detected bot accounts.\nContinue?")) {
+    return;
+  }
+
+  if (!confirm("This action will delete comments, accounts and ban matching users.\nContinue?")) {
+    return;
+  }
+
+  try {
+    const res = await blogPost("/admin/exterminate-bots", {
+      ip,
+      fp,
+      banHours,
+      dryRun: false
+    });
+
+    if (!res.ok) {
+      toast(res.error || "Failed");
+      return;
+    }
+
+    toast(
+      `Removed ${res.removedComments} comments, ${res.removedReplies} replies, ` +
+      `${res.deletedAccounts} accounts, banned ${res.bannedIps} IPs and ${res.bannedFps} fingerprints`
+    );
+
+    console.log("Bot extermination result:", res);
+  } catch (err) {
+    console.error(err);
+    toast("Request failed");
+  }
+}
+  
 async function overrideLikes() {
   const postId = document.getElementById('statsPostId').value.trim();
   const likes = document.getElementById('statsLikes').value;
