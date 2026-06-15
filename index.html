@@ -863,8 +863,8 @@ function buildCard(plan) {
 }
 
 var plans = [
-  { tier:'Community', desc:'Your classic Raton, always with you', sub:'', price:'$0', href:'https://raton.lol/download', btnLabel:'Start for free', featured:false },
-  { tier:'Professional', desc:'Only the best additions for true ratters', sub:'', price:'$180', href:'https://raton.lol/professional', btnLabel:'Get Professional', featured:true },
+  { tier:'Community', desc:'Your classic Raton, always with you', sub:'', price:'Free', href:'https://raton.lol/download', btnLabel:'Start for free', featured:false },
+  { tier:'Professional', desc:'Only the best additions for true ratters', sub:'', price:'$120', href:'https://raton.lol/professional', btnLabel:'Get Professional', featured:true },
 ];
 var grid = document.getElementById('pricingGrid');
 plans.forEach(function(p) { grid.appendChild(buildCard(p)); });
