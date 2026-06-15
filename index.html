@@ -76,7 +76,31 @@ body {
   92%  { opacity: 0.18; }
   100% { opacity: 0;    transform: translateY(-55px) rotate(-4deg) scale(0.95); }
 }
-
+#disclaimer-overlay{position:fixed;inset:0;z-index:999;background:rgba(0,0,0,0.85);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:2rem}
+#disclaimer-overlay.hidden{display:none}
+.raton-modal{width:100%;max-width:430px;background:#141414;border:1px solid rgba(255,255,255,0.12);border-radius:18px;overflow:hidden}
+.raton-header{padding:1.2rem 1.4rem;border-bottom:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;gap:12px}
+.raton-icon-wrap{width:38px;height:38px;border-radius:10px;background:rgba(139,92,246,0.15);border:1px solid rgba(139,92,246,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.raton-header-text p{margin:0}
+.raton-header-text .title{font-size:14px;font-weight:600;color:#f4f4f8}
+.raton-header-text .sub{font-size:12px;color:#606078}
+.raton-items{padding:1rem;display:flex;flex-direction:column;gap:8px}
+.raton-item{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:10px;border:1px solid rgba(255,255,255,0.07);background:#0d0d0d}
+.raton-item-icon{width:28px;height:28px;border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.raton-item-icon.purple{background:rgba(139,92,246,0.15);border:1px solid rgba(139,92,246,0.2);color:#a78bfa}
+.raton-item-icon.green{background:rgba(29,158,117,0.12);border:1px solid rgba(29,158,117,0.2);color:#34d399}
+.raton-item-icon.red{background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.2);color:#f87171}
+.raton-item-icon.amber{background:rgba(251,191,36,0.12);border:1px solid rgba(251,191,36,0.2);color:#fbbf24}
+.raton-item p{margin:0}
+.raton-item .item-title{font-size:12px;font-weight:600;color:#f4f4f8;margin-bottom:2px}
+.raton-item .item-desc{font-size:11px;color:#606078;line-height:1.5}
+.raton-note{margin:0 1rem 1rem;padding:10px 12px;border-radius:10px;background:#1c1c1c;font-size:11px;color:#606078;line-height:1.5}
+.raton-btns{padding:0 1rem 1rem;display:flex;gap:8px}
+.raton-btn{flex:1;padding:9px 0;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;border:none;cursor:pointer;transition:all 0.2s;text-align:center}
+.raton-btn.decline{background:rgba(139,92,246,0.12);border:1px solid rgba(139,92,246,0.25);color:#a78bfa}
+.raton-btn.decline:hover{background:rgba(139,92,246,0.2)}
+.raton-btn.accept{background:#8b5cf6;color:#fff}
+.raton-btn.accept:hover{background:#7c3aed;transform:translateY(-1px)}
 nav {
   position: sticky; top: 0; z-index: 100;
   display: flex; align-items: center; justify-content: space-between;
@@ -473,7 +497,52 @@ h1             { animation-delay: 0.15s; }
 </style>
 </head>
 <body>
-
+<div id="disclaimer-overlay">
+  <div class="raton-modal">
+    <div class="raton-header">
+      <div class="raton-icon-wrap">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2">
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+          <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+        </svg>
+      </div>
+      <div class="raton-header-text">
+        <p class="title">Before you continue</p>
+        <p class="sub">Please read the following clarifications</p>
+      </div>
+    </div>
+    <div class="raton-items">
+      <div class="raton-item">
+        <div class="raton-item-icon purple"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+<div>
+  <p class="item-title">For your own devices only</p>
+  <p class="item-desc">Raton manages your own devices. Using it on devices you don't own is prohibited by our <a href="https://raton.lol/agreement" style="color:#a78bfa;text-decoration:none;">user agreement</a></p>
+</div>
+      </div>
+      <div class="raton-item">
+        <div class="raton-item-icon green"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <div><p class="item-title">Everything is safe</p>
+        <p class="item-desc">All communication uses encrypted connections. No data from the clients is sent to our servers, check what information we get on our <a href="https://raton.lol/agreement" style="color:#a78bfa;text-decoration:none;">user agreement</a>. But don't worry, is nothing too private</p></div>
+      </div>
+      <div class="raton-item">
+        <div class="raton-item-icon red"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
+        <div><p class="item-title">Not malware</p>
+        <p class="item-desc">RAT stands for Remote Access Tool, not Remote Access Trojan. Our platform is designed for legitimate remote administration for your devices and we strictly prohibit malicious use</p></div>
+      </div>
+      <div class="raton-item">
+        <div class="raton-item-icon amber"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+        <div><p class="item-title">Your responsibility</p>
+        <p class="item-desc">By downloading/using/registering, you agree to use Raton only on systems you own or have explicit permission to manage</p></div>
+      </div>
+    </div>
+    <p class="raton-note">By clicking “Accept & Continue” you agree to the terms stated above</p>
+    <div id="raton-result" class="raton-result"></div>
+    <div class="raton-btns" id="raton-btns">
+      <button class="raton-btn decline" onclick="handleDecline()">Decline</button>
+      <button class="raton-btn accept" onclick="handleAccept()">Accept & continue</button>
+    </div>
+  </div>
+</div>
 <div class="rata-bg" id="rataBg" aria-hidden="true"></div>
 
 <nav id="mainNav">
@@ -753,7 +822,12 @@ h1             { animation-delay: 0.15s; }
       © 2026 SillyCS. All rights reserved
     </a>
 <script>
-
+function handleAccept(){
+  document.getElementById('disclaimer-overlay').classList.add('hidden');
+}
+function handleDecline(){
+  window.location.href = 'https://www.youtube.com/watch?v=cBkyS0MwGlk&list=PL1ylb5IHEn99Diyx1RBSVTwWGccl9dubW';
+}
 (function() {
   var bg = document.getElementById('rataBg');
   var data = [
