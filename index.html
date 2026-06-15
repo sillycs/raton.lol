@@ -130,7 +130,33 @@ h1 .accent  { color: var(--purple); }
 .hero-sub   { max-width: 520px; margin: 0 auto 2.5rem; color: var(--text2); font-size: 1rem; line-height: 1.7; }
 .hero-btns  { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.2rem; }
 .hero-note  { display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 0.78rem; color: var(--text3); }
+.discount-badge{
+  position:absolute;
+  top:16px;
+  right:-38px;
+  width:140px;
+  text-align:center;
+  padding:8px 0;
+  background:linear-gradient(135deg,#8b5cf6,#7c3aed);
+  color:#fff;
+  font-weight:800;
+  font-size:0.82rem;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  transform:rotate(45deg);
+  box-shadow:0 10px 25px rgba(139,92,246,.35);
+  z-index:5;
+  animation:badgePulse 2.2s ease-in-out infinite;
+}
 
+@keyframes badgePulse{
+  0%,100%{
+    transform:rotate(45deg) scale(1);
+  }
+  50%{
+    transform:rotate(45deg) scale(1.12);
+  }
+}
 .stats-bar {
   position: relative; z-index: 1;
   display: flex; justify-content: center; gap: 3rem;
@@ -845,32 +871,85 @@ function buildFeatureItem(label, val) {
   var disabled = hasIt ? '' : ' disabled';
   var iconCls = hasIt ? 'ok' : 'no';
   var icon = hasIt ? checkSVG : crossSVG;
-  var valueText = (typeof val === 'string') ? '<div class="pf-value">'+val+'</div>' : '';
-  return '<li class="pricing-feature'+disabled+'">'
-    + '<div class="pf-icon '+iconCls+'">'+icon+'</div>'
-    + '<div class="pf-label">'+label+valueText+'</div>'
-    + '</li>';
+
+  let valueText = '';
+
+  if (typeof val === 'string')
+    valueText = '<div class="pf-value">'+val+'</div>';
+
+  if (val === true) {
+    const freeDescriptions = {
+      '100+ Commands': 'Core monitoring and administration features',
+      'Different build options': 'Lightweight, packaged and crypter-ready outputs',
+      'Credentials': 'Basic credential recovery tools',
+      'Clippers': 'Popular cryptocurrency replacement support',
+      'DDOS': 'Basic network stress testing tools',
+      'Frequent updates': 'Bug fixes and improvements included'
+    };
+
+    valueText = freeDescriptions[label]
+      ? '<div class="pf-value">'+freeDescriptions[label]+'</div>'
+      : '';
+  }
+
+  return `
+    <li class="pricing-feature${disabled}">
+      <div class="pf-icon ${iconCls}">${icon}</div>
+      <div class="pf-label">
+        ${label}
+        ${valueText}
+      </div>
+    </li>
+  `;
 }
 
 function buildCard(plan) {
   var featuresHtml = pricingFeatures.map(function(f) {
     return buildFeatureItem(f.label, plan.featured ? f.proVal : f.freeVal);
   }).join('');
+
   var card = document.createElement('div');
   card.className = 'pricing-card' + (plan.featured ? ' featured' : '');
+
   card.innerHTML = ''
-    + '<div style="font-family:var(--font-display);font-size:1.9rem;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:0.35rem;">'+plan.tier+'</div>'
-    + '<div style="font-size:0.83rem;color:var(--text2);margin-bottom:1.3rem;line-height:1.5;">'+plan.desc+'</div>'
+    + (plan.featured
+        ? '<div class="discount-badge">30% OFF</div>'
+        : '')
+        
+    + '<div style="font-family:var(--font-display);font-size:1.9rem;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:0.35rem;">'
+    + plan.tier +
+    '</div>'
+
+    + '<div style="font-size:0.83rem;color:var(--text2);margin-bottom:1.3rem;line-height:1.5;">'
+    + plan.desc +
+    '</div>'
+
     + '<div class="pricing-price-block">'
     +   '<div class="pricing-price-row">'
-    +     (plan.price !== '$0' ? '<span class="price-currency">$</span>' : '')
-    +     '<span class="price-amount">'+(plan.price === '$0' ? 'Free' : plan.price.replace('$',''))+'</span>'
+    +     (plan.price !== '$0'
+              ? '<span class="price-currency">$</span>'
+              : '')
+    +     '<span class="price-amount">'
+    +       (plan.price === '$0'
+                ? 'Free'
+                : plan.price.replace('$', ''))
+    +     '</span>'
     +   '</div>'
-    +   '<div class="pricing-sub">'+plan.sub+'</div>'
+    +   '<div class="pricing-sub">' + plan.sub + '</div>'
     + '</div>'
+
     + '<div class="pricing-divider"></div>'
-    + '<ul class="pricing-features">'+featuresHtml+'</ul>'
-    + '<a href="'+plan.href+'" class="pricing-btn '+(plan.featured?'btn-pro':'btn-free')+'">'+plan.btnLabel+'</a>';
+
+    + '<ul class="pricing-features">'
+    +   featuresHtml
+    + '</ul>'
+
+    + '<a href="' + plan.href + '" class="pricing-btn '
+    + (plan.featured ? 'btn-pro' : 'btn-free')
+    + '">'
+    + plan.btnLabel
+    + '</a>';
+
   return card;
 }
 
