@@ -810,15 +810,27 @@ var reviews = [
 })();
 
 var pricingFeatures = [
+  { label: '100+ Commands',          freeVal: true,           proVal: 'Monitoring, Entertainment, Misc & More'           },
+  { label: 'Different build options',          freeVal: true,           proVal: '3 types of .exe (Lightweigth, Packaged and Crypters)'           },
+  { label: 'Credentials',          freeVal: true,           proVal: 'Discord, Roblox, Telegram, etc'           },
+  { label: 'Clippers',          freeVal: true,           proVal: 'BTC, ETH, LTC, XMR and SOLANA'           },
+  { label: 'DDOS',          freeVal: true,           proVal: 'Execute basic DDOS attacks to websites'           },
+  { label: 'Frequent updates',          freeVal: true,           proVal: 'We do bug fixes and new additions to both versions'           },
+
+  { label: 'Entertainment plugin',          freeVal: false,           proVal: 'More GDI effects, screamers, popups & more'           },
+  { label: 'Extra clippers',          freeVal: false,           proVal: 'BCH, TRON and BINANCE'           },
+  { label: 'Report window v2',          freeVal: false,           proVal: 'Keyword-based for banking, corn, games, etc'           },
+  { label: 'Client sharing',          freeVal: false,           proVal: 'Share your clients to professional or free users'           },
   { label: 'Client sharing',          freeVal: false,           proVal: 'Share your clients to professional or free users'           },
   { label: 'Wallet finder',          freeVal: false,           proVal: 'Find installed wallets and the paths'           },
   { label: 'Firewall & UAC killer',          freeVal: false,           proVal: 'Be more persistent and disable security'           },
   { label: 'Chromium v20',          freeVal: false,           proVal: 'New Chrome cookie stealer'           },
-  { label: 'Steal all',          freeVal: false,           proVal: 'Use all stealers at once, with extra stealers'           },
-  { label: 'Rootkit',        freeVal: false,       proVal: 'Hide from task manager & registry'    },
+  { label: 'Extra credentials',          freeVal: false,           proVal: 'Chromium, Signal, EA' },
+  { label: 'Credential plugin',          freeVal: false,           proVal: '75+ credential recovery at once' },
+  { label: 'Rootkit plugin',        freeVal: false,       proVal: 'Hide from task manager & registry'    },
   { label: 'UI improvements',         freeVal: false,            proVal: 'A new sexy, interactive and complete UI '           },
   { label: 'More outputs',                  freeVal: false, proVal: 'Minecraft mods, java, python, bat, cmd, vbs and more'    },
-  { label: 'Plugins',     freeVal: false,           proVal: 'Create your own commands and share/sell them'           },
+  { label: 'Plugins maker',     freeVal: false,           proVal: 'Create your own commands and share/sell them'           },
   { label: 'Improvements',          freeVal: false,           proVal: 'Improvements on Tools, UI, Commands, and more'           },
   { label: 'Community',              freeVal: false,           proVal: 'Join our telegram community with cool stuff/leaks'           },
   { label: 'Setup',          freeVal: false,           proVal: 'Free and fast setup on your device/RDP'           },
@@ -863,8 +875,8 @@ function buildCard(plan) {
 }
 
 var plans = [
-  { tier:'Community', desc:'Your classic Raton, always with you', sub:'test', price:'$0', href:'https://raton.lol/download', btnLabel:'Start for free', featured:false },
-  { tier:'Professional', desc:'Only the best additions for true ratters', sub:'', price:'$125', href:'https://raton.lol/professional', btnLabel:'Get Professional', featured:true },
+  { tier:'Community', desc:'Your classic Raton, always with you', sub:'', price:'$0', href:'https://raton.lol/download', btnLabel:'Start for free', featured:false },
+  { tier:'Professional', desc:'Only the best additions for true ratters', sub:'30% off', price:'$125', href:'https://raton.lol/professional', btnLabel:'Get Professional', featured:true },
 ];
 var grid = document.getElementById('pricingGrid');
 plans.forEach(function(p) { grid.appendChild(buildCard(p)); });
