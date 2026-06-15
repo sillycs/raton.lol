@@ -146,16 +146,6 @@ h1 .accent  { color: var(--purple); }
   transform:rotate(45deg);
   box-shadow:0 10px 25px rgba(139,92,246,.35);
   z-index:5;
-  animation:badgePulse 2.2s ease-in-out infinite;
-}
-
-@keyframes badgePulse{
-  0%,100%{
-    transform:rotate(45deg) scale(1);
-  }
-  50%{
-    transform:rotate(45deg) scale(1.12);
-  }
 }
 .stats-bar {
   position: relative; z-index: 1;
@@ -879,12 +869,12 @@ function buildFeatureItem(label, val) {
 
   if (val === true) {
     const freeDescriptions = {
-      '100+ Commands': 'Core monitoring and administration features',
-      'Different build options': 'Lightweight, packaged and crypter-ready outputs',
-      'Credentials': 'Basic credential recovery tools',
-      'Clippers': 'Popular cryptocurrency replacement support',
-      'DDOS': 'Basic network stress testing tools',
-      'Frequent updates': 'Bug fixes and improvements included'
+      '100+ Commands': 'Monitoring, Entertainment, Misc & More',
+      'Different build options': '3 types of .exe (Lightweigth, Packaged and Crypters)',
+      'Credentials': 'Discord, Roblox, Telegram, etc',
+      'Clippers': 'BTC, ETH, LTC, XMR and SOLANA',
+      'DDOS': 'Execute basic DDOS attacks to websites',
+      'Frequent updates': 'We do bug fixes and new additions to both versions'
     };
 
     valueText = freeDescriptions[label]
@@ -955,7 +945,7 @@ function buildCard(plan) {
 
 var plans = [
   { tier:'Community', desc:'Your classic Raton, always with you', sub:'', price:'$0', href:'https://raton.lol/download', btnLabel:'Start for free', featured:false },
-  { tier:'Professional', desc:'Only the best additions for true ratters', sub:'30% off', price:'$125', href:'https://raton.lol/professional', btnLabel:'Get Professional', featured:true },
+  { tier:'Professional', desc:'Only the best additions for true ratters', sub:'', price:'$125', href:'https://raton.lol/professional', btnLabel:'Get Professional', featured:true },
 ];
 var grid = document.getElementById('pricingGrid');
 plans.forEach(function(p) { grid.appendChild(buildCard(p)); });
