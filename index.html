@@ -747,16 +747,13 @@ h1             { animation-delay: 0.15s; }
   <h2 class="section-title">Raton showcase</h2>
   <p class="section-sub">Check out the features that Raton offers with this video made by the amazing silly</p>
   <div style="display:flex; justify-content:center; align-items:center; width:100%; margin-top:20px;">
-  <iframe 
-    width="1259" 
-    height="708" 
-    src="https://www.youtube.com/embed/rXzMoxk1xhQ" 
-    title="Raton showcase" 
-    frameborder="0" 
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-    referrerpolicy="strict-origin-when-cross-origin" 
-    allowfullscreen>
-  </iframe>
+<iframe
+  src="https://geo.dailymotion.com/player.html?video=xag8ila"
+  style="width:100%; height:100%; aspect-ratio:16/9; border:none;"
+  allow="web-share; fullscreen"
+  allowfullscreen
+  title="Dailymotion Video Player">
+</iframe>
 </div>
 </section>
 
@@ -872,32 +869,7 @@ function handleDecline(){
 })();
 
 var pricingFeatures = [
-  { label: '100+ Commands',          freeVal: true,           proVal: 'Monitoring, Entertainment, Misc & More'           },
-  { label: 'Different build options',          freeVal: true,           proVal: '3 types of .exe (Lightweigth, Packaged and Mixed)'           },
-  { label: 'Credentials',          freeVal: true,           proVal: 'Discord, Roblox, Telegram, etc'           },
-  { label: 'Clipboard check',          freeVal: true,           proVal: 'BTC, ETH, LTC, XMR and SOLANA'           },
-  { label: 'Denial',          freeVal: true,           proVal: 'Execute basic denial to websites'           },
-  { label: 'Frequent updates',          freeVal: true,           proVal: 'We do bug fixes and new additions to both versions'           },
 
-  { label: 'Entertainment plugin',          freeVal: false,           proVal: 'More GDI effects, screamers, popups & more'           },
-  { label: 'Extra crypto checkers',          freeVal: false,           proVal: 'BCH, TRON and BINANCE'           },
-  { label: 'Report window v2',          freeVal: false,           proVal: 'Keyword-based for banking, corn, games, etc'           },
-  { label: 'Client sharing',          freeVal: false,           proVal: 'Share your clients to professional or free users'           },
-  { label: 'Client sharing',          freeVal: false,           proVal: 'Share your clients to professional or free users'           },
-  { label: 'Wallet finder',          freeVal: false,           proVal: 'Find installed wallets and the paths'           },
-  { label: 'Firewall & UAC',          freeVal: false,           proVal: 'Add restrictions of those system configurations'           },
-  { label: 'Chromium v20',          freeVal: false,           proVal: 'New Chrome cookies'           },
-  { label: 'Extra credentials',          freeVal: false,           proVal: 'Chromium, Signal, EA' },
-  { label: 'Plugins maker',     freeVal: false,           proVal: 'Create your own commands and share/sell them'           },
-  { label: 'Credential plugin',          freeVal: false,           proVal: '75+ credential recovery at once' },
-  { label: 'Rkit plugin',        freeVal: false,       proVal: 'task manager & registry'    },
-  { label: 'Request a custom plugin',        freeVal: false,       proVal: 'Yes, request a fully customized plugin (NO MINERS)'    },
-  { label: 'UI improvements',         freeVal: false,            proVal: 'A new sexy, interactive and complete UI '           },
-  { label: 'More outputs',                  freeVal: false, proVal: 'Minecraft mods, java, python, bat, cmd, vbs and more'    },
-  { label: 'Improvements',          freeVal: false,           proVal: 'Improvements on Tools, UI, Commands, and more'           },
-  { label: 'Community',              freeVal: false,           proVal: 'Join our telegram community with cool stuff/leaks'           },
-  { label: 'Setup',          freeVal: false,           proVal: 'Free and fast setup on your device/RDP'           },
-  { label: 'Priority support',          freeVal: false,           proVal: 'I will reply to every question you send'           },
 ];
 
 var checkSVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>';
@@ -916,12 +888,7 @@ function buildFeatureItem(label, val) {
 
   if (val === true) {
     const freeDescriptions = {
-      '100+ Commands': 'Monitoring, Entertainment, Misc & More',
-      'Different build options': '3 types of .exe (Lightweigth, Packaged and Mixed)',
-      'Credentials': 'Discord, Roblox, Telegram, etc',
-      'Clipboard check': 'BTC, ETH, LTC, XMR and SOLANA',
-      'Denial': 'Execute basic denial to websites',
-      'Frequent updates': 'We do bug fixes and new additions to both versions'
+
     };
 
     valueText = freeDescriptions[label]
@@ -990,10 +957,6 @@ function buildCard(plan) {
   return card;
 }
 
-var plans = [
-  { tier:'Community', desc:'Your classic Raton, always with you', sub:'', price:'$0', href:'https://raton.lol/download', btnLabel:'Start for free', featured:false },
-  { tier:'Professional', desc:'Only the best additions for true ratters', sub:'', price:'$125', href:'https://raton.lol/professional', btnLabel:'Get Professional', featured:true },
-];
 var grid = document.getElementById('pricingGrid');
 plans.forEach(function(p) { grid.appendChild(buildCard(p)); });
 
