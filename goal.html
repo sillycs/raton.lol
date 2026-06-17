@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="icon" href="https://raton.lol/img/RATA.png"/>
+<link rel="icon" href="https://raton.wtf/img/RATA.png"/>
 <meta charset="utf-8" />
 <title>Goal</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -27,8 +27,8 @@
   --font-body: 'DM Sans', sans-serif;
 }
 
-* { cursor: url('https://raton.lol/img/default.png') 0 0, auto; }
-a, button { cursor: url('https://raton.lol/img/handpointing.png') 0 0, pointer; }
+* { cursor: url('https://raton.wtf/img/default.png') 0 0, auto; }
+a, button { cursor: url('https://raton.wtf/img/handpointing.png') 0 0, pointer; }
 
 html { scroll-behavior: smooth; }
 
@@ -382,8 +382,8 @@ nav {
 <canvas id="cc"></canvas>
 
 <nav>
-  <a class="nav-logo" href="https://raton.lol">
-    <img src="https://raton.lol/img/RATA.png" width="24" height="24" alt="Raton" onerror="this.style.display='none'">
+  <a class="nav-logo" href="https://raton.wtf">
+    <img src="https://raton.wtf/img/RATA.png" width="24" height="24" alt="Raton" onerror="this.style.display='none'">
     Raton
   </a>
 </nav>
@@ -430,8 +430,8 @@ nav {
     <div class="thanks-list" id="tl"></div>
   </div>
 
-  <a class="footer-note" href="https://raton.lol">
-    <img src="https://raton.lol/img/RATA.png" width="13" height="13" alt="" onerror="this.style.display='none'">
+  <a class="footer-note" href="https://raton.wtf">
+    <img src="https://raton.wtf/img/RATA.png" width="13" height="13" alt="" onerror="this.style.display='none'">
     © 2026 SillyCS. All rights reserved
   </a>
 
@@ -468,8 +468,8 @@ const SUPPORTERS = [
   {name:"@Dwey",               amount:0,   msg:"Protection to Raton"},
 ];
 
-const BIG_IMG   = 'https://raton.lol/img/bigdonator.png';
-const SMALL_IMG = 'https://raton.lol/img/smalldonator.png';
+const BIG_IMG   = 'https://raton.wtf/img/bigdonator.png';
+const SMALL_IMG = 'https://raton.wtf/img/smalldonator.png';
 
 const pct = Math.min(RAISED / GOAL, 1);
 const hit = RAISED >= GOAL;
@@ -514,7 +514,7 @@ function animPct(dur) {
   ];
   data.forEach(function(r) {
     var img = document.createElement('img');
-    img.src = 'https://raton.lol/img/RATA.png';
+    img.src = 'https://raton.wtf/img/RATA.png';
     img.className = 'rata-sprite'; img.alt = ''; img.draggable = false;
     img.style.cssText = 'width:'+r.s+'px;height:'+r.s+'px;left:'+r.x+'%;top:'+r.y+'%;animation-duration:'+r.d+'s;animation-delay:-'+r.dl+'s';
     bg.appendChild(img);
@@ -598,7 +598,7 @@ function buildThanks() {
 
     if (s.isLast) {
       const btn = document.createElement('a');
-      btn.href = 'https://raton.lol/deluxe'; btn.target = '_blank';
+      btn.href = 'https://raton.wtf/deluxe'; btn.target = '_blank';
       btn.className = 'purchase-btn'; btn.textContent = 'Purchase or Donate';
       list.appendChild(btn);
 
