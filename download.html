@@ -195,12 +195,11 @@ footer{
       <img src="https://raton.wtf/img/RATA.png" width="24" height="24" alt="" onerror="this.style.display='none'">
       Raton
     </a>
-    <p class="page-sub">Your download will start automatically in <span id="timer">5</span>s</p>
     <div class="dl-card">
       <div class="dl-card-top">
         <div class="pw-block">
           <span class="pw-label">Password</span>
-          <span class="pw-value" id="pwValue">v3.9.9</span>
+          <span class="pw-value" id="pwValue">raton</span>
         </div>
         <div class="btn-row">
           <button class="btn-sm btn-ghost-sm" id="copyBtn" onclick="copyPw()">
@@ -210,7 +209,7 @@ footer{
             </svg>
             Copy
           </button>
-          <a class="btn-sm btn-primary-sm" id="dlBtn" href="https://codeberg.org/sillycs/notratonupdates/releases/download/v3.9.9/Raton_ImagineAWorldWithoutWar.zip">
+          <a class="btn-sm btn-primary-sm" id="dlBtn" href="https://gofile.io/d/jkAMTp">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
               <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
               <polyline points="7 10 12 15 17 10"/>
@@ -243,13 +242,6 @@ footer{
 
 var s=5;
 var t=document.getElementById('timer');
-var iv=setInterval(function(){
-  s--;t.textContent=s;
-  if(s<=0){
-    clearInterval(iv);confetti();
-    window.location.href='https://codeberg.org/sillycs/notratonupdates/releases/download/v3.9.9/Raton_ImagineAWorldWithoutWar.zip';
-  }
-},1000);
 
 function copyPw(){
   var pw=document.getElementById('pwValue').textContent;
