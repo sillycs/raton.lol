@@ -1,965 +1,121 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Raton</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Coming soon</title>
 <link rel="icon" type="image/png" href="https://raton.wtf/img/RATA.png">
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link href="https://fonts.cdnfonts.com/css/kunal" rel="stylesheet">
-<link href="https://fonts.cdnfonts.com/css/unblock" rel="stylesheet">
-<link href="https://fonts.cdnfonts.com/css/nishiki-teki" rel="stylesheet">
+
 <style>
+    body {
+        margin: 0;
+        min-height: 100vh;
+        background: radial-gradient(circle at top, #121212 0%, #000 70%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+        color: white;
+        overflow: hidden;
+    }
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    .page {
+        text-align: center;
+        max-width: 620px;
+        padding: 30px 20px;
+        z-index: 2;
+        transform: scale(0.95);
+    }
 
-:root {
-  --bg: #0d0d0d;
-  --surface: #141414;
-  --surface2: #1c1c1c;
-  --border: rgba(255,255,255,0.07);
-  --border2: rgba(255,255,255,0.12);
-  --purple: #8b5cf6;
-  --purple2: #a78bfa;
-  --purple3: #ba68c8;
-  --purple-dim: rgba(139,92,246,0.15);
-  --text: #f4f4f8;
-  --text2: #a0a0b8;
-  --text3: #606078;
-  --font-display: 'Nishiki-teki', sans-serif;
-  --font-logo: 'kunal', sans-serif;
-  --font-body: 'DM Sans', sans-serif;
-  --radius: 16px;
-}
+    .notice {
+        display: flex;
+        gap: 10px;
+        text-align: left;
+        max-width: 600px;
+        margin: 0 auto 25px auto;
+        padding: 12px 14px;
+        border: 1px solid rgba(255,255,255,0.1);
+        background: rgba(255,255,255,0.03);
+        border-radius: 10px;
+        font-size: 12px;
+        color: rgba(255,255,255,0.7);
+    }
 
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #0d0d0d; }
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, var(--purple), #5b21b6);
-  border-radius: 99px;
-  cursor: url('https://raton.wtf/img/handpointing.png') 0 0, pointer;
-}
-::-webkit-scrollbar-thumb:hover { background: var(--purple2); }
-* { scrollbar-width: thin; scrollbar-color: var(--purple) #0d0d0d; }
+    .headline {
+        font-size: 24px;
+        font-weight: 300;
+        margin-bottom: 25px;
+        color: rgba(255,255,255,0.92);
+        animation: float 4s ease-in-out infinite;
+    }
 
-* { cursor: url('https://raton.wtf/img/default.png') 0 0, auto; }
-a, button, [role="button"], .btn, .pricing-btn, .social-btn,
-body.dragging, body.dragging * {
-  cursor: url('https://raton.wtf/img/handpointing.png') 0 0, pointer !important;
-}
+    @keyframes float {
+        0%,100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
 
-html { scroll-behavior: smooth; }
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--font-body);
-  font-size: 16px;
-  line-height: 1.6;
-  overflow-x: hidden;
-}
+    .nav {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+    }
 
-.rata-bg {
-  position: fixed; inset: 0;
-  pointer-events: none; z-index: 0; overflow: hidden;
-}
-.rata-sprite {
-  position: absolute; opacity: 0;
-  will-change: transform, opacity;
-  filter: grayscale(20%) brightness(0.65);
-  animation: rataFloat linear infinite;
-  transform-origin: center; user-select: none;
-}
-@keyframes rataFloat {
-  0%   { opacity: 0;    transform: translateY(0px)   rotate(0deg)  scale(1);    }
-  8%   { opacity: 0.18; }
-  50%  { opacity: 0.10; transform: translateY(-28px) rotate(7deg)  scale(1.05); }
-  92%  { opacity: 0.18; }
-  100% { opacity: 0;    transform: translateY(-55px) rotate(-4deg) scale(0.95); }
-}
-#disclaimer-overlay{position:fixed;inset:0;z-index:999;background:rgba(0,0,0,0.85);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:2rem}
-#disclaimer-overlay.hidden{display:none}
-.raton-modal{width:100%;max-width:430px;background:#141414;border:1px solid rgba(255,255,255,0.12);border-radius:18px;overflow:hidden}
-.raton-header{padding:1.2rem 1.4rem;border-bottom:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;gap:12px}
-.raton-icon-wrap{width:38px;height:38px;border-radius:10px;background:rgba(139,92,246,0.15);border:1px solid rgba(139,92,246,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.raton-header-text p{margin:0}
-.raton-header-text .title{font-size:14px;font-weight:600;color:#f4f4f8}
-.raton-header-text .sub{font-size:12px;color:#606078}
-.raton-items{padding:1rem;display:flex;flex-direction:column;gap:8px}
-.raton-item{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:10px;border:1px solid rgba(255,255,255,0.07);background:#0d0d0d}
-.raton-item-icon{width:28px;height:28px;border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;margin-top:1px}
-.raton-item-icon.purple{background:rgba(139,92,246,0.15);border:1px solid rgba(139,92,246,0.2);color:#a78bfa}
-.raton-item-icon.green{background:rgba(29,158,117,0.12);border:1px solid rgba(29,158,117,0.2);color:#34d399}
-.raton-item-icon.red{background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.2);color:#f87171}
-.raton-item-icon.amber{background:rgba(251,191,36,0.12);border:1px solid rgba(251,191,36,0.2);color:#fbbf24}
-.raton-item p{margin:0}
-.raton-item .item-title{font-size:12px;font-weight:600;color:#f4f4f8;margin-bottom:2px}
-.raton-item .item-desc{font-size:11px;color:#606078;line-height:1.5}
-.raton-note{margin:0 1rem 1rem;padding:10px 12px;border-radius:10px;background:#1c1c1c;font-size:11px;color:#606078;line-height:1.5}
-.raton-btns{padding:0 1rem 1rem;display:flex;gap:8px}
-.raton-btn{flex:1;padding:9px 0;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;border:none;cursor:pointer;transition:all 0.2s;text-align:center}
-.raton-btn.decline{background:rgba(139,92,246,0.12);border:1px solid rgba(139,92,246,0.25);color:#a78bfa}
-.raton-btn.decline:hover{background:rgba(139,92,246,0.2)}
-.raton-btn.accept{background:#8b5cf6;color:#fff}
-.raton-btn.accept:hover{background:#7c3aed;transform:translateY(-1px)}
-nav {
-  position: sticky; top: 0; z-index: 100;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 3rem; height: 64px;
-  background: rgba(13,13,13,0.88);
-  backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-  border-bottom: 1px solid var(--border);
-}
-.nav-logo {
-  display: flex; align-items: center; gap: 10px;
-  font-family: var(--font-logo); font-weight: 800;
-  font-size: 1.5rem; color: var(--text); text-decoration: none;
-}
-.nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
-.nav-links a {
-  text-decoration: none; color: var(--text2);
-  font-size: 0.875rem; font-weight: 400; transition: color 0.2s;
-}
-.nav-links a:hover { color: var(--text); }
-.nav-mobile-toggle {
-  display: none; background: none; border: none; color: var(--text); padding: 6px;
-}
+    .nav a {
+        text-decoration: none;
+        color: rgba(255,255,255,0.65);
+        font-size: 14px;
+        transition: 0.25s;
+        position: relative;
+    }
 
-.btn {
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 0.55rem 1.3rem; border-radius: 10px;
-  font-family: var(--font-body); font-size: 0.875rem; font-weight: 500;
-  text-decoration: none; border: none; transition: all 0.2s;
-}
-.btn-primary { background: var(--purple); color: #fff; }
-.btn-primary:hover { background: #7c3aed; transform: translateY(-1px); }
-.btn-ghost {
-  background: rgba(255,255,255,0.06); color: var(--text);
-  border: 1px solid var(--border2);
-}
-.btn-ghost:hover { background: rgba(255,255,255,0.1); }
+    .nav a:hover {
+        color: #fff;
+        transform: translateY(-3px);
+    }
 
-.hero {
-  position: relative; text-align: center;
-  padding: 7rem 2rem 5rem; overflow: hidden; z-index: 1;
-}
-h1 {
-  font-family: var(--font-display);
-  font-size: clamp(3.5rem, 8vw, 7rem);
-  font-weight: 800; line-height: 1.0;
-  letter-spacing: 0.04em; margin-bottom: 1.5rem;
-  text-transform: uppercase;
-}
-h1 .accent  { color: var(--purple); }
-.accent2    { color: var(--purple2); }
-.hero-sub   { max-width: 520px; margin: 0 auto 2.5rem; color: var(--text2); font-size: 1rem; line-height: 1.7; }
-.hero-btns  { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.2rem; }
-.hero-note  { display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 0.78rem; color: var(--text3); }
-.discount-badge{
-  position:absolute;
-  top:16px;
-  right:-38px;
-  width:140px;
-  text-align:center;
-  padding:8px 0;
-  background:linear-gradient(135deg,#8b5cf6,#7c3aed);
-  color:#fff;
-  font-weight:800;
-  font-size:0.82rem;
-  letter-spacing:.08em;
-  text-transform:uppercase;
-  transform:rotate(45deg);
-  box-shadow:0 10px 25px rgba(139,92,246,.35);
-  z-index:5;
-}
-.stats-bar {
-  position: relative; z-index: 1;
-  display: flex; justify-content: center; gap: 3rem;
-  padding: 2rem 2rem 4rem; flex-wrap: wrap;
-}
-.stat-item  { display: flex; align-items: center; gap: 10px; }
-.stat-icon  {
-  width: 36px; height: 36px; border-radius: 10px;
-  background: rgba(255,255,255,0.05); border: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: center; color: var(--purple2);
-}
-.stat-icon svg { width: 16px; height: 16px; }
-.stat-label { font-size: 0.75rem; color: var(--text3); }
-.stat-value { font-size: 0.875rem; font-weight: 500; color: var(--text); }
+    .nav a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -5px;
+        width: 0%;
+        height: 1px;
+        background: white;
+        transition: 0.3s;
+    }
 
-.live-demo {
-  position: relative; z-index: 1;
-  max-width: 980px; margin: 0 auto 6rem; padding: 0 2rem;
-  animation: floatDemo 6s ease-in-out infinite;
-}
-.demo-image-wrapper {
-  overflow: hidden; background: #1a1a1a;
-  box-shadow: 0 40px 100px rgba(0,0,0,0.7);
-  transform: scale(1.03); transition: transform 0.4s ease;
-}
-.demo-image-wrapper:hover { transform: scale(1.05); }
-.demo-image-wrapper img  { width: 100%; height: auto; display: block; }
-@keyframes floatDemo {
-  0%   { transform: translateY(0px); }
-  50%  { transform: translateY(-14px); }
-  100% { transform: translateY(0px); }
-}
-
-section { position: relative; z-index: 1; }
-.section-title {
-  font-family: var(--font-display);
-  font-size: clamp(2.5rem, 3vw, 3.5rem);
-  font-weight: 800; line-height: 1.0;
-  letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 1rem;
-}
-.section-sub { color: var(--text2); font-size: 0.95rem; line-height: 1.7; max-width: 600px; margin: 0 auto; }
-.text-center { text-align: center; }
-
-.features { padding: 5rem 2rem; max-width: 1100px; margin: 0 auto; }
-.features-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 1px; background: var(--border);
-  overflow: hidden; margin-top: 4rem;
-  border: 1px solid var(--border); border-radius: 20px;
-}
-.feature-card { background: var(--surface); padding: 2rem; transition: background 0.2s; }
-.feature-card:hover { background: var(--surface2); }
-.feature-card:first-child      { border-top-left-radius: 19px; }
-.feature-card:nth-child(3)     { border-top-right-radius: 19px; }
-.feature-card:nth-child(4)     { border-bottom-left-radius: 19px; }
-.feature-card:last-child       { border-bottom-right-radius: 19px; }
-.feature-icon {
-  width: 44px; height: 44px; border-radius: 12px;
-  background: var(--purple-dim); border: 1px solid rgba(139,92,246,0.2);
-  display: flex; align-items: center; justify-content: center;
-  color: var(--purple2); margin-bottom: 1.2rem;
-}
-.feature-icon svg  { width: 20px; height: 20px; }
-.feature-title     { font-size: 1rem; font-weight: 600; margin-bottom: 0.6rem; }
-.feature-desc      { font-size: 0.85rem; color: var(--text2); line-height: 1.65; }
-
-.interface-section {
-  background: #0f0f0f;
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  padding: 5rem 2rem;
-}
-.interface-inner {
-  max-width: 1100px; margin: 0 auto;
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 4rem; align-items: center;
-}
-.interface-checks { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.8rem; }
-.check-item  { display: flex; align-items: flex-start; gap: 10px; font-size: 0.875rem; }
-.check-icon  {
-  flex-shrink: 0; width: 20px; height: 20px; border-radius: 6px;
-  background: var(--purple-dim); border: 1px solid rgba(139,92,246,0.25);
-  display: flex; align-items: center; justify-content: center;
-  color: var(--purple2); margin-top: 2px;
-}
-.check-icon svg  { width: 11px; height: 11px; }
-.check-label     { font-weight: 600; margin-bottom: 2px; }
-.check-sub       { color: var(--text3); font-size: 0.8rem; }
-.interface-link  {
-  display: inline-flex; align-items: center; gap: 6px;
-  color: var(--purple2); font-size: 0.875rem; text-decoration: none;
-  margin-top: 1.5rem; font-weight: 500; transition: gap 0.2s;
-}
-.interface-link:hover    { gap: 10px; }
-.interface-link svg      { width: 16px; height: 16px; }
-
-.reviews { padding: 5rem 2rem; max-width: 860px; margin: 0 auto; text-align: center; }
-.discord-widget {
-  margin-top: 3rem; background: #313338;
-  border-radius: 16px; overflow: hidden;
-  text-align: left; box-shadow: 0 24px 60px rgba(0,0,0,0.4);
-}
-.discord-topbar {
-  height: 48px; background: #313338;
-  border-bottom: 1px solid rgba(0,0,0,0.2);
-  display: flex; align-items: center; padding: 0 1rem; gap: 10px;
-}
-.discord-channel-name {
-  display: flex; align-items: center; gap: 6px;
-  font-size: 0.92rem; font-weight: 700; color: #f2f3f5;
-}
-.discord-hash         { color: #80848e; font-size: 1.3rem; line-height: 1; }
-.discord-topbar-sep   { width: 1px; height: 20px; background: rgba(255,255,255,0.08); margin: 0 6px; }
-.discord-topic        { font-size: 0.8rem; color: #80848e; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.discord-body         { background: #313338; padding: 0 0 1rem; min-height: 300px; }
-.discord-date-sep {
-  display: flex; align-items: center; gap: 1rem;
-  padding: 1.2rem 1rem 0.6rem;
-  font-size: 0.72rem; color: #80848e; font-weight: 600; letter-spacing: 0.04em;
-}
-.discord-date-sep::before, .discord-date-sep::after {
-  content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.06);
-}
-.discord-message      { display: flex; padding: 2px 1rem; transition: background 0.08s; }
-.discord-message:hover { background: rgba(0,0,0,0.06); }
-.discord-avatar-col   { width: 40px; flex-shrink: 0; margin-right: 12px; padding-top: 2px; }
-.discord-avatar {
-  width: 40px; height: 40px; border-radius: 50%;
-  overflow: hidden; position: relative;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 0.82rem; font-weight: 700; color: #fff;
-}
-.discord-avatar img {
-  width: 100%; height: 100%; object-fit: cover; display: block;
-  border-radius: 50%; position: absolute; inset: 0;
-}
-.discord-msg-content  { flex: 1; min-width: 0; padding: 2px 0; }
-.discord-msg-header   {
-  display: flex; align-items: baseline; gap: 8px;
-  margin-bottom: 2px; flex-wrap: wrap;
-}
-.discord-username         { font-size: 0.95rem; font-weight: 500; }
-.discord-timestamp-header { font-size: 0.72rem; color: #80848e; }
-.discord-msg-text {
-  font-size: 0.94rem; color: #dbdee1; line-height: 1.575; word-break: break-word;
-}
-.discord-msg-text code {
-  background: #1e1f22; border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 3px; padding: 0 4px;
-  font-family: 'Consolas', monospace; font-size: 0.85em; color: #c9d1d9;
-}
-
-.pricing { padding: 5rem 2rem; max-width: 900px; margin: 0 auto; text-align: center; }
-.pricing-grid {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 1.5rem; margin-top: 3.5rem; align-items: stretch;
-}
-
-.pricing-card {
-  border-radius: 24px; padding: 2.4rem 2rem;
-  text-align: left; position: relative;
-  display: flex; flex-direction: column; gap: 0;
-  background: var(--surface);
-  border: 1px solid var(--border2);
-  transition: border-color 0.25s, transform 0.25s;
-  overflow: hidden;
-}
-.pricing-card::before {
-  content: '';
-  position: absolute; inset: 0;
-  background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(139,92,246,0.08), transparent 70%);
-  pointer-events: none;
-}
-.pricing-card:hover { border-color: rgba(255,255,255,0.2); transform: translateY(-3px); }
-
-.pricing-card.featured {
-  border: 1px solid var(--purple);
-}
-.pricing-card.featured::before {
-  background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(139,92,246,0.1), transparent 70%);
-}
-
-.pricing-price-block { margin-bottom: 1.6rem; }
-.pricing-price-row   { display: flex; align-items: baseline; gap: 4px; line-height: 1; }
-.price-currency      { font-family: var(--font-display); font-size: 1.8rem; color: var(--text2); margin-top: 4px; align-self: flex-start; }
-.price-amount        { font-family: var(--font-display); font-size: 4rem; font-weight: 800; letter-spacing: -0.02em; }
-.price-period        { font-size: 0.8rem; color: var(--text3); margin-left: 4px; }
-.pricing-sub         { font-size: 0.8rem; color: var(--text3); margin-top: 6px; }
-
-.pricing-divider { height: 1px; background: var(--border); margin: 1.4rem 0; }
-
-.pricing-features { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; margin-bottom: 2rem; flex: 1; }
-.pricing-feature  { display: flex; align-items: flex-start; gap: 10px; font-size: 0.875rem; }
-.pricing-feature.disabled { color: var(--text3); }
-.pf-icon {
-  flex-shrink: 0; width: 18px; height: 18px; border-radius: 5px;
-  display: flex; align-items: center; justify-content: center; margin-top: 2px;
-}
-.pf-icon.ok { background: rgba(139,92,246,0.18); color: var(--purple2); }
-.pf-icon.no { background: rgba(255,255,255,0.04); color: var(--text3); }
-.pf-icon svg { width: 10px; height: 10px; }
-.pf-label    { line-height: 1.4; }
-.pf-value    { font-size: 0.78rem; color: var(--text3); margin-top: 1px; }
-
-.pricing-btn {
-  display: block; width: 100%; text-align: center;
-  padding: 0.85rem; border-radius: 14px; font-size: 0.9rem;
-  font-weight: 600; border: none; font-family: var(--font-body);
-  transition: all 0.2s; text-decoration: none; margin-top: auto;
-}
-.pricing-btn.btn-free {
-  background: rgba(255,255,255,0.06);
-  color: var(--text);
-  border: 1px solid var(--border2);
-}
-.pricing-btn.btn-free:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); }
-.pricing-btn.btn-pro {
-  background: linear-gradient(135deg, var(--purple), #7c3aed);
-  color: #fff;
-}
-.pricing-btn.btn-pro:hover {
-  background: linear-gradient(135deg, #7c3aed, #6d28d9);
-  transform: translateY(-1px);
-}
-
-footer {
-  border-top: 1px solid var(--border);
-  padding: 3rem;
-  max-width: 1100px; margin: 0 auto;
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 3rem; align-items: start;
-}
-.footer-brand { max-width: 320px; }
-.footer-tagline { font-size: 0.8rem; color: var(--text3); line-height: 1.6; margin-top: 0.6rem; }
-
-.footer-community { display: flex; flex-direction: column; align-items: flex-end; text-align: right; }
-.footer-col-title {
-  display: flex; align-items: center; gap: 0.45rem;
-  font-family: var(--font-logo); font-size: 1.4rem; font-weight: 700;
-  color: var(--text); letter-spacing: 0.06em; text-transform: uppercase;
-  margin-bottom: 0.9rem;
-}
-.footer-community ul {
-  list-style: none; display: flex; flex-direction: column;
-  gap: 0.5rem; align-items: flex-end;
-}
-.footer-community a { font-size: 0.8rem; color: var(--text3); text-decoration: none; transition: color 0.2s; }
-.footer-community a:hover { color: var(--text2); }
-
-.footer-socials {
-  display: flex; gap: 0.8rem; margin-top: 1.2rem;
-}
-	
-.footer-note{
-    grid-column: span 2;
-    justify-self:center;
-    display:flex;
-    align-items:center;
-    gap:6px;
-    font-size:0.72rem;
-    color:var(--text3);
-    padding-top:1.5rem;
-    text-decoration:none;
-}
-
-.footer-note:hover{
-    color:var(--text2);
-}
-.social-btn {
-  width: 34px; height: 34px; border-radius: 10px;
-  background: rgba(255,255,255,0.05); border: 1px solid var(--border2);
-  display: flex; align-items: center; justify-content: center;
-  color: var(--text3); text-decoration: none; transition: all 0.2s;
-}
-.social-btn:hover { background: rgba(255,255,255,0.1); color: var(--text); }
-.social-btn svg { width: 16px; height: 16px; }
-
-.footer-bottom {
-  border-top: 1px solid var(--border);
-  padding: 1.5rem 3rem;
-  max-width: 1100px; margin: 0 auto;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 0.75rem; color: var(--text3); text-align: center;
-}
-.footer-bottom span { display: block; width: 100%; text-align: center; }
-
-@keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
-.hero > * { animation: fadeUp 0.6s ease both; }
-h1             { animation-delay: 0.15s; }
-.hero-sub      { animation-delay: 0.25s; }
-.hero-btns     { animation-delay: 0.35s; }
-.hero-note     { animation-delay: 0.45s; }
-
-@media (max-width: 768px) {
-  nav { padding: 0 1.2rem; }
-  .nav-links { display: none; }
-  .nav-mobile-toggle { display: flex; }
-  nav.open .nav-links {
-    display: flex; flex-direction: column; position: fixed;
-    top: 64px; left: 0; right: 0;
-    background: rgba(13,13,13,0.97); backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border);
-    padding: 1.5rem 1.5rem 2rem; gap: 1.2rem; z-index: 99;
-  }
-  .hero { padding: 4rem 1.2rem 3rem; }
-  h1 { font-size: clamp(3rem, 14vw, 5rem); }
-  .stats-bar { gap: 1.5rem; padding: 1.5rem 1.2rem 3rem; }
-  .live-demo { padding: 0 1.2rem; margin-bottom: 4rem; }
-  .features { padding: 3rem 1.2rem; }
-  .features-grid { grid-template-columns: 1fr; }
-  .interface-section { padding: 3rem 1.2rem; }
-  .interface-inner { grid-template-columns: 1fr; gap: 2rem; }
-  .reviews { padding: 3rem 1.2rem; }
-  .pricing { padding: 3rem 1.2rem; }
-  .pricing-grid { grid-template-columns: 1fr; }
-  footer { grid-template-columns: 1fr; padding: 2rem 1.2rem; gap: 2rem; }
-  .footer-bottom { padding: 1.2rem; }
-}
-@media (max-width: 480px) {
-  .stats-bar { flex-direction: column; align-items: flex-start; padding-left: 1.2rem; }
-  .hero-btns { flex-direction: column; align-items: center; }
-  .hero-btns .btn { width: 100%; max-width: 280px; justify-content: center; }
-}
+    .nav a:hover::after {
+        width: 100%;
+    }
 </style>
 </head>
+
 <body>
-<div id="disclaimer-overlay">
-  <div class="raton-modal">
-    <div class="raton-header">
-      <div class="raton-icon-wrap">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2">
-          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
-          <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
-        </svg>
-      </div>
-      <div class="raton-header-text">
-        <p class="title">Before you continue</p>
-        <p class="sub">Please read the following clarifications</p>
-      </div>
-    </div>
-    <div class="raton-items">
-      <div class="raton-item">
-        <div class="raton-item-icon purple"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
-<div>
-  <p class="item-title">For your own devices only</p>
-  <p class="item-desc">Raton manages your own devices. Using it on devices you don't own is prohibited by our <a href="https://raton.wtf/agreement" style="color:#a78bfa;text-decoration:none;">user agreement</a></p>
-</div>
-      </div>
-      <div class="raton-item">
-        <div class="raton-item-icon green"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-        <div><p class="item-title">Everything is safe</p>
-        <p class="item-desc">All communication uses encrypted connections. No data from the clients is sent to our servers, check what information we get on our <a href="https://raton.wtf/agreement" style="color:#a78bfa;text-decoration:none;">user agreement</a>. But don't worry, is nothing too private</p></div>
-      </div>
-      <div class="raton-item">
-        <div class="raton-item-icon red"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
-        <div><p class="item-title">Not malware</p>
-        <p class="item-desc">RAT stands for Remote Access Tool, not Remote Access Trojan. Our platform is designed for legitimate remote administration for your devices and we strictly prohibit malicious use</p></div>
-      </div>
-      <div class="raton-item">
-        <div class="raton-item-icon amber"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
-        <div><p class="item-title">Your responsibility</p>
-        <p class="item-desc">By downloading/using/registering, you agree to use Raton only on systems you own or have explicit permission to manage</p></div>
-      </div>
-    </div>
-    <p class="raton-note">By clicking “Accept & Continue” you agree to the terms stated above</p>
-    <div id="raton-result" class="raton-result"></div>
-    <div class="raton-btns" id="raton-btns">
-      <button class="raton-btn decline" onclick="handleDecline()">Decline</button>
-      <button class="raton-btn accept" onclick="handleAccept()">Accept & continue</button>
-    </div>
-  </div>
-</div>
-<div class="rata-bg" id="rataBg" aria-hidden="true"></div>
 
-<nav id="mainNav">
-  <a class="nav-logo" href="#">
-    <img src="https://raton.wtf/img/RATA.png" width="28" height="28" alt="Logo" onerror="this.style.display='none'">
-    Raton
-  </a>
-  <ul class="nav-links">
-    <li><a href="#showcase">Showcase</a></li>
-    <li><a href="https://raton.wtf/download">Download</a></li>
-	  <li><a href="https://raton.wtf/docs">Documentation</a></li>
-	  <li><a href="https://raton.wtf/blog">Forum</a></li>
-  </ul>
-  <button class="nav-mobile-toggle" aria-label="Menú" onclick="document.getElementById('mainNav').classList.toggle('open')">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-  </button>
-</nav>
+<div class="page">
 
-<section class="hero" id="home">
-  <h1><span class="accent">Raton</span></h1>
-  <p class="hero-sub">Raton is a powerful remote management program for your devices. Offering various features, customization, safe connections, and much more for a better and fun administration.</p>
-  <div class="hero-btns">
-    <a href="https://raton.wtf/download" class="btn btn-primary">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-      Download for Windows
-    </a>
-    <a href="#showcase" class="btn btn-ghost">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-      Showcase
-    </a>
-  </div>
-  <p class="hero-note">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-    Available for Windows 10, Windows 11, and Windows Server editions
-  </p>
-</section>
+<div class="notice">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0; margin-top:2px;">
+        <path d="M12 2L1 21h22L12 2z" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" fill="none"/>
+        <path d="M12 9v4" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M12 17h.01" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-linecap="round"/>
+    </svg>
 
-<div class="stats-bar">
-  <div class="stat-item">
-    <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-    <div><div class="stat-label">Administration</div><div class="stat-value">Management made easy</div></div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-icon">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M1 12S5 5 12 5s11 7 11 7-4 7-11 7S1 12 1 12z"/>
-        <circle cx="12" cy="12" r="3"/>
-      </svg>
-    </div>
-    <div><div class="stat-label">Monitoring</div><div class="stat-value">All you need in one tool</div></div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-    <div><div class="stat-label">Beginner friendly</div><div class="stat-value">Easy to use interface</div></div>
-  </div>
+    <span>This software is intended strictly for IT support and system administration purposes only.</span>
 </div>
 
-<div class="live-demo">
-  <div class="demo-image-wrapper">
-    <img src="https://raton.wtf/img/demo2.png" alt="Raton demo"
-      onerror="this.parentElement.innerHTML='<div style=\'padding:3rem 2rem;text-align:center;color:#606078;font-size:0.85rem;\'>Demo image</div>'">
-  </div>
+    <div class="headline">
+        We are doing big changes to the Raton brand
+    </div>
+
+
+    <div class="nav">
+        <a href="/download">Download</a>
+        <a href="/professional">Purchase</a>
+        <a href="/blog">Blog</a>
+    </div>
+
 </div>
 
-<section class="features" id="features">
-  <div class="text-center">
-    <h2 class="section-title">What do we offer?</h2>
-    <p class="section-sub">Discover the cool features that Raton offers; whatever you're looking for will be here with all the simplicity that will make your experience even better</p>
-  </div>
-  <div class="features-grid">
-    <div class="feature-card">
-      <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
-      <div class="feature-title">Full control</div>
-      <p class="feature-desc">Access and control your own remote devices as if you were sitting in front of them, with remote functions to don't disturb</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/><line x1="12" y1="11" x2="12" y2="17"/><line x1="9" y1="14" x2="15" y2="14"/></svg></div>
-      <div class="feature-title">File transfer</div>
-      <p class="feature-desc">Send and receive files or entire directories using our stable file protocol, this including our recovery tools</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg></div>
-      <div class="feature-title">Batch</div>
-      <p class="feature-desc">Run integrated Cmd or PowerShell terminals for advanced users</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
-      <div class="feature-title">Information</div>
-      <p class="feature-desc">Protect your devices with password access controls and management features</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="9" height="7" rx="1"/><rect x="13" y="3" width="9" height="7" rx="1"/><rect x="2" y="14" width="9" height="7" rx="1"/><rect x="13" y="14" width="9" height="7" rx="1"/></svg></div>
-      <div class="feature-title">Centralized</div>
-      <p class="feature-desc">Clients all around the world in one panel, with a map and client images, manage them with tasks, plugins or use them</p>
-    </div>
-    <div class="feature-card">
-<div class="feature-icon">
-
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-
-    <circle cx="12" cy="12" r="10"/>
-
-    <path d="M8 10h.01"/>
-
-    <path d="M16 10h.01"/>
-
-    <path d="M8 15s1.5 2 4 2 4-2 4-2"/>
-
-  </svg>
-
-</div>      <div class="feature-title">Entertainment</div>
-      <p class="feature-desc">Want to have some fun? Our wide variety of entertainment commands will be more than enough for you</p>
-    </div>
-  </div>
-</section>
-
-<section class="interface-section" id="interface">
-  <div class="interface-inner">
-    <div class="interface-text">
-      <h2 class="section-title">Raton vs<br>Generic IT applications</h2>
-      <p style="color: var(--text2); font-size: 0.9rem; line-height: 1.7; margin-bottom: 1.5rem;">Forget about problems with bad apps, vulnerabilities, ugly interfaces, confusing things and other annoying issues (Also without cool features)</p>
-      <div class="interface-checks">
-        <div class="check-item">
-          <div class="check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-          <div>
-            <div class="check-label">A Very Sexy UI</div>
-            <div class="check-sub">We offer a nice and clean interface for free and paid users</div>
-          </div>
-        </div>
-				        <div class="check-item">
-          <div class="check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-          <div>
-            <div class="check-label">Different build options</div>
-            <div class="check-sub">Generate 3 types of .exe (Lightweigth, Packaged and mixed)</div>
-          </div>
-        </div>
-        <div class="check-item">
-          <div class="check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-          <div>
-            <div class="check-label">User friendly</div>
-            <div class="check-sub">Raton is designed for all types of administrators, our UI will guide you</div>
-          </div>
-        </div>
-		        <div class="check-item">
-          <div class="check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-          <div>
-            <div class="check-label">Large list of commands</div>
-            <div class="check-sub">We're full of useful features, tools and much more</div>
-          </div>
-        </div>
-		        <div class="check-item">
-          <div class="check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-          <div>
-            <div class="check-label">Ultra safe</div>
-            <div class="check-sub">Designed with security, stability, and reliability in mind</div>
-          </div>
-        </div>
-		        <div class="check-item">
-          <div class="check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-          <div>
-            <div class="check-label">Full uptime</div>
-            <div class="check-sub">Your computers won't lose your connection, don't worry about losing the support application</div>
-          </div>
-        </div>
-		        <div class="check-item">
-          <div class="check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-          <div>
-            <div class="check-label">Frequent updates</div>
-            <div class="check-sub">We do bug fixes and new additions to both free and paid version</div>
-          </div>
-        </div>
-		        <div class="check-item">
-          <div class="check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-          <div>
-            <div class="check-label">Its just raton...</div>
-            <div class="check-sub">No need to choose other support apps while we got your back :)</div>
-          </div>
-        </div>
-      </div>
-      <a href="https://raton.wtf/docs" class="interface-link">
-        Check our documentation
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </a>
-    </div>
-  </div>
-</section>
-
-<div class="live-demo">
-  <div class="demo-image-wrapper">
-    <img src="https://raton.wtf/img/demo.png" alt="Raton demo"
-      onerror="this.parentElement.innerHTML='<div style=\'padding:3rem 2rem;text-align:center;color:#606078;font-size:0.85rem;\'>Demo image</div>'">
-  </div>
-		      <a href="https://raton.wtf/professional" class="interface-link">
-        Check our professional showcase video
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </a>
-</div>
-<section class="pricing" id="showcase">
-  <h2 class="section-title">Raton showcase</h2>
-  <p class="section-sub">Check out the features that Raton offers with this video made by the amazing silly</p>
-  <div style="display:flex; justify-content:center; align-items:center; width:100%; margin-top:20px;">
-<iframe title="demovideo" width="560" height="315" src="https://clip.place/videos/embed/2M3N73od2Ju1q7VwNb8nW6" style="border: 0px;" allow="fullscreen" sandbox="allow-same-origin allow-scripts allow-popups allow-forms"></iframe>
-</div>
-</section>
-<footer id="download">
-  <div class="footer-brand">
-    <a class="nav-logo" href="#">
-      <img src="https://raton.wtf/img/RATA.png" width="22" height="22" alt="" onerror="this.style.display='none'">
-      RATON
-    </a>
-    <p class="footer-tagline">Monitoring, transfers, management, customization, and much more for everyone. Come and join us!</p>
-    <div style="display:flex;gap:0.8rem;margin-top:1.2rem;flex-wrap:wrap;">
-      <a href="https://raton.wtf/download" class="btn btn-primary" style="font-size:0.85rem;">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Download for Windows
-      </a>
-    </div>
-  </div>
-
-  <div class="footer-community">
-    <div class="footer-col-title">
-      <img src="https://raton.wtf/img/RATA.png" width="22" height="22" alt="" onerror="this.style.display='none'">
-      Community
-    </div>
-<ul>
-  <li><a href="https://discord.gg/scvVCGaRkZ"><span>Discord</span><span>Join us on our community</span></a></li>
-  <li><a href="https://github.com/sillycs"><span>GitHub</span><span>Check my other projects</span></a></li>
-  <li><a href="https://t.me/sillycs"><span>Telegram</span><span>Contact me and say hi</span></a></li>
-  <li><a href="https://raton.wtf/agreement"><span>Agreement</span><span>Our terms and policy</span></a></li>
-</ul>
-
-<style>
-ul li a{
-    display:flex;
-    gap:16px;
-}
-ul li a span:first-child{
-    width:90px;
-}
-</style>
-    <div class="footer-socials">
-      <a href="https://discord.gg/scvVCGaRkZ" class="social-btn" aria-label="Discord">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.033.056a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
-      </a>
-      <a href="https://github.com/sillycs" class="social-btn" aria-label="GitHub">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
-      </a>
-      <a href="https://t.me/sillycs" class="social-btn" aria-label="Telegram">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
-      </a>
-    </div>
-  </div>
-
-    <a class="footer-note" href="https://raton.wtf">
-      <img src="https://raton.wtf/img/RATA.png" width="13" height="13" alt="" onerror="this.style.display='none'">
-      © 2026 SillyCS. All rights reserved
-    </a>
-<script>
-function handleAccept(){
-  document.getElementById('disclaimer-overlay').classList.add('hidden');
-}
-function handleDecline(){
-  window.location.href = 'https://www.youtube.com/watch?v=5mGuCdlCcNM';
-}
-(function() {
-  var bg = document.getElementById('rataBg');
-  var data = [
-    {x:5,  y:8,  s:56, d:20, dl:0 },
-    {x:18, y:22, s:48, d:24, dl:5 },
-    {x:32, y:5,  s:64, d:18, dl:9 },
-    {x:48, y:15, s:52, d:26, dl:2 },
-    {x:65, y:3,  s:72, d:22, dl:13},
-    {x:78, y:20, s:48, d:30, dl:7 },
-    {x:90, y:8,  s:60, d:16, dl:11},
-    {x:10, y:55, s:56, d:28, dl:3 },
-    {x:28, y:70, s:80, d:32, dl:16},
-    {x:50, y:60, s:48, d:20, dl:8 },
-    {x:72, y:75, s:64, d:25, dl:6 },
-    {x:88, y:50, s:52, d:19, dl:14},
-  ];
-  data.forEach(function(r) {
-    var img = document.createElement('img');
-    img.src = 'https://raton.wtf/img/RATA.png';
-    img.className = 'rata-sprite'; img.alt = ''; img.draggable = false;
-    img.style.cssText = 'width:'+r.s+'px;height:'+r.s+'px;left:'+r.x+'%;top:'+r.y+'%;animation-duration:'+r.d+'s;animation-delay:-'+r.dl+'s';
-    bg.appendChild(img);
-  });
-})();
-
-
-(function() {
-  var body = document.getElementById('discordBody');
-  var sep = document.createElement('div');
-  sep.className = 'discord-date-sep'; sep.textContent = 'raton.wtf';
-  body.appendChild(sep);
-
-  reviews.forEach(function(r, i) {
-    var row = document.createElement('div');
-    row.className = 'discord-message';
-    row.style.marginTop = i === 0 ? '0' : '12px';
-
-    var avatarCol = document.createElement('div'); avatarCol.className = 'discord-avatar-col';
-    var avatarWrap = document.createElement('div'); avatarWrap.className = 'discord-avatar'; avatarWrap.style.background = r.grad;
-    var initials = document.createElement('span');
-    initials.textContent = r.initials;
-    initials.style.cssText = 'position:absolute;color:#fff;font-size:0.82rem;font-weight:700;z-index:0;';
-    avatarWrap.appendChild(initials);
-    var img = document.createElement('img');
-    img.src = r.avatar; img.alt = r.username;
-    img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;border-radius:50%;object-fit:cover;z-index:1;';
-    img.addEventListener('error', function() { this.style.display='none'; });
-    avatarWrap.appendChild(img);
-    avatarCol.appendChild(avatarWrap);
-
-    var msgContent = document.createElement('div'); msgContent.className = 'discord-msg-content';
-    var header = document.createElement('div'); header.className = 'discord-msg-header';
-    header.innerHTML = '<span class="discord-username" style="color:'+r.usernameColor+'">'+r.username+'</span><span class="discord-timestamp-header">'+r.ts+'</span>';
-    var text = document.createElement('div'); text.className = 'discord-msg-text'; text.innerHTML = r.msg;
-    msgContent.appendChild(header); msgContent.appendChild(text);
-
-    row.appendChild(avatarCol); row.appendChild(msgContent);
-    body.appendChild(row);
-  });
-})();
-
-var pricingFeatures = [
-
-];
-
-var checkSVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>';
-var crossSVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
-
-function buildFeatureItem(label, val) {
-  var hasIt = val !== false;
-  var disabled = hasIt ? '' : ' disabled';
-  var iconCls = hasIt ? 'ok' : 'no';
-  var icon = hasIt ? checkSVG : crossSVG;
-
-  let valueText = '';
-
-  if (typeof val === 'string')
-    valueText = '<div class="pf-value">'+val+'</div>';
-
-  if (val === true) {
-    const freeDescriptions = {
-
-    };
-
-    valueText = freeDescriptions[label]
-      ? '<div class="pf-value">'+freeDescriptions[label]+'</div>'
-      : '';
-  }
-
-  return `
-    <li class="pricing-feature${disabled}">
-      <div class="pf-icon ${iconCls}">${icon}</div>
-      <div class="pf-label">
-        ${label}
-        ${valueText}
-      </div>
-    </li>
-  `;
-}
-
-function buildCard(plan) {
-  var featuresHtml = pricingFeatures.map(function(f) {
-    return buildFeatureItem(f.label, plan.featured ? f.proVal : f.freeVal);
-  }).join('');
-
-  var card = document.createElement('div');
-  card.className = 'pricing-card' + (plan.featured ? ' featured' : '');
-
-  card.innerHTML = ''
-    + (plan.featured
-        ? '<div class="discount-badge">30% OFF</div>'
-        : '')
-        
-    + '<div style="font-family:var(--font-display);font-size:1.9rem;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:0.35rem;">'
-    + plan.tier +
-    '</div>'
-
-    + '<div style="font-size:0.83rem;color:var(--text2);margin-bottom:1.3rem;line-height:1.5;">'
-    + plan.desc +
-    '</div>'
-
-    + '<div class="pricing-price-block">'
-    +   '<div class="pricing-price-row">'
-    +     (plan.price !== '$0'
-              ? '<span class="price-currency">$</span>'
-              : '')
-    +     '<span class="price-amount">'
-    +       (plan.price === '$0'
-                ? 'Free'
-                : plan.price.replace('$', ''))
-    +     '</span>'
-    +   '</div>'
-    +   '<div class="pricing-sub">' + plan.sub + '</div>'
-    + '</div>'
-
-    + '<div class="pricing-divider"></div>'
-
-    + '<ul class="pricing-features">'
-    +   featuresHtml
-    + '</ul>'
-
-    + '<a href="' + plan.href + '" class="pricing-btn '
-    + (plan.featured ? 'btn-pro' : 'btn-free')
-    + '">'
-    + plan.btnLabel
-    + '</a>';
-
-  return card;
-}
-
-var grid = document.getElementById('pricingGrid');
-plans.forEach(function(p) { grid.appendChild(buildCard(p)); });
-
-</script>
 </body>
 </html>
