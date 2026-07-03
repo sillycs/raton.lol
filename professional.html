@@ -79,21 +79,21 @@ nav{
   font-family:var(--font-logo);font-weight:800;
   font-size:1.5rem;color:var(--text);text-decoration:none;
 }
-.nav-links{display:flex;align-items:center;gap:2rem;list-style:none}
+.nav-links{
+  display:flex;align-items:center;gap:2rem;list-style:none;
+  position:absolute;left:50%;transform:translateX(-50%);
+}
 .nav-links a{
   text-decoration:none;color:var(--text2);
-  font-size:0.875rem;font-weight:400;transition:color 0.2s;
+  font-size:0.875rem;font-weight:500;transition:filter 0.2s,color 0.2s;
 }
-.nav-links a:hover{color:var(--text)}
-.nav-links a.active{color:var(--purple2)}
-	.nav-links a:hover{filter:brightness(1.28)}
+.nav-links a:hover{filter:brightness(1.28)}
 .nav-links a.active{color:var(--purple2)}
 .nav-links a.nl-raton{color:var(--purple2)}
 .nav-links a.nl-tux{color:#ff8c42}
 .nav-links a.nl-pear{color:#38bdf8}
 .nav-links a.nl-forum{color:#d6c9ff}
 .nav-links a.nl-forum:hover{filter:brightness(1.15)}
-.nav-mobile-toggle{display:none;background:none;border:none;color:var(--text);padding:6px}
 .nav-mobile-toggle{display:none;background:none;border:none;color:var(--text);padding:6px}
 
 .main{
