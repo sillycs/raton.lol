@@ -498,7 +498,7 @@ let currentUser = null; // { username, tag, sessionToken, sessionExpiresAt }
 function requireAuth() {
   if (!currentUser) {
     openAuthModal('register');
-    showToast('Debes iniciar sesion o registrarte primero', true);
+    showToast('Please register or login first', true);
     return false;
   }
   return true;
