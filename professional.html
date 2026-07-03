@@ -86,6 +86,14 @@ nav{
 }
 .nav-links a:hover{color:var(--text)}
 .nav-links a.active{color:var(--purple2)}
+	.nav-links a:hover{filter:brightness(1.28)}
+.nav-links a.active{color:var(--purple2)}
+.nav-links a.nl-raton{color:var(--purple2)}
+.nav-links a.nl-tux{color:#ff8c42}
+.nav-links a.nl-pear{color:#38bdf8}
+.nav-links a.nl-forum{color:#d6c9ff}
+.nav-links a.nl-forum:hover{filter:brightness(1.15)}
+.nav-mobile-toggle{display:none;background:none;border:none;color:var(--text);padding:6px}
 .nav-mobile-toggle{display:none;background:none;border:none;color:var(--text);padding:6px}
 
 .main{
@@ -346,10 +354,10 @@ nav{
     Raton
   </a>
   <ul class="nav-links">
-    <li><a href="https://raton.wtf/#showcase">Showcase</a></li>
-    <li><a href="https://raton.wtf/download">Download</a></li>
-    <li><a href="https://raton.wtf/docs">Documentation</a></li>
-	  <li><a href="https://raton.wtf/blog">Forum</a></li>
+    <li><a href="https://raton.wtf/" class="nl-raton">Raton</a></li>
+    <li><a href="https://raton.wtf/" class="nl-tux">TuxControl</a></li>
+    <li><a href="https://raton.wtf/" class="nl-pear">iPear</a></li>
+    <li><a href="https://raton.wtf/blog" class="nl-forum">Forum</a></li>
   </ul>
   <button class="nav-mobile-toggle" aria-label="Menu" onclick="document.getElementById('mainNav').classList.toggle('open')">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
