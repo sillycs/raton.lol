@@ -295,6 +295,46 @@ nav{
   padding-top:0.5rem;
 }
 .footer-note:hover { color: var(--text2); }
+
+/* video placeholder for the variants */
+.video-soon{
+  width:560px;max-width:100%;height:315px;
+  margin:0 auto;
+  border:1px dashed var(--border2);
+  border-radius:16px;
+  background:var(--surface);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:1rem;text-align:center;padding:1.5rem;
+}
+.video-soon svg{
+  width:54px;height:54px;color:var(--purple2);
+  animation:soonJump 1.05s cubic-bezier(.3,0,.4,1) infinite;
+}
+.video-soon p{font-size:0.92rem;color:var(--text2);letter-spacing:0.03em}
+@keyframes soonJump{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-16px)}
+}
+
+/* fairy + sparkles */
+.fairy{
+  position:fixed;left:0;top:0;
+  width:52px;height:52px;
+  z-index:95;pointer-events:none;
+  filter:drop-shadow(0 0 9px rgba(167,139,250,0.65));
+  will-change:transform;
+}
+.sparkle{
+  position:fixed;width:7px;height:7px;
+  margin:-3.5px 0 0 -3.5px;border-radius:50%;
+  pointer-events:none;z-index:94;
+  background:radial-gradient(circle,#fff 0%,var(--purple2) 55%,rgba(167,139,250,0) 72%);
+  animation:sparkleFade .9s ease-out forwards;
+}
+@keyframes sparkleFade{
+  0%{opacity:1;transform:scale(var(--sc,1))}
+  100%{opacity:0;transform:scale(0) translateY(12px)}
+}
 </style>
 </head>
 <body>
@@ -420,6 +460,65 @@ function copyText(id, btn){
     setTimeout(function(){btn.innerHTML=orig;btn.classList.remove('copied');},2000);
   });
 }
+
+// ts for the fairy :O
+(function(){
+  var fairy=document.createElement('img');
+  fairy.src='https://raton.wtf/img/fairy.gif';
+  fairy.className='fairy';fairy.alt='';fairy.draggable=false;
+  document.body.appendChild(fairy);
+
+  var fx=window.innerWidth*0.5, fy=window.innerHeight*0.42;
+  var tx=fx, ty=fy;
+  var facingRight=true;     // the gif already looks right
+  var locked=null;          // element currently followed
+
+  function pickWander(){
+    if(locked) return;
+    tx=40+Math.random()*Math.max(120,(window.innerWidth-80));
+    ty=60+Math.random()*Math.max(120,(window.innerHeight-120));
+  }
+  pickWander();
+  setInterval(pickWander, 1900);
+
+  function aimAt(el){
+    var r=el.getBoundingClientRect();
+    tx=r.left+r.width*0.5;
+    ty=r.top+r.height*0.4;
+  }
+
+  document.querySelectorAll('.method-card, .btn-telegram, .page-logo, .interface-link').forEach(function(el){
+    el.addEventListener('mouseenter',function(){ locked=el; aimAt(el); });
+    el.addEventListener('mouseleave',function(){ if(locked===el){ locked=null; pickWander(); } });
+  });
+
+  // ts for the fairy dust
+  function sparkle(x,y){
+    var s=document.createElement('span');
+    s.className='sparkle';
+    s.style.left=(x+(Math.random()-0.5)*20)+'px';
+    s.style.top=(y+(Math.random()-0.5)*20)+'px';
+    s.style.setProperty('--sc',(0.5+Math.random()*0.7).toFixed(2));
+    document.body.appendChild(s);
+    setTimeout(function(){ s.remove(); }, 900);
+  }
+
+  var lastSpark=0;
+  function loop(ts){
+    if(locked) aimAt(locked);
+    var dx=tx-fx, dy=ty-fy;
+    fx+=dx*0.045; fy+=dy*0.045;
+    if(Math.abs(dx)>2){ facingRight = dx>0; }
+    var flip = facingRight ? '' : ' scaleX(-1)';
+    var bob = Math.sin(ts/380)*5;
+    fairy.style.transform='translate('+(fx-26)+'px,'+(fy-26+bob)+'px)'+flip;
+    if(ts-lastSpark>95 && (Math.abs(dx)+Math.abs(dy)>6 || locked)){
+      sparkle(fx, fy+10); lastSpark=ts;
+    }
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+})();
 </script>
 </body>
 </html>
