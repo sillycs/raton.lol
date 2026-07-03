@@ -37,13 +37,34 @@
 a,button,[role="button"]{cursor:url('https://raton.wtf/img/handpointing.png') 0 0,pointer}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:16px;line-height:1.6;overflow-x:hidden;min-height:100vh;display:flex;flex-direction:column}
-nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 3rem;height:64px;background:rgba(13,13,13,0.88);backdrop-filter:blur(24px);border-bottom:1px solid var(--border)}
-.nav-logo{display:flex;align-items:center;gap:10px;font-family:var(--font-logo);font-weight:800;font-size:1.5rem;color:var(--text);text-decoration:none}
-.nav-links{display:flex;align-items:center;gap:2rem;list-style:none}
-.nav-links a{text-decoration:none;color:var(--text2);font-size:0.875rem;font-weight:400;transition:color 0.2s}
-.nav-links a:hover{color:var(--text)}
+nav{
+  position:sticky;top:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 3rem;height:64px;
+  background:rgba(13,13,13,0.88);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo{
+  display:flex;align-items:center;gap:10px;
+  font-family:var(--font-logo);font-weight:800;
+  font-size:1.5rem;color:var(--text);text-decoration:none;
+}
+.nav-links{
+  display:flex;align-items:center;gap:2rem;list-style:none;
+  position:absolute;left:50%;transform:translateX(-50%);
+}
+.nav-links a{
+  text-decoration:none;color:var(--text2);
+  font-size:0.875rem;font-weight:500;transition:filter 0.2s,color 0.2s;
+}
+.nav-links a:hover{filter:brightness(1.28)}
 .nav-links a.active{color:var(--purple2)}
-.nav-auth{display:flex;align-items:center;gap:0.6rem;flex-shrink:0}
+.nav-links a.nl-raton{color:var(--purple2)}
+.nav-links a.nl-tux{color:#ff8c42}
+.nav-links a.nl-pear{color:#38bdf8}
+.nav-links a.nl-forum{color:#d6c9ff}
+.nav-links a.nl-forum:hover{filter:brightness(1.15)}
 .nav-mobile-toggle{display:none;background:none;border:none;color:var(--text);padding:6px}
 
 .auth-btn{display:inline-flex;align-items:center;gap:6px;padding:0.35rem 0.8rem;border-radius:8px;font-family:var(--font-body);font-size:0.75rem;font-weight:600;transition:.2s;border:none}
