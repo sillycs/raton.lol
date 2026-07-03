@@ -65,30 +65,35 @@
     @keyframes fadeUp { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
     @keyframes pulse  { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:0.6;transform:scale(1.3);} }
 
-    nav {
-      position: sticky; top: 0; z-index: 200;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 2rem; height: 64px;
-      background: rgba(10,10,10,0.9);
-      backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-      border-bottom: 1px solid var(--border);
-    }
-    .nav-logo {
-      display: flex; align-items: center; gap: 10px;
-      font-family: var(--font-logo); font-weight: 800;
-      font-size: 1.5rem; color: var(--text); text-decoration: none;
-    }
-    .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
-    .nav-links a {
-      text-decoration: none; color: var(--text2);
-      font-size: 0.875rem; font-weight: 400; transition: color 0.2s;
-    }
-    .nav-links a:hover { color: var(--text); }
-    .nav-links a.active { color: var(--purple2); }
-    .nav-mobile-toggle {
-      display: none; background: none; border: none;
-      color: var(--text); padding: 6px;
-    }
+   nav{
+  position:sticky;top:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 3rem;height:64px;
+  background:rgba(13,13,13,0.88);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo{
+  display:flex;align-items:center;gap:10px;
+  font-family:var(--font-logo);font-weight:800;
+  font-size:1.5rem;color:var(--text);text-decoration:none;
+}
+.nav-links{
+  display:flex;align-items:center;gap:2rem;list-style:none;
+  position:absolute;left:50%;transform:translateX(-50%);
+}
+.nav-links a{
+  text-decoration:none;color:var(--text2);
+  font-size:0.875rem;font-weight:500;transition:filter 0.2s,color 0.2s;
+}
+.nav-links a:hover{filter:brightness(1.28)}
+.nav-links a.active{color:var(--purple2)}
+.nav-links a.nl-raton{color:var(--purple2)}
+.nav-links a.nl-tux{color:#ff8c42}
+.nav-links a.nl-pear{color:#38bdf8}
+.nav-links a.nl-forum{color:#d6c9ff}
+.nav-links a.nl-forum:hover{filter:brightness(1.15)}
+.nav-mobile-toggle{display:none;background:none;border:none;color:var(--text);padding:6px}
 
     .layout {
       position: relative; z-index: 1;
@@ -287,7 +292,6 @@
     }
     .footer-note:hover { color: var(--text2); }
 
-    /* ─── RESPONSIVE ─── */
     @media (max-width: 900px) {
       .sidebar { display: none; }
       .nav-links { display: none; }
@@ -319,10 +323,10 @@
     Raton
   </a>
   <ul class="nav-links">
-    <li><a href="https://raton.click/#showcase">Showcase</a></li>
-    <li><a href="https://raton.click/download">Download</a></li>
-    <li><a href="https://raton.click/docs" class="active">Documentation</a></li>
-    <li><a href="https://raton.click/blog">Forum</a></li>
+    <li><a href="https://raton.click/" class="nl-raton">Raton</a></li>
+    <li><a href="https://raton.click/" class="nl-tux">TuxControl</a></li>
+    <li><a href="https://raton.click/" class="nl-pear">iPear</a></li>
+    <li><a href="https://raton.click/blog" class="nl-forum">Forum</a></li>
   </ul>
   <button class="nav-mobile-toggle" aria-label="Menu" onclick="document.getElementById('mainNav').classList.toggle('open')">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
