@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>iPear</title>
+<link rel="icon" type="image/png" href="https://raton.wtf/img/RATA.png">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.cdnfonts.com/css/kunal" rel="stylesheet">
+<link href="https://fonts.cdnfonts.com/css/nishiki-teki" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d0d0d;
+  --surface:#141414;
+  --surface2:#1c1c1c;
+  --border:rgba(255,255,255,0.07);
+  --border2:rgba(255,255,255,0.13);
+  --purple:#8b5cf6;
+  --purple2:#a78bfa;
+  --text:#f4f4f8;
+  --text2:#a0a0b8;
+  --text3:#606078;
+  --font-display:'Nishiki-teki',sans-serif;
+  --font-logo:'kunal',sans-serif;
+  --font-body:'DM Sans',sans-serif;
+  --tg:#229ED9;
+}
+*{cursor:url('https://raton.wtf/img/default.png') 0 0,auto}
+a,button,[role="button"]{cursor:url('https://raton.wtf/img/handpointing.png') 0 0,pointer}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:#0d0d0d}
+::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--purple),#5b21b6);border-radius:99px}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font-body);
+  font-size:16px;
+  line-height:1.6;
+  overflow-x:hidden;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+}
+.interface-link  {
+  display: inline-flex; align-items: center; gap: 6px;
+  color: var(--purple2); font-size: 0.875rem; text-decoration: none;
+  margin-top: 1.5rem; font-weight: 500; transition: gap 0.2s;
+}
+.interface-link:hover    { gap: 10px; }
+.interface-link svg      { width: 16px; height: 16px; }
+.rata-bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.rata-sprite{
+  position:absolute;opacity:0;
+  will-change:transform,opacity;
+  filter:grayscale(20%) brightness(0.55);
+  animation:rataFloat linear infinite;
+  transform-origin:center;user-select:none;
+}
+@keyframes rataFloat{
+  0%{opacity:0;transform:translateY(0px) rotate(0deg) scale(1)}
+  8%{opacity:0.14}
+  50%{opacity:0.07;transform:translateY(-28px) rotate(7deg) scale(1.05)}
+  92%{opacity:0.14}
+  100%{opacity:0;transform:translateY(-55px) rotate(-4deg) scale(0.95)}
+}
+
+nav{
+  position:sticky;top:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 3rem;height:64px;
+  background:rgba(13,13,13,0.88);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo{
+  display:flex;align-items:center;gap:10px;
+  font-family:var(--font-logo);font-weight:800;
+  font-size:1.5rem;color:var(--text);text-decoration:none;
+}
+.nav-links{
+  display:flex;align-items:center;gap:2rem;list-style:none;
+  position:absolute;left:50%;transform:translateX(-50%);
+}
+.nav-links a{
+  text-decoration:none;color:var(--text2);
+  font-size:0.875rem;font-weight:500;transition:filter 0.2s,color 0.2s;
+}
+.nav-links a:hover{filter:brightness(1.28)}
+.nav-links a.active{color:var(--purple2)}
+.nav-links a.nl-raton{color:var(--purple2)}
+.nav-links a.nl-tux{color:#ff8c42}
+.nav-links a.nl-pear{color:#38bdf8}
+.nav-links a.nl-forum{color:#d6c9ff}
+.nav-links a.nl-forum:hover{filter:brightness(1.15)}
+.nav-mobile-toggle{display:none;background:none;border:none;color:var(--text);padding:6px}
+
+.main{
+  position:relative;z-index:1;
+  flex:1;display:flex;align-items:center;justify-content:center;
+  padding:4rem 2rem 5rem;
+}
+
+.page{
+  width:100%;
+  max-width:1100px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  animation:fadeUp .6s cubic-bezier(.22,1,.36,1) both;
+}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(24px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+.page-logo{
+  display:flex;align-items:center;justify-content:center;
+  text-decoration:none;
+  margin-bottom:1.6rem;
+}
+.page-logo img{
+  height:64px;
+  width:auto;
+  object-fit:contain;
+  display:block;
+}
+
+.page-title{
+  font-family:var(--font-logo);
+  font-size:1.5rem;
+  font-weight:800;
+  color:var(--text);
+  text-align:center;
+  margin-bottom:0.25rem;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+}
+.page-sub{
+  text-align:center;
+  font-size:0.85rem;
+  color:var(--text3);
+  margin-bottom:2.6rem;
+  letter-spacing:0.06em;
+  font-family:var(--font-sub);
+}
+
+.methods-grid{
+  width:100%;
+  max-width:1400px;
+  margin:0 auto;
+
+  display:flex;
+  flex-direction:column;
+  gap:1rem;
+}
+
+.method-card{
+  width:100%;
+  max-width:1400px;
+  margin:0 auto;
+
+  background:var(--surface);
+  border:1px solid var(--border2);
+  border-radius:18px;
+  padding:1.3rem 1.8rem;
+
+  display:flex;
+  align-items:center;
+  gap:1.6rem;
+
+  position:relative;
+  overflow:hidden;
+
+  transition:border-color .25s, transform .2s;
+  animation:fadeUp .6s cubic-bezier(.22,1,.36,1) both;
+}
+
+.method-card::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  opacity:0;
+  transition:opacity .25s;
+  pointer-events:none;
+}
+.method-card.btc::before{background:radial-gradient(ellipse at left center, rgba(247,147,26,0.09) 0%, transparent 65%)}
+.method-card.eth::before{background:radial-gradient(ellipse at left center, rgba(98,126,234,0.09) 0%, transparent 65%)}
+.method-card.pp::before{background:radial-gradient(ellipse at left center, rgba(0,112,186,0.09) 0%, transparent 65%)}
+.method-card:hover{border-color:rgba(255,255,255,0.22);transform:translateY(-2px)}
+.method-card:hover::before{opacity:1}
+.method-card:nth-child(1){animation-delay:.05s}
+.method-card:nth-child(2){animation-delay:.12s}
+.method-card:nth-child(3){animation-delay:.19s}
+
+.method-logo{
+  flex-shrink:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:110px;
+}
+.method-logo img{
+  width:100%;
+  height:auto;
+  max-height:38px;
+  object-fit:contain;
+  display:block;
+  filter:brightness(1.05);
+}
+
+.method-divider{
+  width:1px;
+  height:36px;
+  background:var(--border2);
+  flex-shrink:0;
+}
+
+.method-info{flex:1;min-width:0}
+.method-addr{
+  font-family:var(--font-display);
+  font-size:0.7rem;
+  color:var(--text3);
+  word-break:break-all;
+  letter-spacing:0.04em;
+  line-height:1.45;
+}
+.method-link{
+  font-size:0.8rem;
+  color:var(--purple2);
+  text-decoration:none;
+  font-weight:500;
+  transition:color .2s;
+}
+.method-link:hover{color:#fff}
+
+.copy-btn{
+  flex-shrink:0;
+  display:inline-flex;align-items:center;gap:5px;
+  background:rgba(255,255,255,0.06);
+  border:1px solid var(--border2);
+  border-radius:9px;
+  padding:0.4rem 0.8rem;
+  font-family:var(--font-body);font-size:0.72rem;font-weight:600;
+  color:var(--text2);
+  transition:.2s;
+}
+.copy-btn:hover{background:rgba(255,255,255,0.11);color:var(--text)}
+.copy-btn.copied{color:#4ade80;border-color:rgba(74,222,128,0.3)}
+
+.divider{
+  width:100%;
+  display:flex;align-items:center;gap:1rem;
+  margin:2.4rem 0 1.8rem;
+  color:var(--text3);font-size:0.78rem;
+}
+.divider::before,.divider::after{
+  content:'';flex:1;
+  height:1px;background:var(--border);
+}
+
+.contact-section{
+  width:100%;
+  display:flex;flex-direction:column;align-items:center;
+  gap:1rem;
+  animation:fadeUp .6s .3s cubic-bezier(.22,1,.36,1) both;
+}
+.contact-label{
+  font-size:0.82rem;color:var(--text3);text-align:center;
+}
+.btn-telegram{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--tg);
+  color:#fff;
+  border:none;
+  border-radius:14px;
+  padding:0.8rem 2rem;
+  font-family:var(--font-body);font-size:0.95rem;font-weight:600;
+  text-decoration:none;
+  letter-spacing:0.02em;
+  box-shadow:0 4px 24px rgba(34,158,217,0.22);
+  transition:all .22s cubic-bezier(.22,1,.36,1);
+}
+.btn-telegram:hover{
+  background:#1a8fc7;
+  transform:translateY(-2px);
+  box-shadow:0 8px 32px rgba(34,158,217,0.35);
+}
+.btn-telegram svg{flex-shrink:0}
+
+.footer-note {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+
+  margin-top:1rem;
+
+  font-size:0.72rem;
+  color:var(--text3);
+  text-decoration:none;
+  padding-top:0.5rem;
+}
+.footer-note:hover { color: var(--text2); }
+
+/* video placeholder for the variants */
+.video-soon{
+  width:560px;max-width:100%;height:315px;
+  margin:0 auto;
+  border:1px dashed var(--border2);
+  border-radius:16px;
+  background:var(--surface);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:1rem;text-align:center;padding:1.5rem;
+}
+.video-soon svg{
+  width:54px;height:54px;color:var(--purple2);
+  animation:soonJump 1.05s cubic-bezier(.3,0,.4,1) infinite;
+}
+.video-soon p{font-size:0.92rem;color:var(--text2);letter-spacing:0.03em}
+@keyframes soonJump{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-16px)}
+}
+
+/* fairy + sparkles */
+.fairy{
+  position:fixed;left:0;top:0;
+  width:52px;height:52px;
+  z-index:95;pointer-events:none;
+  filter:drop-shadow(0 0 9px rgba(167,139,250,0.65));
+  will-change:transform;
+}
+.sparkle{
+  position:fixed;width:7px;height:7px;
+  margin:-3.5px 0 0 -3.5px;border-radius:50%;
+  pointer-events:none;z-index:94;
+  background:radial-gradient(circle,#fff 0%,var(--purple2) 55%,rgba(167,139,250,0) 72%);
+  animation:sparkleFade .9s ease-out forwards;
+}
+@keyframes sparkleFade{
+  0%{opacity:1;transform:scale(var(--sc,1))}
+  100%{opacity:0;transform:scale(0) translateY(12px)}
+}
+@media(max-width:768px){
+  nav{padding:0 1.2rem}
+  .nav-links{display:none}
+  .nav-mobile-toggle{display:flex}
+  nav.open .nav-links{
+    display:flex;flex-direction:column;position:fixed;
+    top:64px;left:0;right:0;transform:none;
+    background:rgba(13,13,13,0.97);backdrop-filter:blur(20px);
+    border-bottom:1px solid var(--border);
+    padding:1.5rem 1.5rem 2rem;gap:1.2rem;z-index:99;
+  }
+}
+</style>
+</head>
+<body>
+<div class="rata-bg" id="rataBg" aria-hidden="true"></div>
+
+<nav id="mainNav">
+  <a class="nav-logo" href="https://raton.wtf/">
+    <img src="https://raton.wtf/img/RATA.png" width="28" height="28" alt="Logo" onerror="this.style.display='none'">
+    Raton
+  </a>
+  <ul class="nav-links">
+    <li><a href="https://raton.wtf/" class="nl-raton">Raton</a></li>
+    <li><a href="https://raton.wtf/" class="nl-tux">TuxControl</a></li>
+    <li><a href="https://raton.wtf/" class="nl-pear">iPear</a></li>
+    <li><a href="https://raton.wtf/blog" class="nl-forum">Forum</a></li>
+  </ul>
+  <button class="nav-mobile-toggle" aria-label="Menu" onclick="document.getElementById('mainNav').classList.toggle('open')">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
+</nav>
+
+<main class="main">
+  <div class="page">
+
+    <a class="page-logo" href="https://raton.wtf/">
+      <img src="https://raton.wtf/img/pear.png" alt="iPear">
+    </a>
+
+    <h1 class="page-title">Purchase iPear</h1>
+    <p class="page-sub">Choose your preferred payment method below ($65)</p>
+
+    <div class="methods-grid">
+
+      <div class="method-card btc">
+        <div class="method-logo">
+          <img src="https://raton.wtf/img/BTCLOGO.png" alt="Bitcoin">
+        </div>
+        <div class="method-divider"></div>
+        <div class="method-info">
+          <div class="method-addr" id="btcAddr">1FL1D515aJaumLqyjrcYUdtL2AmJT6xoLr</div>
+        </div>
+        <button class="copy-btn" onclick="copyText('btcAddr', this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy
+        </button>
+      </div>
+
+      <div class="method-card eth">
+        <div class="method-logo">
+          <img src="https://raton.wtf/img/ETHEREUM.png" alt="Ethereum">
+        </div>
+        <div class="method-divider"></div>
+        <div class="method-info">
+          <div class="method-addr" id="ethAddr">0xc3633a27A75FD4AE7ddEdbb01C5Ba8703bd8D4d5</div>
+        </div>
+        <button class="copy-btn" onclick="copyText('ethAddr', this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy
+        </button>
+      </div>
+
+      <div class="method-card pp">
+        <div class="method-logo">
+          <img src="https://raton.wtf/img/PayPal.png" alt="PayPal">
+        </div>
+        <div class="method-divider"></div>
+        <div class="method-info">
+          <a class="method-link" href="https://t.me/sillycs" target="_blank" rel="noopener">https://t.me/sillycs (Request the payment link) ↗</a>
+        </div>
+        <a class="copy-btn" href="https://t.me/sillycs" target="_blank" rel="noopener" style="text-decoration:none">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Open
+        </a>
+      </div>
+<div style="display:flex; justify-content:center; align-items:center; width:100%;">
+  <div class="video-soon">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m22 8-6 4 6 4V8Z"/><rect x="2" y="6" width="14" height="12" rx="2"/></svg>
+    <p>The showcase video is not ready yet</p>
+  </div>
+</div>    
+      <a href="https://raton.wtf/blog" class="interface-link">
+        Check the reviews
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+
+    <div class="divider">Questions about iPear?</div>
+
+    <div class="contact-section">
+      <p class="contact-label">Contact me on telegram! :)</p>
+      <a class="btn-telegram" href="https://t.me/sillycs" target="_blank" rel="noopener">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+          <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+        </svg>
+        Contact me
+      </a>
+    </div>
+  <a class="footer-note" href="https://raton.wtf">
+    <img src="https://raton.wtf/img/RATA.png" width="13" height="13" alt="" onerror="this.style.display='none'">
+    © 2026 SillyCS. All rights reserved
+  </a>
+  </div>
+</main>
+
+
+
+<script>
+(function(){
+  var bg=document.getElementById('rataBg');
+  var data=[{x:5,y:8,s:56,d:20,dl:0},{x:18,y:22,s:48,d:24,dl:5},{x:32,y:5,s:64,d:18,dl:9},{x:65,y:3,s:72,d:22,dl:13},{x:78,y:20,s:48,d:30,dl:7},{x:90,y:8,s:60,d:16,dl:11},{x:10,y:55,s:56,d:28,dl:3},{x:72,y:75,s:64,d:25,dl:6}];
+  data.forEach(function(r){
+    var img=document.createElement('img');
+    img.src='https://raton.wtf/img/RATA.png';
+    img.className='rata-sprite';img.alt='';img.draggable=false;
+    img.style.cssText='width:'+r.s+'px;height:'+r.s+'px;left:'+r.x+'%;top:'+r.y+'%;animation-duration:'+r.d+'s;animation-delay:-'+r.dl+'s';
+    bg.appendChild(img);
+  });
+})();
+
+function copyText(id, btn){
+  var text=document.getElementById(id).textContent.trim();
+  navigator.clipboard.writeText(text).then(function(){
+    var orig=btn.innerHTML;
+    btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" width="13" height="13"><polyline points="20 6 9 17 4 12"/></svg> Copied!';
+    btn.classList.add('copied');
+    setTimeout(function(){btn.innerHTML=orig;btn.classList.remove('copied');},2000);
+  });
+}
+
+// ts for the fairy :O
+(function(){
+  var fairy=document.createElement('img');
+  fairy.src='https://raton.wtf/img/fairy.gif';
+  fairy.className='fairy';fairy.alt='';fairy.draggable=false;
+  document.body.appendChild(fairy);
+
+  var fx=window.innerWidth*0.5, fy=window.innerHeight*0.42;
+  var tx=fx, ty=fy;
+  var facingRight=true;     // the gif already looks right
+  var locked=null;          // element currently followed
+
+  function pickWander(){
+    if(locked) return;
+    tx=40+Math.random()*Math.max(120,(window.innerWidth-80));
+    ty=60+Math.random()*Math.max(120,(window.innerHeight-120));
+  }
+  pickWander();
+  setInterval(pickWander, 1900);
+
+  function aimAt(el){
+    var r=el.getBoundingClientRect();
+    tx=r.left+r.width*0.5;
+    ty=r.top+r.height*0.4;
+  }
+
+  document.querySelectorAll('.method-card, .btn-telegram, .page-logo, .interface-link').forEach(function(el){
+    el.addEventListener('mouseenter',function(){ locked=el; aimAt(el); });
+    el.addEventListener('mouseleave',function(){ if(locked===el){ locked=null; pickWander(); } });
+  });
+
+  // ts for the fairy dust
+  function sparkle(x,y){
+    var s=document.createElement('span');
+    s.className='sparkle';
+    s.style.left=(x+(Math.random()-0.5)*20)+'px';
+    s.style.top=(y+(Math.random()-0.5)*20)+'px';
+    s.style.setProperty('--sc',(0.5+Math.random()*0.7).toFixed(2));
+    document.body.appendChild(s);
+    setTimeout(function(){ s.remove(); }, 900);
+  }
+
+  var lastSpark=0;
+  function loop(ts){
+    if(locked) aimAt(locked);
+    var dx=tx-fx, dy=ty-fy;
+    fx+=dx*0.045; fy+=dy*0.045;
+    if(Math.abs(dx)>2){ facingRight = dx>0; }
+    var flip = facingRight ? '' : ' scaleX(-1)';
+    var bob = Math.sin(ts/380)*5;
+    fairy.style.transform='translate('+(fx-26)+'px,'+(fy-26+bob)+'px)'+flip;
+    if(ts-lastSpark>95 && (Math.abs(dx)+Math.abs(dy)>6 || locked)){
+      sparkle(fx, fy+10); lastSpark=ts;
+    }
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>
