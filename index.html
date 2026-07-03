@@ -1,121 +1,562 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Coming soon</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Raton — Showcase</title>
 <link rel="icon" type="image/png" href="https://raton.wtf/img/RATA.png">
-
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.cdnfonts.com/css/kunal" rel="stylesheet">
+<link href="https://fonts.cdnfonts.com/css/nishiki-teki" rel="stylesheet">
 <style>
-    body {
-        margin: 0;
-        min-height: 100vh;
-        background: radial-gradient(circle at top, #121212 0%, #000 70%);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-        color: white;
-        overflow: hidden;
-    }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d0d0d;
+  --surface:#141414;
+  --surface2:#1c1c1c;
+  --border:rgba(255,255,255,0.07);
+  --border2:rgba(255,255,255,0.12);
+  --purple:#8b5cf6;
+  --purple2:#a78bfa;
+  --purple-dim:rgba(139,92,246,0.15);
+  --text:#f4f4f8;
+  --text2:#a0a0b8;
+  --text3:#606078;
+  --font-display:'Nishiki-teki',sans-serif;
+  --font-logo:'kunal',sans-serif;
+  --font-body:'DM Sans',sans-serif;
+}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:#0d0d0d}
+::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--purple),#5b21b6);border-radius:99px;cursor:url('https://raton.wtf/img/handpointing.png') 0 0,pointer}
+::-webkit-scrollbar-thumb:hover{background:var(--purple2)}
+*{scrollbar-width:thin;scrollbar-color:var(--purple) #0d0d0d}
+*{cursor:url('https://raton.wtf/img/default.png') 0 0,auto}
+a,button,[role="button"]{cursor:url('https://raton.wtf/img/handpointing.png') 0 0,pointer}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font-body);
+  font-size:16px;
+  line-height:1.6;
+  overflow-x:hidden;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+}
+.rata-bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.rata-sprite{
+  position:absolute;opacity:0;
+  will-change:transform,opacity;
+  filter:grayscale(20%) brightness(0.65);
+  animation:rataFloat linear infinite;
+  transform-origin:center;user-select:none;
+}
+@keyframes rataFloat{
+  0%{opacity:0;transform:translateY(0px) rotate(0deg) scale(1)}
+  8%{opacity:0.18}
+  50%{opacity:0.10;transform:translateY(-28px) rotate(7deg) scale(1.05)}
+  92%{opacity:0.18}
+  100%{opacity:0;transform:translateY(-55px) rotate(-4deg) scale(0.95)}
+}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+nav{
+  position:sticky;top:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 3rem;height:64px;
+  background:rgba(13,13,13,0.88);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo{
+  display:flex;align-items:center;gap:10px;
+  font-family:var(--font-logo);font-weight:800;
+  font-size:1.5rem;color:var(--text);text-decoration:none;
+}
+.nav-links{
+  display:flex;align-items:center;gap:2rem;list-style:none;
+  position:absolute;left:50%;transform:translateX(-50%);
+}
+.nav-links a{
+  text-decoration:none;color:var(--text2);
+  font-size:0.875rem;font-weight:500;transition:filter 0.2s,color 0.2s;
+}
+.nav-links a:hover{filter:brightness(1.28)}
+.nav-links a.active{color:var(--purple2)}
+.nav-links a.nl-raton{color:var(--purple2)}
+.nav-links a.nl-tux{color:#ff8c42}
+.nav-links a.nl-pear{color:#38bdf8}
+.nav-links a.nl-forum{color:#d6c9ff}
+.nav-links a.nl-forum:hover{filter:brightness(1.15)}
+.nav-mobile-toggle{display:none;background:none;border:none;color:var(--text);padding:6px}
+@media(max-width:768px){
+  nav{padding:0 1.2rem}
+  .nav-links{display:none}
+  .nav-mobile-toggle{display:flex}
+  nav.open .nav-links{
+    display:flex;flex-direction:column;position:fixed;
+    top:64px;left:0;right:0;transform:none;
+    background:rgba(13,13,13,0.97);backdrop-filter:blur(20px);
+    border-bottom:1px solid var(--border);
+    padding:1.5rem 1.5rem 2rem;gap:1.2rem;z-index:99;
+  }
+}
 
-    .page {
-        text-align: center;
-        max-width: 620px;
-        padding: 30px 20px;
-        z-index: 2;
-        transform: scale(0.95);
-    }
+.main{
+  position:relative;z-index:1;
+  flex:1;
+  display:flex;flex-direction:column;align-items:center;
+  padding:4.5rem 2rem 6rem;
+  animation:fadeUp .55s cubic-bezier(.22,1,.36,1) both;
+}
+.eyebrow{
+  font-size:0.72rem;letter-spacing:0.28em;text-transform:uppercase;
+  color:var(--purple2);font-weight:600;margin-bottom:0.9rem;
+}
+.hero-title{
+  font-family:var(--font-display);
+  font-size:clamp(2.2rem,5vw,3.4rem);
+  text-align:center;color:var(--text);
+  letter-spacing:0.01em;
+}
+.hero-sub{
+  margin-top:0.7rem;
+  max-width:600px;text-align:center;
+  color:var(--text2);font-size:0.92rem;line-height:1.55;
+}
+.hero-sub b{color:var(--text);font-weight:500}
 
-    .notice {
-        display: flex;
-        gap: 10px;
-        text-align: left;
-        max-width: 600px;
-        margin: 0 auto 25px auto;
-        padding: 12px 14px;
-        border: 1px solid rgba(255,255,255,0.1);
-        background: rgba(255,255,255,0.03);
-        border-radius: 10px;
-        font-size: 12px;
-        color: rgba(255,255,255,0.7);
-    }
+.trio{
+  position:relative;
+  width:100%;
+  max-width:1300px;
+  height:800px;
+  margin:4.5rem auto 2.5rem;
+}
+.card[data-app="tux"]{--accent:#ff8c42}
+.card[data-app="professional"]{--accent:var(--purple2)}
+.card[data-app="pear"]{--accent:#38bdf8}
+.card{
+  position:absolute;
+  display:flex;flex-direction:column;align-items:center;
+  transition:transform .6s cubic-bezier(.4,0,.2,1),
+             filter .6s cubic-bezier(.4,0,.2,1),
+             opacity .6s cubic-bezier(.4,0,.2,1);
+  transform-origin:center center;
+}
+.trio:hover .card:not(:hover){
+  filter:blur(2px);
+  opacity:0.82;
+}
+.card:hover{
+  z-index:60 !important;
+  filter:none;
+}
+.card-tag{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;
+  color:var(--accent);
+  margin-bottom:0.5rem;
+}
+.card-tag svg{
+  width:16px;height:16px;flex-shrink:0;display:block;
+}
+.card-tag svg.icon-lg{
+  width:22px;height:22px;
+}
+.card-title{
+  font-family:var(--font-display);
+  font-size:0.95rem;
+  letter-spacing:0.02em;
+  color:var(--text2);
+  margin-bottom:0.65rem;
+  white-space:nowrap;
+  transition:color .3s ease;
+}
+.card:hover .card-title{color:var(--accent)}
 
-    .headline {
-        font-size: 24px;
-        font-weight: 300;
-        margin-bottom: 25px;
-        color: rgba(255,255,255,0.92);
-        animation: float 4s ease-in-out infinite;
-    }
+.card-img-wrap{
+  border-radius:0;
+}
+.card-img-wrap img{
+  display:block;width:100%;height:auto;
+}
 
-    @keyframes float {
-        0%,100% { transform: translateY(0); }
-        50% { transform: translateY(-10px); }
-    }
+.card-back{
+  top:0;left:50%;
+  transform:translateX(-50%) rotate(0deg);
+  z-index:10;
+}
+.card-back .card-img-wrap{
+  width:820px;
+  aspect-ratio:16/9;
+}
+.card-back .card-img-wrap img{
+  width:100%;height:100%;object-fit:contain;
+}
+.card-back:hover{transform:translateX(-50%) scale(1.02)}
 
-    .nav {
-        display: flex;
-        justify-content: center;
-        gap: 30px;
-    }
+.card-front{z-index:30}
+.card-front .card-img-wrap{width:576px}
+.card-left{top:330px;left:-2%;transform:rotate(-2.5deg);z-index:40}
+.card-left:hover{transform:rotate(-2.5deg) scale(1.03)}
+.card-right{top:330px;right:-2%;transform:rotate(2.5deg);z-index:20}
+.card-right:hover{transform:rotate(2.5deg) scale(1.03)}
 
-    .nav a {
-        text-decoration: none;
-        color: rgba(255,255,255,0.65);
-        font-size: 14px;
-        transition: 0.25s;
-        position: relative;
-    }
+.card-links{
+  display:flex;flex-direction:column;align-items:center;gap:0.3rem;
+  margin-top:0.75rem;
+  opacity:0;transform:translateY(-3px);
+  max-height:0;overflow:hidden;
+  transition:opacity .5s ease, transform .5s ease, max-height .5s ease;
+  pointer-events:none;
+}
+.card:hover .card-links{
+  opacity:1;transform:translateY(0);
+  max-height:230px;
+  pointer-events:auto;
+}
+.card-link{
+  font-size:0.8rem;font-weight:500;color:var(--text2);
+  text-decoration:none;padding:0.12rem 0.4rem;
+  border-bottom:1px solid transparent;
+  transition:color .2s, border-color .2s;
+}
+.card-link:hover{color:var(--accent);border-color:var(--accent)}
+.card-link.is-primary{color:var(--text)}
+.card-link.is-primary:hover{color:var(--accent)}
 
-    .nav a:hover {
-        color: #fff;
-        transform: translateY(-3px);
-    }
+.hint{
+  margin-top:1rem;
+  font-size:0.78rem;color:var(--text3);
+  display:flex;align-items:center;gap:6px;
+}
+.hint-warning{color:#e0a94b}
+.hint-warning svg{flex-shrink:0}
 
-    .nav a::after {
-        content: "";
-        position: absolute;
-        left: 0;
-        bottom: -5px;
-        width: 0%;
-        height: 1px;
-        background: white;
-        transition: 0.3s;
-    }
+footer{
+  position:relative;z-index:1;
+  border-top:1px solid var(--border);
+  padding:1.5rem 3rem;
+  display:flex;align-items:center;justify-content:center;
+}
+.footer-bottom{
+  font-size:0.75rem;color:var(--text3);text-align:center;
+  display:flex;align-items:center;gap:8px;
+}
 
-    .nav a:hover::after {
-        width: 100%;
-    }
+@media(max-width:720px){
+  .trio{
+    height:auto;max-width:300px;
+    display:flex;flex-direction:column;align-items:center;gap:2rem;
+    margin:3rem auto;
+  }
+  .card{position:static !important;transform:none !important}
+  .card-left:hover,.card-right:hover,.card-back:hover{transform:scale(1.02) !important}
+  .trio:hover .card:not(:hover){transform:none !important}
+  .card-back .card-img-wrap,
+  .card-front .card-img-wrap{width:360px}
+  footer{padding:1.2rem}
+}
+
+.loader{
+  position:fixed;inset:0;z-index:9999;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--bg);
+  transition:opacity .55s ease;
+}
+.loader.hidden{opacity:0;pointer-events:none}
+.loader-inner{display:flex;flex-direction:column;align-items:center;gap:1.1rem}
+.loader-logo{
+  width:64px;height:64px;
+  animation:loaderPulse 1.3s ease-in-out infinite;
+  filter:drop-shadow(0 0 14px rgba(139,92,246,0.5));
+}
+@keyframes loaderPulse{
+  0%,100%{transform:translateY(0) scale(1);opacity:.85}
+  50%{transform:translateY(-8px) scale(1.06);opacity:1}
+}
+.loader-bar{
+  width:190px;height:4px;border-radius:99px;
+  background:var(--surface2);overflow:hidden;position:relative;
+}
+.loader-bar span{
+  position:absolute;top:0;left:0;height:100%;width:40%;
+  border-radius:99px;
+  background:linear-gradient(90deg,var(--purple),var(--purple2));
+  animation:loaderSlide 1.1s cubic-bezier(.4,0,.2,1) infinite;
+}
+@keyframes loaderSlide{
+  0%{left:-40%}
+  100%{left:100%}
+}
+.loader-text{
+  font-size:0.72rem;letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--text3);
+}
+
+.fairy{
+  position:fixed;left:0;top:0;
+  width:52px;height:52px;
+  z-index:95;pointer-events:none;
+  filter:drop-shadow(0 0 9px rgba(167,139,250,0.65));
+  will-change:transform;
+}
+.sparkle{
+  position:fixed;width:7px;height:7px;
+  margin:-3.5px 0 0 -3.5px;border-radius:50%;
+  pointer-events:none;z-index:94;
+  background:radial-gradient(circle,#fff 0%,var(--purple2) 55%,rgba(167,139,250,0) 72%);
+  animation:sparkleFade .9s ease-out forwards;
+}
+@keyframes sparkleFade{
+  0%{opacity:1;transform:scale(var(--sc,1))}
+  100%{opacity:0;transform:scale(0) translateY(12px)}
+}
+/* ts for the phone users */
+.rotate-gate{display:none}
+.rg-phone{
+  width:78px;height:78px;color:var(--purple2);
+  animation:rgSpin 2.8s ease-in-out infinite;
+  filter:drop-shadow(0 0 12px rgba(139,92,246,0.5));
+}
+@keyframes rgSpin{
+  0%,18%{transform:rotate(0deg)}
+  50%,68%{transform:rotate(-90deg)}
+  100%{transform:rotate(0deg)}
+}
+.rg-title{font-family:var(--font-display);font-size:1.5rem;color:var(--text)}
+.rg-text{color:var(--text2);font-size:0.9rem;max-width:290px;line-height:1.55}
+@media (max-width:768px) and (orientation:portrait){
+  body>*:not(.rotate-gate){display:none !important}
+  .rotate-gate{
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:1.3rem;position:fixed;inset:0;z-index:100000;
+    background:var(--bg);text-align:center;padding:2rem;
+  }
+}
 </style>
 </head>
-
 <body>
 
-<div class="page">
-
-<div class="notice">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0; margin-top:2px;">
-        <path d="M12 2L1 21h22L12 2z" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" fill="none"/>
-        <path d="M12 9v4" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" stroke-linecap="round"/>
-        <path d="M12 17h.01" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-linecap="round"/>
-    </svg>
-
-    <span>This software is intended strictly for IT support and system administration purposes only.</span>
+<div class="rotate-gate" aria-hidden="true">
+  <svg class="rg-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="7" y="2" width="10" height="20" rx="2.4"/>
+    <line x1="10.5" y1="18.6" x2="13.5" y2="18.6"/>
+  </svg>
+  <h2 class="rg-title">Rotate your phone</h2>
 </div>
 
-    <div class="headline">
-        We are doing big changes to the Raton brand
-    </div>
-
-
-    <div class="nav">
-        <a href="/download">Download</a>
-        <a href="/professional">Purchase</a>
-        <a href="/blog">Blog</a>
-    </div>
-
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader-inner">
+    <img src="https://raton.wtf/img/RATA.png" class="loader-logo" alt="" onerror="this.style.display='none'">
+    <div class="loader-bar"><span></span></div>
+    <p class="loader-text">Loading...</p>
+  </div>
 </div>
 
+<div class="rata-bg" id="rataBg" aria-hidden="true"></div>
+
+<nav id="mainNav">
+  <a class="nav-logo" href="https://raton.wtf/">
+    <img src="https://raton.wtf/img/RATA.png" width="28" height="28" alt="Logo" onerror="this.style.display='none'">
+    Raton
+  </a>
+  <ul class="nav-links">
+    <li><a href="https://raton.wtf/download" class="nl-raton">Raton</a></li>
+    <li><a href="https://raton.wtf/tux/home" class="nl-tux">TuxControl</a></li>
+    <li><a href="https://raton.wtf/pear/home" class="nl-pear">iPear</a></li>
+    <li><a href="https://raton.wtf/blog" class="nl-forum">Forum</a></li>
+  </ul>
+  <button class="nav-mobile-toggle" aria-label="Menu" onclick="document.getElementById('mainNav').classList.toggle('open')">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
+</nav>
+
+<main class="main" id="showcase">
+  <span class="eyebrow"></span>
+  <h1 class="hero-title">Improving the administration</h1>
+  <p class="hero-sub">Hover any app below for <b>details</b>, <b>purchase</b> and <b>download</b> options.</p>
+
+  <div class="trio">
+
+    <div class="card card-back" data-app="professional">
+      <span class="card-tag">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 88 88"><path d="M0 12.402l35.687-4.86.016 34.423-35.67.203zm35.67 33.529l.028 34.453L.028 75.48.026 45.7zm4.326-39.025L87.314 0v41.527l-47.318.376zm47.329 39.349l-.011 41.34-47.318-6.678-.066-34.739z" fill="#00adef"/></svg>
+        Windows
+      </span>
+      <span class="card-title">Raton Professional</span>
+      <div class="card-img-wrap">
+        <img
+          src="https://raton.wtf/img/ratonProfessional.png"
+          data-default="https://raton.wtf/img/ratonProfessional.png"
+          data-alt="https://raton.wtf/img/ratonFree.png"
+          alt="Raton Professional">
+      </div>
+      <div class="card-links">
+                  <a class="card-link is-primary" data-action="free" href="https://raton.wtf/download">Free</a>
+        <a class="card-link is-primary" href="https://raton.wtf/professional">Purchase</a>
+        <a class="card-link is-primary" href="https://raton.wtf/docs">Documentation</a>
+        <a class="card-link is-primary" href="https://raton.wtf/agreement">Agreement</a>
+      </div>
+    </div>
+
+    <div class="card card-front card-left" data-app="tux">
+      <span class="card-tag">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-lg"> <path d="M30 16C30 23.728 23.735 30 16 30C8.265 30 2 23.728 2 16C2 8.265 8.265 2 16 2C23.735 2 30 8.265 30 16Z" fill="white"/> <path d="M11.3063 21.91C11.181 21.7232 11.0714 21.4713 10.9824 21.1699C9.37571 19.358 10.6169 16.6916 11.8446 14.881C11.9623 14.6874 12.0905 14.5004 12.2299 14.3215C13.1666 13.1577 13.4089 12.3478 13.481 11.2521C13.4896 11.0481 13.4727 10.7781 13.4533 10.4678C13.3542 8.8837 13.1895 6.25174 16.0159 6.0184C19.5489 5.72669 19.2611 8.97105 19.235 10.8732C19.2339 10.9519 19.2328 11.0285 19.2321 11.1024C19.2225 12.249 19.8209 13.0341 20.4455 13.8535C20.6736 14.1528 20.9052 14.4566 21.112 14.7843C21.1181 14.794 21.1242 14.8038 21.1303 14.8135C22.2218 16.3877 23.2994 18.737 21.7995 20.9653C21.5887 21.7259 21.2695 22.424 20.8434 22.9921C19.3136 25.0052 17.9539 24.8008 16.892 24.6412C16.5717 24.5931 16.2785 24.549 16.0159 24.5711C15.5797 24.5977 15.2301 24.6682 14.9281 24.7292C13.7608 24.9648 13.3046 25.0569 11.3063 21.91Z" fill="#000000"/> <path d="M18.0139 7.79452C17.9811 8.72691 16.9921 9.53681 15.8065 9.61167C14.6209 9.68654 13.6907 8.97873 13.7235 8.04633C13.7562 7.11393 14.7453 6.30404 15.9309 6.22917C17.1165 6.16112 18.0466 6.86212 18.0139 7.79452Z" fill="#E68C3F"/> <path fill-rule="evenodd" clip-rule="evenodd" d="M15.8656 10.0609C15.8751 10.5679 16.1073 11.0002 16.4334 11.1955C15.3695 11.1002 14.0512 11.4891 14.0512 12.2252C14.0348 13.4703 13.3418 15.0195 12.8429 16.1346C12.7447 16.3543 12.654 16.5571 12.5774 16.7374C12.2686 17.5021 12.0833 18.32 12.0614 19.1221C11.2435 17.9947 11.8378 16.5484 12.1582 15.9207C12.5846 15.0947 12.5764 14.9916 12.4108 15.1852C11.7759 16.2648 10.5803 18.4333 12.0775 19.736C12.125 20.3177 12.2667 20.8813 12.5185 21.3994C14.5228 25.4421 18.2761 23.7815 19.5141 21.6853C19.6788 21.3872 19.812 21.0989 19.9177 20.8203C19.9797 20.8593 20.0461 20.8895 20.1167 20.9094C20.739 21.0932 21.6691 20.3922 21.8918 19.9566C22.1604 19.3781 21.8853 18.9833 20.9683 18.5137C20.9215 18.4906 20.8753 18.4688 20.8297 18.4485C21.1814 16.9676 20.2122 15.4276 19.52 14.7743C19.3909 14.7424 19.3727 14.8156 19.5731 15.0155C20.009 15.4333 20.9572 16.9228 20.4442 18.3091C20.3597 18.2864 20.2784 18.2704 20.2009 18.2616C20.0433 17.3158 19.6231 16.58 19.3294 16.0658C19.2629 15.9493 19.2029 15.8442 19.1538 15.7506C19.055 15.5617 18.9368 15.3661 18.8114 15.1587C18.3283 14.3594 17.739 13.3843 17.739 11.9393C17.6651 11.6214 17.3651 11.4094 16.9658 11.2923C17.4293 11.1988 17.7772 10.6573 17.7652 10.0065C17.7521 9.30545 17.3132 8.74737 16.7892 8.76099C16.2652 8.7746 15.846 9.3599 15.8656 10.0609ZM16.2979 10.2174C16.2914 10.6054 16.4748 10.9184 16.7172 10.9184C16.953 10.9184 17.156 10.6054 17.1626 10.2242C17.1691 9.83631 16.9857 9.52324 16.7434 9.52324C16.501 9.52324 16.3045 9.83631 16.2979 10.2174Z" fill="#BDBFC2"/> <path fill-rule="evenodd" clip-rule="evenodd" d="M14.5556 11.1498C14.9355 11.1294 15.2106 10.619 15.1779 10.0133C15.1451 9.40754 14.8111 8.93794 14.4311 8.95835C14.0512 8.97877 13.7761 9.48921 13.8089 10.0949C13.8416 10.7006 14.1757 11.1702 14.5556 11.1498ZM14.7848 10.2242C14.8176 10.5441 14.6997 10.8163 14.5294 10.8436C14.3591 10.864 14.1953 10.6258 14.1626 10.3059C14.1298 9.98604 14.2477 9.7138 14.418 9.68658C14.5883 9.66616 14.7521 9.90436 14.7848 10.2242Z" fill="#BDBFC2"/> <path d="M18.669 17.1525C18.669 18.3503 17.562 19.9021 15.6625 19.8885C13.7039 19.9021 12.8721 18.3503 12.8721 17.1525C12.8721 15.9547 14.169 14.9814 15.7673 14.9814C17.3721 14.9883 18.669 15.9547 18.669 17.1525Z" fill="white"/> <path d="M17.6346 13.3892C17.615 14.6279 16.8355 14.9205 15.8529 14.9205C14.8704 14.9205 14.1564 14.7367 14.0713 13.3892C14.0713 12.5453 14.8704 12.0552 15.8529 12.0552C16.8355 12.0484 17.6346 12.5385 17.6346 13.3892Z" fill="white"/> <path d="M11.6936 15.2947C12.3356 14.2807 13.6914 12.7221 11.9491 15.5125C10.5342 17.8129 11.4251 19.2898 11.8836 19.6981C13.2067 20.9232 13.1543 21.7467 12.1128 21.1001C9.87922 19.7185 10.3443 17.3909 11.6936 15.2947Z" fill="white"/> <path d="M20.9881 15.71C20.4314 14.519 18.6628 11.4972 21.0733 15.009C23.2676 18.1873 21.7283 20.3992 21.4532 20.617C21.1781 20.8348 20.2545 21.2771 20.5231 20.5081C20.7982 19.739 22.1606 18.2826 20.9881 15.71Z" fill="white"/> <path d="M11.2089 25.1021C9.74165 24.2922 7.61283 25.2586 8.38575 23.0671C8.54296 22.5703 8.15649 21.8217 8.4054 21.3384C8.70016 20.7463 9.33553 20.8756 9.71544 20.4809C10.0888 20.0726 10.3246 19.3648 11.0255 19.4736C11.7198 19.5825 12.1849 20.4673 12.6696 21.5562C13.0299 22.3321 14.3006 23.4278 14.2154 24.299C14.1106 25.6329 12.6499 25.8847 11.2089 25.1021Z" fill="#FFA63F"/> <path d="M21.3814 24.7278C22.4556 23.3735 24.8464 23.6525 23.2351 21.7945C22.8945 21.393 22.9993 20.5354 22.5801 20.1679C22.0888 19.7187 21.5451 20.0862 21.0473 19.8548C20.5495 19.603 20.0255 19.1198 19.4163 19.4601C18.8071 19.8072 18.7416 20.7056 18.6827 21.8898C18.6303 22.7405 17.8836 24.1629 18.2831 24.9456C18.8596 26.157 20.3596 25.9937 21.3814 24.7278Z" fill="#FFA63F"/> <path d="M20.9156 22.9174C22.5793 20.3652 21.3413 20.3856 20.9221 20.1882C20.5029 19.9841 20.0641 19.5825 19.5728 19.8616C19.0815 20.1474 19.0553 20.8824 19.0422 21.8489C19.0226 22.5431 18.4658 23.7069 18.7999 24.3534C19.206 25.1089 20.1885 24.0131 20.9156 22.9174Z" fill="white"/> <path d="M10.8682 23.2847C8.37909 21.6105 9.54502 21.0388 9.91839 20.7733C10.3704 20.433 10.3769 19.7797 10.9337 19.8409C11.4904 19.9022 11.8179 20.6168 12.1913 21.5016C12.4664 22.1345 13.4228 22.9784 13.3507 23.7066C13.259 24.5642 11.9424 23.9993 10.8682 23.2847Z" fill="white"/> <path d="M21.7481 19.9362C21.5516 20.2901 20.7525 20.8481 20.2219 20.6984C19.6783 20.5555 19.4294 19.7592 19.5407 19.1603C19.639 18.4797 20.2219 18.4457 20.9556 18.786C21.735 19.1535 21.9774 19.4666 21.7481 19.9362Z" fill="#000000"/> <path d="M14.4374 10.8576C14.6994 10.6057 15.3348 9.83668 16.54 10.6398C16.7627 10.7895 16.9461 10.8031 17.3719 10.9937C18.23 11.3612 17.8238 12.2459 16.9068 12.5454C16.5138 12.6747 16.1601 13.1715 15.4527 13.1239C14.8435 13.0899 14.6863 12.6747 14.3129 12.4501C13.6514 12.0622 13.5531 11.5381 13.9134 11.2591C14.2736 10.9801 14.4112 10.878 14.4374 10.8576Z" fill="#FFA63F"/> </svg>
+        Linux
+      </span>
+      <span class="card-title">TuxControl</span>
+      <div class="card-img-wrap">
+        <img src="https://raton.wtf/img/tuxControl.png" alt="TuxControl">
+      </div>
+      <div class="card-links">
+                  <a class="card-link" href="https://raton.wtf/tux/purchase">Purchase</a>
+        <a class="card-link" href="https://raton.wtf/tux/home">Details</a>
+      </div>
+    </div>
+
+    <div class="card card-front card-right" data-app="pear">
+      <span class="card-tag">
+        <svg xmlns="http://www.w3.org/2000/svg" aria-label="Finder" role="img" viewBox="0 0 512 512"><rect width="512" height="512" rx="15%" fill="url(#pear-a)"/><defs><linearGradient id="pear-a" x2="0" y1="100%"><stop offset="0" stop-color="#1e73f2"/><stop offset="1" stop-color="#19d3fd"/></linearGradient><linearGradient id="pear-b" x2="0" y1="100%"><stop offset="0" stop-color="#dbe9f4"/><stop offset="1" stop-color="#f7f6f6"/></linearGradient></defs><path fill="url(#pear-b)" d="M435.2 0H274.4c-21.2 49.2-59.2 129.6-60.8 283.4a9.9 9.9 0 0010 10.1h58.7a9.9 9.9 0 019.9 10.2A933.3 933.3 0 00311.3 512h123.9a76.8 76.8 0 0076.8-76.8V76.8A76.8 76.8 0 00435.2 0z"/><path fill="none" stroke="#000000" stroke-linecap="round" stroke-width="20" d="M371 149v34m-229-34v34m263.4 147.2a215.2 215.2 0 01-298.8 0"/></svg>
+        macOS
+      </span>
+      <span class="card-title">iPear</span>
+      <div class="card-img-wrap">
+        <img src="https://raton.wtf/img/Pear.png" alt="iPear">
+      </div>
+      <div class="card-links">
+                  <a class="card-link" href="https://raton.wtf/pear/purchase">Purchase</a>
+        <a class="card-link" href="https://raton.wtf/pear/home">Details</a>
+      </div>
+    </div>
+
+  </div>
+
+  <p class="hint hint-warning">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12" y2="17.5"/></svg>
+    These are IT support tools intended for authorized devices only.
+  </p>
+</main>
+
+<footer>
+  <p class="footer-bottom">
+    <img src="https://raton.wtf/img/RATA.png" width="16" height="16" alt="" onerror="this.style.display='none'">
+    © 2026 SillyCS. All rights reserved
+  </p>
+</footer>
+
+<script>
+// ts for the fairy
+(function(){
+  var bg=document.getElementById('rataBg');
+  var data=[{x:5,y:8,s:56,d:20,dl:0},{x:18,y:22,s:48,d:24,dl:5},{x:32,y:5,s:64,d:18,dl:9},{x:65,y:3,s:72,d:22,dl:13},{x:78,y:20,s:48,d:30,dl:7},{x:90,y:8,s:60,d:16,dl:11},{x:10,y:55,s:56,d:28,dl:3},{x:72,y:75,s:64,d:25,dl:6},{x:45,y:85,s:52,d:26,dl:2},{x:88,y:60,s:58,d:23,dl:8}];
+  data.forEach(function(r){
+    var img=document.createElement('img');
+    img.src='https://raton.wtf/img/RATA.png';
+    img.className='rata-sprite';img.alt='';img.draggable=false;
+    img.style.cssText='width:'+r.s+'px;height:'+r.s+'px;left:'+r.x+'%;top:'+r.y+'%;animation-duration:'+r.d+'s;animation-delay:-'+r.dl+'s';
+    bg.appendChild(img);
+  });
+})();
+
+// ts for the pro
+(function(){
+  var freeLink=document.querySelector('[data-action="free"]');
+  if(!freeLink) return;
+  var img=document.querySelector('.card-back .card-img-wrap img');
+  freeLink.addEventListener('mouseenter',function(){ img.src=img.dataset.alt; });
+  freeLink.addEventListener('mouseleave',function(){ img.src=img.dataset.default; });
+})();
+
+// ts for the loading :O
+(function(){
+  var loader=document.getElementById('loader');
+  if(!loader) return;
+  var sources=[
+    'https://raton.wtf/img/ratonProfessional.png',
+    'https://raton.wtf/img/ratonFree.png',
+    'https://raton.wtf/img/tuxControl.png',
+    'https://raton.wtf/img/Pear.png',
+    'https://raton.wtf/img/fairy.gif',
+    'https://raton.wtf/img/RATA.png'
+  ];
+  var done=0, finished=false;
+  function hide(){
+    if(finished) return; finished=true;
+    loader.classList.add('hidden');
+    setTimeout(function(){ loader.style.display='none'; }, 600);
+  }
+  sources.forEach(function(src){
+    var i=new Image();
+    i.onload=i.onerror=function(){ if(++done>=sources.length) hide(); };
+    i.src=src;
+  });
+  setTimeout(hide, 5000); // just in case an image ghosts us
+})();
+
+// ts for the fairy :O
+(function(){
+  var fairy=document.createElement('img');
+  fairy.src='https://raton.wtf/img/fairy.gif';
+  fairy.className='fairy';fairy.alt='';fairy.draggable=false;
+  document.body.appendChild(fairy);
+
+  var fx=window.innerWidth*0.5, fy=window.innerHeight*0.42;
+  var tx=fx, ty=fy;
+  var facingRight=true;     // the gif already looks right
+  var locked=null;          // card currently followed
+
+  function pickWander(){
+    if(locked) return;
+    tx=40+Math.random()*Math.max(120,(window.innerWidth-80));
+    ty=60+Math.random()*Math.max(120,(window.innerHeight-120));
+  }
+  pickWander();
+  setInterval(pickWander, 1900);
+
+  function aimAt(el){
+    var r=el.getBoundingClientRect();
+    tx=r.left+r.width*0.5;
+    ty=r.top+r.height*0.32;
+  }
+
+  document.querySelectorAll('.card').forEach(function(card){
+    card.addEventListener('mouseenter',function(){ locked=card; aimAt(card); });
+    card.addEventListener('mouseleave',function(){ if(locked===card){ locked=null; pickWander(); } });
+  });
+
+  // ts for the fairy dust
+  function sparkle(x,y){
+    var s=document.createElement('span');
+    s.className='sparkle';
+    s.style.left=(x+(Math.random()-0.5)*20)+'px';
+    s.style.top=(y+(Math.random()-0.5)*20)+'px';
+    s.style.setProperty('--sc',(0.5+Math.random()*0.7).toFixed(2));
+    document.body.appendChild(s);
+    setTimeout(function(){ s.remove(); }, 900);
+  }
+
+  var lastSpark=0;
+  function loop(ts){
+    if(locked) aimAt(locked);
+    var dx=tx-fx, dy=ty-fy;
+    fx+=dx*0.045; fy+=dy*0.045;
+    if(Math.abs(dx)>2){ facingRight = dx>0; }
+    var flip = facingRight ? '' : ' scaleX(-1)';
+    var bob = Math.sin(ts/380)*5;
+    fairy.style.transform='translate('+(fx-26)+'px,'+(fy-26+bob)+'px)'+flip;
+    if(ts-lastSpark>95 && (Math.abs(dx)+Math.abs(dy)>6 || locked)){
+      sparkle(fx, fy+10); lastSpark=ts;
+    }
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+})();
+</script>
 </body>
 </html>
