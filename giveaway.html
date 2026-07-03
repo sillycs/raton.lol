@@ -38,9 +38,9 @@
   --radius: 20px;
 }
 
-* { cursor: url('https://raton.wtf/img/default.png') 0 0, auto; }
+* { cursor: url('https://raton.click/img/default.png') 0 0, auto; }
 a, button, [role="button"] {
-  cursor: url('https://raton.wtf/img/handpointing.png') 0 0, pointer;
+  cursor: url('https://raton.click/img/handpointing.png') 0 0, pointer;
 }
 
 html { scroll-behavior: smooth; }
@@ -366,8 +366,8 @@ nav {
 <div class="rata-bg" id="rataBg" aria-hidden="true"></div>
 
 <nav>
-  <a class="nav-logo" href="https://raton.wtf">
-    <img src="https://raton.wtf/img/RATA.png" width="24" height="24" alt="Raton" onerror="this.style.display='none'">
+  <a class="nav-logo" href="https://raton.click">
+    <img src="https://raton.click/img/RATA.png" width="24" height="24" alt="Raton" onerror="this.style.display='none'">
     Raton
   </a>
 </nav>
@@ -382,8 +382,8 @@ nav {
         </div>
       </div>
     </div>
-    <a class="footer-note" href="https://raton.wtf">
-      <img src="https://raton.wtf/img/RATA.png" width="14" height="14" alt="" onerror="this.style.display='none'">
+    <a class="footer-note" href="https://raton.click">
+      <img src="https://raton.click/img/RATA.png" width="14" height="14" alt="" onerror="this.style.display='none'">
       &copy; 2026 SillyCS. All rights reserved
     </a>
   </div>
@@ -412,7 +412,7 @@ const WORKER = 'https://steep-sun-85c4.sillykuadro.workers.dev';
   ];
   data.forEach(function(r) {
     var img = document.createElement('img');
-    img.src = 'https://raton.wtf/img/RATA.png';
+    img.src = 'https://raton.click/img/RATA.png';
     img.className = 'rata-sprite'; img.alt = ''; img.draggable = false;
     img.style.cssText = 'width:'+r.s+'px;height:'+r.s+'px;left:'+r.x+'%;top:'+r.y+'%;animation-duration:'+r.d+'s;animation-delay:-'+r.dl+'s';
     bg.appendChild(img);
@@ -561,7 +561,7 @@ async function render() {
 
     ${hasWon ? `
     <div class="winner-box">
-      <img class="winner-trophy" src="https://raton.wtf/img/bigdonator.png" alt="Winner" onerror="this.style.display='none'">
+      <img class="winner-trophy" src="https://raton.click/img/bigdonator.png" alt="Winner" onerror="this.style.display='none'">
       <div class="winner-info">
         <div class="winner-label">Winner Announced</div>
         <div class="winner-name">${g.winner}</div>
