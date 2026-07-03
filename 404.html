@@ -1,1 +1,356 @@
-this doesn't exist crochacho...
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>404 - under construction</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    width:100vw;
+    height:100vh;
+    overflow:hidden;
+    position:relative;
+    font-family:Tahoma,sans-serif;
+    background:url("https://raton.wtf/img/background_xp.png") center center/cover no-repeat;
+}
+
+
+body::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,0.12);
+    z-index:1;
+    pointer-events:none;
+}
+
+
+body::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+    repeating-linear-gradient(
+        to bottom,
+        rgba(255,255,255,0.03),
+        rgba(255,255,255,0.03) 1px,
+        transparent 1px,
+        transparent 4px
+    );
+    pointer-events:none;
+    z-index:999;
+    mix-blend-mode:soft-light;
+}
+
+
+.corner-left{
+    position:absolute;
+    left:0;
+    bottom:0;
+    height:55vh;
+    z-index:45;
+    pointer-events:none;
+}
+
+
+.corner-right{
+    position:absolute;
+    right:-500px;
+    bottom:0;
+    height:100vh;
+    z-index:60;
+    pointer-events:none;
+}
+
+
+.center{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    text-align:center;
+    z-index:20;
+    user-select:none;
+}
+
+.title{
+    font-size:9rem;
+    color:white;
+    text-shadow:
+        0 0 10px rgba(0,0,0,0.8),
+        0 0 25px rgba(0,0,0,0.5);
+    animation:float 4s ease-in-out infinite;
+}
+
+.subtitle{
+    color:white;
+    font-size:1.6rem;
+    margin-top:-10px;
+    text-shadow:0 0 8px black;
+}
+
+@keyframes float{
+
+    0%{
+        transform:translateY(0px);
+    }
+
+    50%{
+        transform:translateY(-6px);
+    }
+
+    100%{
+        transform:translateY(0px);
+    }
+
+}
+
+
+.truck{
+    position:absolute;
+    z-index:18;
+    pointer-events:none;
+    will-change:left,transform;
+}
+
+.truck1{
+    width:520px;
+}
+
+.truck2{
+    width:620px;
+}
+
+
+@keyframes craneShake{
+
+    0%{
+        transform:scaleX(-1) rotate(0deg) translateY(0px);
+    }
+
+    25%{
+        transform:scaleX(-1) rotate(0.2deg) translateY(-1px);
+    }
+
+    50%{
+        transform:scaleX(-1) rotate(-0.2deg) translateY(0px);
+    }
+
+    75%{
+        transform:scaleX(-1) rotate(0.2deg) translateY(-1px);
+    }
+
+    100%{
+        transform:scaleX(-1) rotate(0deg) translateY(0px);
+    }
+
+}
+
+
+.rat{
+    position:absolute;
+    width:240px;
+    z-index:40;
+    pointer-events:none;
+    will-change:left,transform;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<img
+src="https://raton.wtf/img/corner_container.png"
+class="corner-left"
+>
+
+<img
+src="https://raton.wtf/img/corner_grua.png"
+class="corner-right"
+>
+
+<div class="center">
+
+    <div class="title">
+        404
+    </div>
+
+    <div class="subtitle">
+        Our rats are still working on this page...
+    </div>
+
+</div>
+
+<script>
+
+
+function createTruck(type){
+
+    const truck =
+    document.createElement("img");
+
+    truck.src =
+    "https://raton.wtf/img/" + type + ".png";
+
+    truck.classList.add("truck");
+    truck.classList.add(type);
+
+    truck.style.animation =
+    "craneShake 0.18s infinite";
+
+    const startX = -900;
+    const endX =
+    window.innerWidth + 900;
+
+    const randomBottom =
+        90 + Math.random() * 120;
+
+    truck.style.left =
+    startX + "px";
+
+    truck.style.bottom =
+    randomBottom + "px";
+
+    document.body.appendChild(truck);
+
+    const duration =
+        14000 + Math.random() * 4000;
+
+    truck.animate([
+        {
+            left:startX + "px"
+        },
+        {
+            left:endX + "px"
+        }
+    ],{
+        duration:duration,
+        easing:"linear"
+    });
+
+    setTimeout(()=>{
+
+        truck.remove();
+
+    }, duration);
+
+}
+
+
+function startTruckFlow(){
+
+
+    createTruck("truck1");
+
+    setTimeout(()=>{
+        createTruck("truck2");
+    }, 3000);
+
+    setTimeout(()=>{
+        createTruck("truck1");
+    }, 6500);
+
+
+    setInterval(()=>{
+
+        const type =
+            Math.random() > 0.5
+            ? "truck1"
+            : "truck2";
+
+        createTruck(type);
+
+    }, 5000);
+
+}
+
+
+
+const rat =
+document.createElement("img");
+
+rat.src =
+"https://raton.wtf/img/raton_worker.png";
+
+rat.classList.add("rat");
+
+document.body.appendChild(rat);
+
+let ratX = 120;
+let direction = 1;
+
+let bounce = 0;
+
+const minX = 60;
+
+function getMaxX(){
+
+    return window.innerWidth - 320;
+
+}
+
+rat.style.bottom = "120px";
+
+function moveRat(){
+
+    ratX += direction * 1.1;
+
+    bounce += 0.08;
+
+    const walkOffset =
+    Math.sin(bounce) * 3;
+
+
+    if(direction === 1){
+
+        rat.style.transform =
+        `scaleX(1) translateY(${walkOffset}px)`;
+
+    }else{
+
+        rat.style.transform =
+        `scaleX(-1) translateY(${walkOffset}px)`;
+
+    }
+
+
+    if(ratX >= getMaxX()){
+
+        direction = -1;
+
+    }
+
+    if(ratX <= minX){
+
+        direction = 1;
+
+    }
+
+    rat.style.left =
+    ratX + "px";
+
+    requestAnimationFrame(moveRat);
+
+}
+
+
+startTruckFlow();
+
+moveRat();
+
+</script>
+
+</body>
+</html>
