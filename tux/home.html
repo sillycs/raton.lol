@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profile</title>
+<link rel="icon" type="image/png" href="https://raton.click/img/RATA.png">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.cdnfonts.com/css/kunal" rel="stylesheet">
+<link href="https://fonts.cdnfonts.com/css/nishiki-teki" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d0d0d;
+  --surface:#141414;
+  --surface2:#1c1c1c;
+  --border:rgba(255,255,255,0.07);
+  --border2:rgba(255,255,255,0.12);
+  --purple:#8b5cf6;
+  --purple2:#a78bfa;
+  --purple-dim:rgba(139,92,246,0.15);
+  --tg:#229ED9;
+  --text:#f4f4f8;
+  --text2:#a0a0b8;
+  --text3:#606078;
+  --font-display:'Nishiki-teki',sans-serif;
+  --font-logo:'kunal',sans-serif;
+  --font-body:'DM Sans',sans-serif;
+}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:#0d0d0d}
+::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--purple),#5b21b6);border-radius:99px;cursor:url('https://raton.click/img/handpointing.png') 0 0,pointer}
+::-webkit-scrollbar-thumb:hover{background:var(--purple2)}
+*{scrollbar-width:thin;scrollbar-color:var(--purple) #0d0d0d}
+*{cursor:url('https://raton.click/img/default.png') 0 0,auto}
+a,button,[role="button"]{cursor:url('https://raton.click/img/handpointing.png') 0 0,pointer}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font-body);
+  font-size:16px;
+  line-height:1.6;
+  overflow-x:hidden;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+}
+.rata-bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.rata-sprite{
+  position:absolute;opacity:0;
+  will-change:transform,opacity;
+  filter:grayscale(20%) brightness(0.65);
+  animation:rataFloat linear infinite;
+  transform-origin:center;user-select:none;
+}
+@keyframes rataFloat{
+  0%{opacity:0;transform:translateY(0px) rotate(0deg) scale(1)}
+  8%{opacity:0.18}
+  50%{opacity:0.10;transform:translateY(-28px) rotate(7deg) scale(1.05)}
+  92%{opacity:0.18}
+  100%{opacity:0;transform:translateY(-55px) rotate(-4deg) scale(0.95)}
+}
+nav{
+  position:sticky;top:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 3rem;height:64px;
+  background:rgba(13,13,13,0.88);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo{
+  display:flex;align-items:center;gap:10px;
+  font-family:var(--font-logo);font-weight:800;
+  font-size:1.5rem;color:var(--text);text-decoration:none;
+}
+.nav-links{
+  display:flex;align-items:center;gap:2rem;list-style:none;
+  position:absolute;left:50%;transform:translateX(-50%);
+}
+.nav-links a{
+  text-decoration:none;color:var(--text2);
+  font-size:0.875rem;font-weight:500;transition:filter 0.2s,color 0.2s;
+}
+.nav-links a:hover{filter:brightness(1.28)}
+.nav-links a.active{color:var(--purple2)}
+.nav-links a.nl-raton{color:var(--purple2)}
+.nav-links a.nl-tux{color:#ff8c42}
+.nav-links a.nl-pear{color:#38bdf8}
+.nav-links a.nl-forum{color:#d6c9ff}
+.nav-links a.nl-forum:hover{filter:brightness(1.15)}
+.nav-mobile-toggle{display:none;background:none;border:none;color:var(--text);padding:6px}
+.main{
+  position:relative;z-index:1;
+  flex:1;display:flex;align-items:center;justify-content:center;
+  padding:3rem 2rem;
+}
+.page{
+  width:100%;max-width:460px;
+  display:flex;flex-direction:column;align-items:center;
+  animation:fadeUp .55s cubic-bezier(.22,1,.36,1) both;
+}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.bubbles{
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:flex-end;gap:9px;
+  min-height:150px;margin-bottom:14px;width:100%;
+}
+.bubble{
+  position:relative;
+  background:var(--surface2);
+  border:1px solid var(--border2);
+  border-radius:16px;
+  padding:0.6rem 0.95rem;
+  max-width:330px;
+  font-size:0.86rem;line-height:1.4;
+  color:var(--text);
+  opacity:0.55;
+  transition:opacity .35s ease;
+  animation:pop .4s cubic-bezier(.22,1.4,.5,1) both;
+}
+.bubble:last-child{opacity:1}
+.bubble:last-child::after{
+  content:'';position:absolute;
+  bottom:-6px;left:50%;
+  width:12px;height:12px;
+  background:var(--surface2);
+  border-right:1px solid var(--border2);
+  border-bottom:1px solid var(--border2);
+  transform:translateX(-50%) rotate(45deg);
+}
+@keyframes pop{
+  from{opacity:0;transform:translateY(12px) scale(.94)}
+  to{opacity:1;transform:none}
+}
+.avatar-wrap{
+  position:relative;width:158px;height:158px;
+  margin-top:2px;
+}
+.avatar{
+  width:100%;height:100%;border-radius:50%;
+  object-fit:cover;
+  border:3px solid var(--border2);
+  box-shadow:0 0 0 5px rgba(139,92,246,0.14),
+             0 12px 40px rgba(0,0,0,0.55);
+  background:var(--surface2);
+}
+.status{
+  position:absolute;right:8px;bottom:8px;
+  width:46px;height:46px;border-radius:50%;
+  border:4px solid var(--bg);
+  background:var(--surface2);overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+}
+.status img{width:100%;height:100%;object-fit:cover}
+.handle{
+  font-family:var(--font-display);
+  font-size:1.35rem;font-weight:800;letter-spacing:0.05em;
+  color:var(--text);margin-top:16px;
+}
+.contact{
+  display:inline-flex;align-items:center;gap:9px;
+  margin-top:16px;
+  padding:0.65rem 1.35rem;border-radius:11px;
+  background:var(--tg);color:#fff;text-decoration:none;
+  font-family:var(--font-body);font-size:0.9rem;font-weight:600;
+  transition:transform .2s ease,filter .2s ease;
+  box-shadow:0 8px 26px rgba(34,158,217,0.28);
+}
+.contact:hover{transform:translateY(-2px);filter:brightness(1.08)}
+.contact svg{flex-shrink:0}
+footer{
+  position:relative;z-index:1;
+  border-top:1px solid var(--border);
+  padding:1.5rem 3rem;
+  display:flex;align-items:center;justify-content:center;
+}
+.footer-bottom{font-size:0.75rem;color:var(--text3);text-align:center}
+@media(max-width:768px){
+  nav{padding:0 1.2rem}
+  .nav-links{display:none}
+  .nav-mobile-toggle{display:flex}
+  nav.open .nav-links{
+    display:flex;flex-direction:column;position:fixed;
+    top:64px;left:0;right:0;transform:none;
+    background:rgba(13,13,13,0.97);backdrop-filter:blur(20px);
+    border-bottom:1px solid var(--border);
+    padding:1.5rem 1.5rem 2rem;gap:1.2rem;z-index:99;
+  }
+  .main{padding:2rem 1.2rem}
+  .bubble{max-width:88vw}
+  footer{padding:1.2rem}
+}
+.fairy{
+  position:fixed;left:0;top:0;
+  width:52px;height:52px;
+  z-index:95;pointer-events:none;
+  filter:drop-shadow(0 0 9px rgba(167,139,250,0.65));
+  will-change:transform;
+}
+.sparkle{
+  position:fixed;width:7px;height:7px;
+  margin:-3.5px 0 0 -3.5px;border-radius:50%;
+  pointer-events:none;z-index:94;
+  background:radial-gradient(circle,#fff 0%,var(--purple2) 55%,rgba(167,139,250,0) 72%);
+  animation:sparkleFade .9s ease-out forwards;
+}
+@keyframes sparkleFade{
+  0%{opacity:1;transform:scale(var(--sc,1))}
+  100%{opacity:0;transform:scale(0) translateY(12px)}
+}
+</style>
+</head>
+<body>
+
+<div class="rata-bg" id="rataBg" aria-hidden="true"></div>
+
+<nav id="mainNav">
+  <a class="nav-logo" href="https://raton.click/">
+    <img src="https://raton.click/img/RATA.png" width="28" height="28" alt="Logo" onerror="this.style.display='none'">
+    Raton
+  </a>
+  <ul class="nav-links">
+    <li><a href="https://raton.click/" class="nl-raton">Raton</a></li>
+    <li><a href="https://raton.click/" class="nl-tux">TuxControl</a></li>
+    <li><a href="https://raton.click/" class="nl-pear">iPear</a></li>
+    <li><a href="https://raton.click/blog" class="nl-forum">Forum</a></li>
+  </ul>
+  <button class="nav-mobile-toggle" aria-label="Menu" onclick="document.getElementById('mainNav').classList.toggle('open')">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
+</nav>
+
+<main class="main">
+  <div class="page">
+
+    <div class="bubbles" id="bubbles"></div>
+
+    <div class="avatar-wrap">
+      <img class="avatar" id="pfp" src="https://raton.click/img/RATA.png" alt="Profile" draggable="false" onerror="this.style.display='none'">
+      <div class="status">
+        <img id="statusImg" src="https://raton.click/img/RATA.png" alt="status" draggable="false">
+      </div>
+    </div>
+
+    <div class="handle" id="handle">raton</div>
+
+    <a class="contact" id="contactBtn" href="https://t.me/yourusername" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+        <path d="M21.94 4.6 18.9 19.02c-.23 1.01-.83 1.26-1.68.78l-4.64-3.42-2.24 2.16c-.25.25-.46.46-.94.46l.33-4.73L18.6 5.9c.37-.33-.08-.51-.58-.18L6.9 12.94l-4.66-1.46c-1.01-.32-1.03-1.01.21-1.5L20.63 3.1c.84-.31 1.58.2 1.31 1.5Z"/>
+      </svg>
+      Contact me for details
+    </a>
+
+  </div>
+</main>
+
+<footer>
+  <p class="footer-bottom">© 2026 SillyCS. All rights reserved</p>
+</footer>
+
+<script>
+var PFP='https://raton.click/img/RATA.png';
+var STATUS_IMG='https://raton.click/img/RATA.png';
+var HANDLE='raton';
+var TELEGRAM_URL='https://t.me/sillycs';
+
+document.getElementById('pfp').src=PFP;
+document.getElementById('statusImg').src=STATUS_IMG;
+document.getElementById('handle').textContent=HANDLE;
+document.getElementById('contactBtn').href=TELEGRAM_URL;
+
+var MESSAGES=[
+  "Interested in tuxControl?",
+  "The rats keep me company here",
+  "Expanding to more devices :)",
+  "Talk to me or just say hi!",
+  "yes, the fairy follows your cursor",
+  "Low prices, high updates",
+  "Long term support software",
+  "Only to monitor your workers, right?",
+  "Want to make a bundle with every program? DM me :D",
+  "Js ask me about the good stuff",
+  "No bots, just me",
+  "This page is kinda cool,
+  "Chronically online, fast reply (help)",
+  "The best administration tools for you",
+  "Yeah, its me: SillyCS",
+  "Thanks for the support",
+  "Hi",
+  "Exit scam!!!!!!!!!!",
+  "Cool UI",
+  "This is on beta, remember"
+];
+
+(function(){
+  var box=document.getElementById('bubbles');
+  var MAX=5;
+  var last=-1;
+
+  function nextIndex(){
+    var i;
+    do{ i=Math.floor(Math.random()*MESSAGES.length); }
+    while(i===last && MESSAGES.length>1);
+    last=i;
+    return i;
+  }
+
+  function say(){
+    var b=document.createElement('div');
+    b.className='bubble';
+    b.textContent=MESSAGES[nextIndex()];
+    box.appendChild(b);
+    while(box.children.length>MAX){ box.removeChild(box.firstChild); }
+  }
+
+  say();
+  setInterval(say, 2600);
+})();
+
+(function(){
+  var bg=document.getElementById('rataBg');
+  var data=[{x:5,y:8,s:56,d:20,dl:0},{x:18,y:22,s:48,d:24,dl:5},{x:32,y:5,s:64,d:18,dl:9},{x:65,y:3,s:72,d:22,dl:13},{x:78,y:20,s:48,d:30,dl:7},{x:90,y:8,s:60,d:16,dl:11},{x:10,y:55,s:56,d:28,dl:3},{x:72,y:75,s:64,d:25,dl:6}];
+  data.forEach(function(r){
+    var img=document.createElement('img');
+    img.src='https://raton.click/img/RATA.png';
+    img.className='rata-sprite';img.alt='';img.draggable=false;
+    img.style.cssText='width:'+r.s+'px;height:'+r.s+'px;left:'+r.x+'%;top:'+r.y+'%;animation-duration:'+r.d+'s;animation-delay:-'+r.dl+'s';
+    bg.appendChild(img);
+  });
+})();
+
+(function(){
+  var fairy=document.createElement('img');
+  fairy.src='https://raton.click/img/fairy.gif';
+  fairy.className='fairy';fairy.alt='';fairy.draggable=false;
+  document.body.appendChild(fairy);
+
+  var fx=window.innerWidth*0.5, fy=window.innerHeight*0.42;
+  var tx=fx, ty=fy;
+  var facingRight=true;
+  var locked=null;
+
+  function pickWander(){
+    if(locked) return;
+    tx=40+Math.random()*Math.max(120,(window.innerWidth-80));
+    ty=60+Math.random()*Math.max(120,(window.innerHeight-120));
+  }
+  pickWander();
+  setInterval(pickWander, 1900);
+
+  function aimAt(el){
+    var r=el.getBoundingClientRect();
+    tx=r.left+r.width*0.5;
+    ty=r.top+r.height*0.4;
+  }
+
+  document.querySelectorAll('.avatar-wrap, .contact, .page-logo, .bubble, .handle').forEach(function(el){
+    el.addEventListener('mouseenter',function(){ locked=el; aimAt(el); });
+    el.addEventListener('mouseleave',function(){ if(locked===el){ locked=null; pickWander(); } });
+  });
+
+  function sparkle(x,y){
+    var s=document.createElement('span');
+    s.className='sparkle';
+    s.style.left=(x+(Math.random()-0.5)*20)+'px';
+    s.style.top=(y+(Math.random()-0.5)*20)+'px';
+    s.style.setProperty('--sc',(0.5+Math.random()*0.7).toFixed(2));
+    document.body.appendChild(s);
+    setTimeout(function(){ s.remove(); }, 900);
+  }
+
+  var lastSpark=0;
+  function loop(ts){
+    if(locked) aimAt(locked);
+    var dx=tx-fx, dy=ty-fy;
+    fx+=dx*0.045; fy+=dy*0.045;
+    if(Math.abs(dx)>2){ facingRight = dx>0; }
+    var flip = facingRight ? '' : ' scaleX(-1)';
+    var bob = Math.sin(ts/380)*5;
+    fairy.style.transform='translate('+(fx-26)+'px,'+(fy-26+bob)+'px)'+flip;
+    if(ts-lastSpark>95 && (Math.abs(dx)+Math.abs(dy)>6 || locked)){
+      sparkle(fx, fy+10); lastSpark=ts;
+    }
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>
