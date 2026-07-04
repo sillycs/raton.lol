@@ -15,6 +15,10 @@
     box-sizing:border-box;
 }
 
+html{
+    background:#000;
+}
+
 body{
     width:100vw;
     height:100vh;
@@ -50,7 +54,7 @@ body::after{
     mix-blend-mode:soft-light;
 }
 
-.corner-left{
+.cornL{
     position:absolute;
     left:0;
     bottom:0;
@@ -59,7 +63,7 @@ body::after{
     pointer-events:none;
 }
 
-.corner-right{
+.cornR{
     position:absolute;
     right:-500px;
     bottom:0;
@@ -68,7 +72,7 @@ body::after{
     pointer-events:none;
 }
 
-.center{
+.mid{
     position:absolute;
     top:50%;
     left:50%;
@@ -78,36 +82,26 @@ body::after{
     user-select:none;
 }
 
-.title{
+.big{
     font-size:9rem;
     color:white;
     text-shadow:
         0 0 10px rgba(0,0,0,0.8),
         0 0 25px rgba(0,0,0,0.5);
-    animation:float 4s ease-in-out infinite;
+    animation:bob 4s ease-in-out infinite;
 }
 
-.subtitle{
+.small{
     color:white;
     font-size:1.6rem;
     margin-top:-10px;
     text-shadow:0 0 8px black;
 }
 
-@keyframes float{
-
-    0%{
-        transform:translateY(0px);
-    }
-
-    50%{
-        transform:translateY(-6px);
-    }
-
-    100%{
-        transform:translateY(0px);
-    }
-
+@keyframes bob{
+    0%{   transform:translateY(0px); }
+    50%{  transform:translateY(-6px); }
+    100%{ transform:translateY(0px); }
 }
 
 .truck{
@@ -117,36 +111,28 @@ body::after{
     will-change:left,transform;
 }
 
-.truck1{
+.t1{
     width:520px;
 }
 
-.truck2{
+.t2{
     width:620px;
 }
 
-@keyframes craneShake{
+@keyframes shakeL{
+    0%{   transform:scaleX(-1) rotate(0deg)    translateY(0px); }
+    25%{  transform:scaleX(-1) rotate(0.2deg)  translateY(-1px); }
+    50%{  transform:scaleX(-1) rotate(-0.2deg) translateY(0px); }
+    75%{  transform:scaleX(-1) rotate(0.2deg)  translateY(-1px); }
+    100%{ transform:scaleX(-1) rotate(0deg)    translateY(0px); }
+}
 
-    0%{
-        transform:scaleX(-1) rotate(0deg) translateY(0px);
-    }
-
-    25%{
-        transform:scaleX(-1) rotate(0.2deg) translateY(-1px);
-    }
-
-    50%{
-        transform:scaleX(-1) rotate(-0.2deg) translateY(0px);
-    }
-
-    75%{
-        transform:scaleX(-1) rotate(0.2deg) translateY(-1px);
-    }
-
-    100%{
-        transform:scaleX(-1) rotate(0deg) translateY(0px);
-    }
-
+@keyframes shakeR{
+    0%{   transform:scaleX(1) rotate(0deg)    translateY(0px); }
+    25%{  transform:scaleX(1) rotate(-0.2deg) translateY(-1px); }
+    50%{  transform:scaleX(1) rotate(0.2deg)  translateY(0px); }
+    75%{  transform:scaleX(1) rotate(-0.2deg) translateY(-1px); }
+    100%{ transform:scaleX(1) rotate(0deg)    translateY(0px); }
 }
 
 .rat{
@@ -155,23 +141,33 @@ body::after{
     z-index:40;
     pointer-events:none;
     will-change:left,transform;
+    transition:filter 0.25s ease;
+}
+
+.rat.fear{
+    filter:
+        grayscale(0.4)
+        sepia(1)
+        hue-rotate(185deg)
+        saturate(4)
+        brightness(0.95);
 }
 
 
 @media (max-width: 768px){
 
-    .corner-left,
-    .corner-right,
+    .cornL,
+    .cornR,
     .truck,
     .rat{
         display:none !important;
     }
 
-    .title{
+    .big{
         font-size:5rem;
     }
 
-    .subtitle{
+    .small{
         font-size:1.1rem;
         padding:0 20px;
     }
@@ -186,21 +182,21 @@ body::after{
 
 <img
 src="https://raton.click/img/corner_container.png"
-class="corner-left"
+class="cornL"
 >
 
 <img
 src="https://raton.click/img/corner_grua.png"
-class="corner-right"
+class="cornR"
 >
 
-<div class="center">
+<div class="mid">
 
-    <div class="title">
+    <div class="big">
         404
     </div>
 
-    <div class="subtitle">
+    <div class="small">
         Our rats are still working on this page...
     </div>
 
@@ -209,88 +205,668 @@ class="corner-right"
 <script>
 
 
-const isMobile =
+const mobile =
 window.innerWidth <= 768;
 
 
-if(!isMobile){
+if(!mobile){
 
-    function createTruck(type){
+    let frozen = false;
 
-        const truck =
+    const HOLD = 2000;
+
+    const LANES = [60, 110, 160];
+
+
+    function spawn(type, dir, lane, dur){
+
+        const t =
         document.createElement("img");
 
-        truck.src =
+        t.src =
         "https://raton.click/img/" + type + ".png";
 
-        truck.classList.add("truck");
-        truck.classList.add(type);
+        t.classList.add("truck");
+        t.classList.add(type === "truck1" ? "t1" : "t2");
 
-        truck.style.animation =
-        "craneShake 0.18s infinite";
+        t.dataset.dir  = dir;
+        t.dataset.lane = String(lane);
 
-        const startX = -900;
-        const endX =
-        window.innerWidth + 900;
+        t.style.animation =
+            (dir === "L" ? "shakeL" : "shakeR")
+            + " 0.18s infinite";
 
-        const randomBottom =
-            90 + Math.random() * 120;
+        const W = window.innerWidth;
 
-        truck.style.left =
-        startX + "px";
+        let x0, x1;
 
-        truck.style.bottom =
-        randomBottom + "px";
+        if(dir === "L"){
+            x0 = -900;
+            x1 = W + 900;
+        }else{
+            x0 = W + 900;
+            x1 = -900;
+        }
 
-        document.body.appendChild(truck);
+        t.style.left   = x0 + "px";
+        t.style.bottom = LANES[lane] + "px";
 
-        const duration =
-            14000 + Math.random() * 4000;
+        t.style.zIndex = String(24 - lane * 2);
 
-        truck.animate([
-            {
-                left:startX + "px"
-            },
-            {
-                left:endX + "px"
-            }
+        document.body.appendChild(t);
+
+        t._a = t.animate([
+            { left: x0 + "px" },
+            { left: x1 + "px" }
         ],{
-            duration:duration,
-            easing:"linear"
+            duration: dur,
+            easing:"linear",
+            fill:"forwards"
+        });
+
+        if(frozen){
+            t._a.pause();
+            t.style.animationPlayState = "paused";
+        }
+
+        t._a.finished
+            .then(()=> kill(t))
+            .catch(()=>{});
+
+        return t;
+    }
+
+
+    function kill(t){
+        if(!t || t._gone) return;
+        t._gone = true;
+        if(t._a){ try{ t._a.cancel(); }catch(e){} }
+        t.remove();
+    }
+
+
+    function trucks(){
+        return Array.prototype.slice
+            .call(document.querySelectorAll(".truck"))
+            .filter(t => !t._gone);
+    }
+
+
+    function hold(){
+
+        frozen = true;
+
+        trucks().forEach(t=>{
+            if(t._a){ try{ t._a.pause(); }catch(e){} }
+            t.style.animationPlayState = "paused";
         });
 
         setTimeout(()=>{
 
-            truck.remove();
+            frozen = false;
 
-        }, duration);
+            trucks().forEach(t=>{
+                if(t._a){ try{ t._a.play(); }catch(e){} }
+                t.style.animationPlayState = "running";
+            });
 
+        }, HOLD);
     }
 
 
-    function startTruckFlow(){
+    function shove(cx, cy){
 
-        createTruck("truck1");
+        const RANGE = 650;
+
+        trucks().forEach(t=>{
+
+            if(t._hit || t._gone) return;
+
+            const r  = t.getBoundingClientRect();
+            const tx = (r.left + r.right) / 2;
+            const ty = (r.top  + r.bottom) / 2;
+
+            const d = Math.hypot(tx - cx, ty - cy);
+
+            if(d > RANGE) return;
+
+            const pw   = 1 - d/RANGE;
+            const s    = tx >= cx ? 1 : -1;
+            const dx   = s * (40 + 140*pw);
+            const up   = -(6 + 24*pw);
+            const wait = d * 0.45;
+
+            t.animate([
+                { translate:"0px 0px" },
+                { translate: dx      +"px "+ up       +"px", offset:0.22 },
+                { translate: dx*0.78 +"px 0px",              offset:0.45 },
+                { translate: dx*0.9  +"px "+ (up*0.3) +"px", offset:0.62 },
+                { translate: dx*0.82 +"px 0px" }
+            ],{
+                duration: 650 + 450*pw,
+                delay: wait,
+                easing:"cubic-bezier(.2,.85,.3,1)",
+                fill:"forwards"
+            });
+        });
+    }
+
+
+    function shake(){
+
+        const f = [{ transform:"translate(0,0) rotate(0deg)" }];
+
+        let a = 14;
+
+        for(let i=0;i<14;i++){
+            const x = (Math.random()*2-1) * a;
+            const y = (Math.random()*2-1) * a * 0.7;
+            const r = (Math.random()*2-1) * a * 0.05;
+            f.push({
+                transform:"translate("+x.toFixed(1)+"px,"+y.toFixed(1)+"px)"+
+                          " rotate("+r.toFixed(2)+"deg)"
+            });
+            a *= 0.78;
+        }
+
+        f.push({ transform:"translate(0,0) rotate(0deg)" });
+
+        document.body.animate(f,{
+            duration:900,
+            easing:"linear"
+        });
+    }
+
+
+    function boom(x, y){
+
+        shake();
+
+        const flash = document.createElement("div");
+        flash.style.cssText =
+            "position:fixed;inset:0;background:#fff;"+
+            "z-index:15;pointer-events:none;";
+        document.body.appendChild(flash);
+        flash.animate(
+            [ {opacity:0.9}, {opacity:0} ],
+            { duration:180, easing:"ease-out" }
+        ).finished.then(()=>flash.remove()).catch(()=>{});
+
+        const glow = document.createElement("div");
+        glow.style.cssText =
+            "position:fixed;inset:0;z-index:13;pointer-events:none;"+
+            "background:radial-gradient(circle at "+x+"px "+y+"px,"+
+            "rgba(255,150,40,0.6),rgba(255,70,0,0.2) 40%,transparent 72%);";
+        document.body.appendChild(glow);
+        glow.animate(
+            [ {opacity:1},{opacity:0} ],
+            { duration:950, easing:"ease-out" }
+        ).finished.then(()=>glow.remove()).catch(()=>{});
+
+        const cv = document.createElement("canvas");
+        cv.width  = window.innerWidth;
+        cv.height = window.innerHeight;
+        cv.style.cssText =
+            "position:fixed;inset:0;z-index:14;pointer-events:none;";
+        document.body.appendChild(cv);
+
+        const g = cv.getContext("2d");
+
+        const gy =
+            Math.min(window.innerHeight - 45, y + 120);
+
+        const cap =
+            Math.max(90, y - 230);
+
+        const rnd = (a,b)=> a + Math.random()*(b-a);
+
+        const ps = [];
+
+        function hue(t, a){
+            let r,gr,b;
+            if(t < 0.12){      r=255; gr=255; b=225; }
+            else if(t < 0.3){  r=255; gr=225; b=110; }
+            else if(t < 0.55){ r=255; gr=140; b=35;  }
+            else if(t < 0.8){  r=225; gr=70;  b=20;  }
+            else{              r=90;  gr=45;  b=30;  }
+            return "rgba("+r+","+gr+","+b+","+a+")";
+        }
+
+        function blast(bx, by, s){
+
+            for(let i=0;i<Math.floor(75*s);i++){
+                const an = rnd(0,Math.PI*2);
+                const v  = rnd(0.6,7.5)*s;
+                ps.push({
+                    k:"fire",
+                    x:bx+rnd(-14,14)*s, y:by+rnd(-14,14)*s,
+                    vx:Math.cos(an)*v,
+                    vy:Math.sin(an)*v - rnd(0.4,2.2),
+                    r:rnd(14,42)*s,
+                    a:0, max:rnd(420,900)
+                });
+            }
+
+            for(let i=0;i<Math.floor(60*s);i++){
+                const upw = Math.random()<0.75;
+                const an  = upw ? rnd(-Math.PI,0) : rnd(0,Math.PI);
+                const v   = rnd(6,17)*s;
+                ps.push({
+                    k:"spark",
+                    x:bx, y:by, px:bx, py:by,
+                    vx:Math.cos(an)*v,
+                    vy:Math.sin(an)*v,
+                    a:0, max:rnd(500,1300),
+                    w:rnd(1,2.6)
+                });
+            }
+
+            for(let i=0;i<Math.floor(14*s);i++){
+                const an = rnd(-Math.PI*0.9, -Math.PI*0.1);
+                const v  = rnd(4,12)*s;
+                ps.push({
+                    k:"junk",
+                    x:bx+rnd(-25,25), y:by+rnd(-12,12),
+                    vx:Math.cos(an)*v*(Math.random()<0.5?-1:1),
+                    vy:Math.sin(an)*v,
+                    w:rnd(6,22), h:rnd(4,13),
+                    rot:rnd(0,Math.PI*2), vr:rnd(-0.3,0.3),
+                    a:0, max:rnd(1800,3200),
+                    c: Math.floor(rnd(25,70))
+                });
+            }
+
+            ps.push({
+                k:"ring", x:bx, y:by,
+                rad:10, v:rnd(16,20)*s,
+                a:0, max:600
+            });
+
+            ps.push({
+                k:"dust", x:bx, y:gy,
+                rad:20, v:11*s,
+                a:0, max:900
+            });
+        }
+
+        let hot = performance.now() + 2600;
+
+        const pits = [];
+        for(let i=0;i<4;i++){
+            pits.push({
+                x: x + rnd(-110,110),
+                end: performance.now() + rnd(2200, 4600)
+            });
+        }
+
+        blast(x, y, 1);
 
         setTimeout(()=>{
-            createTruck("truck2");
-        }, 3000);
+            blast(x + rnd(-70,70), y + rnd(-30,20), 0.55);
+        }, rnd(220,420));
 
+
+        let prev = performance.now();
+        const t0 = prev;
+
+        function draw(now){
+
+            const dt = Math.min(40, now - prev);
+            prev = now;
+            const st = dt/16.6;
+
+            g.clearRect(0,0,cv.width,cv.height);
+
+            if(now < hot){
+                for(let i=0;i<3;i++){
+                    ps.push({
+                        k:"smoke",
+                        x:x+rnd(-60,60), y:y+rnd(-40,20),
+                        vx:rnd(-0.5,0.9), vy:rnd(-1.6,-0.6),
+                        r:rnd(16,34),
+                        a:0, max:rnd(1800,3600)
+                    });
+                }
+            }
+
+            for(const pit of pits){
+                if(now < pit.end && Math.random()<0.75){
+                    ps.push({
+                        k:"fire",
+                        x:pit.x+rnd(-16,16), y:gy+rnd(-4,4),
+                        vx:rnd(-0.4,0.4), vy:rnd(-2.4,-1),
+                        r:rnd(6,16),
+                        a:0, max:rnd(280,620)
+                    });
+                    if(Math.random()<0.25){
+                        ps.push({
+                            k:"smoke",
+                            x:pit.x+rnd(-14,14), y:gy-10,
+                            vx:rnd(-0.4,0.6), vy:rnd(-1.4,-0.7),
+                            r:rnd(10,20),
+                            a:0, max:rnd(1400,2600)
+                        });
+                    }
+                }
+            }
+
+            g.globalCompositeOperation = "source-over";
+
+            for(const p of ps){
+                if(p.k!=="smoke") continue;
+                const t = p.a/p.max;
+                const al = t<0.2 ? (t/0.2)*0.5 : (1-t)*0.5;
+                const gr = 60 + Math.floor(t*45);
+                g.fillStyle =
+                    "rgba("+gr+","+(gr-6)+","+(gr-10)+","+al.toFixed(3)+")";
+                g.beginPath();
+                g.arc(p.x, p.y, p.r*(0.6+t*1.8), 0, Math.PI*2);
+                g.fill();
+            }
+
+            for(const p of ps){
+                if(p.k!=="junk") continue;
+                const t = p.a/p.max;
+                g.save();
+                g.translate(p.x,p.y);
+                g.rotate(p.rot);
+                g.fillStyle =
+                    "rgba("+p.c+","+p.c+","+p.c+","+(1-t).toFixed(3)+")";
+                g.fillRect(-p.w/2,-p.h/2,p.w,p.h);
+                g.restore();
+            }
+
+            for(const p of ps){
+                if(p.k!=="dust") continue;
+                const t = p.a/p.max;
+                g.strokeStyle =
+                    "rgba(150,135,110,"+(0.5*(1-t)).toFixed(3)+")";
+                g.lineWidth = 10*(1-t)+2;
+                g.beginPath();
+                g.ellipse(p.x, p.y, p.rad, p.rad*0.22, 0, 0, Math.PI*2);
+                g.stroke();
+            }
+
+            g.globalCompositeOperation = "lighter";
+
+            for(const p of ps){
+
+                const t = p.a/p.max;
+
+                if(p.k==="fire"){
+                    const al = t<0.1 ? t/0.1 : (1-t);
+                    const rd = p.r*(0.5+t);
+                    const gd = g.createRadialGradient(
+                        p.x,p.y,0, p.x,p.y, rd);
+                    gd.addColorStop(0, hue(t,(al*0.9).toFixed(3)));
+                    gd.addColorStop(1, "rgba(0,0,0,0)");
+                    g.fillStyle = gd;
+                    g.beginPath();
+                    g.arc(p.x,p.y,rd,0,Math.PI*2);
+                    g.fill();
+                }
+
+                else if(p.k==="spark"){
+                    g.strokeStyle = hue(t*0.6,(1-t).toFixed(3));
+                    g.lineWidth = p.w;
+                    g.beginPath();
+                    g.moveTo(p.px,p.py);
+                    g.lineTo(p.x,p.y);
+                    g.stroke();
+                }
+
+                else if(p.k==="ring"){
+                    g.strokeStyle =
+                        "rgba(255,240,210,"+((1-t)*0.55).toFixed(3)+")";
+                    g.lineWidth = 3+(1-t)*9;
+                    g.beginPath();
+                    g.arc(p.x,p.y,p.rad,0,Math.PI*2);
+                    g.stroke();
+                }
+            }
+
+            g.globalCompositeOperation = "source-over";
+
+            for(let i=ps.length-1;i>=0;i--){
+
+                const p = ps[i];
+                p.a += dt;
+
+                if(p.a >= p.max){
+                    ps.splice(i,1);
+                    continue;
+                }
+
+                if(p.k==="fire"){
+                    p.x += p.vx*st;
+                    p.y += p.vy*st;
+                    p.vx *= Math.pow(0.94,st);
+                    p.vy = p.vy*Math.pow(0.94,st) - 0.06*st;
+                }
+
+                else if(p.k==="smoke"){
+                    p.x += (p.vx + Math.sin((p.a+p.r*37)/400)*0.35)*st;
+                    p.y += p.vy*st;
+                    p.vy *= Math.pow(0.995,st);
+                    if(p.y < cap){
+                        p.y = Math.max(p.y, cap - 30);
+                        p.vy *= Math.pow(0.8,st);
+                        p.a += dt*1.5;
+                    }
+                }
+
+                else if(p.k==="spark"){
+                    p.px = p.x; p.py = p.y;
+                    p.x += p.vx*st;
+                    p.y += p.vy*st;
+                    p.vy += 0.32*st;
+                    p.vx *= Math.pow(0.985,st);
+                    if(p.y >= gy){
+                        p.y = gy;
+                        p.vy *= -0.42;
+                        p.vx *= 0.6;
+                    }
+                }
+
+                else if(p.k==="junk"){
+                    p.x += p.vx*st;
+                    p.y += p.vy*st;
+                    p.vy += 0.38*st;
+                    p.rot += p.vr*st;
+                    if(p.y >= gy){
+                        p.y = gy;
+                        p.vy *= -0.35;
+                        p.vx *= 0.55;
+                        p.vr *= 0.5;
+                    }
+                }
+
+                else if(p.k==="ring" || p.k==="dust"){
+                    p.rad += p.v*st;
+                    p.v *= Math.pow(0.97,st);
+                }
+            }
+
+            if(ps.length===0 && now > hot){
+                cv.remove();
+                return;
+            }
+
+            if(now - t0 > 9000){
+                cv.remove();
+                return;
+            }
+
+            requestAnimationFrame(draw);
+        }
+
+        requestAnimationFrame(draw);
+    }
+
+
+    function watch(){
+
+        if(!frozen){
+
+            const fleet =
+                trucks().filter(t => !t._hit);
+
+            out:
+            for(let i=0;i<fleet.length;i++){
+                for(let j=i+1;j<fleet.length;j++){
+
+                    const a = fleet[i];
+                    const b = fleet[j];
+
+                    if(a.dataset.lane !== b.dataset.lane) continue;
+                    if(a.dataset.dir  === b.dataset.dir)  continue;
+
+                    const ra = a.getBoundingClientRect();
+                    const rb = b.getBoundingClientRect();
+
+                    const ov =
+                        Math.min(ra.right, rb.right) -
+                        Math.max(ra.left,  rb.left);
+
+                    const mw =
+                        Math.min(ra.width, rb.width);
+
+                    const bang =
+                        ov > mw * 0.4 &&
+                        ra.right > 0 && ra.left < window.innerWidth;
+
+                    if(bang){
+
+                        a._hit = true;
+                        b._hit = true;
+
+                        const cx =
+                            (Math.max(ra.left,rb.left) +
+                             Math.min(ra.right,rb.right)) / 2;
+
+                        const cy = (ra.top + ra.bottom) / 2;
+
+                        kill(a);
+                        kill(b);
+
+                        boom(cx, cy);
+
+                        shove(cx, cy);
+
+                        panic();
+
+                        hold();
+
+                        break out;
+                    }
+                }
+            }
+        }
+
+        requestAnimationFrame(watch);
+    }
+
+
+    function pick(){
+        return Math.random() > 0.5 ? "truck1" : "truck2";
+    }
+
+    const GAP = 6500;
+
+    const log = {
+        L:{}, R:{}
+    };
+
+    function freeLane(dir){
+
+        const now = Date.now();
+
+        const order = LANES.map((_,i)=>i)
+            .sort(()=>Math.random()-0.5);
+
+        for(const l of order){
+            const last = log[dir][l];
+            if(!last || (now - last.t) > GAP){
+                return l;
+            }
+        }
+
+        return -1;
+    }
+
+    function mark(dir, lane, dur){
+        log[dir][lane] = { t:Date.now(), dur:dur };
+    }
+
+    function fix(dir, lane, dur){
+        const last = log[dir][lane];
+        if(last && dur < last.dur){
+            return last.dur + 300 + Math.random()*800;
+        }
+        return dur;
+    }
+
+    function one(){
+        if(frozen) return;
+
+        const dir  = Math.random() > 0.5 ? "L" : "R";
+        const lane = freeLane(dir);
+
+        if(lane === -1) return;
+
+        const dur =
+            fix(dir, lane, 12000 + Math.random()*5000);
+
+        mark(dir, lane, dur);
+        spawn(pick(), dir, lane, dur);
+    }
+
+    function pair(){
+        if(frozen) return;
+
+        const now = Date.now();
+
+        const order = LANES.map((_,i)=>i)
+            .sort(()=>Math.random()-0.5);
+
+        let lane = -1;
+
+        for(const l of order){
+            const a = log.L[l];
+            const b = log.R[l];
+            const fa = !a || (now - a.t) > GAP;
+            const fb = !b || (now - b.t) > GAP;
+            if(fa && fb){ lane = l; break; }
+        }
+
+        if(lane === -1) return;
+
+        const dur = 9000 + Math.random()*2500;
+
+        mark("L", lane, dur);
+        mark("R", lane, dur);
+
+        spawn(pick(), "L", lane, dur);
+        spawn(pick(), "R", lane, dur);
+    }
+
+    function crashLoop(){
+        const wait = 20000 + Math.random()*15000;
         setTimeout(()=>{
-            createTruck("truck1");
-        }, 6500);
+            pair();
+            crashLoop();
+        }, wait);
+    }
 
-        setInterval(()=>{
+    function go(){
 
-            const type =
-                Math.random() > 0.5
-                ? "truck1"
-                : "truck2";
+        one();
+        setTimeout(one, 2500);
+        setTimeout(pair, 12000);
 
-            createTruck(type);
+        setInterval(one, 5000);
 
-        }, 5000);
-
+        crashLoop();
     }
 
 
@@ -304,67 +880,117 @@ if(!isMobile){
 
     document.body.appendChild(rat);
 
-    let ratX = 120;
-    let direction = 1;
+    let rx = 120;
+    let rdir = 1;
 
-    let bounce = 0;
+    let step = 0;
 
-    const minX = 60;
+    const MINX = 60;
 
-    function getMaxX(){
+    let mode = "ok";
 
+    const RUN  = 7;
+    const WAIT = 1600;
+
+    function maxX(){
         return window.innerWidth - 320;
-
     }
 
-    rat.style.bottom = "120px";
-
-    function moveRat(){
-
-        ratX += direction * 1.1;
-
-        bounce += 0.08;
-
-        const walkOffset =
-        Math.sin(bounce) * 3;
+    rat.style.bottom = "30px";
 
 
-        if(direction === 1){
+    function panic(){
 
-            rat.style.transform =
-            `scaleX(1) translateY(${walkOffset}px)`;
+        if(mode !== "ok") return;
 
-        }else{
+        mode = "run";
 
-            rat.style.transform =
-            `scaleX(-1) translateY(${walkOffset}px)`;
+        rat.classList.add("fear");
 
-        }
-
-
-        if(ratX >= getMaxX()){
-
-            direction = -1;
-
-        }
-
-        if(ratX <= minX){
-
-            direction = 1;
-
-        }
-
-        rat.style.left =
-        ratX + "px";
-
-        requestAnimationFrame(moveRat);
-
+        rat.animate(
+            [ {transform:"scaleX(-1) translateY(0px)"},
+              {transform:"scaleX(-1) translateY(-34px)"},
+              {transform:"scaleX(-1) translateY(0px)"} ],
+            { duration:260, easing:"ease-out" }
+        );
     }
 
 
-    startTruckFlow();
+    function swap(){
 
-    moveRat();
+        mode = "wait";
+
+        setTimeout(()=>{
+
+            rat.classList.remove("fear");
+            rx = -260;
+            rdir = 1;
+            step = 0;
+            rat.style.left = rx + "px";
+            mode = "ok";
+
+        }, WAIT);
+    }
+
+
+    function tick(){
+
+        if(mode === "run"){
+
+            rx -= RUN;
+
+            step += 0.35;
+
+            const b =
+            Math.sin(step) * 7;
+
+            rat.style.transform =
+            `scaleX(-1) translateY(${b}px)`;
+
+            rat.style.left =
+            rx + "px";
+
+            if(rx < -320){
+                swap();
+            }
+
+        }else if(mode === "ok" && !frozen){
+
+            rx += rdir * 1.1;
+
+            step += 0.08;
+
+            const b =
+            Math.sin(step) * 3;
+
+            if(rdir === 1){
+                rat.style.transform =
+                `scaleX(1) translateY(${b}px)`;
+            }else{
+                rat.style.transform =
+                `scaleX(-1) translateY(${b}px)`;
+            }
+
+            if(rx >= maxX()){
+                rdir = -1;
+            }
+
+            if(rx <= MINX){
+                rdir = 1;
+            }
+
+            rat.style.left =
+            rx + "px";
+        }
+
+        requestAnimationFrame(tick);
+
+    }
+
+
+    go();
+    watch();
+    tick();
 
 }
 
