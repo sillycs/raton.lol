@@ -4,7 +4,7 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Documentation</title>
-  <link rel="icon" href="https://raton.click/img/RATA.png"/>
+  <link rel="icon" href="/img/RATA.png"/>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link href="https://fonts.cdnfonts.com/css/nishiki-teki" rel="stylesheet">
   <link href="https://fonts.cdnfonts.com/css/kunal" rel="stylesheet">
@@ -36,8 +36,8 @@
       --sidebar-w: 220px;
     }
 
-    * { cursor: url('https://raton.click/img/default.png') 0 0, auto; }
-    a, button, select { cursor: url('https://raton.click/img/handpointing.png') 0 0, pointer; }
+    * { cursor: url('/img/default.png') 0 0, auto; }
+    a, button, select { cursor: url('/img/handpointing.png') 0 0, pointer; }
     html { scroll-behavior: smooth; }
     body {
       font-family: var(--font-body);
@@ -318,15 +318,15 @@
 
 
 <nav id="mainNav">
-  <a class="nav-logo" href="https://raton.click/">
-    <img src="https://raton.click/img/RATA.png" width="26" height="26" alt="Raton" onerror="this.style.display='none'">
+  <a class="nav-logo" href="/">
+    <img src="/img/RATA.png" width="26" height="26" alt="Raton" onerror="this.style.display='none'">
     Raton
   </a>
   <ul class="nav-links">
-    <li><a href="https://raton.click/" class="nl-raton">Raton</a></li>
-    <li><a href="https://raton.click/" class="nl-tux">TuxControl</a></li>
-    <li><a href="https://raton.click/" class="nl-pear">iPear</a></li>
-    <li><a href="https://raton.click/blog" class="nl-forum">Forum</a></li>
+    <li><a href="/" class="nl-raton">Raton</a></li>
+    <li><a href="/" class="nl-tux">TuxControl</a></li>
+    <li><a href="/" class="nl-pear">iPear</a></li>
+    <li><a href="/blog" class="nl-forum">Forum</a></li>
   </ul>
   <button class="nav-mobile-toggle" aria-label="Menu" onclick="document.getElementById('mainNav').classList.toggle('open')">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -672,8 +672,8 @@
       </div>
     </section>
 
-    <a class="footer-note" href="https://raton.click">
-      <img src="https://raton.click/img/RATA.png" width="13" height="13" alt="" onerror="this.style.display='none'">
+    <a class="footer-note" href="">
+      <img src="/img/RATA.png" width="13" height="13" alt="" onerror="this.style.display='none'">
       © 2026 SillyCS. All rights reserved
     </a>
   </main>
@@ -692,7 +692,7 @@
   ];
   data.forEach(function(r) {
     var img = document.createElement('img');
-    img.src = 'https://raton.click/img/RATA.png';
+    img.src = '/img/RATA.png';
     img.className = 'rata-sprite'; img.alt = ''; img.draggable = false;
     img.style.cssText = 'width:'+r.s+'px;height:'+r.s+'px;left:'+r.x+'%;top:'+r.y+'%;animation-duration:'+r.d+'s;animation-delay:-'+r.dl+'s';
     bg.appendChild(img);
