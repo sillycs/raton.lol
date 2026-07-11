@@ -37,27 +37,10 @@
 a,button,[role="button"]{cursor:url('/img/handpointing.png') 0 0,pointer}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:16px;line-height:1.6;overflow-x:hidden;min-height:100vh;display:flex;flex-direction:column}
-nav{
-  position:sticky;top:0;z-index:100;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 3rem;height:64px;
-  background:rgba(13,13,13,0.88);
-  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
-  border-bottom:1px solid var(--border);
-}
-.nav-logo{
-  display:flex;align-items:center;gap:10px;
-  font-family:var(--font-logo);font-weight:800;
-  font-size:1.5rem;color:var(--text);text-decoration:none;
-}
-.nav-links{
-  display:flex;align-items:center;gap:2rem;list-style:none;
-  position:absolute;left:50%;transform:translateX(-50%);
-}
-.nav-links a{
-  text-decoration:none;color:var(--text2);
-  font-size:0.875rem;font-weight:500;transition:filter 0.2s,color 0.2s;
-}
+nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 3rem;height:64px;background:rgba(13,13,13,0.88);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid var(--border)}
+.nav-logo{display:flex;align-items:center;gap:10px;font-family:var(--font-logo);font-weight:800;font-size:1.5rem;color:var(--text);text-decoration:none}
+.nav-links{display:flex;align-items:center;gap:2rem;list-style:none;position:absolute;left:50%;transform:translateX(-50%)}
+.nav-links a{text-decoration:none;color:var(--text2);font-size:0.875rem;font-weight:500;transition:filter 0.2s,color 0.2s}
 .nav-links a:hover{filter:brightness(1.28)}
 .nav-links a.active{color:var(--purple2)}
 .nav-links a.nl-raton{color:var(--purple2)}
@@ -66,7 +49,7 @@ nav{
 .nav-links a.nl-forum{color:#d6c9ff}
 .nav-links a.nl-forum:hover{filter:brightness(1.15)}
 .nav-mobile-toggle{display:none;background:none;border:none;color:var(--text);padding:6px}
-
+.nav-auth{display:flex;align-items:center;gap:0.5rem}
 .auth-btn{display:inline-flex;align-items:center;gap:6px;padding:0.35rem 0.8rem;border-radius:8px;font-family:var(--font-body);font-size:0.75rem;font-weight:600;transition:.2s;border:none}
 .auth-btn-outline{background:none;border:1px solid var(--border2);color:var(--text2)}
 .auth-btn-outline:hover{border-color:var(--purple);color:var(--purple2);background:var(--purple-dim)}
@@ -76,7 +59,6 @@ nav{
 .auth-btn-user:hover{border-color:var(--purple);color:var(--purple2)}
 .auth-btn-logout{background:none;border:1px solid rgba(239,68,68,0.3);color:#ef4444}
 .auth-btn-logout:hover{background:rgba(239,68,68,0.12)}
-
 .auth-modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.72);backdrop-filter:blur(8px);z-index:9000;display:flex;align-items:center;justify-content:center;padding:1rem;opacity:0;pointer-events:none;transition:opacity .25s}
 .auth-modal-backdrop.show{opacity:1;pointer-events:auto}
 .auth-modal{background:var(--surface);border:1px solid var(--border2);border-radius:18px;padding:2rem 2.2rem;width:100%;max-width:400px;box-shadow:0 32px 80px rgba(0,0,0,0.6);transform:scale(0.94) translateY(10px);transition:transform .3s cubic-bezier(.22,1,.36,1)}
@@ -97,7 +79,6 @@ nav{
 .auth-hint{font-size:0.7rem;color:var(--text3);text-align:center}
 .auth-close{position:absolute;top:1rem;right:1rem;background:none;border:none;color:var(--text3);font-size:1.2rem;line-height:1;padding:4px;transition:color .2s}
 .auth-close:hover{color:var(--text)}
-
 .blog-hero{position:relative;padding:4rem 2rem 3rem;text-align:center;border-bottom:1px solid var(--border);overflow:hidden}
 .blog-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 70% at 50% 0%,rgba(139,92,246,0.08) 0%,transparent 70%);pointer-events:none}
 .hero-eyebrow{display:inline-flex;align-items:center;gap:6px;font-size:0.72rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--purple2);font-weight:600;margin-bottom:1rem}
@@ -142,7 +123,9 @@ nav{
 .post-card-body{padding:1.4rem 1.6rem 1.2rem}
 .post-meta{display:flex;align-items:center;gap:0.75rem;font-size:0.72rem;color:var(--text3);letter-spacing:0.06em;margin-bottom:0.6rem;flex-wrap:wrap}
 .post-meta .dot{width:3px;height:3px;border-radius:50%;background:var(--text3)}
-.post-tag{color:var(--purple2);font-size:0.8rem;font-weight:700;letter-spacing:0.01em;opacity:0.8;transition:opacity .15s}.post-tag:hover{opacity:1}.post-card h2{font-family:var(--font-display);font-size:1.3rem;font-weight:800;color:var(--text);margin-bottom:0.4rem;letter-spacing:0.02em;line-height:1.25}
+.post-tag{color:var(--purple2);font-size:0.8rem;font-weight:700;letter-spacing:0.01em;opacity:0.8;transition:opacity .15s}
+.post-tag:hover{opacity:1}
+.post-card h2{font-family:var(--font-display);font-size:1.3rem;font-weight:800;color:var(--text);margin-bottom:0.4rem;letter-spacing:0.02em;line-height:1.25}
 .post-card p{color:var(--text2);font-size:0.875rem;line-height:1.55;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .post-card-footer{display:flex;align-items:center;justify-content:space-between;padding:0.85rem 1.6rem;border-top:1px solid var(--border)}
 .post-stats{display:flex;align-items:center;gap:1.2rem}
@@ -202,15 +185,8 @@ nav{
 .submit-btn:hover{background:#7c3aed;transform:translateY(-1px)}
 .submit-btn:disabled{opacity:.5;pointer-events:none}
 .comment-list{display:flex;flex-direction:column;gap:1rem}
-
 .comment.pinned-comment{border-color:rgba(139,92,246,0.4);background:rgba(139,92,246,0.04)}
-.pinned-comment-icon{
-  width:14px;
-  height:14px;
-  object-fit:contain;
-  margin-left:6px;
-  vertical-align:middle;
-}
+.pinned-comment-icon{width:14px;height:14px;object-fit:contain;margin-left:6px;vertical-align:middle}
 .comment{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem 1.1rem;position:relative;overflow:visible}
 .comment.deleted{opacity:.55}
 .comment.ragebait{background:#f5eedf!important;border-color:rgba(180,140,60,0.35)!important;color:#2a2010}
@@ -276,8 +252,13 @@ nav{
 .reply-form{margin-top:0.8rem;margin-left:1.5rem;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:0.9rem}
 .name-locked-hint{font-size:0.68rem;color:var(--text3);margin-top:0.3rem;font-style:italic}
 .identity-notice{display:flex;align-items:center;gap:8px;background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.2);border-radius:8px;padding:0.5rem 0.8rem;font-size:0.72rem;color:var(--purple2);margin-bottom:0.7rem}
-.auth-prompt-notice{display:flex;align-items:center;justify-content:space-between;background:rgba(139,92,246,0.06);border:1px solid rgba(139,92,246,0.15);border-radius:8px;padding:0.6rem 0.9rem;font-size:0.75rem;color:var(--text2);margin-bottom:0.8rem;flex-wrap:wrap;gap:0.4rem}
-.auth-prompt-notice button{background:var(--purple);color:#fff;border:none;border-radius:6px;padding:0.25rem 0.6rem;font-size:0.72rem;font-weight:600}
+/* ── Auth gate box (reemplaza el form cuando no hay sesión) ── */
+.auth-gate{background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius);padding:1.6rem 1.8rem;margin-bottom:1.6rem;display:flex;flex-direction:column;gap:1rem;align-items:flex-start}
+.auth-gate-title{font-family:var(--font-display);font-size:1rem;font-weight:800;color:var(--text);letter-spacing:0.03em}
+.auth-gate-sub{font-size:0.82rem;color:var(--text2);line-height:1.5}
+.auth-gate-actions{display:flex;gap:0.6rem;flex-wrap:wrap}
+/* ── captcha fix: posición del botón "New" ── */
+.captcha-canvas-wrap{position:relative;display:inline-block;flex-shrink:0}
 .empty{text-align:center;padding:4rem 2rem;color:var(--text3)}
 .spinner{width:28px;height:28px;border:2px solid var(--border2);border-top-color:var(--purple);border-radius:50%;animation:spin .7s linear infinite;margin:2rem auto}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -314,7 +295,8 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:1.
 .captcha-label{font-size:0.7rem;color:var(--text3);font-weight:600;margin-bottom:2px}
 .captcha-canvas{display:block;width:180px;height:52px;border-radius:7px;border:1px solid var(--border2);background:#0a0a0a;overflow:hidden}
 .captcha-canvas svg{display:block;width:100%;height:100%}
-.captcha-refresh{position:absolute;top:3px;right:3px;background:rgba(0,0,0,0.55);border:none;border-radius:5px;padding:3px 5px;color:var(--text3);font-size:0.65rem;display:flex;align-items:center;transition:.15s;gap:3px}
+/* FIX: botón de refresh dentro del canvas wrap con position:absolute funciona ahora */
+.captcha-refresh{position:absolute;top:3px;right:3px;background:rgba(0,0,0,0.55);border:none;border-radius:5px;padding:3px 5px;color:var(--text3);font-size:0.65rem;display:flex;align-items:center;transition:.15s;gap:3px;z-index:2}
 .captcha-refresh:hover{color:var(--text);background:rgba(0,0,0,0.8)}
 .captcha-refresh svg{transition:transform .35s}
 .captcha-refresh:hover svg{transform:rotate(180deg)}
@@ -346,14 +328,6 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:1.
 @media(max-width:768px){
   nav{padding:0 1.2rem}
   .nav-links{display:none}
-  .nav-links a:hover{filter:brightness(1.28)}
-.nav-links a.active{color:var(--purple2)}
-.nav-links a.nl-raton{color:var(--purple2)}
-.nav-links a.nl-tux{color:#ff8c42}
-.nav-links a.nl-pear{color:#38bdf8}
-.nav-links a.nl-forum{color:#d6c9ff}
-.nav-links a.nl-forum:hover{filter:brightness(1.15)}
-.nav-mobile-toggle{display:none;background:none;border:none;color:var(--text);padding:6px}
   .nav-mobile-toggle{display:flex}
   nav.open .nav-links{display:flex;flex-direction:column;position:fixed;top:64px;left:0;right:0;background:rgba(13,13,13,0.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:1.5rem 1.5rem 2rem;gap:1.2rem;z-index:99}
   .nav-auth{gap:0.4rem}
@@ -364,39 +338,30 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:1.
   .post-card-img-wrap{height:160px}
   .broadcast-banner{margin:0 1.2rem;margin-top:1rem}
   .captcha-row{flex-direction:column;align-items:flex-start}
+  .auth-gate{padding:1.2rem}
 }
 </style>
 </head>
 <body>
-
 <div class="rata-bg" id="rataBg" aria-hidden="true"></div>
-
 <nav id="mainNav">
-  <a class="nav-logo" href="/">
-    <img src="/img/RATA.png" width="28" height="28" alt="">
-    Raton
-  </a>
+  <a class="nav-logo" href="/"><img src="/img/RATA.png" width="28" height="28" alt="">Raton</a>
   <ul class="nav-links">
     <li><a href="/" class="nl-raton">Raton</a></li>
     <li><a href="/" class="nl-tux">TuxControl</a></li>
     <li><a href="/" class="nl-pear">iPear</a></li>
     <li><a href="/blog" class="nl-forum">Forum</a></li>
   </ul>
-  <div class="nav-auth" id="navAuth">
-  </div>
+  <div class="nav-auth" id="navAuth"></div>
   <button class="nav-mobile-toggle" onclick="document.getElementById('mainNav').classList.toggle('open')">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
   </button>
 </nav>
-
 <div id="app"></div>
-
 <div class="auth-modal-backdrop" id="authModalBackdrop" onclick="if(event.target===this)closeAuthModal()">
   <div class="auth-modal" style="position:relative">
     <button class="auth-close" onclick="closeAuthModal()" style="position:absolute;top:1rem;right:1rem">✕</button>
-    <div class="auth-modal-logo">
-      <img src="/img/RATA.png" alt="">
-    </div>
+    <div class="auth-modal-logo"><img src="/img/RATA.png" alt=""></div>
     <div class="auth-tabs">
       <button class="auth-tab active" id="authTabLogin" onclick="switchAuthTab('login')">Login</button>
       <button class="auth-tab" id="authTabRegister" onclick="switchAuthTab('register')">Register</button>
@@ -404,7 +369,6 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:1.
     <div id="authFormBody"></div>
   </div>
 </div>
-
 <div class="captcha-modal-backdrop" id="captchaModalBackdrop">
   <div class="captcha-modal">
     <div class="captcha-modal-title">Human check</div>
@@ -416,7 +380,6 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:1.
     </div>
   </div>
 </div>
-
 <div class="auth-modal-backdrop" id="linkModalBackdrop" onclick="if(event.target===this)dismissLinkModal()">
   <div class="auth-modal" style="position:relative;max-width:380px">
     <button class="auth-close" onclick="dismissLinkModal()" style="position:absolute;top:1rem;right:1rem">✕</button>
@@ -429,7 +392,6 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:1.
     </div>
   </div>
 </div>
-
 <div class="live-warning-overlay" id="liveWarningOverlay">
   <div class="live-warning-backdrop" onclick="dismissLiveWarning()"></div>
   <div class="live-warning-box">
@@ -439,29 +401,19 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:1.
     <div class="live-warning-bar"><div class="live-warning-bar-fill" id="liveWarningBar" style="width:100%"></div></div>
   </div>
 </div>
-
 <div class="photo-lightbox" id="photoLightbox" onclick="closeLightbox(event)">
   <button class="photo-lightbox-close" onclick="closeLightboxBtn()">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
   </button>
   <img id="photoLightboxImg" src="" alt="">
 </div>
-
-<a class="footer-note" href="">
-  <img src="/img/RATA.png" width="13" height="13" alt="" onerror="this.style.display='none'">
-  © 2026 SillyCS. All rights reserved
-</a>
-
-<div class="action-loading" id="actionLoading">
-  <div class="mini-spin"></div>
-  <span id="actionLoadingMsg">Loading...</span>
-</div>
+<a class="footer-note" href=""><img src="/img/RATA.png" width="13" height="13" alt="" onerror="this.style.display='none'">© 2026 SillyCS. All rights reserved</a>
+<div class="action-loading" id="actionLoading"><div class="mini-spin"></div><span id="actionLoadingMsg">Loading...</span></div>
 <div id="toastContainer"></div>
 
 <script>
 const WORKER = 'https://bold-glitter-3cd0.sillycro.workers.dev';
 const SITE   = window.location.origin + window.location.pathname;
-
 const REACTIONS = [
   { id:'heart', img:'/img/heart.png', label:'❤️' },
   { id:'fire',  img:'/img/fire.png',  label:'🔥' },
@@ -470,350 +422,245 @@ const REACTIONS = [
   { id:'sad',   img:'/img/sad.png',   label:'😢' },
   { id:'clown', img:'/img/clown.png', label:'🤡' },
 ];
-const CUSTOM_AVATARS = {
-  'Silly': '/img/silly.png',
-  'Moizefala': '/img/moizefala.png',
-};
+const CUSTOM_AVATARS = { 'Silly':'/img/silly.png', 'Moizefala':'/img/moizefala.png' };
 
 (function(){
-  var bg = document.getElementById('rataBg');
+  var bg=document.getElementById('rataBg');
   [{x:5,y:8,s:56,d:20,dl:0},{x:18,y:22,s:48,d:24,dl:5},{x:32,y:5,s:64,d:18,dl:9},
    {x:65,y:3,s:72,d:22,dl:13},{x:78,y:20,s:48,d:30,dl:7},{x:90,y:8,s:60,d:16,dl:11},
    {x:10,y:55,s:56,d:28,dl:3},{x:72,y:75,s:64,d:25,dl:6}].forEach(r=>{
-    var img = document.createElement('img');
-    img.src = '/img/RATA.png';
-    img.className = 'rata-sprite'; img.alt=''; img.draggable=false;
+    var img=document.createElement('img');
+    img.src='/img/RATA.png';img.className='rata-sprite';img.alt='';img.draggable=false;
     img.style.cssText=`width:${r.s}px;height:${r.s}px;left:${r.x}%;top:${r.y}%;animation-duration:${r.d}s;animation-delay:-${r.dl}s`;
     bg.appendChild(img);
   });
 })();
 
-function openLightbox(src) { const lb=document.getElementById('photoLightbox'); document.getElementById('photoLightboxImg').src=src; lb.classList.add('show'); document.body.style.overflow='hidden'; }
-function closeLightbox(e) { if(e.target===document.getElementById('photoLightbox')) closeLightboxBtn(); }
-function closeLightboxBtn() { document.getElementById('photoLightbox').classList.remove('show'); document.body.style.overflow=''; }
-document.addEventListener('keydown', e => { if(e.key==='Escape') { closeLightboxBtn(); closeAuthModal(); dismissLinkModal(); } });
+function openLightbox(src){const lb=document.getElementById('photoLightbox');document.getElementById('photoLightboxImg').src=src;lb.classList.add('show');document.body.style.overflow='hidden';}
+function closeLightbox(e){if(e.target===document.getElementById('photoLightbox'))closeLightboxBtn();}
+function closeLightboxBtn(){document.getElementById('photoLightbox').classList.remove('show');document.body.style.overflow='';}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeLightboxBtn();closeAuthModal();dismissLinkModal();}});
 
-let currentUser = null; // { username, tag, sessionToken, sessionExpiresAt }
+let currentUser = null;
+function requireAuth(){if(!currentUser){openAuthModal('register');showToast('Please register or login first',true);return false;}return true;}
+function getStoredSession(){try{const raw=localStorage.getItem('raton_session');if(!raw)return null;const s=JSON.parse(raw);if(!s.token||!s.expiresAt||Date.now()>s.expiresAt){clearStoredSession();return null;}return s;}catch(_){return null;}}
+function saveStoredSession(token,username,tag,expiresAt){localStorage.setItem('raton_session',JSON.stringify({token,username,tag,expiresAt}));setCookie('_rsession',token,90);}
+function clearStoredSession(){localStorage.removeItem('raton_session');setCookie('_rsession','',-1);}
 
-function requireAuth() {
-  if (!currentUser) {
-    openAuthModal('register');
-    showToast('Please register or login first', true);
-    return false;
-  }
-  return true;
-}
+function _lsKey(suffix){return currentUser?`liked_${suffix}_${currentUser.username}`:`liked_${suffix}_guest`;}
+function _rxKey(){return currentUser?`my_reactions_${currentUser.username}`:`my_reactions_guest`;}
 
-function getStoredSession() {
-  try {
-    const raw = localStorage.getItem('raton_session');
-    if (!raw) return null;
-    const s = JSON.parse(raw);
-    if (!s.token || !s.expiresAt || Date.now() > s.expiresAt) { clearStoredSession(); return null; }
-    return s;
-  } catch(_) { return null; }
-}
-function saveStoredSession(token, username, tag, expiresAt) {
-  localStorage.setItem('raton_session', JSON.stringify({ token, username, tag, expiresAt }));
-  setCookie('_rsession', token, 90);
-}
-function clearStoredSession() {
-  localStorage.removeItem('raton_session');
-  setCookie('_rsession', '', -1);
-}
+let likedPosts       = {};
+let likedComments    = {};
+let dislikedComments = {};
+let myReactions      = {};
 
-function renderNavAuth() {
-  const el = document.getElementById('navAuth');
-  if (!el) return;
-  if (currentUser) {
-    el.innerHTML = `
-      <span class="auth-btn auth-btn-user" title="${escHtml(currentUser.username)}">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        ${escHtml(currentUser.username)}
-      </span>
-      <button class="auth-btn auth-btn-logout" onclick="doLogout()">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-        Logout
-      </button>`;
+function reloadLikeState(){
+  likedPosts       = JSON.parse(localStorage.getItem(_lsKey('posts'))    ||'{}');
+  likedComments    = JSON.parse(localStorage.getItem(_lsKey('comments')) ||'{}');
+  dislikedComments = JSON.parse(localStorage.getItem(_lsKey('disliked')) ||'{}');
+  myReactions      = JSON.parse(localStorage.getItem(_rxKey())            ||'{}');
+}
+function saveLikedPosts()      {localStorage.setItem(_lsKey('posts'),    JSON.stringify(likedPosts));}
+function saveLikedComments()   {localStorage.setItem(_lsKey('comments'), JSON.stringify(likedComments));}
+function saveDislikedComments(){localStorage.setItem(_lsKey('disliked'), JSON.stringify(dislikedComments));}
+function saveMyReactions()     {localStorage.setItem(_rxKey(),            JSON.stringify(myReactions));}
+
+function saveAuthorName(n){localStorage.setItem('comment_author_name',n);}
+
+function renderNavAuth(){
+  const el=document.getElementById('navAuth');if(!el)return;
+  if(currentUser){
+    el.innerHTML=`<span class="auth-btn auth-btn-user" title="${escHtml(currentUser.username)}"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>${escHtml(currentUser.username)}</span><button class="auth-btn auth-btn-logout" onclick="doLogout()"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Logout</button>`;
   } else {
-    el.innerHTML = `
-      <button class="auth-btn auth-btn-outline" onclick="openAuthModal('login')">Login</button>
-      <button class="auth-btn auth-btn-fill" onclick="openAuthModal('register')">Register</button>`;
+    el.innerHTML=`<button class="auth-btn auth-btn-outline" onclick="openAuthModal('login')">Login</button><button class="auth-btn auth-btn-fill" onclick="openAuthModal('register')">Register</button>`;
   }
 }
 
-async function doLogout() {
-  const s = getStoredSession();
-  if (s) {
-    try { await apiNoAuth('/auth/logout', { method:'POST', body:JSON.stringify({ token: s.token }) }); } catch(_) {}
-  }
-  currentUser = null;
+async function doLogout(){
+  const s=getStoredSession();
+  if(s){try{await apiNoAuth('/auth/logout',{method:'POST',body:JSON.stringify({token:s.token})});}catch(_){}}
+  currentUser=null;
   clearStoredSession();
-  commentAuthorName = '';
-  identityBoundName = null;
+  reloadLikeState();
   saveAuthorName('');
   renderNavAuth();
   showToast('Logged out');
-
-  if (currentPostId) {
-    const cData = await api(`/comments?postId=${currentPostId}`);
-    knownCommenters = collectCommenters(cData.comments||[]);
-    const isLocked = !!document.querySelector('.locked-notice');
-    document.getElementById('commentsSection').innerHTML = renderCommentsHTML(cData.comments||[], currentPostId, isLocked);
-    setupDeveloperRain(); setupMentionAutocomplete();
-    setTimeout(() => newCaptcha('captchaCanvas-main','captchaInput-main','main'), 100);
+  if(currentPostId){
+    const cData=await api(`/comments?postId=${currentPostId}`);
+    knownCommenters=collectCommenters(cData.comments||[]);
+    document.getElementById('commentsSection').innerHTML=renderCommentsHTML(cData.comments||[],currentPostId,!!document.querySelector('.locked-notice'));
+    setupDeveloperRain();setupMentionAutocomplete();
+    setTimeout(()=>newCaptcha('captchaCanvas-main','captchaInput-main','main'),100);
   }
 }
 
-let _authTab = 'login';
-
-function openAuthModal(tab) {
-  _authTab = tab || 'login';
-  switchAuthTab(_authTab);
-  document.getElementById('authModalBackdrop').classList.add('show');
-}
-function closeAuthModal() { document.getElementById('authModalBackdrop').classList.remove('show'); }
-
-function switchAuthTab(tab) {
-  _authTab = tab;
-  document.getElementById('authTabLogin').classList.toggle('active', tab==='login');
-  document.getElementById('authTabRegister').classList.toggle('active', tab==='register');
-  renderAuthForm();
-}
-
-function renderAuthForm() {
-  const body = document.getElementById('authFormBody');
-  if (_authTab === 'login') {
-    body.innerHTML = `
-      <div class="auth-form" id="loginForm">
-        <input class="auth-input" id="loginUsername" placeholder="Username" autocomplete="username" onkeydown="if(event.key==='Enter')submitLogin()">
-        <input class="auth-input" id="loginPassword" type="password" placeholder="Password" autocomplete="current-password" onkeydown="if(event.key==='Enter')submitLogin()">
-        <button class="auth-submit" id="loginSubmitBtn" onclick="submitLogin()">Login</button>
-        <div class="auth-err" id="loginErr"></div>
-        <div class="auth-hint">Don't have an account? <a href="#" onclick="switchAuthTab('register');event.preventDefault()" style="color:var(--purple2)">Register here</a></div>
-      </div>`;
+let _authTab='login';
+function openAuthModal(tab){_authTab=tab||'login';switchAuthTab(_authTab);document.getElementById('authModalBackdrop').classList.add('show');}
+function closeAuthModal(){document.getElementById('authModalBackdrop').classList.remove('show');}
+function switchAuthTab(tab){_authTab=tab;document.getElementById('authTabLogin').classList.toggle('active',tab==='login');document.getElementById('authTabRegister').classList.toggle('active',tab==='register');renderAuthForm();}
+function renderAuthForm(){
+  const body=document.getElementById('authFormBody');
+  if(_authTab==='login'){
+    body.innerHTML=`<div class="auth-form" id="loginForm"><input class="auth-input" id="loginUsername" placeholder="Username" autocomplete="username" onkeydown="if(event.key==='Enter')submitLogin()"><input class="auth-input" id="loginPassword" type="password" placeholder="Password" autocomplete="current-password" onkeydown="if(event.key==='Enter')submitLogin()"><button class="auth-submit" id="loginSubmitBtn" onclick="submitLogin()">Login</button><div class="auth-err" id="loginErr"></div><div class="auth-hint">Don't have an account? <a href="#" onclick="switchAuthTab('register');event.preventDefault()" style="color:var(--purple2)">Register here</a></div></div>`;
   } else {
-    body.innerHTML = `
-      <div class="auth-form" id="registerForm">
-        <input class="auth-input" id="regUsername" placeholder="Choose a username" autocomplete="username" maxlength="32" onkeydown="if(event.key==='Enter')submitRegister()">
-        <input class="auth-input" id="regPassword" type="password" placeholder="Password (min 6 chars)" autocomplete="new-password" onkeydown="if(event.key==='Enter')submitRegister()">
-        <input class="auth-input" id="regPassword2" type="password" placeholder="Confirm password" autocomplete="new-password" onkeydown="if(event.key==='Enter')submitRegister()">
-        <button class="auth-submit" id="regSubmitBtn" onclick="submitRegister()">Create Account</button>
-        <div class="auth-err" id="regErr"></div>
-        <div class="auth-hint">Your username will be reserved</div>
-      </div>`;
+    body.innerHTML=`<div class="auth-form" id="registerForm"><input class="auth-input" id="regUsername" placeholder="Choose a username" autocomplete="username" maxlength="32" onkeydown="if(event.key==='Enter')submitRegister()"><input class="auth-input" id="regPassword" type="password" placeholder="Password (min 6 chars)" autocomplete="new-password" onkeydown="if(event.key==='Enter')submitRegister()"><input class="auth-input" id="regPassword2" type="password" placeholder="Confirm password" autocomplete="new-password" onkeydown="if(event.key==='Enter')submitRegister()"><button class="auth-submit" id="regSubmitBtn" onclick="submitRegister()">Create Account</button><div class="auth-err" id="regErr"></div><div class="auth-hint">Your username will be reserved permanently</div></div>`;
   }
 }
 
-async function submitLogin() {
-  const username = document.getElementById('loginUsername').value.trim();
-  const password = document.getElementById('loginPassword').value;
-  const errEl = document.getElementById('loginErr');
-  const btn = document.getElementById('loginSubmitBtn');
-  errEl.textContent = '';
-  if (!username || !password) { errEl.textContent = 'Fill in all fields'; return; }
-  btn.disabled = true; btn.textContent = 'Logging in...';
-  try {
-    const data = await apiNoAuth('/auth/login', {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ username, password })
-    });
-    if (!data.ok) { errEl.textContent = data.error; btn.disabled=false; btn.textContent='Login'; return; }
-    currentUser = { username: data.username, tag: data.tag, sessionToken: data.token };
-    saveStoredSession(data.token, data.username, data.tag, data.sessionExpiresAt);
-    commentAuthorName = data.username;
-    identityBoundName = data.username;
+async function submitLogin(){
+  const username=document.getElementById('loginUsername').value.trim();
+  const password=document.getElementById('loginPassword').value;
+  const errEl=document.getElementById('loginErr'),btn=document.getElementById('loginSubmitBtn');
+  errEl.textContent='';
+  if(!username||!password){errEl.textContent='Fill in all fields';return;}
+  btn.disabled=true;btn.textContent='Logging in...';
+  try{
+    const data=await apiNoAuth('/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username,password})});
+    if(!data.ok){errEl.textContent=data.error;btn.disabled=false;btn.textContent='Login';return;}
+    currentUser={username:data.username,tag:data.tag,sessionToken:data.token};
+    saveStoredSession(data.token,data.username,data.tag,data.sessionExpiresAt);
+    reloadLikeState();
     saveAuthorName(data.username);
-    closeAuthModal();
-    renderNavAuth();
+    closeAuthModal();renderNavAuth();
     showToast(`Welcome back, ${data.username}!`);
-    if (currentPostId) {
-      const cData = await api(`/comments?postId=${currentPostId}`);
-      knownCommenters = collectCommenters(cData.comments||[]);
-      const isLocked = !!document.querySelector('.locked-notice');
-      document.getElementById('commentsSection').innerHTML = renderCommentsHTML(cData.comments||[], currentPostId, isLocked);
-      setupDeveloperRain(); setupMentionAutocomplete();
-      setTimeout(() => newCaptcha('captchaCanvas-main','captchaInput-main','main'), 100);
-    }
-  } catch(e) { errEl.textContent = 'Network error'; btn.disabled=false; btn.textContent='Login'; }
+    if(currentPostId){const cData=await api(`/comments?postId=${currentPostId}`);knownCommenters=collectCommenters(cData.comments||[]);document.getElementById('commentsSection').innerHTML=renderCommentsHTML(cData.comments||[],currentPostId,!!document.querySelector('.locked-notice'));setupDeveloperRain();setupMentionAutocomplete();setTimeout(()=>newCaptcha('captchaCanvas-main','captchaInput-main','main'),100);}
+  }catch(e){errEl.textContent='Network error';btn.disabled=false;btn.textContent='Login';}
 }
 
-async function submitRegister() {
-  const username = document.getElementById('regUsername').value.trim();
-  const password = document.getElementById('regPassword').value;
-  const password2 = document.getElementById('regPassword2').value;
-  const errEl = document.getElementById('regErr');
-  const btn = document.getElementById('regSubmitBtn');
-  errEl.textContent = '';
-  if (!username || !password) { errEl.textContent = 'Fill in all fields'; return; }
-  if (password !== password2) { errEl.textContent = 'Passwords do not match'; return; }
-  if (password.length < 6) { errEl.textContent = 'Password must be at least 6 characters'; return; }
-  btn.disabled = true; btn.textContent = 'Creating account...';
-  try {
-    const data = await apiNoAuth('/auth/register', {
-      method:'POST',
-      headers:{'Content-Type':'application/json', 'X-Client-FP': CLIENT_FP},
-      body: JSON.stringify({ username, password })
-    });
-    if (!data.ok) { errEl.textContent = data.error; btn.disabled=false; btn.textContent='Create Account'; return; }
-    currentUser = { username: data.username, tag: null, sessionToken: data.token };
-    saveStoredSession(data.token, data.username, null, data.sessionExpiresAt);
-    commentAuthorName = data.username;
-    identityBoundName = data.username;
+async function submitRegister(){
+  const username=document.getElementById('regUsername').value.trim();
+  const password=document.getElementById('regPassword').value;
+  const password2=document.getElementById('regPassword2').value;
+  const errEl=document.getElementById('regErr'),btn=document.getElementById('regSubmitBtn');
+  errEl.textContent='';
+  if(!username||!password){errEl.textContent='Fill in all fields';return;}
+  if(password!==password2){errEl.textContent='Passwords do not match';return;}
+  if(password.length<6){errEl.textContent='Password must be at least 6 characters';return;}
+  btn.disabled=true;btn.textContent='Creating account...';
+  try{
+    const data=await apiNoAuth('/auth/register',{method:'POST',headers:{'Content-Type':'application/json','X-Client-FP':CLIENT_FP},body:JSON.stringify({username,password})});
+    if(!data.ok){errEl.textContent=data.error;btn.disabled=false;btn.textContent='Create Account';return;}
+    currentUser={username:data.username,tag:null,sessionToken:data.token};
+    saveStoredSession(data.token,data.username,null,data.sessionExpiresAt);
+    reloadLikeState();
     saveAuthorName(data.username);
-    closeAuthModal();
-    renderNavAuth();
+    closeAuthModal();renderNavAuth();
     showToast(`Welcome, ${data.username}! Your name is now reserved.`);
-    if (currentPostId) {
-      const cData = await api(`/comments?postId=${currentPostId}`);
-      knownCommenters = collectCommenters(cData.comments||[]);
-      const isLocked = !!document.querySelector('.locked-notice');
-      document.getElementById('commentsSection').innerHTML = renderCommentsHTML(cData.comments||[], currentPostId, isLocked);
-      setupDeveloperRain(); setupMentionAutocomplete();
-      setTimeout(() => newCaptcha('captchaCanvas-main','captchaInput-main','main'), 100);
-    }
-  } catch(e) { errEl.textContent = 'Network error'; btn.disabled=false; btn.textContent='Create Account'; }
+    if(currentPostId){const cData=await api(`/comments?postId=${currentPostId}`);knownCommenters=collectCommenters(cData.comments||[]);document.getElementById('commentsSection').innerHTML=renderCommentsHTML(cData.comments||[],currentPostId,!!document.querySelector('.locked-notice'));setupDeveloperRain();setupMentionAutocomplete();setTimeout(()=>newCaptcha('captchaCanvas-main','captchaInput-main','main'),100);}
+  }catch(e){errEl.textContent='Network error';btn.disabled=false;btn.textContent='Create Account';}
 }
 
-const CAPTCHA_LEN   = 5;
-const CAPTCHA_TTL_MS = 5 * 60 * 1000;
+const CAPTCHA_LEN    = 5;
+const CAPTCHA_TTL_MS = 5*60*1000;
 let _captchaInstances = {};
 
-async function newCaptcha(canvasId, inputId, formId) {
-  const container = document.getElementById(canvasId);
-  const input  = document.getElementById(inputId);
-  if (!container || !input) return null;
-  let tokenData = null;
-  try {
-    const res = await fetch(WORKER + '/captcha/new', { headers: { 'X-Client-FP': CLIENT_FP } });
-    tokenData = await res.json();
-  } catch(_) { return null; }
-  if (!tokenData || !tokenData.ok) return null;
-  const { token, svg, captchaLen } = tokenData;
-  _captchaInstances[formId] = { token, captchaLen: captchaLen || 5 };
-  container.innerHTML = svg;
-  input.value = '';
+async function newCaptcha(canvasId,inputId,formId){
+  const container=document.getElementById(canvasId),input=document.getElementById(inputId);
+  if(!container||!input)return null;
+  let tokenData=null;
+  try{const res=await fetch(WORKER+'/captcha/new',{headers:{'X-Client-FP':CLIENT_FP,'X-Session-Token':currentUser?.sessionToken||''}});tokenData=await res.json();}catch(_){return null;}
+  if(!tokenData||!tokenData.ok)return null;
+  const{token,svg,captchaLen}=tokenData;
+  _captchaInstances[formId]={token,captchaLen:captchaLen||5};
+  container.innerHTML=svg;
+  input.value='';
   input.classList.remove('captcha-ok','captcha-err');
-  const hintEl = document.getElementById(`captchaHint-${formId}`);
-  if (hintEl) hintEl.innerHTML = `u r not a robot? then type the <b>${captchaLen || CAPTCHA_LEN} characters</b> you see`;
+  const hintEl=document.getElementById(`captchaHint-${formId}`);
+  if(hintEl)hintEl.innerHTML=`u r not a robot? then type the <b>${captchaLen||CAPTCHA_LEN} characters</b> you see`;
   return token;
 }
-  
-function rnd(a,b){return Math.floor(Math.random()*(b-a+1))+a}
-function captchaInputLive(input){input.classList.remove('captcha-ok','captcha-err')}
-function getCaptchaPayload(formId){const inst=_captchaInstances[formId];if(!inst)return null;const input=document.getElementById(`captchaInput-${formId}`);if(!input)return null;const answer=input.value.trim().toUpperCase();const expectedLen=inst.captchaLen||CAPTCHA_LEN;if(answer.length<expectedLen)return null;return{captchaToken:inst.token,captchaAnswer:answer}}
-function markCaptchaError(formId){const input=document.getElementById(`captchaInput-${formId}`);if(input){input.classList.add('captcha-err');input.classList.remove('captcha-ok')}setTimeout(()=>newCaptcha(`captchaCanvas-${formId}`,`captchaInput-${formId}`,formId),600)}
-function markCaptchaOk(formId){const input=document.getElementById(`captchaInput-${formId}`);if(input){input.classList.add('captcha-ok');input.classList.remove('captcha-err')}}
-function captchaHTML(formId){const cid=`captchaCanvas-${formId}`,iid=`captchaInput-${formId}`;return`<div class="captcha-wrap" id="captchaWrap-${formId}"><div class="captcha-label">r u human?!</div><div class="captcha-row"><div class="captcha-canvas-wrap"><div class="captcha-canvas" id="${cid}"></div><button class="captcha-refresh" type="button" onclick="newCaptcha('${cid}','${iid}','${formId}')" title="New captcha"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>New</button></div><div class="captcha-input-wrap"><input class="captcha-input form-input" id="${iid}" maxlength="10" autocomplete="off" spellcheck="false" placeholder="Type the code" oninput="captchaInputLive(this)" onkeydown="if(event.key==='Enter'){event.preventDefault()}"><span class="captcha-hint" id="captchaHint-${formId}">u r not a robot? then type the <b>${CAPTCHA_LEN} characters</b> you see</span></div></div></div>`}
-let _modalPendingAction = null;
-function showCaptchaModal(sub,onConfirm){const body=document.getElementById('captchaModalBody');const sub_=document.getElementById('captchaModalSub');if(sub_)sub_.textContent=sub||'Please solve the captcha to continue.';if(body)body.innerHTML=captchaHTML('modal');setTimeout(()=>newCaptcha('captchaCanvas-modal','captchaInput-modal','modal'),80);document.getElementById('captchaModalBackdrop').classList.add('show');_modalPendingAction=onConfirm}
-function dismissCaptchaModal(){document.getElementById('captchaModalBackdrop').classList.remove('show');_modalPendingAction=null}
-async function confirmCaptchaModal(){const btn=document.getElementById('captchaModalConfirm');const payload=getCaptchaPayload('modal');if(!payload){showToast('Please type the captcha code',true);return}if(btn)btn.disabled=true;if(_modalPendingAction)await _modalPendingAction(payload);if(btn)btn.disabled=false;dismissCaptchaModal()}
 
-let _pendingLinkUrl = null;
-function confirmOpenLink(e, encodedUrl) {
-  if (e) { e.preventDefault(); e.stopPropagation(); }
-  _pendingLinkUrl = decodeURIComponent(encodedUrl);
-  const urlEl = document.getElementById('linkModalUrl');
-  if (urlEl) urlEl.textContent = _pendingLinkUrl;
-  document.getElementById('linkModalBackdrop').classList.add('show');
+function captchaInputLive(input){input.classList.remove('captcha-ok','captcha-err');}
+function getCaptchaPayload(formId){const inst=_captchaInstances[formId];if(!inst)return null;const input=document.getElementById(`captchaInput-${formId}`);if(!input)return null;const answer=input.value.trim().toUpperCase();const expectedLen=inst.captchaLen||CAPTCHA_LEN;if(answer.length<expectedLen)return null;return{captchaToken:inst.token,captchaAnswer:answer};}
+function markCaptchaError(formId){const input=document.getElementById(`captchaInput-${formId}`);if(input){input.classList.add('captcha-err');input.classList.remove('captcha-ok');}setTimeout(()=>newCaptcha(`captchaCanvas-${formId}`,`captchaInput-${formId}`,formId),600);}
+function markCaptchaOk(formId){const input=document.getElementById(`captchaInput-${formId}`);if(input){input.classList.add('captcha-ok');input.classList.remove('captcha-err');}}
+
+function captchaHTML(formId){
+  const cid=`captchaCanvas-${formId}`,iid=`captchaInput-${formId}`;
+  const initLen=currentUser?CAPTCHA_LEN:8;
+  return `<div class="captcha-wrap" id="captchaWrap-${formId}">
+    <div class="captcha-label">r u human?!</div>
+    <div class="captcha-row">
+      <div class="captcha-canvas-wrap">
+        <div class="captcha-canvas" id="${cid}"></div>
+        <button class="captcha-refresh" type="button" onclick="newCaptcha('${cid}','${iid}','${formId}')" title="New captcha">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>New
+        </button>
+      </div>
+      <div class="captcha-input-wrap">
+        <input class="captcha-input form-input" id="${iid}" maxlength="10" autocomplete="off" spellcheck="false" placeholder="Type the code" oninput="captchaInputLive(this)" onkeydown="if(event.key==='Enter'){event.preventDefault()}">
+        <span class="captcha-hint" id="captchaHint-${formId}">u r not a robot? then type the <b>${initLen} characters</b> you see</span>
+      </div>
+    </div>
+  </div>`;
 }
-function dismissLinkModal() { document.getElementById('linkModalBackdrop').classList.remove('show'); _pendingLinkUrl = null; }
-function proceedLinkModal() { if (_pendingLinkUrl) window.open(_pendingLinkUrl, '_blank', 'noopener,noreferrer'); dismissLinkModal(); }
+
+let _modalPendingAction=null;
+function showCaptchaModal(sub,onConfirm){const body=document.getElementById('captchaModalBody'),sub_=document.getElementById('captchaModalSub');if(sub_)sub_.textContent=sub||'Please solve the captcha to continue.';if(body)body.innerHTML=captchaHTML('modal');setTimeout(()=>newCaptcha('captchaCanvas-modal','captchaInput-modal','modal'),80);document.getElementById('captchaModalBackdrop').classList.add('show');_modalPendingAction=onConfirm;}
+function dismissCaptchaModal(){document.getElementById('captchaModalBackdrop').classList.remove('show');_modalPendingAction=null;}
+async function confirmCaptchaModal(){const btn=document.getElementById('captchaModalConfirm'),payload=getCaptchaPayload('modal');if(!payload){showToast('Please type the captcha code',true);return;}if(btn)btn.disabled=true;if(_modalPendingAction)await _modalPendingAction(payload);if(btn)btn.disabled=false;dismissCaptchaModal();}
+
+let _pendingLinkUrl=null;
+function confirmOpenLink(e,encodedUrl){if(e){e.preventDefault();e.stopPropagation();}_pendingLinkUrl=decodeURIComponent(encodedUrl);const urlEl=document.getElementById('linkModalUrl');if(urlEl)urlEl.textContent=_pendingLinkUrl;document.getElementById('linkModalBackdrop').classList.add('show');}
+function dismissLinkModal(){document.getElementById('linkModalBackdrop').classList.remove('show');_pendingLinkUrl=null;}
+function proceedLinkModal(){if(_pendingLinkUrl)window.open(_pendingLinkUrl,'_blank','noopener,noreferrer');dismissLinkModal();}
 
 function getFingerprint(){
   const stored=sessionStorage.getItem('_rfp')||localStorage.getItem('_rfp');if(stored)return stored;
   const canvas=document.createElement('canvas'),gl=canvas.getContext('webgl'),glInfo=gl?gl.getParameter(gl.RENDERER)+gl.getParameter(gl.VENDOR):'';
   const data=[navigator.userAgent,navigator.language,screen.width+'x'+screen.height+'x'+screen.colorDepth,new Date().getTimezoneOffset(),navigator.hardwareConcurrency||0,navigator.deviceMemory||0,glInfo,navigator.platform||''].join('|');
-  let hash=0;for(let i=0;i<data.length;i++){hash=((hash<<5)-hash)+data.charCodeAt(i);hash|=0}
+  let hash=0;for(let i=0;i<data.length;i++){hash=((hash<<5)-hash)+data.charCodeAt(i);hash|=0;}
   const fp=Math.abs(hash).toString(36)+Date.now().toString(36).slice(-4);localStorage.setItem('_rfp',fp);sessionStorage.setItem('_rfp',fp);return fp;
 }
-function getSessionId(){let sid=getCookie('_rsid')||localStorage.getItem('_rsid');if(!sid){sid=Math.random().toString(36).slice(2)+Date.now().toString(36);setCookie('_rsid',sid,90);localStorage.setItem('_rsid',sid)}return sid}
-function setCookie(name,val,days){const exp=new Date(Date.now()+days*864e5).toUTCString();document.cookie=`${name}=${val};expires=${exp};path=/;SameSite=Lax`}
-function getCookie(name){return document.cookie.split('; ').reduce((r,c)=>{const[k,v]=c.split('=');return k===name?v:r},null)}
+function getSessionId(){let sid=getCookie('_rsid')||localStorage.getItem('_rsid');if(!sid){sid=Math.random().toString(36).slice(2)+Date.now().toString(36);setCookie('_rsid',sid,90);localStorage.setItem('_rsid',sid);}return sid;}
+function setCookie(name,val,days){const exp=new Date(Date.now()+days*864e5).toUTCString();document.cookie=`${name}=${val};expires=${exp};path=/;SameSite=Lax`;}
+function getCookie(name){return document.cookie.split('; ').reduce((r,c)=>{const[k,v]=c.split('=');return k===name?v:r},null);}
 const CLIENT_FP=getFingerprint();
-const SESSION_ID=getSessionId();
+getSessionId();
 
-function getAuthHeaders() {
-  const h = { 'Content-Type': 'application/json', 'X-Client-FP': CLIENT_FP };
-  if (currentUser && currentUser.sessionToken) h['X-Session-Token'] = currentUser.sessionToken;
-  return h;
-}
-
+function getAuthHeaders(){const h={'Content-Type':'application/json','X-Client-FP':CLIENT_FP};if(currentUser&&currentUser.sessionToken)h['X-Session-Token']=currentUser.sessionToken;return h;}
 let loadingTimer=null;
-function showLoading(msg){const el=document.getElementById('actionLoading');document.getElementById('actionLoadingMsg').textContent=msg||'Loading...';el.classList.add('show');clearTimeout(loadingTimer);loadingTimer=setTimeout(()=>hideLoading(),12000)}
-function hideLoading(){clearTimeout(loadingTimer);document.getElementById('actionLoading').classList.remove('show')}
-function showToast(msg,isError,dur){const container=document.getElementById('toastContainer');const t=document.createElement('div');t.className='toast'+(isError?' error':'');t.textContent=msg;container.appendChild(t);requestAnimationFrame(()=>{requestAnimationFrame(()=>{t.classList.add('show')})});setTimeout(()=>{t.classList.remove('show');setTimeout(()=>t.remove(),350)},dur||2800)}
-
-function fmtDate(ts){return new Date(ts).toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'})}
-function timeAgo(ts){const s=Math.floor((Date.now()-ts)/1000);if(s<60)return'just now';if(s<3600)return Math.floor(s/60)+'m ago';if(s<86400)return Math.floor(s/3600)+'h ago';return Math.floor(s/86400)+'d ago'}
+function showLoading(msg){const el=document.getElementById('actionLoading');document.getElementById('actionLoadingMsg').textContent=msg||'Loading...';el.classList.add('show');clearTimeout(loadingTimer);loadingTimer=setTimeout(()=>hideLoading(),12000);}
+function hideLoading(){clearTimeout(loadingTimer);document.getElementById('actionLoading').classList.remove('show');}
+function showToast(msg,isError,dur){const container=document.getElementById('toastContainer'),t=document.createElement('div');t.className='toast'+(isError?' error':'');t.textContent=msg;container.appendChild(t);requestAnimationFrame(()=>{requestAnimationFrame(()=>{t.classList.add('show');});});setTimeout(()=>{t.classList.remove('show');setTimeout(()=>t.remove(),350);},dur||2800);}
+function fmtDate(ts){return new Date(ts).toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'});}
+function timeAgo(ts){const s=Math.floor((Date.now()-ts)/1000);if(s<60)return'just now';if(s<3600)return Math.floor(s/60)+'m ago';if(s<86400)return Math.floor(s/3600)+'h ago';return Math.floor(s/86400)+'d ago';}
 
 let currentPage=1,currentPostId=null,searchQuery='';
-const likedPosts=JSON.parse(localStorage.getItem('liked_posts')||'{}');
-const likedComments=JSON.parse(localStorage.getItem('liked_comments')||'{}');
-const dislikedComments=JSON.parse(localStorage.getItem('disliked_comments')||'{}');
-const myReactions=JSON.parse(localStorage.getItem('my_reactions')||'{}');
-let commentAuthorName=localStorage.getItem('comment_author_name')||'';
-let identityBoundName=null;
-let currentPostAuthor=null;
-let knownCommenters=[];
+let currentPostAuthor=null,knownCommenters=[];
 
-function saveLikedPosts(){localStorage.setItem('liked_posts',JSON.stringify(likedPosts))}
-function saveLikedComments(){localStorage.setItem('liked_comments',JSON.stringify(likedComments))}
-function saveDislikedComments(){localStorage.setItem('disliked_comments',JSON.stringify(dislikedComments))}
-function saveMyReactions(){localStorage.setItem('my_reactions',JSON.stringify(myReactions))}
-function saveAuthorName(n){commentAuthorName=n;localStorage.setItem('comment_author_name',n)}
-
-async function apiNoAuth(path,opts={}){const r=await fetch(WORKER+path,opts);return r.json()}
-async function api(path,opts={}){
-  opts.headers=opts.headers||{};
-  opts.headers['X-Client-FP']=CLIENT_FP;
-  if(currentUser&&currentUser.sessionToken)opts.headers['X-Session-Token']=currentUser.sessionToken;
-  const r=await fetch(WORKER+path,opts);return r.json();
-}
+async function apiNoAuth(path,opts={}){const r=await fetch(WORKER+path,opts);return r.json();}
+async function api(path,opts={}){opts.headers=opts.headers||{};opts.headers['X-Client-FP']=CLIENT_FP;if(currentUser&&currentUser.sessionToken)opts.headers['X-Session-Token']=currentUser.sessionToken;const r=await fetch(WORKER+path,opts);return r.json();}
 
 async function loadIdentity(){
-  const stored = getStoredSession();
-  if (stored) {
-    try {
+  const stored=getStoredSession();
+  if(stored){
+    try{
       showLoading('Resuming session...');
-      const data = await fetch(WORKER+'/auth/me?token='+encodeURIComponent(stored.token), {
-        headers:{'X-Client-FP':CLIENT_FP,'X-Session-Token':stored.token}
-      }).then(r=>r.json());
-      if (data.ok && data.authenticated && data.user) {
-        currentUser = { username: data.user.username, tag: data.user.tag, sessionToken: stored.token };
-        commentAuthorName = data.user.username;
-        identityBoundName = data.user.username;
+      const data=await fetch(WORKER+'/auth/me?token='+encodeURIComponent(stored.token),{headers:{'X-Client-FP':CLIENT_FP,'X-Session-Token':stored.token}}).then(r=>r.json());
+      if(data.ok&&data.authenticated&&data.user){
+        currentUser={username:data.user.username,tag:data.user.tag,sessionToken:stored.token};
         saveAuthorName(data.user.username);
-        hideLoading();
-        return;
-      } else {
-        clearStoredSession();
-      }
-    } catch(_) { clearStoredSession(); }
-    finally { hideLoading(); }
+        reloadLikeState();
+        hideLoading();return;
+      }else{clearStoredSession();}
+    }catch(_){clearStoredSession();}
+    finally{hideLoading();}
   }
-  try {
-    showLoading('Checking identity...');
-    const data = await api('/my-identity');
-    if(data.ok&&data.name){identityBoundName=data.name;commentAuthorName=data.name;saveAuthorName(data.name)}
-    else{if(commentAuthorName&&!data.name){saveAuthorName('');identityBoundName=null}}
-  } catch(_) {}
-  finally{hideLoading()}
+  reloadLikeState();
 }
 
-function getUrlParam(k){return new URLSearchParams(window.location.search).get(k)}
-function setUrl(params){const u=new URL(window.location);Object.keys(params).forEach(k=>{if(params[k]!=null)u.searchParams.set(k,params[k]);else u.searchParams.delete(k)});history.pushState({},'',u)}
+function getUrlParam(k){return new URLSearchParams(window.location.search).get(k);}
+function setUrl(params){const u=new URL(window.location);Object.keys(params).forEach(k=>{if(params[k]!=null)u.searchParams.set(k,params[k]);else u.searchParams.delete(k);});history.pushState({},'',u);}
 
 let liveWarningDismissed={},liveWarningTimer=null;
-function showLiveWarning(warning){if(liveWarningDismissed[warning.id])return;const overlay=document.getElementById('liveWarningOverlay');document.getElementById('liveWarningMsg').textContent=warning.message;overlay.classList.add('show');const durationMs=(warning.duration||10)*1000;let remaining=warning.duration||10;const timerEl=document.getElementById('liveWarningTimer'),barEl=document.getElementById('liveWarningBar');timerEl.textContent=`Closing in ${remaining}s`;barEl.style.transition='none';barEl.style.width='100%';clearInterval(liveWarningTimer);setTimeout(()=>{barEl.style.transition=`width ${durationMs}ms linear`;barEl.style.width='0%'},50);liveWarningTimer=setInterval(()=>{remaining--;if(remaining<=0){clearInterval(liveWarningTimer);liveWarningDismissed[warning.id]=true;dismissLiveWarning()}else timerEl.textContent=`Closing in ${remaining}s`},1000)}
-function dismissLiveWarning(){document.getElementById('liveWarningOverlay').classList.remove('show');clearInterval(liveWarningTimer)}
-
+function showLiveWarning(warning){if(liveWarningDismissed[warning.id])return;const overlay=document.getElementById('liveWarningOverlay');document.getElementById('liveWarningMsg').textContent=warning.message;overlay.classList.add('show');const durationMs=(warning.duration||10)*1000;let remaining=warning.duration||10;const timerEl=document.getElementById('liveWarningTimer'),barEl=document.getElementById('liveWarningBar');timerEl.textContent=`Closing in ${remaining}s`;barEl.style.transition='none';barEl.style.width='100%';clearInterval(liveWarningTimer);setTimeout(()=>{barEl.style.transition=`width ${durationMs}ms linear`;barEl.style.width='0%';},50);liveWarningTimer=setInterval(()=>{remaining--;if(remaining<=0){clearInterval(liveWarningTimer);liveWarningDismissed[warning.id]=true;dismissLiveWarning();}else timerEl.textContent=`Closing in ${remaining}s`;},1000);}
+function dismissLiveWarning(){document.getElementById('liveWarningOverlay').classList.remove('show');clearInterval(liveWarningTimer);}
 let lastSeenWarningId=localStorage.getItem('last_seen_warning')||'',broadcastPollInterval=null;
-async function pollBroadcasts(){try{const data=await fetch(WORKER+'/broadcasts').then(r=>r.json());if(!data.ok)return;if(data.warning&&data.warning.id&&data.warning.id!==lastSeenWarningId){lastSeenWarningId=data.warning.id;localStorage.setItem('last_seen_warning',data.warning.id);showLiveWarning(data.warning)}renderBroadcastBanner(data.banners||[])}catch(_){}}
-function renderBroadcastBanner(banners){const heroEl=document.querySelector('.blog-hero');if(!heroEl)return;const existing=document.getElementById('broadcastBannersWrap');if(existing)existing.remove();const active=banners.filter(b=>b&&b.text);if(!active.length)return;const wrap=document.createElement('div');wrap.id='broadcastBannersWrap';wrap.style.cssText='display:flex;flex-direction:column;gap:0.5rem;position:relative;z-index:1;padding:0 2rem;padding-top:1.5rem;max-width:900px;margin:0 auto;width:100%';active.forEach(b=>{const color=b.color||'#8b5cf6';const div=document.createElement('div');div.className='broadcast-banner';div.style.cssText=`background:${hexToRgba(color,0.1)};border:1px solid ${hexToRgba(color,0.3)}`;div.innerHTML=`<div class="broadcast-banner-inner" style="color:${color}">${b.icon?`<div class="broadcast-banner-icon">${b.icon}</div>`:''}<div class="broadcast-banner-text">${escHtml(b.text)}</div></div>`;wrap.appendChild(div)});heroEl.after(wrap)}
-function hexToRgba(hex,alpha){const clean=hex.replace('#','');const r=parseInt(clean.slice(0,2),16),g=parseInt(clean.slice(2,4),16),b=parseInt(clean.slice(4,6),16);return`rgba(${r},${g},${b},${alpha})`}
+async function pollBroadcasts(){try{const data=await fetch(WORKER+'/broadcasts').then(r=>r.json());if(!data.ok)return;if(data.warning&&data.warning.id&&data.warning.id!==lastSeenWarningId){lastSeenWarningId=data.warning.id;localStorage.setItem('last_seen_warning',data.warning.id);showLiveWarning(data.warning);}renderBroadcastBanner(data.banners||[]);}catch(_){}}
+function renderBroadcastBanner(banners){const heroEl=document.querySelector('.blog-hero');if(!heroEl)return;const existing=document.getElementById('broadcastBannersWrap');if(existing)existing.remove();const active=banners.filter(b=>b&&b.text);if(!active.length)return;const wrap=document.createElement('div');wrap.id='broadcastBannersWrap';wrap.style.cssText='display:flex;flex-direction:column;gap:0.5rem;position:relative;z-index:1;padding:0 2rem;padding-top:1.5rem;max-width:900px;margin:0 auto;width:100%';active.forEach(b=>{const color=b.color||'#8b5cf6',div=document.createElement('div');div.className='broadcast-banner';div.style.cssText=`background:${hexToRgba(color,0.1)};border:1px solid ${hexToRgba(color,0.3)}`;div.innerHTML=`<div class="broadcast-banner-inner" style="color:${color}">${b.icon?`<div class="broadcast-banner-icon">${b.icon}</div>`:''}<div class="broadcast-banner-text">${escHtml(b.text)}</div></div>`;wrap.appendChild(div);});heroEl.after(wrap);}
+function hexToRgba(hex,alpha){const clean=hex.replace('#','');const r=parseInt(clean.slice(0,2),16),g=parseInt(clean.slice(2,4),16),b=parseInt(clean.slice(4,6),16);return`rgba(${r},${g},${b},${alpha})`;}
 
 async function route(){
   await loadIdentity();
@@ -828,36 +675,31 @@ async function route(){
 window.addEventListener('popstate',route);
 
 let allPostsCache=[],searchDebounce=null;
-
 async function renderList(){
   currentPostId=null;currentPostAuthor=null;
   const app=document.getElementById('app');
   app.innerHTML=`<div class="blog-hero" style="position:relative;z-index:1"><div class="hero-eyebrow"><span></span>Forum<span></span></div><h1>The raton forum</h1><p>The latest from Raton: updates, guides, and leaks (or js shit)</p></div><div class="blog-wrap" style="position:relative;z-index:1"><div class="search-bar-wrap"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input class="search-input" id="searchInput" placeholder="Search posts..." value="${escHtml(searchQuery)}" oninput="handleSearch(this.value)"></div><div class="posts-grid" id="postsGrid"><div class="spinner"></div></div><div class="pagination" id="pagination"></div></div>`;
   await loadAndRender();
 }
-
 async function loadAndRender(){
-  if(!allPostsCache.length){showLoading('Loading posts...');const data=await api(`/posts?page=1&limit=100`);hideLoading();if(!data.ok){document.getElementById('postsGrid').innerHTML='<div class="empty">Failed to load posts.</div>';return}allPostsCache=(data.posts||[]).filter(p=>p.published);allPostsCache.sort((a,b)=>{if(a.pinned&&!b.pinned)return -1;if(!a.pinned&&b.pinned)return 1;return b.ts-a.ts})}
+  if(!allPostsCache.length){showLoading('Loading posts...');const data=await api(`/posts?page=1&limit=100`);hideLoading();if(!data.ok){document.getElementById('postsGrid').innerHTML='<div class="empty">Failed to load posts.</div>';return;}allPostsCache=(data.posts||[]).filter(p=>p.published);allPostsCache.sort((a,b)=>{if(a.pinned&&!b.pinned)return -1;if(!a.pinned&&b.pinned)return 1;return b.ts-a.ts;});}
   applySearchAndRender();
 }
-
-function handleSearch(val){searchQuery=val;clearTimeout(searchDebounce);searchDebounce=setTimeout(()=>{currentPage=1;setUrl({page:null});applySearchAndRender()},250)}
-function applySearchAndRender(){const q=searchQuery.trim().toLowerCase();const filtered=q?allPostsCache.filter(p=>(p.title||'').toLowerCase().includes(q)||(p.excerpt||'').toLowerCase().includes(q)||(p.author||'').toLowerCase().includes(q)||(p.tags||[]).some(t=>t.toLowerCase().includes(q))):allPostsCache;const limit=8,total=filtered.length,pages=Math.ceil(total/limit),page=Math.min(currentPage,Math.max(1,pages));renderCards(filtered.slice((page-1)*limit,page*limit));renderPagination(total,page,limit)}
-function renderCards(posts){const grid=document.getElementById('postsGrid');if(!grid)return;if(!posts.length){grid.innerHTML='<div class="empty">No posts yet...</div>';return}grid.innerHTML=posts.map(p=>cardHTML(p)).join('')}
-
+function handleSearch(val){searchQuery=val;clearTimeout(searchDebounce);searchDebounce=setTimeout(()=>{currentPage=1;setUrl({page:null});applySearchAndRender();},250);}
+function applySearchAndRender(){const q=searchQuery.trim().toLowerCase();const filtered=q?allPostsCache.filter(p=>(p.title||'').toLowerCase().includes(q)||(p.excerpt||'').toLowerCase().includes(q)||(p.author||'').toLowerCase().includes(q)||(p.tags||[]).some(t=>t.toLowerCase().includes(q))):allPostsCache;const limit=8,total=filtered.length,pages=Math.ceil(total/limit),page=Math.min(currentPage,Math.max(1,pages));renderCards(filtered.slice((page-1)*limit,page*limit));renderPagination(total,page,limit);}
+function renderCards(posts){const grid=document.getElementById('postsGrid');if(!grid)return;if(!posts.length){grid.innerHTML='<div class="empty">No posts yet...</div>';return;}grid.innerHTML=posts.map(p=>cardHTML(p)).join('');}
 function cardHTML(p){
-  const liked=likedPosts[p.id],tags=(p.tags||[]).map(t=>`<span class="post-tag">#${escHtml(t)}</span>`).join('')
+  const liked=likedPosts[p.id],tags=(p.tags||[]).map(t=>`<span class="post-tag">#${escHtml(t)}</span>`).join('');
   const imgBlock=p.imageUrl?`<div class="post-card-img-wrap"><img class="post-card-img" src="${escHtml(p.imageUrl)}" alt="" loading="lazy"><div class="post-card-img-overlay" onclick="openLightbox('${escHtml(p.imageUrl)}');event.preventDefault();event.stopPropagation();"><span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>View full photo</span></div></div>`:'';
-  return`<a class="post-card${p.pinned?' pinned':''}" href="#" onclick="openPost('${p.id}',event)">${p.pinned?`<img class="pin-badge" src="/img/office-push-pin.png" alt="Pinned" title="Pinned post">`:''}`+imgBlock+`<div class="post-card-body"><div class="post-meta"><span>${escHtml(p.author||'Admin')}</span><span class="dot"></span><span>${fmtDate(p.ts)}</span>${tags?`<span class="dot"></span>${tags}`:''}`+(p.locked?`<span class="dot"></span><span style="color:#f59e0b;font-size:0.67rem"> Locked</span>`:'')+`</div><h2>${escHtml(p.title)}</h2><p>${escHtml(p.excerpt||'')}</p></div><div class="post-card-footer"><div class="post-stats"><span class="stat"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>${p.commentCount||0}</span><span class="stat"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span id="views-${p.id}">${p.views||0}</span></span></div><button class="like-btn ${liked?'liked':''}" onclick="likePost(event,'${p.id}')" id="like-${p.id}"><svg width="14" height="14" viewBox="0 0 24 24" fill="${liked?'currentColor':'none'}" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span id="lc-${p.id}">${p.likes||0}</span></button></div></a>`;
+  return `<a class="post-card${p.pinned?' pinned':''}" href="#" onclick="openPost('${p.id}',event)">${p.pinned?`<img class="pin-badge" src="/img/office-push-pin.png" alt="Pinned" title="Pinned post">`:''}${imgBlock}<div class="post-card-body"><div class="post-meta"><span>${escHtml(p.author||'Admin')}</span><span class="dot"></span><span>${fmtDate(p.ts)}</span>${tags?`<span class="dot"></span>${tags}`:''}${p.locked?`<span class="dot"></span><span style="color:#f59e0b;font-size:0.67rem"> Locked</span>`:''}</div><h2>${escHtml(p.title)}</h2><p>${escHtml(p.excerpt||'')}</p></div><div class="post-card-footer"><div class="post-stats"><span class="stat"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>${p.commentCount||0}</span><span class="stat"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span id="views-${p.id}">${p.views||0}</span></span></div><button class="like-btn ${liked?'liked':''}" onclick="likePost(event,'${p.id}')" id="like-${p.id}"><svg width="14" height="14" viewBox="0 0 24 24" fill="${liked?'currentColor':'none'}" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span id="lc-${p.id}">${p.likes||0}</span></button></div></a>`;
 }
+function renderPagination(total,page,limit){const pages=Math.ceil(total/limit),el=document.getElementById('pagination');if(!el)return;if(pages<=1){el.innerHTML='';return;}let html=`<button class="page-btn" onclick="goPage(${page-1})" ${page<=1?'disabled':''}><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg> Prev</button>`;for(let i=1;i<=pages;i++)html+=`<button class="page-btn ${i===page?'active':''}" onclick="goPage(${i})">${i}</button>`;html+=`<button class="page-btn" onclick="goPage(${page+1})" ${page>=pages?'disabled':''}>Next <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>`;el.innerHTML=html;}
+function goPage(p){currentPage=p;setUrl({page:p});applySearchAndRender();scrollTo({top:0,behavior:'smooth'});}
 
-function renderPagination(total,page,limit){const pages=Math.ceil(total/limit);const el=document.getElementById('pagination');if(!el)return;if(pages<=1){el.innerHTML='';return}let html=`<button class="page-btn" onclick="goPage(${page-1})" ${page<=1?'disabled':''}><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg> Prev</button>`;for(let i=1;i<=pages;i++)html+=`<button class="page-btn ${i===page?'active':''}" onclick="goPage(${i})">${i}</button>`;html+=`<button class="page-btn" onclick="goPage(${page+1})" ${page>=pages?'disabled':''}>Next <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>`;el.innerHTML=html}
-function goPage(p){currentPage=p;setUrl({page:p});applySearchAndRender();scrollTo({top:0,behavior:'smooth'})}
+async function likePost(e,id){e.preventDefault();e.stopPropagation();if(!requireAuth())return;await doLikePost(id,null);}
+async function doLikePost(id,captchaPayload){showLoading('Sending like...');const body={postId:id,type:'post',...(captchaPayload||{})};const data=await api('/like',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});hideLoading();if(data.needsCaptcha){showCaptchaModal("Too many likes too fast — prove you're human 🐭",async(cp)=>{await doLikePost(id,cp);});return;}if(data.captchaFailed){markCaptchaError('modal');showToast('Wrong captcha, try again',true);return;}if(!data.ok){showToast(data.error,true);return;}likedPosts[id]=data.liked;saveLikedPosts();const btn=document.getElementById(`like-${id}`),cnt=document.getElementById(`lc-${id}`);if(btn){btn.classList.toggle('liked',data.liked);const svg=btn.querySelector('svg');if(svg)svg.setAttribute('fill',data.liked?'currentColor':'none');}if(cnt)cnt.textContent=data.count;showToast(data.liked?' Liked':'Unliked');}
 
-async function likePost(e,id){e.preventDefault();e.stopPropagation();if(!requireAuth())return;await doLikePost(id,null)}
-async function doLikePost(id,captchaPayload){showLoading('Sending like...');const body={postId:id,type:'post',...(captchaPayload||{})};const data=await api('/like',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});hideLoading();if(data.needsCaptcha){showCaptchaModal("Too many likes too fast — prove you're human 🐭",async(cp)=>{await doLikePost(id,cp)});return}if(data.captchaFailed){markCaptchaError('modal');showToast('Wrong captcha, try again',true);return}if(!data.ok){showToast(data.error,true);return}likedPosts[id]=data.liked;saveLikedPosts();const btn=document.getElementById(`like-${id}`),cnt=document.getElementById(`lc-${id}`);if(btn){btn.classList.toggle('liked',data.liked);const svg=btn.querySelector('svg');if(svg)svg.setAttribute('fill',data.liked?'currentColor':'none')}if(cnt)cnt.textContent=data.count;showToast(data.liked?' Liked':'Unliked')}
-
-function openPost(id,e){e&&e.preventDefault();allPostsCache=[];setUrl({post:id,page:null});renderPost(id);scrollTo({top:0,behavior:'smooth'})}
+function openPost(id,e){e&&e.preventDefault();allPostsCache=[];setUrl({post:id,page:null});renderPost(id);scrollTo({top:0,behavior:'smooth'});}
 
 async function renderPost(id){
   currentPostId=id;
@@ -865,9 +707,9 @@ async function renderPost(id){
   app.innerHTML=`<div class="single-wrap" style="position:relative;z-index:1"><div class="spinner"></div></div>`;
   showLoading('Loading post...');
   await api('/view',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({postId:id})});
-  const [pData,cData]=await Promise.all([api(`/post?id=${id}`),api(`/comments?postId=${id}`)]);
+  const[pData,cData]=await Promise.all([api(`/post?id=${id}`),api(`/comments?postId=${id}`)]);
   hideLoading();
-  if(!pData.ok){app.innerHTML='<div class="single-wrap" style="position:relative;z-index:1"><div class="empty">This post was deleted by an administrator or it doesnt exist anymore</div></div>';return}
+  if(!pData.ok){app.innerHTML='<div class="single-wrap" style="position:relative;z-index:1"><div class="empty">This post was deleted or does not exist.</div></div>';return;}
   const p=pData.post;
   currentPostAuthor=(p.author||'').trim();
   const comments=cData.comments||[];
@@ -881,129 +723,194 @@ async function renderPost(id){
   setTimeout(()=>newCaptcha('captchaCanvas-main','captchaInput-main','main'),100);
 }
 
-function collectCommenters(comments){const names=new Set();for(const c of comments){if(!c.deleted&&!c.hardDeleted&&c.name&&c.name!=='deleted'&&c.name!=='?')names.add(c.name);for(const r of(c.replies||[])){if(!r.deleted&&!r.hardDeleted&&r.name&&r.name!=='deleted'&&r.name!=='?')names.add(r.name)}}return Array.from(names)}
+function collectCommenters(comments){const names=new Set();for(const c of comments){if(!c.deleted&&!c.hardDeleted&&c.name&&c.name!=='deleted'&&c.name!=='?')names.add(c.name);for(const r of(c.replies||[])){if(!r.deleted&&!r.hardDeleted&&r.name&&r.name!=='deleted'&&r.name!=='?')names.add(r.name);}}return Array.from(names);}
 
-function tagBadge(tag,name){let html='';if(tag){const labels={deluxe:'Professional',gold:'Star',developer:'Administrator'},label=labels[tag]||tag;html+=tag==='gold'?`<span class="user-tag gold">${escHtml(label)}<span class="gold-shine"></span></span>`:`<span class="user-tag ${escHtml(tag)}">${escHtml(label)}</span>`}if(currentPostAuthor&&name&&name.trim().toLowerCase()===currentPostAuthor.toLowerCase())html+=`<span class="user-tag op">OP</span>`;return html}
-function getAvatarHTML(name,isDeleted,isRagebait,userTag){if(isDeleted)return`<span>${(name||'?')[0].toUpperCase()}</span>`;if(isRagebait)return`<img src="/img/clown.png" alt="clown">`;if(name&&CUSTOM_AVATARS[name])return`<img src="${CUSTOM_AVATARS[name]}" alt="${escHtml(name)}">`;return`<span>${(name||'?')[0].toUpperCase()}</span>`}
-function nameTooltip(name,authenticated){return authenticated?`@${name} is registered on raton.click`:'This user is a Guest'}
+function tagBadge(tag,name){let html='';if(tag){const labels={deluxe:'Professional',gold:'Star',developer:'Administrator'},label=labels[tag]||tag;html+=tag==='gold'?`<span class="user-tag gold">${escHtml(label)}<span class="gold-shine"></span></span>`:`<span class="user-tag ${escHtml(tag)}">${escHtml(label)}</span>`;}if(currentPostAuthor&&name&&name.trim().toLowerCase()===currentPostAuthor.toLowerCase())html+=`<span class="user-tag op">OP</span>`;return html;}
+function getAvatarHTML(name,isDeleted,isRagebait){if(isDeleted)return`<span>${(name||'?')[0].toUpperCase()}</span>`;if(isRagebait)return`<img src="/img/clown.png" alt="clown">`;if(name&&CUSTOM_AVATARS[name])return`<img src="${CUSTOM_AVATARS[name]}" alt="${escHtml(name)}">`;return`<span>${(name||'?')[0].toUpperCase()}</span>`;}
+function nameTooltip(name,authenticated){return authenticated?`@${name} is registered on raton.click`:'This user is a Guest';}
 
 function renderCommentsHTML(comments,postId,locked){
-  const savedName=identityBoundName||commentAuthorName;
-  const nameIsLocked=!!(identityBoundName||currentUser);
   const lockedNotice=locked?`<div class="locked-notice"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Comments are locked on this post</div>`:'';
-  const identityNotice=nameIsLocked?`<div class="identity-notice"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Hello, <strong style="margin:0 3px">${escHtml(savedName)}</strong>${currentUser?' (logged in)':' this will be your name :)'}</div>`:'';
-  const authPrompt=!currentUser?`<div class="auth-prompt-notice"><span>💡 You need to <strong>login</strong> or <strong>register</strong> to comment</span><button onclick="openAuthModal('register')">Register</button></div>`:'';
-  const form=locked?'':
-    `<div class="comment-form">${identityNotice}${authPrompt}<div class="form-row"><input class="form-input" id="cName" placeholder="Your name" maxlength="32" value="${escHtml(savedName)}" ${nameIsLocked?'readonly':''} oninput="${nameIsLocked?'':'handleNameInput(this.value)'}"></div>${!nameIsLocked&&savedName?`<p class="name-locked-hint">Commenting as <strong>${escHtml(savedName)}</strong>. <a href="#" onclick="clearName(event)" style="color:var(--purple2)">Change</a></p>`:''}<div class="textarea-wrap"><textarea class="form-input form-textarea" id="cBody" placeholder="Write a comment... Use @name to mention someone" maxlength="1000" oninput="handleMentionInput(this,'cBody-autocomplete')" onkeydown="handleMentionKeydown(event,this,'cBody-autocomplete')"></textarea><div class="mention-autocomplete" id="cBody-autocomplete"></div></div>${captchaHTML('main')}<div class="form-row-submit"><button class="submit-btn" id="submitCommentBtn" onclick="submitComment(null,'${postId}')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>Post Comment</button></div></div>`;
 
-  const topLevel = comments.filter(c=>!c.parentId);
-  const pinnedFirst = [...topLevel.filter(c=>c.pinned), ...topLevel.filter(c=>!c.pinned)];
+  let form='';
+  if(!locked){
+    if(!currentUser){
+      form=`<div class="auth-gate">
+        <div class="auth-gate-title">💬 Join the conversation</div>
+        <div class="auth-gate-sub">You need a free account to post comments, like posts and react to comments.<br>Registration takes 30 seconds.</div>
+        <div class="auth-gate-actions">
+          <button class="submit-btn" onclick="openAuthModal('register')">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+            Create Account
+          </button>
+          <button class="action-btn" style="padding:0.45rem 1rem" onclick="openAuthModal('login')">Login</button>
+        </div>
+      </div>`;
+    } else {
+      const identityNotice=`<div class="identity-notice"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Hello, <strong style="margin:0 3px">${escHtml(currentUser.username)}</strong> (logged in)</div>`;
+      form=`<div class="comment-form">${identityNotice}<div class="form-row"><input class="form-input" id="cName" placeholder="Your name" maxlength="32" value="${escHtml(currentUser.username)}" readonly></div><div class="textarea-wrap"><textarea class="form-input form-textarea" id="cBody" placeholder="Write a comment... Use @name to mention someone" maxlength="1000" oninput="handleMentionInput(this,'cBody-autocomplete')" onkeydown="handleMentionKeydown(event,this,'cBody-autocomplete')"></textarea><div class="mention-autocomplete" id="cBody-autocomplete"></div></div>${captchaHTML('main')}<div class="form-row-submit"><button class="submit-btn" id="submitCommentBtn" onclick="submitComment(null,'${postId}')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>Post Comment</button></div></div>`;
+    }
+  }
 
-  return`<h3><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline;vertical-align:middle;margin-right:6px"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comments (${topLevel.length})</h3>${lockedNotice}${form}<div class="comment-list" id="commentList">${pinnedFirst.map(c=>commentHTML(c,postId,comments,locked)).join('')}${!topLevel.length?'<div class="empty" style="padding:2rem 0">No comments yet...</div>':''}</div>`;
+  const topLevel=[...comments.filter(c=>!c.parentId&&c.pinned),...comments.filter(c=>!c.parentId&&!c.pinned)];
+  return`<h3><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline;vertical-align:middle;margin-right:6px"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comments (${comments.filter(c=>!c.parentId).length})</h3>${lockedNotice}${form}<div class="comment-list" id="commentList">${topLevel.map(c=>commentHTML(c,postId,comments,locked)).join('')}${!topLevel.length?'<div class="empty" style="padding:2rem 0">No comments yet...</div>':''}</div>`;
 }
 
-function setupDeveloperRain(){document.querySelectorAll('.user-tag.developer').forEach(badge=>{if(badge.dataset.rainAttached)return;badge.dataset.rainAttached='1';const explode=()=>{for(let i=0;i<7;i++){const rat=document.createElement('img');rat.src='/img/RATA.png';rat.className='rat-rain';const size=20+Math.random()*5;rat.style.cssText=`position:absolute;left:50%;top:50%;width:${size}px;height:${size}px;pointer-events:none;opacity:.85;z-index:1;transform:translate(-50%,-50%);`;badge.appendChild(rat);const angle=Math.random()*Math.PI*2,distance=20+Math.random()*35,x=Math.cos(angle)*distance,y=Math.sin(angle)*distance;rat.animate([{transform:'translate(-50%,-50%) scale(.3) rotate(0deg)',opacity:0},{transform:`translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) scale(1) rotate(${Math.random()*180}deg)`,opacity:.9,offset:.2},{transform:`translate(calc(-50% + ${x*1.5}px), calc(-50% + ${y*1.5}px)) scale(.6) rotate(${360+Math.random()*360}deg)`,opacity:0}],{duration:1200+Math.random()*400,easing:'cubic-bezier(.22,1,.36,1)',fill:'forwards'});setTimeout(()=>rat.remove(),1800)}};explode();badge.addEventListener('mouseenter',explode)})}
+function setupDeveloperRain(){document.querySelectorAll('.user-tag.developer').forEach(badge=>{if(badge.dataset.rainAttached)return;badge.dataset.rainAttached='1';const explode=()=>{for(let i=0;i<7;i++){const rat=document.createElement('img');rat.src='/img/RATA.png';rat.className='rat-rain';const size=20+Math.random()*5;rat.style.cssText=`position:absolute;left:50%;top:50%;width:${size}px;height:${size}px;pointer-events:none;opacity:.85;z-index:1;transform:translate(-50%,-50%);`;badge.appendChild(rat);const angle=Math.random()*Math.PI*2,distance=20+Math.random()*35,x=Math.cos(angle)*distance,y=Math.sin(angle)*distance;rat.animate([{transform:'translate(-50%,-50%) scale(.3) rotate(0deg)',opacity:0},{transform:`translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) scale(1) rotate(${Math.random()*180}deg)`,opacity:.9,offset:.2},{transform:`translate(calc(-50% + ${x*1.5}px), calc(-50% + ${y*1.5}px)) scale(.6) rotate(${360+Math.random()*360}deg)`,opacity:0}],{duration:1200+Math.random()*400,easing:'cubic-bezier(.22,1,.36,1)',fill:'forwards'});setTimeout(()=>rat.remove(),1800);}};explode();badge.addEventListener('mouseenter',explode);});}
 
-function reactionsHTML(commentId,type,parentId,reactionsData){const rd=reactionsData||{},rKey=type==='reply'?`r:${commentId}`:`c:${commentId}`,myR=myReactions[rKey]||{};const existingBtns=REACTIONS.filter(r=>rd[r.id]>0).map(r=>{const reacted=!!myR[r.id],cid=type==='reply'?parentId:commentId,rid=type==='reply'?commentId:null;return`<button class="reaction-btn${reacted?' reacted':''}" onclick="toggleReaction(event,'${currentPostId}','${cid}','${rid||''}','${r.id}','${type}')" title="${r.id}"><img src="${r.img}" alt="${r.id}"><span id="rxc-${rKey}-${r.id}">${rd[r.id]}</span></button>`}).join('');const cid2=type==='reply'?parentId:commentId,rid2=type==='reply'?commentId:null,pickerBtns=REACTIONS.map(r=>`<button onclick="toggleReaction(event,'${currentPostId}','${cid2}','${rid2||''}','${r.id}','${type}')" title="${r.id}"><img src="${r.img}" alt="${r.id}"></button>`).join('');return`<div class="reactions-bar" id="rxbar-${rKey}">${existingBtns}<div class="reaction-picker" id="rxpicker-${rKey}"><button class="reaction-picker-btn" onclick="toggleReactionPicker('rxpicker-${rKey}',event)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></button><div class="reaction-picker-menu" id="rxpicker-${rKey}-menu">${pickerBtns}</div></div></div>`}
-function toggleReactionPicker(pickerId,e){e.stopPropagation();const menu=document.getElementById(pickerId+'-menu');if(!menu)return;const isOpen=menu.classList.contains('open');document.querySelectorAll('.reaction-picker-menu.open').forEach(m=>m.classList.remove('open'));if(!isOpen)menu.classList.add('open')}
+function reactionsHTML(commentId,type,parentId,reactionsData){
+  const rd=reactionsData||{},rKey=type==='reply'?`r:${commentId}`:`c:${commentId}`,myR=myReactions[rKey]||{};
+  const existingBtns=REACTIONS.filter(r=>rd[r.id]>0).map(r=>{const reacted=!!myR[r.id],cid=type==='reply'?parentId:commentId,rid=type==='reply'?commentId:null;return`<button class="reaction-btn${reacted?' reacted':''}" onclick="toggleReaction(event,'${currentPostId}','${cid}','${rid||''}','${r.id}','${type}')" title="${r.id}"><img src="${r.img}" alt="${r.id}"><span id="rxc-${rKey}-${r.id}">${rd[r.id]}</span></button>`;}).join('');
+  const cid2=type==='reply'?parentId:commentId,rid2=type==='reply'?commentId:null;
+  const pickerBtns=REACTIONS.map(r=>`<button onclick="toggleReaction(event,'${currentPostId}','${cid2}','${rid2||''}','${r.id}','${type}')" title="${r.id}"><img src="${r.img}" alt="${r.id}"></button>`).join('');
+  return`<div class="reactions-bar" id="rxbar-${rKey}">${existingBtns}<div class="reaction-picker" id="rxpicker-${rKey}"><button class="reaction-picker-btn" onclick="toggleReactionPicker('rxpicker-${rKey}',event)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></button><div class="reaction-picker-menu" id="rxpicker-${rKey}-menu">${pickerBtns}</div></div></div>`;
+}
+function toggleReactionPicker(pickerId,e){e.stopPropagation();const menu=document.getElementById(pickerId+'-menu');if(!menu)return;const isOpen=menu.classList.contains('open');document.querySelectorAll('.reaction-picker-menu.open').forEach(m=>m.classList.remove('open'));if(!isOpen)menu.classList.add('open');}
 document.addEventListener('click',()=>document.querySelectorAll('.reaction-picker-menu.open').forEach(m=>m.classList.remove('open')));
-async function toggleReaction(e,postId,commentId,replyId,reactionId,type){e.stopPropagation();if(!requireAuth())return;document.querySelectorAll('.reaction-picker-menu.open').forEach(m=>m.classList.remove('open'));await doToggleReaction(postId,commentId,replyId,reactionId,type,null)}
-async function doToggleReaction(postId,commentId,replyId,reactionId,type,captchaPayload){const payload={postId,commentId,type,reactionId,...(captchaPayload||{})};if(replyId)payload.replyId=replyId;showLoading('Reacting...');const data=await api('/react',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});hideLoading();if(data.needsCaptcha){showCaptchaModal("Whoa, slow down! Prove you're not a bot 🤖",async(cp)=>{await doToggleReaction(postId,commentId,replyId,reactionId,type,cp)});return}if(data.captchaFailed){markCaptchaError('modal');showToast('Wrong captcha, try again',true);return}if(!data.ok){showToast(data.error,true);return}const rKey=type==='reply'?`r:${replyId||commentId}`:`c:${commentId}`;if(!myReactions[rKey])myReactions[rKey]={};if(data.reacted)myReactions[rKey][reactionId]=true;else delete myReactions[rKey][reactionId];saveMyReactions();const bar=document.getElementById(`rxbar-${rKey}`);if(bar){const cid=type==='reply'?(replyId||commentId):commentId,pid=type==='reply'?commentId:null;bar.outerHTML=reactionsHTML(cid,type,pid,data.reactions)}}
-async function dislikeComment(e,postId,type,commentId,replyId){e.stopPropagation();if(!requireAuth())return;showLoading('Sending...');const body={postId,type,commentId};if(replyId)body.replyId=replyId;const data=await api('/dislike',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});hideLoading();if(!data.ok){showToast(data.error,true);return}const lKey=type==='reply'?`r:${replyId}`:`c:${commentId}`;dislikedComments[lKey]=data.disliked;saveDislikedComments();const btnId=type==='reply'?`dlbtn-${replyId}`:`dlbtn-${commentId}`,countId=type==='reply'?`dl-${replyId}`:`dl-${commentId}`,btn=document.getElementById(btnId),countEl=document.getElementById(countId);if(btn){btn.classList.toggle('downvoted',data.disliked);const svg=btn.querySelector('svg');if(svg)svg.setAttribute('fill',data.disliked?'currentColor':'none')}if(countEl)countEl.textContent=data.count;showToast(data.disliked?' Downvoted':'Removed downvote')}
+
+async function toggleReaction(e,postId,commentId,replyId,reactionId,type){e.stopPropagation();if(!requireAuth())return;document.querySelectorAll('.reaction-picker-menu.open').forEach(m=>m.classList.remove('open'));await doToggleReaction(postId,commentId,replyId,reactionId,type,null);}
+async function doToggleReaction(postId,commentId,replyId,reactionId,type,captchaPayload){
+  const payload={postId,commentId,type,reactionId,...(captchaPayload||{})};if(replyId)payload.replyId=replyId;
+  showLoading('Reacting...');const data=await api('/react',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});hideLoading();
+  if(data.needsCaptcha){showCaptchaModal("Whoa, slow down! Prove you're not a bot 🤖",async(cp)=>{await doToggleReaction(postId,commentId,replyId,reactionId,type,cp);});return;}
+  if(data.captchaFailed){markCaptchaError('modal');showToast('Wrong captcha, try again',true);return;}
+  if(!data.ok){showToast(data.error,true);return;}
+  const rKey=type==='reply'?`r:${replyId||commentId}`:`c:${commentId}`;
+  if(!myReactions[rKey])myReactions[rKey]={};
+  if(data.reacted)myReactions[rKey][reactionId]=true;else delete myReactions[rKey][reactionId];
+  saveMyReactions();
+  const bar=document.getElementById(`rxbar-${rKey}`);
+  if(bar){const cid=type==='reply'?(replyId||commentId):commentId,pid=type==='reply'?commentId:null;bar.outerHTML=reactionsHTML(cid,type,pid,data.reactions);}
+}
+
+async function dislikeComment(e,postId,type,commentId,replyId){
+  e.stopPropagation();if(!requireAuth())return;
+  showLoading('Sending...');const body={postId,type,commentId};if(replyId)body.replyId=replyId;
+  const data=await api('/dislike',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});hideLoading();
+  if(!data.ok){showToast(data.error,true);return;}
+  const lKey=type==='reply'?`r:${replyId}`:`c:${commentId}`;
+  dislikedComments[lKey]=data.disliked;saveDislikedComments();
+  const btnId=type==='reply'?`dlbtn-${replyId}`:`dlbtn-${commentId}`,countId=type==='reply'?`dl-${replyId}`:`dl-${commentId}`,btn=document.getElementById(btnId);
+  if(btn){btn.classList.toggle('downvoted',data.disliked);btn.innerHTML=(data.disliked?DOWNVOTE_SVG_ON:DOWNVOTE_SVG_OFF)+`<span id="${countId}">${data.count}</span>`;}
+  showToast(data.disliked?' Downvoted':'Removed downvote');
+}
 
 let _mentionState={};
-function handleMentionInput(textarea,dropdownId){const val=textarea.value,cursor=textarea.selectionStart,textBefore=val.slice(0,cursor),match=textBefore.match(/@(\w*)$/),dropdown=document.getElementById(dropdownId);if(!dropdown)return;if(!match){dropdown.classList.remove('open');_mentionState[dropdownId]=null;return}const query=match[1].toLowerCase(),results=knownCommenters.filter(n=>n.toLowerCase().includes(query)&&n!==(identityBoundName||commentAuthorName)).slice(0,6);if(!results.length){dropdown.classList.remove('open');_mentionState[dropdownId]=null;return}_mentionState[dropdownId]={results,selected:0,query,start:cursor-match[0].length};dropdown.innerHTML=results.map((n,i)=>`<div class="mention-item${i===0?' selected':''}" data-idx="${i}" onmousedown="insertMention(event,'${dropdownId}')"><div class="mention-item-avatar">${n[0].toUpperCase()}</div><span>@${escHtml(n)}</span></div>`).join('');dropdown.classList.add('open')}
-function handleMentionKeydown(e,textarea,dropdownId){const state=_mentionState[dropdownId],dropdown=document.getElementById(dropdownId);if(!dropdown||!state||!dropdown.classList.contains('open'))return;if(e.key==='ArrowDown'){e.preventDefault();state.selected=Math.min(state.selected+1,state.results.length-1);updateMentionSelection(dropdown,state.selected)}else if(e.key==='ArrowUp'){e.preventDefault();state.selected=Math.max(state.selected-1,0);updateMentionSelection(dropdown,state.selected)}else if(e.key==='Enter'||e.key==='Tab'){if(dropdown.classList.contains('open')){e.preventDefault();commitMention(textarea,dropdownId,state.results[state.selected])}}else if(e.key==='Escape'){dropdown.classList.remove('open');_mentionState[dropdownId]=null}}
-function updateMentionSelection(dropdown,idx){dropdown.querySelectorAll('.mention-item').forEach((el,i)=>el.classList.toggle('selected',i===idx))}
-function insertMention(e,dropdownId){e.preventDefault();const idx=parseInt(e.currentTarget.dataset.idx),state=_mentionState[dropdownId];if(!state)return;const textareaId=dropdownId.replace('-autocomplete',''),textarea=document.getElementById(textareaId);if(!textarea)return;commitMention(textarea,dropdownId,state.results[idx])}
-function commitMention(textarea,dropdownId,name){const state=_mentionState[dropdownId];if(!state)return;const val=textarea.value,before=val.slice(0,state.start),after=val.slice(textarea.selectionStart);textarea.value=before+'@'+name+' '+after;const newCursor=before.length+name.length+2;textarea.setSelectionRange(newCursor,newCursor);textarea.focus();const dropdown=document.getElementById(dropdownId);if(dropdown)dropdown.classList.remove('open');_mentionState[dropdownId]=null}
-function setupMentionAutocomplete(){document.addEventListener('click',e=>{if(!e.target.closest('.textarea-wrap'))document.querySelectorAll('.mention-autocomplete.open').forEach(d=>d.classList.remove('open'))},{capture:true})}
+function handleMentionInput(textarea,dropdownId){const val=textarea.value,cursor=textarea.selectionStart,textBefore=val.slice(0,cursor),match=textBefore.match(/@(\w*)$/),dropdown=document.getElementById(dropdownId);if(!dropdown)return;if(!match){dropdown.classList.remove('open');_mentionState[dropdownId]=null;return;}const query=match[1].toLowerCase(),results=knownCommenters.filter(n=>n.toLowerCase().includes(query)&&n!==(currentUser?.username||'')).slice(0,6);if(!results.length){dropdown.classList.remove('open');_mentionState[dropdownId]=null;return;}_mentionState[dropdownId]={results,selected:0,query,start:cursor-match[0].length};dropdown.innerHTML=results.map((n,i)=>`<div class="mention-item${i===0?' selected':''}" data-idx="${i}" onmousedown="insertMention(event,'${dropdownId}')"><div class="mention-item-avatar">${n[0].toUpperCase()}</div><span>@${escHtml(n)}</span></div>`).join('');dropdown.classList.add('open');}
+function handleMentionKeydown(e,textarea,dropdownId){const state=_mentionState[dropdownId],dropdown=document.getElementById(dropdownId);if(!dropdown||!state||!dropdown.classList.contains('open'))return;if(e.key==='ArrowDown'){e.preventDefault();state.selected=Math.min(state.selected+1,state.results.length-1);updateMentionSelection(dropdown,state.selected);}else if(e.key==='ArrowUp'){e.preventDefault();state.selected=Math.max(state.selected-1,0);updateMentionSelection(dropdown,state.selected);}else if(e.key==='Enter'||e.key==='Tab'){if(dropdown.classList.contains('open')){e.preventDefault();commitMention(textarea,dropdownId,state.results[state.selected]);}}else if(e.key==='Escape'){dropdown.classList.remove('open');_mentionState[dropdownId]=null;}}
+function updateMentionSelection(dropdown,idx){dropdown.querySelectorAll('.mention-item').forEach((el,i)=>el.classList.toggle('selected',i===idx));}
+function insertMention(e,dropdownId){e.preventDefault();const idx=parseInt(e.currentTarget.dataset.idx),state=_mentionState[dropdownId];if(!state)return;const textareaId=dropdownId.replace('-autocomplete',''),textarea=document.getElementById(textareaId);if(!textarea)return;commitMention(textarea,dropdownId,state.results[idx]);}
+function commitMention(textarea,dropdownId,name){const state=_mentionState[dropdownId];if(!state)return;const val=textarea.value,before=val.slice(0,state.start),after=val.slice(textarea.selectionStart);textarea.value=before+'@'+name+' '+after;const newCursor=before.length+name.length+2;textarea.setSelectionRange(newCursor,newCursor);textarea.focus();const dropdown=document.getElementById(dropdownId);if(dropdown)dropdown.classList.remove('open');_mentionState[dropdownId]=null;}
+function setupMentionAutocomplete(){document.addEventListener('click',e=>{if(!e.target.closest('.textarea-wrap'))document.querySelectorAll('.mention-autocomplete.open').forEach(d=>d.classList.remove('open'));},{capture:true});}
+
 function renderCommentBody(body){
   if(!body)return'';
   const urls=[];
-  const withPlaceholders=body.replace(/(https?:\/\/[^\s<]+)/g,(m)=>{urls.push(m);return `\u0000${urls.length-1}\u0000`});
+  const withPlaceholders=body.replace(/(https?:\/\/[^\s<]+)/g,(m)=>{urls.push(m);return`\u0000${urls.length-1}\u0000`;});
   let escaped=escHtml(withPlaceholders);
   escaped=escaped.replace(/@(\w+)/g,(match,name)=>`<span class="mention">@${escHtml(name)}</span>`);
-  escaped=escaped.replace(/\u0000(\d+)\u0000/g,(m,idx)=>{
-    const url=urls[parseInt(idx)];
-    const safe=escHtml(url);
-    const encoded=encodeURIComponent(url);
-    return `<a href="#" class="comment-link" onclick="confirmOpenLink(event,'${encoded}')">${safe}</a>`;
-  });
+  escaped=escaped.replace(/\u0000(\d+)\u0000/g,(m,idx)=>{const url=urls[parseInt(idx)],safe=escHtml(url),encoded=encodeURIComponent(url);return`<a href="#" class="comment-link" onclick="confirmOpenLink(event,'${encoded}')">${safe}</a>`;});
   return escaped;
 }
 
-const UPVOTE_SVG_ON=`<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>`;
-const UPVOTE_SVG_OFF=`<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>`;
-const DOWNVOTE_SVG_ON=`<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>`;
+const UPVOTE_SVG_ON  =`<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>`;
+const UPVOTE_SVG_OFF =`<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>`;
+const DOWNVOTE_SVG_ON =`<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>`;
 const DOWNVOTE_SVG_OFF=`<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>`;
 
 function commentHTML(c,postId,allComments,locked){
   const isDeleted=c.deleted,cLiked=likedComments[`c:${c.id}`],cDisliked=dislikedComments[`c:${c.id}`],replies=(c.replies||[]),canInteract=!isDeleted&&!c.hardDeleted,isRagebait=!!c.rageBait,isAdmin=!isDeleted&&c.userTag==='developer',isPinned=!!c.pinned;
-  const avatarContent=getAvatarHTML(c.name,isDeleted,isRagebait,c.userTag);
+  const avatarContent=getAvatarHTML(c.name,isDeleted,isRagebait);
   const pinnedBadge=isPinned?`<img class="pinned-comment-icon" src="/img/office-push-pin.png" alt="">`:'';
   const nameTip=isDeleted?'':` data-tooltip="${escHtml(nameTooltip(c.name,c.authenticated))}"`;
-  return`<div class="comment ${isDeleted?'deleted':''} ${isRagebait?'ragebait':''} ${isAdmin?'administrator':''} ${isPinned?'pinned-comment':''}" id="comment-${c.id}"><div class="comment-header"><div class="comment-avatar">${avatarContent}</div><span class="comment-name"${nameTip}>${escHtml(isDeleted?'deleted':c.name)}${!isDeleted?tagBadge(c.userTag,c.name):''}${pinnedBadge}</span>${c.editedByAdmin&&!isDeleted?`<span class="comment-edited">[edited by a moderator]</span>`:''}<span class="comment-ts">${timeAgo(c.ts)}</span></div><div class="comment-body ${isDeleted?'deleted-msg':''}">${isDeleted?escHtml(c.body):renderCommentBody(c.body)}</div><div class="comment-actions">${canInteract?`<button class="comment-upvote ${cLiked?'upvoted':''}" id="clbtn-${c.id}" onclick="likeComment(event,'${postId}','comment','${c.id}')">${cLiked?UPVOTE_SVG_ON:UPVOTE_SVG_OFF}<span id="cl-${c.id}">${c.likes||0}</span></button><button class="comment-downvote ${cDisliked?'downvoted':''}" id="dlbtn-${c.id}" onclick="dislikeComment(event,'${postId}','comment','${c.id}')">${cDisliked?DOWNVOTE_SVG_ON:DOWNVOTE_SVG_OFF}<span id="dl-${c.id}">${c.dislikes||0}</span></button>${reactionsHTML(c.id,'comment',null,c.reactions||{})}`:''}`+(canInteract&&!locked?`<button class="reply-toggle" onclick="toggleReplyForm('${c.id}','${postId}')"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 17 4 12 9 7"/><path d="M20 18v-2a4 4 0 0 0-4-4H4"/></svg>Reply</button>`:'')+`</div><div id="replyForm-${c.id}"></div>${replies.length?`<div class="reply-list" id="replies-${c.id}">${replies.map(r=>replyHTML(r,c.id,postId,locked)).join('')}</div>`:`<div id="replies-${c.id}"></div>`}</div>`
+  return`<div class="comment ${isDeleted?'deleted':''} ${isRagebait?'ragebait':''} ${isAdmin?'administrator':''} ${isPinned?'pinned-comment':''}" id="comment-${c.id}"><div class="comment-header"><div class="comment-avatar">${avatarContent}</div><span class="comment-name"${nameTip}>${escHtml(isDeleted?'deleted':c.name)}${!isDeleted?tagBadge(c.userTag,c.name):''}${pinnedBadge}</span>${c.editedByAdmin&&!isDeleted?`<span class="comment-edited">[edited by a moderator]</span>`:''}<span class="comment-ts">${timeAgo(c.ts)}</span></div><div class="comment-body ${isDeleted?'deleted-msg':''}">${isDeleted?escHtml(c.body):renderCommentBody(c.body)}</div><div class="comment-actions">${canInteract?`<button class="comment-upvote ${cLiked?'upvoted':''}" id="clbtn-${c.id}" onclick="likeComment(event,'${postId}','comment','${c.id}')">${cLiked?UPVOTE_SVG_ON:UPVOTE_SVG_OFF}<span id="cl-${c.id}">${c.likes||0}</span></button><button class="comment-downvote ${cDisliked?'downvoted':''}" id="dlbtn-${c.id}" onclick="dislikeComment(event,'${postId}','comment','${c.id}')">${cDisliked?DOWNVOTE_SVG_ON:DOWNVOTE_SVG_OFF}<span id="dl-${c.id}">${c.dislikes||0}</span></button>${reactionsHTML(c.id,'comment',null,c.reactions||{})}`:''}`+(canInteract&&!locked?`<button class="reply-toggle" onclick="toggleReplyForm('${c.id}','${postId}')"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 17 4 12 9 7"/><path d="M20 18v-2a4 4 0 0 0-4-4H4"/></svg>Reply</button>`:'')+`</div><div id="replyForm-${c.id}"></div>${replies.length?`<div class="reply-list" id="replies-${c.id}">${replies.map(r=>replyHTML(r,c.id,postId,locked)).join('')}</div>`:`<div id="replies-${c.id}"></div>`}</div>`;
 }
 
 function replyHTML(r,parentId,postId,locked){
   const isDeleted=r.deleted,rLiked=likedComments[`r:${r.id}`],rDisliked=dislikedComments[`r:${r.id}`],canInteract=!isDeleted&&!r.hardDeleted,isRagebait=!!r.rageBait,isAdmin=!isDeleted&&r.userTag==='developer';
-  const avatarContent=getAvatarHTML(r.name,isDeleted,isRagebait,r.userTag);
+  const avatarContent=getAvatarHTML(r.name,isDeleted,isRagebait);
   const nameTip=isDeleted?'':` data-tooltip="${escHtml(nameTooltip(r.name,r.authenticated))}"`;
   const mentionName=(r.name||'').replace(/'/g,"\\'");
-  return`<div class="comment reply ${isDeleted?'deleted':''} ${isRagebait?'ragebait':''} ${isAdmin?'administrator':''}" id="reply-${r.id}"><div class="comment-header"><div class="comment-avatar" style="width:20px;height:20px;font-size:0.6rem">${avatarContent}</div><span class="comment-name"${nameTip}>${escHtml(isDeleted?'deleted':r.name)}${!isDeleted?tagBadge(r.userTag,r.name):''}</span>${r.editedByAdmin&&!isDeleted?`<span class="comment-edited">[edited by a moderator]</span>`:''}<span class="comment-ts">${timeAgo(r.ts)}</span></div><div class="comment-body ${isDeleted?'deleted-msg':''}">${isDeleted?escHtml(r.body):renderCommentBody(r.body)}</div><div class="comment-actions">${canInteract?`${reactionsHTML(r.id,'reply',parentId,r.reactions||{})}<button class="comment-upvote ${rLiked?'upvoted':''}" id="rlbtn-${r.id}" onclick="likeComment(event,'${postId}','reply','${parentId}','${r.id}')">${rLiked?UPVOTE_SVG_ON:UPVOTE_SVG_OFF}<span id="rl-${r.id}">${r.likes||0}</span></button><button class="comment-downvote ${rDisliked?'downvoted':''}" id="dlbtn-${r.id}" onclick="dislikeComment(event,'${postId}','reply','${parentId}','${r.id}')">${rDisliked?DOWNVOTE_SVG_ON:DOWNVOTE_SVG_OFF}<span id="dl-${r.id}">${r.dislikes||0}</span></button>`:''}`+(canInteract&&!locked?`<button class="reply-toggle" onclick="toggleReplyForm('${parentId}','${postId}','${mentionName}')"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 17 4 12 9 7"/><path d="M20 18v-2a4 4 0 0 0-4-4H4"/></svg>Reply</button>`:'')+`</div></div>`
+  return`<div class="comment reply ${isDeleted?'deleted':''} ${isRagebait?'ragebait':''} ${isAdmin?'administrator':''}" id="reply-${r.id}"><div class="comment-header"><div class="comment-avatar" style="width:20px;height:20px;font-size:0.6rem">${avatarContent}</div><span class="comment-name"${nameTip}>${escHtml(isDeleted?'deleted':r.name)}${!isDeleted?tagBadge(r.userTag,r.name):''}</span>${r.editedByAdmin&&!isDeleted?`<span class="comment-edited">[edited by a moderator]</span>`:''}<span class="comment-ts">${timeAgo(r.ts)}</span></div><div class="comment-body ${isDeleted?'deleted-msg':''}">${isDeleted?escHtml(r.body):renderCommentBody(r.body)}</div><div class="comment-actions">${canInteract?`${reactionsHTML(r.id,'reply',parentId,r.reactions||{})}<button class="comment-upvote ${rLiked?'upvoted':''}" id="rlbtn-${r.id}" onclick="likeComment(event,'${postId}','reply','${parentId}','${r.id}')">${rLiked?UPVOTE_SVG_ON:UPVOTE_SVG_OFF}<span id="rl-${r.id}">${r.likes||0}</span></button><button class="comment-downvote ${rDisliked?'downvoted':''}" id="dlbtn-${r.id}" onclick="dislikeComment(event,'${postId}','reply','${parentId}','${r.id}')">${rDisliked?DOWNVOTE_SVG_ON:DOWNVOTE_SVG_OFF}<span id="dl-${r.id}">${r.dislikes||0}</span></button>`:''}`+(canInteract&&!locked?`<button class="reply-toggle" onclick="toggleReplyForm('${parentId}','${postId}','${mentionName}')"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 17 4 12 9 7"/><path d="M20 18v-2a4 4 0 0 0-4-4H4"/></svg>Reply</button>`:'')+`</div></div>`;
 }
 
-function handleNameInput(val){if(!identityBoundName&&!currentUser)commentAuthorName=val}
-function clearName(e){e&&e.preventDefault();if(identityBoundName||currentUser){showToast('The name is yours',true);return}saveAuthorName('');const postId=currentPostId;if(postId){api(`/comments?postId=${postId}`).then(cData=>{const isLocked=!!document.querySelector('.locked-notice');document.getElementById('commentsSection').innerHTML=renderCommentsHTML(cData.comments||[],postId,isLocked);setupDeveloperRain();setupMentionAutocomplete();setTimeout(()=>newCaptcha('captchaCanvas-main','captchaInput-main','main'),100)})}}
-
-function toggleReplyForm(commentId,postId,mentionName){if(!requireAuth())return;const el=document.getElementById(`replyForm-${commentId}`);if(el.innerHTML){el.innerHTML='';return}const savedName=identityBoundName||commentAuthorName,nameIsLocked=!!(identityBoundName||currentUser),taId=`rBody-${commentId}`,acId=`${taId}-autocomplete`,replyFormId=`reply-${commentId}`,placeholder=mentionName?`@${mentionName} ...`:'Write a reply... Use @name to mention someone';el.innerHTML=`<div class="reply-form"><div class="form-row"><input class="form-input" id="rName-${commentId}" placeholder="Your name" maxlength="32" value="${escHtml(savedName)}" ${nameIsLocked?'readonly':''} oninput="${nameIsLocked?'':'commentAuthorName=this.value'}"></div>${savedName?`<p class="name-locked-hint">Replying as <strong>${escHtml(savedName)}</strong>${nameIsLocked?' (Your name)':''}</p>`:''}<div class="textarea-wrap"><textarea class="form-input form-textarea" id="${taId}" placeholder="${escHtml(placeholder)}" style="min-height:60px" maxlength="500" oninput="handleMentionInput(this,'${acId}')" onkeydown="handleMentionKeydown(event,this,'${acId}')"></textarea><div class="mention-autocomplete" id="${acId}"></div></div>${captchaHTML(replyFormId)}<div class="form-row-submit"><button class="submit-btn" id="replyBtn-${commentId}" onclick="submitComment('${commentId}','${postId}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 17 4 12 9 7"/><path d="M20 18v-2a4 4 0 0 0-4-4H4"/></svg>Reply</button></div></div>`;setTimeout(()=>newCaptcha(`captchaCanvas-${replyFormId}`,`captchaInput-${replyFormId}`,replyFormId),80)}
+function toggleReplyForm(commentId,postId,mentionName){
+  if(!requireAuth())return;
+  const el=document.getElementById(`replyForm-${commentId}`);
+  if(el.innerHTML){el.innerHTML='';return;}
+  const uname=currentUser.username,taId=`rBody-${commentId}`,acId=`${taId}-autocomplete`,replyFormId=`reply-${commentId}`,placeholder=mentionName?`@${mentionName} ...`:'Write a reply... Use @name to mention someone';
+  el.innerHTML=`<div class="reply-form"><div class="form-row"><input class="form-input" id="rName-${commentId}" value="${escHtml(uname)}" readonly></div><p class="name-locked-hint">Replying as <strong>${escHtml(uname)}</strong></p><div class="textarea-wrap"><textarea class="form-input form-textarea" id="${taId}" placeholder="${escHtml(placeholder)}" style="min-height:60px" maxlength="500" oninput="handleMentionInput(this,'${acId}')" onkeydown="handleMentionKeydown(event,this,'${acId}')"></textarea><div class="mention-autocomplete" id="${acId}"></div></div>${captchaHTML(replyFormId)}<div class="form-row-submit"><button class="submit-btn" id="replyBtn-${commentId}" onclick="submitComment('${commentId}','${postId}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 17 4 12 9 7"/><path d="M20 18v-2a4 4 0 0 0-4-4H4"/></svg>Reply</button></div></div>`;
+  setTimeout(()=>newCaptcha(`captchaCanvas-${replyFormId}`,`captchaInput-${replyFormId}`,replyFormId),80);
+}
 
 async function submitComment(parentId,postId){
   if(!requireAuth())return;
-  const nameEl=document.getElementById(parentId?`rName-${parentId}`:'cName'),bodyEl=document.getElementById(parentId?`rBody-${parentId}`:'cBody'),btnEl=document.getElementById(parentId?`replyBtn-${parentId}`:'submitCommentBtn');
+  const bodyEl=document.getElementById(parentId?`rBody-${parentId}`:'cBody');
+  const btnEl =document.getElementById(parentId?`replyBtn-${parentId}`:'submitCommentBtn');
   const formId=parentId?`reply-${parentId}`:'main';
-  const name=(currentUser?currentUser.username:identityBoundName||nameEl?.value||'').trim();
+  const name=currentUser.username;
   const body=bodyEl?.value.trim();
-  if(!name||name.length<2){showToast('Name must be at least 2 characters',true);return}
-  if(!body||body.length<2){showToast('Comment must be at least 2 characters',true);return}
+  if(!body||body.length<2){showToast('Comment must be at least 2 characters',true);return;}
   const captchaPayload=getCaptchaPayload(formId);
-  if(!captchaPayload){showToast('Please complete the captcha',true);document.getElementById(`captchaInput-${formId}`)?.focus();return}
-  if(btnEl){btnEl.disabled=true;btnEl.textContent='Checking...'}
-  showLoading('Checking name availability...');
-  const nameCheck=await api('/check-name',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({postId,name})});
-  if(!nameCheck.ok){hideLoading();if(btnEl){btnEl.disabled=false;btnEl.innerHTML=parentId?'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 17 4 12 9 7"/><path d="M20 18v-2a4 4 0 0 0-4-4H4"/></svg> Reply':'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Post Comment'}showToast(nameCheck.error,true);return}
-  if(btnEl)btnEl.textContent='Posting...';
+  if(!captchaPayload){showToast('Please complete the captcha',true);document.getElementById(`captchaInput-${formId}`)?.focus();return;}
+  if(btnEl){btnEl.disabled=true;btnEl.textContent='Posting...';}
   showLoading('Posting comment...');
   const data=await api('/comment',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({postId,name,body,parentId,...captchaPayload})});
   hideLoading();
-  if(btnEl){btnEl.disabled=false;btnEl.innerHTML=parentId?'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 17 4 12 9 7"/><path d="M20 18v-2a4 4 0 0 0-4-4H4"/></svg> Reply':'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Post Comment'}
-  if(data.captchaFailed){markCaptchaError(formId);showToast('Wrong captcha — try again',true);return}
-  if(!data.ok){showToast(data.error,true);return}
+  if(btnEl){btnEl.disabled=false;btnEl.innerHTML=parentId?'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 17 4 12 9 7"/><path d="M20 18v-2a4 4 0 0 0-4-4H4"/></svg> Reply':'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Post Comment';}
+  if(data.captchaFailed){markCaptchaError(formId);showToast('Wrong captcha — try again',true);return;}
+  if(!data.ok){showToast(data.error,true);return;}
   markCaptchaOk(formId);
-  if(!currentUser){identityBoundName=name;saveAuthorName(name)}
   showToast('Comment posted!');
   showLoading('Refreshing comments...');
   const cData=await api(`/comments?postId=${postId}`);
   hideLoading();
   knownCommenters=collectCommenters(cData.comments||[]);
-  const isLocked=!!document.querySelector('.locked-notice');
-  document.getElementById('commentsSection').innerHTML=renderCommentsHTML(cData.comments||[],postId,isLocked);
+  document.getElementById('commentsSection').innerHTML=renderCommentsHTML(cData.comments||[],postId,!!document.querySelector('.locked-notice'));
   setupDeveloperRain();setupMentionAutocomplete();
   setTimeout(()=>newCaptcha('captchaCanvas-main','captchaInput-main','main'),100);
 }
 
-async function likeComment(e,postId,type,commentId,replyId){e.stopPropagation();if(!requireAuth())return;showLoading('Sending...');const body={postId,type,commentId};if(replyId)body.replyId=replyId;const data=await api('/like',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});hideLoading();if(!data.ok){showToast(data.error,true);return}const lKey=type==='reply'?`r:${replyId}`:`c:${commentId}`;likedComments[lKey]=data.liked;saveLikedComments();const btnId=type==='reply'?`rlbtn-${replyId}`:`clbtn-${commentId}`,countId=type==='reply'?`rl-${replyId}`:`cl-${commentId}`,btn=document.getElementById(btnId);if(btn){btn.classList.toggle('upvoted',data.liked);btn.innerHTML=(data.liked?UPVOTE_SVG_ON:UPVOTE_SVG_OFF)+`<span id="${countId}">${data.count}</span>`}showToast(data.liked?' Upvoted':'Removed upvote')}
+async function likeComment(e,postId,type,commentId,replyId){
+  e.stopPropagation();if(!requireAuth())return;
+  showLoading('Sending...');const body={postId,type,commentId};if(replyId)body.replyId=replyId;
+  const data=await api('/like',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});hideLoading();
+  if(!data.ok){showToast(data.error,true);return;}
+  const lKey=type==='reply'?`r:${replyId}`:`c:${commentId}`;
+  likedComments[lKey]=data.liked;saveLikedComments();
+  const btnId=type==='reply'?`rlbtn-${replyId}`:`clbtn-${commentId}`,countId=type==='reply'?`rl-${replyId}`:`cl-${commentId}`,btn=document.getElementById(btnId);
+  if(btn){btn.classList.toggle('upvoted',data.liked);btn.innerHTML=(data.liked?UPVOTE_SVG_ON:UPVOTE_SVG_OFF)+`<span id="${countId}">${data.count}</span>`;}
+  showToast(data.liked?' Upvoted':'Removed upvote');
+}
 
-async function likePostSingle(id){if(!requireAuth())return;const btn=document.getElementById('post-like-btn');if(btn)btn.disabled=true;await doLikePostSingle(id,null);if(btn)btn.disabled=false}
-async function doLikePostSingle(id,captchaPayload){showLoading('Sending like...');const body={postId:id,type:'post',...(captchaPayload||{})};const data=await api('/like',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});hideLoading();if(data.needsCaptcha){showCaptchaModal("Too many likes too fast — prove you're human 🐭",async(cp)=>{await doLikePostSingle(id,cp)});return}if(data.captchaFailed){markCaptchaError('modal');showToast('Wrong captcha, try again',true);return}if(!data.ok){showToast(data.error,true);return}likedPosts[id]=data.liked;saveLikedPosts();const cnt=document.getElementById('single-lc'),btn=document.getElementById('post-like-btn');if(btn){btn.classList.toggle('liked',data.liked);const svg=btn.querySelector('svg');if(svg)svg.setAttribute('fill',data.liked?'currentColor':'none')}if(cnt)cnt.textContent=data.count;showToast(data.liked?' Liked':'Unliked')}
+async function likePostSingle(id){if(!requireAuth())return;const btn=document.getElementById('post-like-btn');if(btn)btn.disabled=true;await doLikePostSingle(id,null);if(btn)btn.disabled=false;}
+async function doLikePostSingle(id,captchaPayload){
+  showLoading('Sending like...');const body={postId:id,type:'post',...(captchaPayload||{})};
+  const data=await api('/like',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});hideLoading();
+  if(data.needsCaptcha){showCaptchaModal("Too many likes too fast — prove you're human 🐭",async(cp)=>{await doLikePostSingle(id,cp);});return;}
+  if(data.captchaFailed){markCaptchaError('modal');showToast('Wrong captcha, try again',true);return;}
+  if(!data.ok){showToast(data.error,true);return;}
+  likedPosts[id]=data.liked;saveLikedPosts();
+  const cnt=document.getElementById('single-lc'),btn=document.getElementById('post-like-btn');
+  if(btn){btn.classList.toggle('liked',data.liked);const svg=btn.querySelector('svg');if(svg)svg.setAttribute('fill',data.liked?'currentColor':'none');}
+  if(cnt)cnt.textContent=data.count;
+  showToast(data.liked?' Liked':'Unliked');
+}
 
-function copyLink(id){const url=`${SITE}?post=${id}`;navigator.clipboard.writeText(url).then(()=>showToast(' Link copied!'))}
-function goList(e){e&&e.preventDefault();currentPostId=null;currentPostAuthor=null;allPostsCache=[];setUrl({post:null,page:null});renderList();scrollTo({top:0})}
+function copyLink(id){const url=`${SITE}?post=${id}`;navigator.clipboard.writeText(url).then(()=>showToast(' Link copied!'));}
+function goList(e){e&&e.preventDefault();currentPostId=null;currentPostAuthor=null;allPostsCache=[];setUrl({post:null,page:null});renderList();scrollTo({top:0});}
 
-function inlineFormat(s){return s.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\*(.+?)\*/g,'<em>$1</em>').replace(/`(.+?)`/g,'<code>$1</code>').replace(/!\[([^\]]*)\]\(([^)]+)\)/g,'<img src="$2" alt="$1">').replace(/\[([^\]]+)\]\(([^)]+)\)/g,'<a href="$2" target="_blank" rel="noopener">$1</a>')}
-function renderMarkdown(md){if(!md)return'';let s=md.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');s=s.replace(/^### (.+)$/gm,'<h3>$1</h3>').replace(/^## (.+)$/gm,'<h2>$1</h2>');s=s.replace(/((?:^- .+\n?)+)/gm,block=>{const items=block.split('\n').filter(l=>l.trim().startsWith('- ')).map(l=>`<li>${l.replace(/^- /,'').trim()}</li>`).join('');return`<ul style="margin:.5em 0 .8em 1.4em;padding:0">${items}</ul>\n`});s=s.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\*(.+?)\*/g,'<em>$1</em>').replace(/`(.+?)`/g,'<code>$1</code>').replace(/!\[([^\]]*)\]\(([^)]+)\)/g,'<img src="$2" alt="$1">').replace(/\[([^\]]+)\]\(([^)]+)\)/g,'<a href="$2" target="_blank" rel="noopener">$1</a>');const blocks=s.split(/\n{2,}/);return blocks.map(block=>{const trimmed=block.trim();if(!trimmed)return'';if(/^<(h[1-6]|ul|ol|li|pre|blockquote)[\s>]/.test(trimmed))return trimmed;return'<p>'+trimmed.replace(/\n/g,'<br>')+'</p>'}).filter(Boolean).join('\n')}
-function escHtml(s){if(typeof s!=='string')return'';return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function renderMarkdown(md){
+  if(!md)return'';
+  let s=md.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  s=s.replace(/^### (.+)$/gm,'<h3>$1</h3>').replace(/^## (.+)$/gm,'<h2>$1</h2>');
+  s=s.replace(/((?:^- .+\n?)+)/gm,block=>{const items=block.split('\n').filter(l=>l.trim().startsWith('- ')).map(l=>`<li>${l.replace(/^- /,'').trim()}</li>`).join('');return`<ul style="margin:.5em 0 .8em 1.4em;padding:0">${items}</ul>\n`;});
+  s=s.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\*(.+?)\*/g,'<em>$1</em>').replace(/`(.+?)`/g,'<code>$1</code>').replace(/!\[([^\]]*)\]\(([^)]+)\)/g,'<img src="$2" alt="$1">').replace(/\[([^\]]+)\]\(([^)]+)\)/g,'<a href="$2" target="_blank" rel="noopener">$1</a>');
+  const blocks=s.split(/\n{2,}/);
+  return blocks.map(block=>{const trimmed=block.trim();if(!trimmed)return'';if(/^<(h[1-6]|ul|ol|li|pre|blockquote)[\s>]/.test(trimmed))return trimmed;return'<p>'+trimmed.replace(/\n/g,'<br>')+'</p>';}).filter(Boolean).join('\n');
+}
+
+function escHtml(s){if(typeof s!=='string')return'';return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 
 route();
 setupDeveloperRain();
