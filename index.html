@@ -401,8 +401,8 @@ footer{
         <a class="card-link is-primary" href="/professional">Purchase</a>
         <a class="card-link is-primary" href="/docs">Documentation</a>
         <a class="card-link is-primary" href="/agreement">Agreement</a>
-        <a class="card-link is-primary" data-action="free" href="/download">Download (free)</a>
-        <a class="card-link is-primary" data-action="free" href="https://clip.place/w/2M3N73od2Ju1q7VwNb8nW6">Demo (Free)</a>
+        <a class="card-link is-primary" data-action="free" href="/download">Download (Free)</a>
+        <a class="card-link is-primary" data-action="free" href="https://clip.place/w/2M3N73od2Ju1q7VwNb8nW6">Showcase (Free)</a>
       </div>
     </div>
 
@@ -467,11 +467,21 @@ footer{
 
 // ts for the pro
 (function(){
-  var freeLink=document.querySelector('[data-action="free"]');
-  if(!freeLink) return;
-  var img=document.querySelector('.card-back .card-img-wrap img');
-  freeLink.addEventListener('mouseenter',function(){ img.src=img.dataset.alt; });
-  freeLink.addEventListener('mouseleave',function(){ img.src=img.dataset.default; });
+  document.querySelectorAll('[data-action="free"]').forEach(function(freeLink){
+    var card = freeLink.closest('.card-back');
+    if(!card) return;
+
+    var img = card.querySelector('.card-img-wrap img');
+    if(!img) return;
+
+    freeLink.addEventListener('mouseenter', function(){
+      if(img.dataset.alt) img.src = img.dataset.alt;
+    });
+
+    freeLink.addEventListener('mouseleave', function(){
+      if(img.dataset.default) img.src = img.dataset.default;
+    });
+  });
 })();
 
 // ts for the loading :O
