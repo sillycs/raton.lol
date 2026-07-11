@@ -259,8 +259,8 @@ var count = 1;
 
   var word = document.getElementById('statusWord');
   var dlBtn = document.getElementById('dlBtn');
-  var isUpdated = !isNaN(yourVersion) && yourVersion >= count;
-
+  var isUpdated = !isNaN(yourVersion) && yourVersion === count;
+  
   if(isUpdated){
     word.classList.add('ok');
     word.textContent = 'updated';
