@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TuxControl</title>
-<link rel="icon" type="image/png" href="https://raton.click/img/RATA.png">
+<link rel="icon" type="image/png" href="/img/RATA.png">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <link href="https://fonts.cdnfonts.com/css/kunal" rel="stylesheet">
 <link href="https://fonts.cdnfonts.com/css/nishiki-teki" rel="stylesheet">
@@ -26,8 +26,8 @@
   --font-body:'DM Sans',sans-serif;
   --tg:#229ED9;
 }
-*{cursor:url('https://raton.click/img/default.png') 0 0,auto}
-a,button,[role="button"]{cursor:url('https://raton.click/img/handpointing.png') 0 0,pointer}
+*{cursor:url('/img/default.png') 0 0,auto}
+a,button,[role="button"]{cursor:url('/img/handpointing.png') 0 0,pointer}
 ::-webkit-scrollbar{width:6px}
 ::-webkit-scrollbar-track{background:#0d0d0d}
 ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--purple),#5b21b6);border-radius:99px}
@@ -361,15 +361,15 @@ nav{
 <div class="rata-bg" id="rataBg" aria-hidden="true"></div>
 
 <nav id="mainNav">
-  <a class="nav-logo" href="https://raton.click/">
-    <img src="https://raton.click/img/RATA.png" width="28" height="28" alt="Logo" onerror="this.style.display='none'">
+  <a class="nav-logo" href="/">
+    <img src="/img/RATA.png" width="28" height="28" alt="Logo" onerror="this.style.display='none'">
     Raton
   </a>
   <ul class="nav-links">
-    <li><a href="https://raton.click/" class="nl-raton">Raton</a></li>
-    <li><a href="https://raton.click/" class="nl-tux">TuxControl</a></li>
-    <li><a href="https://raton.click/" class="nl-pear">iPear</a></li>
-    <li><a href="https://raton.click/blog" class="nl-forum">Forum</a></li>
+    <li><a href="/" class="nl-raton">Raton</a></li>
+    <li><a href="/" class="nl-tux">TuxControl</a></li>
+    <li><a href="/" class="nl-pear">iPear</a></li>
+    <li><a href="/blog" class="nl-forum">Forum</a></li>
   </ul>
   <button class="nav-mobile-toggle" aria-label="Menu" onclick="document.getElementById('mainNav').classList.toggle('open')">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
@@ -379,8 +379,8 @@ nav{
 <main class="main">
   <div class="page">
 
-    <a class="page-logo" href="https://raton.click/">
-      <img src="https://raton.click/img/tux.png" alt="TuxControl">
+    <a class="page-logo" href="/">
+      <img src="/img/tux.png" alt="TuxControl">
     </a>
 
     <h1 class="page-title">Purchase tuxControl</h1>
@@ -390,7 +390,7 @@ nav{
 
       <div class="method-card btc">
         <div class="method-logo">
-          <img src="https://raton.click/img/BTCLOGO.png" alt="Bitcoin">
+          <img src="/img/BTCLOGO.png" alt="Bitcoin">
         </div>
         <div class="method-divider"></div>
         <div class="method-info">
@@ -404,7 +404,7 @@ nav{
 
       <div class="method-card eth">
         <div class="method-logo">
-          <img src="https://raton.click/img/ETHEREUM.png" alt="Ethereum">
+          <img src="/img/ETHEREUM.png" alt="Ethereum">
         </div>
         <div class="method-divider"></div>
         <div class="method-info">
@@ -418,7 +418,7 @@ nav{
 
       <div class="method-card pp">
         <div class="method-logo">
-          <img src="https://raton.click/img/PayPal.png" alt="PayPal">
+          <img src="/img/PayPal.png" alt="PayPal">
         </div>
         <div class="method-divider"></div>
         <div class="method-info">
@@ -435,7 +435,7 @@ nav{
     <p>The showcase video is not ready yet</p>
   </div>
 </div>    
-      <a href="https://raton.click/blog" class="interface-link">
+      <a href="/blog" class="interface-link">
         Check the reviews
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
       </a>
@@ -452,8 +452,8 @@ nav{
         Contact me
       </a>
     </div>
-  <a class="footer-note" href="https://raton.click">
-    <img src="https://raton.click/img/RATA.png" width="13" height="13" alt="" onerror="this.style.display='none'">
+  <a class="footer-note" href="">
+    <img src="/img/RATA.png" width="13" height="13" alt="" onerror="this.style.display='none'">
     © 2026 SillyCS. All rights reserved
   </a>
   </div>
@@ -467,7 +467,7 @@ nav{
   var data=[{x:5,y:8,s:56,d:20,dl:0},{x:18,y:22,s:48,d:24,dl:5},{x:32,y:5,s:64,d:18,dl:9},{x:65,y:3,s:72,d:22,dl:13},{x:78,y:20,s:48,d:30,dl:7},{x:90,y:8,s:60,d:16,dl:11},{x:10,y:55,s:56,d:28,dl:3},{x:72,y:75,s:64,d:25,dl:6}];
   data.forEach(function(r){
     var img=document.createElement('img');
-    img.src='https://raton.click/img/RATA.png';
+    img.src='/img/RATA.png';
     img.className='rata-sprite';img.alt='';img.draggable=false;
     img.style.cssText='width:'+r.s+'px;height:'+r.s+'px;left:'+r.x+'%;top:'+r.y+'%;animation-duration:'+r.d+'s;animation-delay:-'+r.dl+'s';
     bg.appendChild(img);
@@ -487,7 +487,7 @@ function copyText(id, btn){
 // ts for the fairy :O
 (function(){
   var fairy=document.createElement('img');
-  fairy.src='https://raton.click/img/fairy.gif';
+  fairy.src='/img/fairy.gif';
   fairy.className='fairy';fairy.alt='';fairy.draggable=false;
   document.body.appendChild(fairy);
 
