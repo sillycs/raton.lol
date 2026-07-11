@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>iPear</title>
-<link rel="icon" type="image/png" href="https://raton.click/img/pear.png">
+<link rel="icon" type="image/png" href="/img/pear.png">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link href="https://fonts.cdnfonts.com/css/kunal" rel="stylesheet">
 <link href="https://fonts.cdnfonts.com/css/nishiki-teki" rel="stylesheet">
@@ -29,11 +29,11 @@
 }
 ::-webkit-scrollbar{width:6px}
 ::-webkit-scrollbar-track{background:#0d0d0d}
-::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--purple),#5b21b6);border-radius:99px;cursor:url('https://raton.click/img/handpointing.png') 0 0,pointer}
+::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--purple),#5b21b6);border-radius:99px;cursor:url('/img/handpointing.png') 0 0,pointer}
 ::-webkit-scrollbar-thumb:hover{background:var(--purple2)}
 *{scrollbar-width:thin;scrollbar-color:var(--purple) #0d0d0d}
-*{cursor:url('https://raton.click/img/default.png') 0 0,auto}
-a,button,[role="button"]{cursor:url('https://raton.click/img/handpointing.png') 0 0,pointer}
+*{cursor:url('/img/default.png') 0 0,auto}
+a,button,[role="button"]{cursor:url('/img/handpointing.png') 0 0,pointer}
 html{scroll-behavior:smooth}
 body{
   background:var(--bg);
@@ -219,15 +219,15 @@ footer{
 <div class="rata-bg" id="rataBg" aria-hidden="true"></div>
 
 <nav id="mainNav">
-  <a class="nav-logo" href="https://raton.click/">
-    <img src="https://raton.click/img/RATA.png" width="28" height="28" alt="Logo" onerror="this.style.display='none'">
+  <a class="nav-logo" href="/">
+    <img src="/img/RATA.png" width="28" height="28" alt="Logo" onerror="this.style.display='none'">
     Raton
   </a>
   <ul class="nav-links">
-    <li><a href="https://raton.click/" class="nl-raton">Raton</a></li>
-    <li><a href="https://raton.click/" class="nl-tux">TuxControl</a></li>
-    <li><a href="https://raton.click/" class="nl-pear">iPear</a></li>
-    <li><a href="https://raton.click/blog" class="nl-forum">Forum</a></li>
+    <li><a href="/" class="nl-raton">Raton</a></li>
+    <li><a href="/" class="nl-tux">TuxControl</a></li>
+    <li><a href="/" class="nl-pear">iPear</a></li>
+    <li><a href="/blog" class="nl-forum">Forum</a></li>
   </ul>
   <button class="nav-mobile-toggle" aria-label="Menu" onclick="document.getElementById('mainNav').classList.toggle('open')">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
@@ -240,9 +240,9 @@ footer{
     <div class="bubbles" id="bubbles"></div>
 
     <div class="avatar-wrap">
-      <img class="avatar" id="pfp" src="https://raton.click/img/profile.jpg" alt="Profile" draggable="false" onerror="this.style.display='none'">
+      <img class="avatar" id="pfp" src="/img/profile.jpg" alt="Profile" draggable="false" onerror="this.style.display='none'">
       <div class="status">
-        <img id="statusImg" src="https://raton.click/img/pear.png" alt="status" draggable="false">
+        <img id="statusImg" src="/img/pear.png" alt="status" draggable="false">
       </div>
     </div>
 
@@ -263,8 +263,8 @@ footer{
 </footer>
 
 <script>
-var PFP='https://raton.click/img/profile.jpg';
-var STATUS_IMG='https://raton.click/img/pear.png';
+var PFP='/img/profile.jpg';
+var STATUS_IMG='/img/pear.png';
 var HANDLE='SillyCS';
 var TELEGRAM_URL='https://t.me/sillycs';
 
@@ -328,7 +328,7 @@ var MESSAGES=[
   var data=[{x:5,y:8,s:56,d:20,dl:0},{x:18,y:22,s:48,d:24,dl:5},{x:32,y:5,s:64,d:18,dl:9},{x:65,y:3,s:72,d:22,dl:13},{x:78,y:20,s:48,d:30,dl:7},{x:90,y:8,s:60,d:16,dl:11},{x:10,y:55,s:56,d:28,dl:3},{x:72,y:75,s:64,d:25,dl:6}];
   data.forEach(function(r){
     var img=document.createElement('img');
-    img.src='https://raton.click/img/RATA.png';
+    img.src='/img/RATA.png';
     img.className='rata-sprite';img.alt='';img.draggable=false;
     img.style.cssText='width:'+r.s+'px;height:'+r.s+'px;left:'+r.x+'%;top:'+r.y+'%;animation-duration:'+r.d+'s;animation-delay:-'+r.dl+'s';
     bg.appendChild(img);
@@ -337,7 +337,7 @@ var MESSAGES=[
 
 (function(){
   var fairy=document.createElement('img');
-  fairy.src='https://raton.click/img/fairy.gif';
+  fairy.src='/img/fairy.gif';
   fairy.className='fairy';fairy.alt='';fairy.draggable=false;
   document.body.appendChild(fairy);
 
