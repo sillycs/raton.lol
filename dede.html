@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Dede sucks</title>
+
+<style>
+    * {
+        cursor: crosshair;
+    }
+
+    body {
+        margin: 0;
+        overflow: hidden;
+        background-image: url("/img/emerald.png");
+        background-size: cover;
+        background-position: center;
+        font-family: Comic Sans MS, Impact, sans-serif;
+    }
+
+    .text-rain {
+        position: absolute;
+        top: -100px;
+        color: lime;
+        font-size: 30px;
+        font-weight: bold;
+        text-shadow: 3px 3px 0 black;
+        white-space: nowrap;
+        animation: fall linear infinite;
+        transform: rotate(-10deg);
+    }
+
+    .laugh {
+        position: absolute;
+        top: -100px;
+        width: 70px;
+        height: 70px;
+        image-rendering: pixelated;
+        animation: fallImg linear infinite;
+    }
+
+    @keyframes fall {
+        from {
+            transform: translateY(-100px) rotate(-20deg);
+        }
+        to {
+            transform: translateY(120vh) rotate(20deg);
+        }
+    }
+
+    @keyframes fallImg {
+        from {
+            transform: translateY(-100px) rotate(0deg);
+        }
+        to {
+            transform: translateY(120vh) rotate(360deg);
+        }
+    }
+
+    .title {
+        position: fixed;
+        top: 40%;
+        width: 100%;
+        text-align: center;
+        font-size: 60px;
+        color: red;
+        background: yellow;
+        border: 10px dashed purple;
+        transform: rotate(-5deg);
+        z-index: 999;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="title">
+    DEDE FUCKING SUCKS AT LEAGUE OF LEGENDS
+</div>
+
+<script>
+const text = "dede fucking sucks at league of legends";
+
+for (let i = 0; i < 80; i++) {
+    let el = document.createElement("div");
+    el.className = "text-rain";
+    el.innerHTML = text;
+
+    el.style.left = Math.random() * 100 + "vw";
+    el.style.animationDuration = (2 + Math.random() * 5) + "s";
+    el.style.animationDelay = Math.random() * 5 + "s";
+    el.style.fontSize = (15 + Math.random() * 40) + "px";
+
+    document.body.appendChild(el);
+}
+
+
+for (let i = 0; i < 60; i++) {
+    let img = document.createElement("img");
+    img.src = "/img/laugh.png";
+    img.className = "laugh";
+
+    img.style.left = Math.random() * 100 + "vw";
+    img.style.animationDuration = (3 + Math.random() * 6) + "s";
+    img.style.animationDelay = Math.random() * 5 + "s";
+    img.style.width = (30 + Math.random() * 80) + "px";
+    img.style.height = img.style.width;
+
+    document.body.appendChild(img);
+}
+</script>
+
+</body>
+</html>
