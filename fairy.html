@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fairy Message</title>
+<link rel="icon" type="image/png" href="/img/RATA.png">
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.cdnfonts.com/css/kunal" rel="stylesheet">
+<link href="https://fonts.cdnfonts.com/css/nishiki-teki" rel="stylesheet">
+
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+    --bg:#0d0d0d;
+    --purple:#8b5cf6;
+    --purple2:#a78bfa;
+    --text:#f4f4f8;
+    --text2:#b7b7ca;
+    --font-display:'Nishiki-teki',sans-serif;
+    --font-logo:'kunal',sans-serif;
+    --font-body:'DM Sans',sans-serif;
+}
+
+*{
+    cursor:url('/img/default.png') 0 0,auto;
+}
+
+a,button,[role="button"]{
+    cursor:url('/img/handpointing.png') 0 0,pointer;
+}
+
+body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    min-height:100vh;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+
+.rata-bg{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:0;
+    overflow:hidden;
+}
+
+.rata-sprite{
+    position:absolute;
+    opacity:0;
+    will-change:transform,opacity;
+    filter:grayscale(20%) brightness(.65);
+    animation:rataFloat linear infinite;
+    transform-origin:center;
+    user-select:none;
+}
+
+@keyframes rataFloat{
+    0%{opacity:0;transform:translateY(0) rotate(0deg) scale(1)}
+    8%{opacity:.18}
+    50%{opacity:.10;transform:translateY(-28px) rotate(7deg) scale(1.05)}
+    92%{opacity:.18}
+    100%{opacity:0;transform:translateY(-55px) rotate(-4deg) scale(.95)}
+}
+
+
+.page{
+    position:relative;
+    z-index:2;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:18px;
+    text-align:center;
+    padding:40px;
+    animation:fadeUp .55s cubic-bezier(.22,1,.36,1);
+}
+
+@keyframes fadeUp{
+    from{opacity:0;transform:translateY(20px)}
+    to{opacity:1;transform:translateY(0)}
+}
+
+
+.bubble{
+    position:relative;
+    max-width:430px;
+    min-width:160px;
+    background:white;
+    color:#202020;
+    padding:15px 20px;
+    border-radius:18px;
+    font-size:.95rem;
+    font-weight:600;
+    line-height:1.45;
+    box-shadow:0 10px 35px rgba(0,0,0,.35);
+    animation:bob 3s ease-in-out infinite;
+    word-break:break-word;
+}
+
+.bubble:after{
+    content:"";
+    position:absolute;
+    left:50%;
+    bottom:-12px;
+    transform:translateX(-50%);
+    border:12px solid transparent;
+    border-top-color:white;
+}
+
+@keyframes bob{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-4px)}
+}
+
+/* Fairy */
+
+.fairy{
+    width:82px;
+    height:82px;
+    user-select:none;
+    pointer-events:none;
+    filter:drop-shadow(0 0 14px rgba(167,139,250,.7));
+}
+
+
+h1{
+    font-family:var(--font-logo);
+    font-size:1.55rem;
+    letter-spacing:.05em;
+}
+
+.subtitle{
+    color:var(--text2);
+    font-size:.95rem;
+}
+
+
+.btn-sm{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    padding:.62rem 1.35rem;
+    border-radius:10px;
+    background:var(--purple);
+    color:white;
+    text-decoration:none;
+    font-weight:600;
+    transition:.2s;
+}
+
+.btn-sm:hover{
+    background:#7c3aed;
+    transform:translateY(-2px);
+}
+</style>
+</head>
+
+<body>
+
+<div class="rata-bg" id="rataBg"></div>
+
+<main class="page">
+
+    <div id="bubble" class="bubble">
+        Hello!
+    </div>
+
+    <img class="fairy" src="/img/fairy.gif" draggable="false">
+
+    <h1>Fairy Message</h1>
+
+    <div class="subtitle">
+        The Raton fairy has a message for you
+    </div>
+
+    <a class="btn-sm" href="https://raton.fun">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+            <path d="M5 12h14"/>
+            <polyline points="12 5 19 12 12 19"/>
+        </svg>
+        Go to Raton
+    </a>
+
+</main>
+
+<script>
+(function(){
+    var bg=document.getElementById("rataBg");
+
+    var data=[
+        {x:5,y:8,s:56,d:20,dl:0},
+        {x:18,y:22,s:48,d:24,dl:5},
+        {x:32,y:5,s:64,d:18,dl:9},
+        {x:65,y:3,s:72,d:22,dl:13},
+        {x:78,y:20,s:48,d:30,dl:7},
+        {x:90,y:8,s:60,d:16,dl:11},
+        {x:10,y:55,s:56,d:28,dl:3},
+        {x:72,y:75,s:64,d:25,dl:6}
+    ];
+
+    data.forEach(function(r){
+        var img=document.createElement("img");
+        img.src="/img/RATA.png";
+        img.className="rata-sprite";
+        img.draggable=false;
+        img.style.cssText=
+            "width:"+r.s+"px;height:"+r.s+
+            "px;left:"+r.x+
+            "%;top:"+r.y+
+            "%;animation-duration:"+r.d+
+            "s;animation-delay:-"+r.dl+"s";
+
+        bg.appendChild(img);
+    });
+
+})();
+
+(function(){
+
+    var params=new URLSearchParams(location.search);
+
+    var msg=params.get("m");
+
+    if(!msg || !msg.trim())
+        msg="The fairy wanted to say hello!";
+
+    document.getElementById("bubble").textContent=msg;
+
+})();
+</script>
+
+</body>
+</html>
