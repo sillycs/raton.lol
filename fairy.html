@@ -3,7 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Fairy Message</title>
+
 <link rel="icon" type="image/png" href="/img/RATA.png">
 
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -11,7 +13,11 @@
 <link href="https://fonts.cdnfonts.com/css/nishiki-teki" rel="stylesheet">
 
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+*,*::before,*::after{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
 
 :root{
     --bg:#0d0d0d;
@@ -28,7 +34,9 @@
     cursor:url('/img/default.png') 0 0,auto;
 }
 
-a,button,[role="button"]{
+a,
+button,
+[role="button"]{
     cursor:url('/img/handpointing.png') 0 0,pointer;
 }
 
@@ -43,6 +51,7 @@ body{
     justify-content:center;
 }
 
+/* Background rats */
 
 .rata-bg{
     position:fixed;
@@ -63,11 +72,28 @@ body{
 }
 
 @keyframes rataFloat{
-    0%{opacity:0;transform:translateY(0) rotate(0deg) scale(1)}
-    8%{opacity:.18}
-    50%{opacity:.10;transform:translateY(-28px) rotate(7deg) scale(1.05)}
-    92%{opacity:.18}
-    100%{opacity:0;transform:translateY(-55px) rotate(-4deg) scale(.95)}
+    0%{
+        opacity:0;
+        transform:translateY(0) rotate(0deg) scale(1);
+    }
+
+    8%{
+        opacity:.18;
+    }
+
+    50%{
+        opacity:.10;
+        transform:translateY(-28px) rotate(7deg) scale(1.05);
+    }
+
+    92%{
+        opacity:.18;
+    }
+
+    100%{
+        opacity:0;
+        transform:translateY(-55px) rotate(-4deg) scale(.95);
+    }
 }
 
 
@@ -84,8 +110,15 @@ body{
 }
 
 @keyframes fadeUp{
-    from{opacity:0;transform:translateY(20px)}
-    to{opacity:1;transform:translateY(0)}
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
 }
 
 
@@ -93,7 +126,7 @@ body{
     position:relative;
     max-width:430px;
     min-width:160px;
-    background:white;
+    background:#fff;
     color:#202020;
     padding:15px 20px;
     border-radius:18px;
@@ -101,35 +134,75 @@ body{
     font-weight:600;
     line-height:1.45;
     box-shadow:0 10px 35px rgba(0,0,0,.35);
-    animation:bob 3s ease-in-out infinite;
-    word-break:break-word;
+    animation:bubbleBob 3s ease-in-out infinite;
+    overflow-wrap:anywhere;
 }
 
-.bubble:after{
+.bubble::after{
     content:"";
     position:absolute;
     left:50%;
     bottom:-12px;
     transform:translateX(-50%);
     border:12px solid transparent;
-    border-top-color:white;
+    border-top-color:#fff;
 }
 
-@keyframes bob{
-    0%,100%{transform:translateY(0)}
-    50%{transform:translateY(-4px)}
+@keyframes bubbleBob{
+    0%,100%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:translateY(-4px);
+    }
 }
 
 /* Fairy */
 
+.fairy-home{
+    position:relative;
+    width:96px;
+    height:96px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
 .fairy{
     width:82px;
     height:82px;
+    object-fit:contain;
     user-select:none;
     pointer-events:none;
     filter:drop-shadow(0 0 14px rgba(167,139,250,.7));
+    transition:
+        left .12s linear,
+        top .12s linear,
+        transform .12s linear,
+        filter .2s ease;
 }
 
+.fairy.flying{
+    position:fixed;
+    z-index:9999;
+    transition:
+        left .12s linear,
+        top .12s linear,
+        transform .12s linear;
+    filter:
+        drop-shadow(0 0 16px rgba(167,139,250,.95))
+        drop-shadow(0 0 35px rgba(139,92,246,.55));
+}
+
+.fairy.returning{
+    transition:
+        left .8s cubic-bezier(.22,1,.36,1),
+        top .8s cubic-bezier(.22,1,.36,1),
+        transform .8s cubic-bezier(.22,1,.36,1);
+}
+
+/* Heading */
 
 h1{
     font-family:var(--font-logo);
@@ -142,6 +215,71 @@ h1{
     font-size:.95rem;
 }
 
+/* Hand button */
+
+.thanks-area{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:5px;
+}
+
+.pet-button{
+    width:58px;
+    height:58px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:none;
+    border-radius:50%;
+    background:rgba(255,255,255,.06);
+    color:#fff;
+    font-size:2rem;
+    box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,.09),
+        0 8px 28px rgba(0,0,0,.25);
+    transition:
+        transform .18s ease,
+        background .18s ease,
+        box-shadow .18s ease;
+}
+
+.pet-button:hover{
+    transform:translateY(-2px) scale(1.06);
+    background:rgba(139,92,246,.18);
+    box-shadow:
+        inset 0 0 0 1px rgba(167,139,250,.3),
+        0 8px 30px rgba(139,92,246,.2);
+}
+
+.pet-button:active{
+    transform:translateY(1px) scale(.93);
+}
+
+.pet-button:disabled{
+    opacity:.65;
+}
+
+.pet-button.petting{
+    animation:petHand .42s ease-in-out 3;
+}
+
+@keyframes petHand{
+    0%,100%{
+        transform:rotate(0deg) translateY(0);
+    }
+
+    50%{
+        transform:rotate(-18deg) translateY(-8px);
+    }
+}
+
+.thanks-label{
+    color:var(--text2);
+    font-size:.8rem;
+    font-weight:500;
+}
+
 
 .btn-sm{
     display:inline-flex;
@@ -150,22 +288,75 @@ h1{
     padding:.62rem 1.35rem;
     border-radius:10px;
     background:var(--purple);
-    color:white;
+    color:#fff;
     text-decoration:none;
     font-weight:600;
-    transition:.2s;
+    transition:.2s ease;
 }
 
 .btn-sm:hover{
     background:#7c3aed;
     transform:translateY(-2px);
 }
+
+.btn-sm svg{
+    flex-shrink:0;
+}
+
+
+.thanks-message{
+    position:fixed;
+    left:50%;
+    bottom:28px;
+    z-index:10000;
+    transform:translate(-50%,20px);
+    padding:10px 16px;
+    border:1px solid rgba(167,139,250,.25);
+    border-radius:12px;
+    background:rgba(20,20,24,.9);
+    color:#fff;
+    font-size:.85rem;
+    font-weight:600;
+    opacity:0;
+    pointer-events:none;
+    backdrop-filter:blur(10px);
+    transition:.3s ease;
+}
+
+.thanks-message.visible{
+    opacity:1;
+    transform:translate(-50%,0);
+}
+
+@media (max-width:600px){
+    .page{
+        padding:25px;
+    }
+
+    .bubble{
+        max-width:calc(100vw - 45px);
+    }
+
+    h1{
+        font-size:1.3rem;
+    }
+}
+
+@media (prefers-reduced-motion:reduce){
+    *,
+    *::before,
+    *::after{
+        animation-duration:.01ms !important;
+        animation-iteration-count:1 !important;
+        scroll-behavior:auto !important;
+    }
+}
 </style>
 </head>
 
 <body>
 
-<div class="rata-bg" id="rataBg"></div>
+<div class="rata-bg" id="rataBg" aria-hidden="true"></div>
 
 <main class="page">
 
@@ -173,7 +364,15 @@ h1{
         Hello!
     </div>
 
-    <img class="fairy" src="/img/fairy.gif" draggable="false">
+    <div class="fairy-home" id="fairyHome">
+        <img
+            id="fairy"
+            class="fairy"
+            src="/img/fairy.gif"
+            alt="Raton fairy"
+            draggable="false"
+        >
+    </div>
 
     <h1>Fairy Message</h1>
 
@@ -181,59 +380,224 @@ h1{
         The Raton fairy has a message for you
     </div>
 
+    <div class="thanks-area">
+        <button
+            id="petButton"
+            class="pet-button"
+            type="button"
+            aria-label="Say thanks to the fairy"
+            title="Say thanks to the fairy"
+        >
+            🫳
+        </button>
+
+        <div class="thanks-label">
+            Say thanks to the fairy
+        </div>
+    </div>
+
     <a class="btn-sm" href="https://raton.fun">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
-            <path d="M5 12h14"/>
-            <polyline points="12 5 19 12 12 19"/>
+        <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            width="14"
+            height="14"
+            aria-hidden="true"
+        >
+            <path d="M5 12h14"></path>
+            <polyline points="12 5 19 12 12 19"></polyline>
         </svg>
+
         Go to Raton
     </a>
 
 </main>
 
+<div id="thanksMessage" class="thanks-message">
+    The fairy is happy :O
+</div>
+
 <script>
 (function(){
-    var bg=document.getElementById("rataBg");
+    var bg = document.getElementById("rataBg");
 
-    var data=[
-        {x:5,y:8,s:56,d:20,dl:0},
-        {x:18,y:22,s:48,d:24,dl:5},
-        {x:32,y:5,s:64,d:18,dl:9},
-        {x:65,y:3,s:72,d:22,dl:13},
-        {x:78,y:20,s:48,d:30,dl:7},
-        {x:90,y:8,s:60,d:16,dl:11},
-        {x:10,y:55,s:56,d:28,dl:3},
-        {x:72,y:75,s:64,d:25,dl:6}
+    var data = [
+        {x:5,  y:8,  s:56, d:20, dl:0},
+        {x:18, y:22, s:48, d:24, dl:5},
+        {x:32, y:5,  s:64, d:18, dl:9},
+        {x:65, y:3,  s:72, d:22, dl:13},
+        {x:78, y:20, s:48, d:30, dl:7},
+        {x:90, y:8,  s:60, d:16, dl:11},
+        {x:10, y:55, s:56, d:28, dl:3},
+        {x:72, y:75, s:64, d:25, dl:6}
     ];
 
     data.forEach(function(r){
-        var img=document.createElement("img");
-        img.src="/img/RATA.png";
-        img.className="rata-sprite";
-        img.draggable=false;
-        img.style.cssText=
-            "width:"+r.s+"px;height:"+r.s+
-            "px;left:"+r.x+
-            "%;top:"+r.y+
-            "%;animation-duration:"+r.d+
-            "s;animation-delay:-"+r.dl+"s";
+        var img = document.createElement("img");
+
+        img.src = "/img/RATA.png";
+        img.className = "rata-sprite";
+        img.alt = "";
+        img.draggable = false;
+
+        img.style.cssText =
+            "width:" + r.s + "px;" +
+            "height:" + r.s + "px;" +
+            "left:" + r.x + "%;" +
+            "top:" + r.y + "%;" +
+            "animation-duration:" + r.d + "s;" +
+            "animation-delay:-" + r.dl + "s;";
 
         bg.appendChild(img);
     });
-
 })();
 
 (function(){
+    var params = new URLSearchParams(window.location.search);
+    var message = params.get("m");
 
-    var params=new URLSearchParams(location.search);
+    if(!message || !message.trim()){
+        message = "The fairy wanted to say hello!";
+    }
 
-    var msg=params.get("m");
+    document.getElementById("bubble").textContent = message;
+})();
 
-    if(!msg || !msg.trim())
-        msg="The fairy wanted to say hello!";
+(function(){
+    var fairy = document.getElementById("fairy");
+    var fairyHome = document.getElementById("fairyHome");
+    var petButton = document.getElementById("petButton");
+    var thanksMessage = document.getElementById("thanksMessage");
 
-    document.getElementById("bubble").textContent=msg;
+    var flying = false;
+    var movementInterval = null;
+    var stopTimeout = null;
+    var messageTimeout = null;
 
+    var movementDuration = 5 * 1000;
+    var movementSpeed = 140;
+
+    function showThanksMessage(){
+        clearTimeout(messageTimeout);
+
+        thanksMessage.classList.add("visible");
+
+        messageTimeout = setTimeout(function(){
+            thanksMessage.classList.remove("visible");
+        }, 2500);
+    }
+
+    function getHomePosition(){
+        var rect = fairyHome.getBoundingClientRect();
+
+        return {
+            left: rect.left + ((rect.width - fairy.offsetWidth) / 2),
+            top: rect.top + ((rect.height - fairy.offsetHeight) / 2)
+        };
+    }
+
+    function moveFairy(){
+        var fairyWidth = fairy.offsetWidth || 82;
+        var fairyHeight = fairy.offsetHeight || 82;
+
+        var padding = 12;
+
+        var maxX = Math.max(
+            padding,
+            window.innerWidth - fairyWidth - padding
+        );
+
+        var maxY = Math.max(
+            padding,
+            window.innerHeight - fairyHeight - padding
+        );
+
+        var x = padding + Math.random() * (maxX - padding);
+        var y = padding + Math.random() * (maxY - padding);
+
+        var rotation = -35 + Math.random() * 70;
+        var scale = .8 + Math.random() * .5;
+
+        fairy.style.left = x + "px";
+        fairy.style.top = y + "px";
+        fairy.style.transform =
+            "rotate(" + rotation + "deg) scale(" + scale + ")";
+    }
+
+    function returnFairyHome(){
+        clearInterval(movementInterval);
+        clearTimeout(stopTimeout);
+
+        var home = getHomePosition();
+
+        fairy.classList.add("returning");
+
+        fairy.style.left = home.left + "px";
+        fairy.style.top = home.top + "px";
+        fairy.style.transform = "rotate(0deg) scale(1)";
+
+        setTimeout(function(){
+            fairy.classList.remove("flying");
+            fairy.classList.remove("returning");
+
+            fairy.style.position = "";
+            fairy.style.left = "";
+            fairy.style.top = "";
+            fairy.style.transform = "";
+
+            fairyHome.appendChild(fairy);
+
+            petButton.disabled = false;
+            flying = false;
+        }, 850);
+    }
+
+    function startFairyFlight(){
+        if(flying){
+            return;
+        }
+
+        flying = true;
+        petButton.disabled = true;
+
+        petButton.classList.remove("petting");
+        void petButton.offsetWidth;
+        petButton.classList.add("petting");
+
+        showThanksMessage();
+
+        var startRect = fairy.getBoundingClientRect();
+
+        document.body.appendChild(fairy);
+
+        fairy.classList.add("flying");
+
+        fairy.style.left = startRect.left + "px";
+        fairy.style.top = startRect.top + "px";
+        fairy.style.transform = "rotate(0deg) scale(1)";
+
+        setTimeout(function(){
+            moveFairy();
+
+            movementInterval = setInterval(function(){
+                moveFairy();
+            }, movementSpeed);
+        }, 300);
+
+        stopTimeout = setTimeout(function(){
+            returnFairyHome();
+        }, movementDuration);
+    }
+
+    petButton.addEventListener("click", startFairyFlight);
+
+    window.addEventListener("resize", function(){
+        if(flying){
+            moveFairy();
+        }
+    });
 })();
 </script>
 
