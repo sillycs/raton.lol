@@ -191,13 +191,20 @@ nav{
   transform:translateX(-50%) rotate(0deg);
   z-index:10;
 }
+/* las dos imagenes van apiladas: se cruzan con opacity en vez de cambiar el src */
 .card-back .card-img-wrap{
+  position:relative;
   width:820px;
   aspect-ratio:16/9;
 }
 .card-back .card-img-wrap img{
+  position:absolute;inset:0;
   width:100%;height:100%;object-fit:contain;
+  transition:opacity .18s ease;
 }
+.card-back .card-img-wrap .img-alt{opacity:0}
+.card-back.show-free .card-img-wrap .img-default{opacity:0}
+.card-back.show-free .card-img-wrap .img-alt{opacity:1}
 .card-back:hover{transform:translateX(-50%) scale(1.02)}
 
 .card-front{z-index:30}
@@ -391,11 +398,8 @@ footer{
       </span>
       <span class="card-title">Raton Professional</span>
       <div class="card-img-wrap">
-        <img
-          src="/img/ratonProfessional.png"
-          data-default="/img/ratonProfessional.png"
-          data-alt="/img/ratonFree.png"
-          alt="Raton Professional">
+        <img class="img-default" src="/img/ratonProfessional.png" alt="Raton Professional">
+        <img class="img-alt" src="/img/ratonFree.png" alt="Raton Free" aria-hidden="true">
       </div>
       <div class="card-links">
         <a class="card-link is-primary" href="/professional">Purchase</a>
@@ -466,21 +470,23 @@ footer{
 })();
 
 // ts for the pro
+// ya no cambiamos el src (eso era lo que bugeaba en equipos lentos / sin cache).
+// ahora solo prendemos y apagamos la clase .show-free y el CSS hace el cruce de opacity.
 (function(){
-  document.querySelectorAll('[data-action="free"]').forEach(function(freeLink){
-    var card = freeLink.closest('.card-back');
-    if(!card) return;
+  document.querySelectorAll('.card-back').forEach(function(card){
+    var links = card.querySelectorAll('[data-action="free"]');
+    if(!links.length) return;
 
-    var img = card.querySelector('.card-img-wrap img');
-    if(!img) return;
-
-    freeLink.addEventListener('mouseenter', function(){
-      if(img.dataset.alt) img.src = img.dataset.alt;
+    links.forEach(function(link){
+      link.addEventListener('mouseenter', function(){ card.classList.add('show-free'); });
+      link.addEventListener('mouseleave', function(){ card.classList.remove('show-free'); });
+      // por si alguien navega con teclado
+      link.addEventListener('focus', function(){ card.classList.add('show-free'); });
+      link.addEventListener('blur',  function(){ card.classList.remove('show-free'); });
     });
 
-    freeLink.addEventListener('mouseleave', function(){
-      if(img.dataset.default) img.src = img.dataset.default;
-    });
+    // red de seguridad: si el mouse se va de la card entera, volvemos al default
+    card.addEventListener('mouseleave', function(){ card.classList.remove('show-free'); });
   });
 })();
 
@@ -502,10 +508,16 @@ footer{
     loader.classList.add('hidden');
     setTimeout(function(){ loader.style.display='none'; }, 600);
   }
+  function tick(){ if(++done>=sources.length) hide(); }
   sources.forEach(function(src){
     var i=new Image();
-    i.onload=i.onerror=function(){ if(++done>=sources.length) hide(); };
     i.src=src;
+    // decode() espera a que este DECODIFICADA, no solo descargada
+    if(i.decode){
+      i.decode().then(tick, tick);
+    }else{
+      i.onload=i.onerror=tick;
+    }
   });
   setTimeout(hide, 5000); // just in case an image ghosts us
 })();
