@@ -1,81 +1,534 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <link rel="icon" href="RATA.png"/>
-    <title>Security</title>
-<meta charset="utf-8">
-    <meta name="theme-color" content="#AE7FE2"/>
-<meta name="color-scheme" content="dark"/>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Raton - Human Verification</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/kunal" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/nishiki-teki" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<meta property="og:type" content="website"/>
-<meta property="og:site_name" content="Raton Giveaways"/>
-<meta property="og:title" content="🎁 Giveaway"/>
-<meta property="og:description" content="A free giveaway is here, click to enter and check your win chances :)"/>
-<meta property="og:image" content="https://steep-sun-85c4.sillykuadro.workers.dev/og-image"/>
-<meta property="og:url" content=""/>
-<meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:title" content="🎁 Giveaway"/>
-<meta name="twitter:description" content="A free giveaway is here, click to enter and check your win chances :)"/>
-<style>
-html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    background: black;
-    overflow: hidden;
-}
+        :root {
+            --bg: #0d0d0d;
+            --surface: #141414;
+            --surface2: #1c1c1c;
+            --surface3: #222;
+            --border: rgba(255,255,255,0.07);
+            --border2: rgba(255,255,255,0.12);
+            --purple: #8b5cf6;
+            --purple2: #a78bfa;
+            --purple-dim: rgba(139,92,246,0.15);
+            --text: #f4f4f8;
+            --text2: #a0a0b8;
+            --text3: #606078;
+            --font-display: 'Nishiki-teki', sans-serif;
+            --font-logo: 'kunal', sans-serif;
+            --font-body: 'DM Sans', sans-serif;
+            --radius: 14px;
+        }
 
-#enter {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 20px 40px;
-    font-size: 24px;
-    background: black;
-    color: white;
-    border: 2px solid white;
-    cursor: pointer;
-}
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font-body);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
 
-video {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: none;
-}
-</style>
+        .blog-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 3rem;
+            height: 64px;
+            background: rgba(13,13,13,0.88);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: var(--font-logo);
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .nav-logo img {
+            width: 28px;
+            height: 28px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text2);
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--purple2);
+        }
+
+        .nav-links a.active {
+            color: var(--purple2);
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border2);
+            border-radius: var(--radius);
+            padding: 48px 40px 40px;
+            max-width: 440px;
+            width: 100%;
+            margin-top: 80px;
+            box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+            text-align: center;
+        }
+
+        .card-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--purple-dim);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            font-size: 28px;
+        }
+
+        .card h1 {
+            font-family: var(--font-display);
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--text);
+            letter-spacing: 0.04em;
+            margin-bottom: 8px;
+        }
+
+        .card p {
+            color: var(--text2);
+            font-size: 15px;
+            line-height: 1.5;
+            margin-bottom: 28px;
+        }
+
+        .captcha-box {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px 16px 16px;
+            margin-bottom: 20px;
+        }
+
+        .captcha-image {
+            background: #0a0a10;
+            border-radius: 10px;
+            padding: 8px 0;
+            margin-bottom: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            user-select: none;
+            position: relative;
+            border: 1px solid var(--border);
+        }
+
+        .captcha-image canvas {
+            display: block;
+            width: 100%;
+            max-width: 220px;
+            height: auto;
+            border-radius: 6px;
+            image-rendering: pixelated;
+        }
+
+        .refresh-btn {
+            position: absolute;
+            top: 6px;
+            right: 8px;
+            background: rgba(0,0,0,0.6);
+            border: 1px solid var(--border2);
+            color: var(--text2);
+            border-radius: 6px;
+            padding: 3px 10px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: var(--font-body);
+        }
+
+        .refresh-btn:hover {
+            background: rgba(255,255,255,0.1);
+            color: var(--text);
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .input-group input {
+            background: var(--surface3);
+            border: 1px solid var(--border2);
+            border-radius: 9px;
+            padding: 14px 16px;
+            font-size: 18px;
+            color: var(--text);
+            outline: none;
+            transition: 0.2s;
+            text-align: center;
+            letter-spacing: 3px;
+            font-weight: 500;
+            font-family: var(--font-body);
+        }
+
+        .input-group input:focus {
+            border-color: var(--purple);
+            box-shadow: 0 0 0 3px rgba(139,92,246,0.15);
+        }
+
+        .input-group input::placeholder {
+            color: var(--text3);
+            letter-spacing: 0.5px;
+            font-weight: 400;
+        }
+
+        .btn {
+            background: var(--purple);
+            border: none;
+            border-radius: 9px;
+            padding: 15px;
+            font-weight: 600;
+            font-size: 16px;
+            color: #fff;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: var(--font-body);
+            box-shadow: 0 4px 16px rgba(139,92,246,0.25);
+        }
+
+        .btn:hover {
+            background: #7c3aed;
+            transform: translateY(-1px);
+        }
+
+        .btn:active {
+            transform: scale(0.97);
+        }
+
+        .error-msg {
+            color: #f77b7b;
+            font-size: 14px;
+            margin-top: 12px;
+            min-height: 24px;
+        }
+
+        .footer-note {
+            margin-top: 16px;
+            font-size: 12px;
+            color: var(--text3);
+            letter-spacing: 0.04em;
+        }
+
+        #screamer-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            flex-direction: column;
+        }
+
+        #screamer-overlay video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        #screamer-overlay .close-btn {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: #fff;
+            padding: 10px 28px;
+            border-radius: 60px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: var(--font-body);
+            letter-spacing: 0.04em;
+        }
+
+        #screamer-overlay .close-btn:hover {
+            background: rgba(255,255,255,0.18);
+        }
+
+        @media (max-width: 768px) {
+            .blog-header {
+                padding: 0 1.2rem;
+            }
+            .nav-links {
+                display: none;
+            }
+            .card {
+                padding: 32px 20px 28px;
+                margin-top: 72px;
+            }
+            .card h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
 </head>
-
 <body>
 
-<button id="enter">Solve captcha</button>
+    <header class="blog-header">
+        <a class="nav-logo" href="#">
+            <img src="/img/RATA.png" alt="Raton" onerror="this.style.display='none'">
+            Raton
+        </a>
+        <ul class="nav-links">
+            <li><a href="#" class="active">Forum</a></li>
+            <li><a href="#">TuxControl</a></li>
+            <li><a href="#">iPear</a></li>
+        </ul>
+    </header>
 
-<video id="vid" loop>
-    <source src="img/coolvideo.mp4" type="video/mp4">
-</video>
+    <div class="card">
+        <div class="card-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                <polyline points="9 12 11 14 15 10"/>
+            </svg>
+        </div>
+        <h1>Human Check</h1>
+        <p>Type the characters you see in the image below</p>
 
-<script>
-const btn = document.getElementById("enter");
-const video = document.getElementById("vid");
+        <div class="captcha-box">
+            <div class="captcha-image" id="captchaContainer">
+                <canvas id="captchaCanvas" width="240" height="70"></canvas>
+                <button class="refresh-btn" id="refreshCaptcha">&#8634; New</button>
+            </div>
 
-btn.onclick = () => {
-    btn.style.display = "none";
-    video.style.display = "block";
+            <div class="input-group">
+                <input type="text" id="captchaInput" placeholder="Enter code" maxlength="6" autocomplete="off" spellcheck="false" />
+                <button class="btn" id="verifyBtn">Verify</button>
+            </div>
+        </div>
 
-    if (video.requestFullscreen) {
-        video.requestFullscreen();
-    }
+        <div class="error-msg" id="errorMsg"></div>
+        <div class="footer-note">humans only</div>
+    </div>
 
-    video.muted = false;
-    video.volume = 1.0;
-    video.play();
-};
-</script>
+    <div id="screamer-overlay">
+        <video id="screamerVideo" loop muted>
+            <source src="img/coolvideo.mp4" type="video/mp4" />
+        </video>
+        <button class="close-btn" id="closeScreamer">Close</button>
+    </div>
+
+    <script>
+        (function() {
+            var canvas = document.getElementById('captchaCanvas');
+            var ctx = canvas.getContext('2d');
+            var input = document.getElementById('captchaInput');
+            var verifyBtn = document.getElementById('verifyBtn');
+            var refreshBtn = document.getElementById('refreshCaptcha');
+            var errorMsg = document.getElementById('errorMsg');
+
+            var overlay = document.getElementById('screamer-overlay');
+            var video = document.getElementById('screamerVideo');
+            var closeBtn = document.getElementById('closeScreamer');
+
+            var currentCaptcha = '';
+
+            function generateCaptcha() {
+                var chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+                var code = '';
+                for (var i = 0; i < 6; i++) {
+                    code += chars.charAt(Math.floor(Math.random() * chars.length));
+                }
+                currentCaptcha = code;
+                drawCaptcha(code);
+                errorMsg.textContent = '';
+                input.value = '';
+                input.focus();
+            }
+
+            function drawCaptcha(text) {
+                var w = canvas.width;
+                var h = canvas.height;
+
+                ctx.fillStyle = '#0a0a12';
+                ctx.fillRect(0, 0, w, h);
+
+                for (var i = 0; i < 7; i++) {
+                    ctx.strokeStyle = 'rgba(80, 70, 130, ' + (0.15 + Math.random() * 0.2) + ')';
+                    ctx.lineWidth = 1.2 + Math.random() * 1.5;
+                    ctx.beginPath();
+                    ctx.moveTo(Math.random() * w, Math.random() * h);
+                    ctx.lineTo(Math.random() * w, Math.random() * h);
+                    ctx.stroke();
+                }
+
+                for (var i = 0; i < 120; i++) {
+                    ctx.fillStyle = 'rgba(180, 170, 220, ' + (0.08 + Math.random() * 0.18) + ')';
+                    ctx.beginPath();
+                    ctx.arc(Math.random() * w, Math.random() * h, 1 + Math.random() * 2, 0, 2 * Math.PI);
+                    ctx.fill();
+                }
+
+                var chars = text.split('');
+                var totalWidth = w - 30;
+                var startX = 15;
+                var charWidth = totalWidth / chars.length;
+
+                ctx.textBaseline = 'middle';
+                ctx.textAlign = 'center';
+
+                for (var i = 0; i < chars.length; i++) {
+                    var x = startX + i * charWidth + charWidth / 2;
+                    var y = h / 2 + (Math.random() - 0.5) * 14;
+
+                    var fontSize = 30 + Math.floor(Math.random() * 8);
+                    ctx.font = 'bold ' + fontSize + 'px "Courier New", monospace';
+
+                    var rotation = (Math.random() - 0.5) * 0.6;
+                    ctx.save();
+                    ctx.translate(x, y);
+                    ctx.rotate(rotation);
+
+                    var r = 160 + Math.floor(Math.random() * 70);
+                    var g = 140 + Math.floor(Math.random() * 80);
+                    var b = 220 + Math.floor(Math.random() * 35);
+                    ctx.fillStyle = 'rgb(' + r + ', ' + g + ', ' + b + ')';
+
+                    ctx.shadowColor = 'rgba(124, 109, 240, 0.3)';
+                    ctx.shadowBlur = 6;
+
+                    ctx.fillText(chars[i], 0, 0);
+                    ctx.restore();
+
+                    if (Math.random() > 0.5) {
+                        ctx.strokeStyle = 'rgba(124, 109, 240, 0.15)';
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(x - 10, y - 18 + Math.random() * 6);
+                        ctx.lineTo(x + 10, y - 18 + Math.random() * 6);
+                        ctx.stroke();
+                    }
+                }
+
+                ctx.fillStyle = 'rgba(255,255,255,0.02)';
+                ctx.beginPath();
+                ctx.arc(w * 0.8, h * 0.2, 30, 0, 2 * Math.PI);
+                ctx.fill();
+            }
+
+            function verifyCaptcha() {
+                var userInput = input.value.trim().toUpperCase();
+                if (!userInput) {
+                    errorMsg.textContent = 'Please type the code first.';
+                    return;
+                }
+
+                if (userInput === currentCaptcha) {
+                    errorMsg.textContent = '';
+                    showScreamer();
+                } else {
+                    errorMsg.textContent = 'Incorrect code, try again.';
+                    generateCaptcha();
+                }
+            }
+
+            function showScreamer() {
+                overlay.style.display = 'flex';
+                video.muted = false;
+                video.volume = 1.0;
+                video.currentTime = 0;
+
+                if (video.requestFullscreen) {
+                    video.requestFullscreen().catch(function() {});
+                }
+
+                video.play().catch(function() {});
+            }
+
+            function hideScreamer() {
+                overlay.style.display = 'none';
+                video.pause();
+                video.currentTime = 0;
+                if (document.fullscreenElement) {
+                    document.exitFullscreen().catch(function() {});
+                }
+            }
+
+            refreshBtn.addEventListener('click', generateCaptcha);
+            verifyBtn.addEventListener('click', verifyCaptcha);
+
+            input.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    verifyCaptcha();
+                }
+            });
+
+            closeBtn.addEventListener('click', hideScreamer);
+
+            overlay.addEventListener('click', function(e) {
+                if (e.target === overlay) hideScreamer();
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && overlay.style.display === 'flex') {
+                    hideScreamer();
+                }
+            });
+
+            generateCaptcha();
+            setTimeout(function() { input.focus(); }, 100);
+        })();
+    </script>
 
 </body>
 </html>
-
