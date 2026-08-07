@@ -462,7 +462,6 @@ const REACTIONS = [
 ];
 const CUSTOM_AVATARS = { 'Silly':'/img/silly.png', 'Moizefala':'/img/moizefala.png' };
 
-/* ── [buy] widget: coin icons, addresses, modal logic ── */
 const PAYMENT_ADDRESSES = {
   btc:{ label:'Bitcoin',  address:'14R3Re7w3pzd6N1wj4C2gNzx596eUH26Cj',                    uriScheme:'bitcoin'   },
   ltc:{ label:'Litecoin', address:'LXvrGCQb2JYduf6UpSJUdm3XsKsbtysbMY',                    uriScheme:'litecoin'  },
@@ -475,7 +474,7 @@ const COIN_ICONS = {
   tg:`<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="#26A5E4" d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>`,
 };
 function buyWidgetHTML(){
-  return `<div class="buy-widget"><div class="buy-widget-title">💳 Support this post</div>`+
+  return `<div class="buy-widget"><div class="buy-widget-title">Payment methods</div>`+
     `<button type="button" class="buy-option" onclick="openPaymentModal('btc')">${COIN_ICONS.btc}<span class="buy-option-text"><span class="buy-option-label">Buy with Bitcoin</span><span class="buy-option-sub">BTC · scan QR or copy address</span></span></button>`+
     `<button type="button" class="buy-option" onclick="openPaymentModal('ltc')">${COIN_ICONS.ltc}<span class="buy-option-text"><span class="buy-option-label">Buy with Litecoin</span><span class="buy-option-sub">LTC · scan QR or copy address</span></span></button>`+
     `<button type="button" class="buy-option" onclick="openPaymentModal('eth')">${COIN_ICONS.eth}<span class="buy-option-text"><span class="buy-option-label">Buy with Ethereum</span><span class="buy-option-sub">ETH · scan QR or copy address</span></span></button>`+
