@@ -405,7 +405,7 @@ footer{
         <a class="card-link is-primary" href="/professional">Purchase</a>
         <a class="card-link is-primary" href="/docs">Documentation</a>
         <a class="card-link is-primary" href="/agreement">Agreement</a>
-        <a class="card-link is-primary" data-action="free" href="/download">Download (Free)</a>
+        <a class="card-link is-primary" data-action="free" href="/download">Download</a>
         <a class="card-link is-primary" data-action="free" href="https://clip.place/w/2M3N73od2Ju1q7VwNb8nW6">Showcase (Free)</a>
       </div>
     </div>
@@ -418,9 +418,7 @@ footer{
       <span class="card-title">TuxControl</span>
       <div class="card-img-wrap">
         <img src="/img/tuxControl.png" alt="TuxControl">
-      </div>
-      <div class="card-links">
-                  <a class="card-link" href="/tux/purchase">Purchase</a>
+      </div>
         <a class="card-link" href="/tux/home">Details</a>
       </div>
     </div>
@@ -470,8 +468,6 @@ footer{
 })();
 
 // ts for the pro
-// ya no cambiamos el src (eso era lo que bugeaba en equipos lentos / sin cache).
-// ahora solo prendemos y apagamos la clase .show-free y el CSS hace el cruce de opacity.
 (function(){
   document.querySelectorAll('.card-back').forEach(function(card){
     var links = card.querySelectorAll('[data-action="free"]');
@@ -511,8 +507,7 @@ footer{
   function tick(){ if(++done>=sources.length) hide(); }
   sources.forEach(function(src){
     var i=new Image();
-    i.src=src;
-    // decode() espera a que este DECODIFICADA, no solo descargada
+    i.src=src;
     if(i.decode){
       i.decode().then(tick, tick);
     }else{
