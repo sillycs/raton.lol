@@ -91,6 +91,7 @@ nav{
 .nav-links a.nl-tux{color:#ff8c42}
 .nav-links a.nl-pear{color:#38bdf8}
 .nav-links a.nl-forum{color:#d6c9ff}
+.nav-links a.nl-wallet{color:#f4f4f5}
 .nav-links a.nl-forum:hover{filter:brightness(1.15)}
 .nav-mobile-toggle{display:none;background:none;border:none;color:var(--text);padding:6px}
 @media(max-width:768px){
@@ -134,12 +135,13 @@ nav{
   position:relative;
   width:100%;
   max-width:1300px;
-  height:800px;
+  height:1130px;
   margin:4.5rem auto 2.5rem;
 }
 .card[data-app="tux"]{--accent:#ff8c42}
 .card[data-app="professional"]{--accent:var(--purple2)}
 .card[data-app="pear"]{--accent:#38bdf8}
+.card[data-app="wallet"]{--accent:#f4f4f5}
 .card{
   position:absolute;
   display:flex;flex-direction:column;align-items:center;
@@ -213,6 +215,12 @@ nav{
 .card-left:hover{transform:rotate(-2.5deg) scale(1.03)}
 .card-right{top:330px;right:-2%;transform:rotate(2.5deg);z-index:20}
 .card-right:hover{transform:rotate(2.5deg) scale(1.03)}
+.card-bottom{top:600px;left:50%;transform:translateX(-50%) rotate(-1deg);z-index:45}
+.card-bottom:hover{transform:translateX(-50%) rotate(-1deg) scale(1.03)}
+.card-bottom .card-img-wrap{position:relative;width:640px;aspect-ratio:1280/800}
+.card-bottom .card-img-wrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .45s ease}
+.card-bottom .card-img-wrap img.on{opacity:1}
+.card-tag img{width:16px;height:16px;display:block}
 
 .card-links{
   display:flex;flex-direction:column;align-items:center;gap:0.3rem;
@@ -266,7 +274,8 @@ footer{
   .card-left:hover,.card-right:hover,.card-back:hover{transform:scale(1.02) !important}
   .trio:hover .card:not(:hover){transform:none !important}
   .card-back .card-img-wrap,
-  .card-front .card-img-wrap{width:360px}
+  .card-front .card-img-wrap,
+  .card-bottom .card-img-wrap{width:360px}
   footer{padding:1.2rem}
 }
 
@@ -377,6 +386,7 @@ footer{
     <li><a href="/download" class="nl-raton">Raton</a></li>
     <li><a href="/tux/home" class="nl-tux">TuxControl</a></li>
     <li><a href="/pear/home" class="nl-pear">iPear</a></li>
+    <li><a href="/wallet" class="nl-wallet">Wallet</a></li>
     <li><a href="/blog" class="nl-forum">Forum</a></li>
   </ul>
   <button class="nav-mobile-toggle" aria-label="Menu" onclick="document.getElementById('mainNav').classList.toggle('open')">
@@ -439,6 +449,26 @@ footer{
       </div>
     </div>
 
+    <div class="card card-front card-bottom" data-app="wallet">
+      <span class="card-tag">
+        <img src="/wallet/silleticon.png" alt="">
+        Windows · Linux · Android
+      </span>
+      <span class="card-title">Sillet Wallet</span>
+      <div class="card-img-wrap">
+        <img class="on" src="/wallet/img/home-dark.webp" alt="Sillet Wallet">
+        <img src="/wallet/img/market.webp" alt="" aria-hidden="true">
+        <img src="/wallet/img/send.webp" alt="" aria-hidden="true">
+        <img src="/wallet/img/home-light.webp" alt="" aria-hidden="true">
+        <img src="/wallet/img/trade.webp" alt="" aria-hidden="true">
+        <img src="/wallet/img/home-raton.webp" alt="" aria-hidden="true">
+      </div>
+      <div class="card-links">
+        <a class="card-link is-primary" href="/wallet">Details</a>
+        <a class="card-link is-primary" href="/wallet/download">Download (Free)</a>
+      </div>
+    </div>
+
   </div>
 
   <p class="hint hint-warning">
@@ -477,14 +507,22 @@ footer{
     links.forEach(function(link){
       link.addEventListener('mouseenter', function(){ card.classList.add('show-free'); });
       link.addEventListener('mouseleave', function(){ card.classList.remove('show-free'); });
-      // por si alguien navega con teclado
       link.addEventListener('focus', function(){ card.classList.add('show-free'); });
       link.addEventListener('blur',  function(){ card.classList.remove('show-free'); });
     });
 
-    // red de seguridad: si el mouse se va de la card entera, volvemos al default
     card.addEventListener('mouseleave', function(){ card.classList.remove('show-free'); });
   });
+})();
+
+(function(){
+  var card=document.querySelector('.card-bottom');
+  if(!card) return;
+  var imgs=card.querySelectorAll('.card-img-wrap img');
+  var i=0, timer=null;
+  function show(n){ imgs[i].classList.remove('on'); i=n%imgs.length; imgs[i].classList.add('on'); }
+  card.addEventListener('mouseenter',function(){ clearInterval(timer); show(i+1); timer=setInterval(function(){ show(i+1); },1400); });
+  card.addEventListener('mouseleave',function(){ clearInterval(timer); show(0); });
 })();
 
 // ts for the loading :O
@@ -496,6 +534,8 @@ footer{
     '/img/ratonFree.png',
     '/img/tuxControl.png',
     '/img/Pear.png',
+    '/wallet/silleticon.png',
+    '/wallet/img/home-dark.webp',
     '/img/fairy.gif',
     '/img/RATA.png'
   ];
@@ -508,7 +548,8 @@ footer{
   function tick(){ if(++done>=sources.length) hide(); }
   sources.forEach(function(src){
     var i=new Image();
-    i.src=src;
+    i.src=src;
+
     if(i.decode){
       i.decode().then(tick, tick);
     }else{
