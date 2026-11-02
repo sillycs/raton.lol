@@ -3,7 +3,7 @@
     {
       "id": 1,
       "author": "@SillyCS",
-      "title": "💜 Welcome to Sillet",
+      "title": "❤ Welcome to Sillet",
       "description": "Hey everyone! Thanks for giving Sillet a try. Your private keys stay right on your device, so you remain in control of your wallet. Just head over to Receive, choose your coin and network, and you're ready to go! We really but really appreciate having you here. Stay safe and enjoy our wallet :)",
       "date": "2026-11-01",
       "url": "https://raton.fun/wallet"
@@ -14,7 +14,15 @@
       "title": "How Sillet keeps you safe",
       "description": "Sillet has no accounts, no tracking and no servers of our own, so we never see your keys, balances or activity. Your wallet is encrypted with AES-256 and a strong password key, locked to your computer so a stolen copy is useless, and protected from clipboard hijackers, screenshots and apps trying to read its memory. And soon Sillet will be open source, so anyone can check the code for themselves. Thanks for trusting us"
       "date": "2026-11-02",
-      "url": "https://raton.fun/wallet"
+      "url": "https://raton.fun/wallet/secure"
+    },
+    {
+      "id": 3,
+      "author": "@SillyCS",
+      "title": "Release",
+      "description": "Sillet has been released to the public. Thank you very much for your support and messages. Remember to join the community at t.me/sillyisafed"
+      "date": "2026-11-02",
+      "url": "https://t.me/sillyisafed"
     }
   ]
 }
