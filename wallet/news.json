@@ -12,7 +12,7 @@
       "id": 2,
       "author": "@Moizefala",
       "title": "✿ How Sillet keeps you safe",
-      "description": "Sillet has no accounts, no tracking and no servers of our own, so we never see your keys, balances or activity. Your wallet is encrypted with AES-256 and a strong password key, locked to your computer so a stolen copy is useless, and protected from clipboard hijackers, screenshots and apps trying to read its memory. And soon Sillet will be open source, so anyone can check the code for themselves. Thanks for trusting us, we attached a link to our page with safety tutorials"
+      "description": "Sillet has no accounts, no tracking and no servers of our own, so we never see your keys, balances or activity. Your wallet is encrypted with AES-256 and a strong password key, locked to your computer so a stolen copy is useless, and protected from clipboard hijackers, screenshots and apps trying to read its memory. And soon Sillet will be open source, so anyone can check the code for themselves. Thanks for trusting us, we attached a link to our page with safety tutorials",
       "date": "2026-11-02",
       "url": "https://raton.fun/wallet/secure"
     },
@@ -23,6 +23,14 @@
       "description": "Sillet has been released to the public. Thank you very much for your support and messages. Remember to join the community clicking the attached link",
       "date": "2026-11-02",
       "url": "https://t.me/sillyisafed"
+    },
+    {
+      "id": 4,
+      "author": "@Moizefala",
+      "title": "✦ Sillet 1.1.1",
+      "description": "Sillet now speaks French, and you get a notice when a new version is out. On Windows it can update itself, on by default and easy to turn off in Settings. On phones, pages and scrolling feel smoother and news now swipe sideways. Activity can be filtered by sent and received, there is a new Screenshot reminder setting. Thanks to sami for reviewing the French translations (@Moilalamoi). Download the new version with the attached link",
+      "date": "2026-11-03",
+      "url": "https://raton.fun/wallet/download"
     }
   ]
 }
