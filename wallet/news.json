@@ -39,6 +39,14 @@
       "description": "Sillet 1.1.2 is out and it is a big one. Sillet now speaks French, you get a notice when a new version is out, and on Windows it can install updates by itself with a simple switch in Settings. You can have several accounts per network, add an optional BIP-39 passphrase, and add your own tokens by contract address. Incoming payments now show the transaction id and who sent it, and Linea, Blast and Gnosis join the supported networks. On phones, pages and scrolling feel smoother and news swipe sideways. Activity can be filtered by sent and received, and Settings is tidier, with a little info icon whenever there is more to read. Thanks to sami for reviewing the French translations (@Moilalamoi). Download the new version with the attached link",
       "date": "2026-11-03",
       "url": "https://raton.fun/wallet/download"
+    },
+    {
+      "id": 6,
+      "author": "@Moizefala",
+      "title": "✧ Sillet 1.1.3",
+      "description": "Sillet 1.1.3 is here. Chainlink (LINK), Worldcoin, FDUSD and TRUMP join the coins, and XRP prices are in. Payments now show Pending, Confirmed and Sent with checks, and received payments tell you their status in notifications. When you send to an address for the first time, the review screen lets you know. Settings has a search bar, currencies come with flags, and on phones changing tabs feels a lot faster. Max in Trade now leaves room for the network fee. Developer mode is hidden at the bottom of Settings if you want to try fake payments. Download the new version with the attached link",
+      "date": "2026-11-04",
+      "url": "https://raton.fun/wallet/download"
     }
   ]
 }
