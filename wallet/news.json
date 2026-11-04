@@ -27,8 +27,16 @@
     {
       "id": 4,
       "author": "@Moizefala",
-      "title": "✦ Sillet 1.1.1",
-      "description": "Sillet now speaks French, and you get a notice when a new version is out. On Windows it can update itself, on by default and easy to turn off in Settings. On phones, pages and scrolling feel smoother and news now swipe sideways. Activity can be filtered by sent and received, there is a new Screenshot reminder setting. Thanks to sami for reviewing the French translations (@Moilalamoi). Download the new version with the attached link",
+      "title": "❖ More privacy in your hands",
+      "description": "Sillet 1.1.2 brings new ways to protect your privacy. Turn on rotating receive addresses in Settings and Bitcoin, Litecoin and Dogecoin give you a fresh address after every payment, while your old ones keep working. Change from your sends also goes to new addresses of your wallet now. You can route Sillet through a SOCKS5 proxy or Tor, or point any network to a node you run yourself. We also merged our guides into one page, with how Sillet protects you, which services it talks to, the roadmap and the known issues. Read it with the attached link",
+      "date": "2026-11-03",
+      "url": "https://raton.fun/wallet/secure"
+    },
+    {
+      "id": 5,
+      "author": "@Moizefala",
+      "title": "✦ Sillet 1.1.2",
+      "description": "Sillet 1.1.2 is out and it is a big one. Sillet now speaks French, you get a notice when a new version is out, and on Windows it can install updates by itself with a simple switch in Settings. You can have several accounts per network, add an optional BIP-39 passphrase, and add your own tokens by contract address. Incoming payments now show the transaction id and who sent it, and Linea, Blast and Gnosis join the supported networks. On phones, pages and scrolling feel smoother and news swipe sideways. Activity can be filtered by sent and received, and Settings is tidier, with a little info icon whenever there is more to read. Thanks to sami for reviewing the French translations (@Moilalamoi). Download the new version with the attached link",
       "date": "2026-11-03",
       "url": "https://raton.fun/wallet/download"
     }
