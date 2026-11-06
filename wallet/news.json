@@ -48,5 +48,13 @@
       "date": "2026-11-04",
       "url": "https://raton.fun/wallet/download"
     }
+    {
+      "id": 7,
+      "author": "@Moizefala",
+      "title": "✺ Sillet 1.1.4",
+      "description": "Sillet 1.1.4 is here. Bitcoin Cash, XRP, TON, Sui and Cosmos (ATOM) join the networks. Stuck payment? You can now speed it up by paying a little more fee, cancel it on EVM networks, or retry one that failed, and Sillet warns you when a fee looks too high. Android gets widgets for Market, quick actions and your address as a QR code, Lite mode for better performance at android, and everything is faster and lighter. The Horror theme makes way for a new Litecoin theme, flags now load instantly and Receive search matches Market. We also hardened security: updates only install when you press Install, automatic updates are off by default, you can turn off news, predictions and update checks, swaps show where your funds go before you confirm, and your secret phrase is wiped from memory when you lock the wallet. Download the new version with the attached link",
+      "date": "2026-11-06",
+      "url": "https://github.com/sillycs/Sillet-Wallet/releases/tag/v1.1.4"
+    }
   ]
 }
