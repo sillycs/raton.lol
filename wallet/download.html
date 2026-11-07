@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Secure your funds</title>
-<meta name="description" content="How to keep your crypto safe with Sillet">
+<title>Download Sillet Wallet</title>
+<meta name="description" content="Download Sillet Wallet for Windows, Linux or Android, or get the browser extension">
 <meta name="theme-color" content="#09090B">
-<meta property="og:title" content="Secure your funds with Sillet">
-<meta property="og:description" content="Setup, everyday habits, privacy, services used, roadmap and issues">
+<meta property="og:title" content="Download Sillet Wallet">
+<meta property="og:description" content="A free, safe and private crypto wallet">
 <meta property="og:image" content="/wallet/silleticon.png">
 <link rel="icon" type="image/png" href="/wallet/silleticon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,365 +18,238 @@
   --bg:#09090B;--surface:#111113;--surface-alt:#18181B;--pressed:#222226;
   --border:#1C1C20;--border-strong:#2E2E34;
   --text:#F4F4F5;--text-2:#8C8C96;--text-3:#56565F;
-  --good:#3DD68C;--warn:#F5B84B;--bad:#F2555A;
   --radius-lg:20px;--ease:cubic-bezier(.2,.7,.2,1);
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font-family:Inter,"Segoe UI",system-ui,sans-serif;font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden;min-height:100vh;display:flex;flex-direction:column}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--text);font-family:Inter,"Segoe UI",system-ui,sans-serif;font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;min-height:100vh;display:flex;flex-direction:column}
 a{color:inherit;text-decoration:none}
 img{display:block;max-width:100%}
-code{font-family:Consolas,"Cascadia Mono",monospace;font-size:12.5px;color:var(--text);background:var(--surface-alt);border:1px solid var(--border);padding:1px 6px;border-radius:6px}
 .nav{position:sticky;top:0;z-index:100;background:rgba(9,9,11,.88);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid var(--border)}
 .nav-bar{position:relative;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 3rem}
 .brand{display:flex;align-items:center;gap:2px;font-weight:800;font-size:1.45rem;letter-spacing:-.02em;color:var(--text)}
 .brand img{width:28px;height:28px}
+.brand-icon{cursor:pointer;transform-origin:50% 100%}
+.brand-icon.jump{animation:jump .7s cubic-bezier(.3,1.6,.5,1)}
+@keyframes jump{0%{transform:translateY(0) scale(1,1)}15%{transform:translateY(0) scale(1.15,.85)}45%{transform:translateY(-14px) scale(.92,1.1) rotate(-8deg)}70%{transform:translateY(0) scale(1.08,.92)}100%{transform:translateY(0) scale(1,1)}}
 .links{display:flex;align-items:center;gap:2rem;list-style:none;position:absolute;left:50%;transform:translateX(-50%)}
 .links a{color:var(--text-2);font-size:.875rem;font-weight:500;transition:color .2s}
 .links a:hover,.links a.active{color:var(--text)}
 .nav-toggle{display:none;background:none;border:0;color:var(--text);padding:6px;cursor:pointer}
 .nav-toggle svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2}
-.progress{position:absolute;left:0;bottom:-1px;height:2px;width:100%;transform-origin:0 50%;transform:scaleX(0);background:linear-gradient(90deg,#71717a,#fff)}
-main{flex:1;padding:72px 24px 40px}
-.wrap{width:100%;max-width:860px;margin:0 auto}
-.hero{text-align:center}
+.fairy{position:fixed;left:0;top:0;width:52px;height:52px;z-index:95;pointer-events:none;will-change:transform;opacity:0;transition:opacity .4s}
+.fairy.on{opacity:1}
+.sparkle{position:fixed;width:6px;height:6px;margin:-3px 0 0 -3px;border-radius:50%;pointer-events:none;z-index:94;background:radial-gradient(circle,#fff 0%,rgba(255,255,255,.55) 55%,rgba(255,255,255,0) 72%);animation:sparkleFade .9s ease-out forwards}
+@keyframes sparkleFade{0%{opacity:1;transform:scale(var(--sc,1))}100%{opacity:0;transform:scale(0) translateY(12px)}}
+
+main{flex:1;display:flex;align-items:center;justify-content:center;padding:72px 24px 88px}
+.page{width:100%;max-width:880px;text-align:center}
 .logo{width:84px;height:84px;margin:0 auto 26px;animation:float 6s ease-in-out infinite}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-h1{font-size:clamp(34px,5.4vw,54px);line-height:1.05;letter-spacing:-.035em;font-weight:700;text-wrap:balance}
-.sub{max-width:560px;margin:16px auto 0;color:var(--text-2);font-size:16.5px;text-wrap:balance}
-.truth{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:40px;text-align:left}
-.truth div{padding:18px;background:var(--surface);border:1px solid var(--border);border-radius:16px}
-.truth b{display:flex;align-items:center;gap:9px;font-size:14px;margin-bottom:5px}
-.truth span{display:block;font-size:13px;color:var(--text-2)}
-.phase{position:relative;margin-top:84px;padding-left:64px}
-.phase::before{content:"";position:absolute;left:21px;top:46px;bottom:-60px;width:2px;background:linear-gradient(var(--border-strong),transparent)}
-.phase:last-of-type::before{display:none}
-.num{position:absolute;left:0;top:0;width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:var(--text);color:var(--bg);font-weight:800;font-size:17px}
-.phase h2{font-size:clamp(24px,3.4vw,32px);letter-spacing:-.025em;line-height:1.15;font-weight:700;padding-top:2px}
-.lead{color:var(--text-2);margin-top:8px;max-width:620px;text-wrap:pretty}
-.items{display:grid;gap:12px;margin-top:26px}
-.item{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px 22px;transition:border-color .3s,transform .35s var(--ease)}
-.item:hover{border-color:var(--border-strong);transform:translateY(-2px)}
-.ic{width:20px;height:20px;fill:currentColor;display:block;flex:none}
-.item-head{display:flex;align-items:center;justify-content:space-between;gap:6px 14px;flex-wrap:wrap}
-.item h3{display:flex;align-items:center;gap:10px;font-size:15.5px;font-weight:600;letter-spacing:-.01em}
-.path{font-size:12px;color:var(--text-3);white-space:nowrap}
-.item p{margin:3px 0 0 30px;color:var(--text-2);font-size:14px;text-wrap:pretty}
-.dont{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:26px}
-.dont .col{padding:20px 22px;border-radius:var(--radius-lg);background:var(--surface);border:1px solid var(--border)}
-.dont h3{font-size:14px;font-weight:700;display:flex;align-items:center;gap:9px;margin-bottom:10px}
-.dont .yes h3{color:var(--good)}
-.dont .no h3{color:var(--bad)}
-.dont ul{list-style:none;display:grid;gap:8px}
-.dont li{font-size:13.5px;color:var(--text-2);padding-left:18px;position:relative}
-.dont li::before{content:"";position:absolute;left:0;top:9px;width:7px;height:7px;border-radius:50%}
-.dont .yes li::before{background:var(--good)}
-.dont .no li::before{background:var(--bad)}
-.split{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:26px}
-.tier{padding:22px;border-radius:var(--radius-lg);background:var(--surface);border:1px solid var(--border)}
-.tier small{color:var(--text-3);font-size:12px;letter-spacing:.06em;text-transform:uppercase;font-weight:600}
-.tier h3{display:flex;align-items:center;gap:10px;font-size:18px;margin:8px 0 4px}
-.tier p{font-size:13.5px;color:var(--text-2)}
-.bar{height:8px;border-radius:99px;background:var(--surface-alt);margin-top:14px;overflow:hidden}
-.bar span{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#71717a,#fff)}
-.callout{display:flex;gap:12px;align-items:flex-start;margin-top:22px;padding:16px 20px;border-radius:16px;background:var(--surface-alt);border:1px solid var(--border-strong);font-size:14px;color:var(--text-2)}
-.callout b{color:var(--text)}
-.finish{margin-top:90px;text-align:center;padding-bottom:20px}
-.finish h2{font-size:clamp(28px,4.4vw,42px);letter-spacing:-.03em;line-height:1.1;text-wrap:balance}
-.finish p{color:var(--text-2);max-width:480px;margin:12px auto 0}
-.btns{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:26px}
-.btn{display:inline-flex;align-items:center;justify-content:center;height:44px;padding:0 22px;border-radius:12px;font-weight:600;font-size:14px;border:1px solid var(--border-strong);background:var(--surface-alt);cursor:pointer;color:var(--text);font-family:inherit;transition:background .25s,color .25s,border-color .25s,transform .25s var(--ease)}
-.btn:hover{background:var(--text);color:var(--bg);border-color:var(--text);transform:translateY(-2px)}
-.btn.solid{background:var(--text);color:var(--bg);border-color:var(--text)}
-.btn.solid:hover{background:#fff}
-.back{display:inline-flex;align-items:center;gap:8px;margin-top:34px;color:var(--text-2);font-size:14px;transition:color .2s}
+h1{font-size:clamp(34px,5.4vw,52px);line-height:1.05;letter-spacing:-.035em;font-weight:700;text-wrap:balance}
+.sub{max-width:460px;margin:14px auto 0;color:var(--text-2);font-size:16px;text-wrap:balance}
+
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:48px}
+.card{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;padding:34px 22px 24px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);transition:transform .35s var(--ease),border-color .3s,background .3s}
+.card:hover,.card:focus-visible{transform:translateY(-6px);border-color:var(--border-strong);background:#131316;outline:none}
+.card:active{transform:translateY(-2px) scale(.98)}
+.os{width:64px;height:64px;margin-bottom:14px;display:grid;place-items:center;filter:grayscale(1) brightness(1.25);opacity:.85;transition:filter .35s,opacity .35s,transform .45s cubic-bezier(.34,1.56,.64,1)}
+.os svg{width:100%;height:100%;display:block}
+.card:hover .os,.card:focus-visible .os{filter:none;opacity:1;transform:translateY(-4px) rotate(-6deg) scale(1.08)}
+.card h2{font-size:19px;font-weight:600;letter-spacing:-.01em}
+.req{color:var(--text-3);font-size:13px}
+.get{display:inline-flex;align-items:center;justify-content:center;gap:8px;margin-top:18px;height:42px;width:100%;border-radius:11px;background:var(--surface-alt);border:1px solid var(--border-strong);font-weight:600;font-size:14px;transition:background .25s,color .25s,border-color .25s}
+.get svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.card:hover .get,.card:focus-visible .get{background:var(--text);color:var(--bg);border-color:var(--text)}
+.card.go{animation:press .55s cubic-bezier(.3,1.5,.5,1)}
+@keyframes press{0%{transform:translateY(-6px) scale(1)}25%{transform:translateY(-2px) scale(.95)}60%{transform:translateY(-8px) scale(1.03)}100%{transform:translateY(-6px) scale(1)}}
+
+.status{height:22px;margin-top:22px;color:var(--text-2);font-size:14px;opacity:0;transform:translateY(4px);transition:opacity .4s,transform .4s}
+.status.on{opacity:1;transform:none}
+.perks{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:10px;color:var(--text-3);font-size:13px}
+.perks i{width:3px;height:3px;border-radius:50%;background:var(--text-3)}
+
+.potato{margin-top:18px;color:var(--text-2);font-size:13.5px}
+.potato a{color:var(--text);font-weight:600;border-bottom:1px solid var(--border-strong);transition:border-color .2s}
+.potato a:hover{border-color:var(--text)}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:56px;text-align:left}
+.step{padding:0 4px}
+.step h3{font-size:13px;font-weight:600;color:var(--text);margin-bottom:6px}
+.step p{font-size:13px;color:var(--text-2);text-wrap:pretty}
+.step code{font-family:Consolas,"Cascadia Mono",monospace;font-size:12px;color:var(--text);background:var(--surface-alt);border:1px solid var(--border);padding:1px 6px;border-radius:6px}
+.back{display:inline-flex;align-items:center;gap:8px;margin-top:48px;color:var(--text-2);font-size:14px;transition:color .2s}
 .back:hover{color:var(--text)}
-#end{height:2px}
+.back svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:transform .3s var(--ease)}
+.back:hover svg{transform:translateX(-3px)}
+
 #confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:50}
+
 footer{border-top:1px solid var(--border);padding:28px 24px}
 .copy{color:var(--text-3);font-size:12.5px;text-align:center}
 .copy a{color:var(--text-2)}
 .copy a:hover{color:var(--text)}
-.reveal{opacity:0;transform:translateY(20px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
-.reveal.in{opacity:1;transform:none}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}.reveal{opacity:1;transform:none}}
+
+.rise{animation:rise .8s var(--ease) both}
+.r1{animation-delay:.06s}.r2{animation-delay:.12s}.r3{animation-delay:.2s}.r4{animation-delay:.28s}.r5{animation-delay:.36s}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 @media (max-width:768px){
   .nav-bar{padding:0 1.2rem}
   .links{display:none}
   .nav-toggle{display:flex}
   .nav.open .links{display:flex;flex-direction:column;align-items:flex-start;position:fixed;top:64px;left:0;right:0;transform:none;background:rgba(9,9,11,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:1.5rem 1.5rem 2rem;gap:1.2rem}
-  main{padding:48px 16px 32px}
-  .truth,.dont,.split{grid-template-columns:1fr}
-  .item{padding:16px}
-  .item p{margin-left:30px}
-  .phase{padding-left:0;margin-top:64px}
-  .phase::before{display:none}
-  .num{position:static;margin-bottom:14px}
+  .cards,.steps{grid-template-columns:1fr}
+  .steps{text-align:center}
+  main{padding:48px 16px 64px}
 }
 
-.status{font-size:12px;font-weight:600;white-space:nowrap}
-.st-now{color:var(--good)}
-.st-next{color:var(--warn)}
-.st-later{color:var(--text-3)}
-.st-no{color:var(--bad)}
-.toc{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:30px}
-.toc a{padding:8px 14px;border-radius:999px;border:1px solid var(--border-strong);background:var(--surface);font-size:13px;color:var(--text-2);transition:color .2s,border-color .2s}
-.toc a:hover{color:var(--text);border-color:var(--text-3)}
-.tbl{margin-top:26px;border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;background:var(--surface)}
-.row{display:grid;grid-template-columns:150px 1fr;gap:6px 18px;padding:14px 22px;border-top:1px solid var(--border);font-size:14px}
-.row:first-child{border-top:0}
-.row b{font-weight:600}
-.row span{color:var(--text-2);word-break:break-word}
-.plain{margin-top:22px;display:grid;gap:12px}
-.plain .item p{margin-left:0}
-@media (max-width:768px){.row{grid-template-columns:1fr;padding:14px 16px}}
+.ext{margin-top:64px;text-align:center}
+.ext h2{font-size:22px;font-weight:700;letter-spacing:-.02em;text-align:center}
+.ext .sub{margin-top:8px}
+.extcards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:28px}
+.ec{text-align:left;display:flex;flex-direction:column;gap:6px;padding:24px 22px 20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);transition:transform .35s var(--ease),border-color .3s,background .3s}
+.ec:hover{transform:translateY(-4px);border-color:var(--border-strong);background:#131316}
+.ec h3{font-size:16px;font-weight:600}
+.ec p{color:var(--text-2);font-size:13px}
+.ec .get{margin-top:14px}
+.ec:hover .get{background:var(--text);color:var(--bg);border-color:var(--text)}
+.extnote{margin-top:18px;color:var(--text-3);font-size:12.5px;text-align:center;text-wrap:balance}
+.extnote code{font-family:Consolas,"Cascadia Mono",monospace;font-size:12px;color:var(--text-2)}
+.verify{margin-top:34px;color:var(--text-3);font-size:12.5px;text-align:center;text-wrap:balance}
+.verify code{font-family:Consolas,"Cascadia Mono",monospace;font-size:12px;color:var(--text-2)}
+@media (max-width:768px){.extcards{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="i-arrow_download" viewBox="0 0 20 20"><path d="M15.5 17a.5.5 0 0 1 .09 1H4.5a.5.5 0 0 1-.09-1H15.5M10 2a.5.5 0 0 1 .5.41V14.3l3.64-3.65a.5.5 0 0 1 .64-.06l.07.06c.17.17.2.44.06.63l-.06.07-4.5 4.5a.5.5 0 0 1-.25.14L10 16a.5.5 0 0 1-.4-.2l-4.46-4.45a.5.5 0 0 1 .64-.76l.07.06 3.65 3.64V2.5c0-.27.22-.5.5-.5"/></symbol><symbol id="i-warning" viewBox="0 0 20 20"><path d="M7.37 3.56a3 3 0 0 1 5.26 0l5.5 10A3 3 0 0 1 15.5 18h-11a3 3 0 0 1-2.63-4.44zm4.38.48a2 2 0 0 0-3.5 0l-5.5 10A2 2 0 0 0 4.5 17h11a2 2 0 0 0 1.75-2.96zM10 12.75a.75.75 0 1 1 0 1.5.75.75 0 0 1 0-1.5m0-6.25c.28 0 .5.22.5.5v4a.5.5 0 0 1-1 0V7c0-.28.22-.5.5-.5"/></symbol><symbol id="i-laptop" viewBox="0 0 20 20"><path d="M3 7c0-1.1.9-2 2-2h10a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1zm-3 9.5c0-.28.22-.5.5-.5h15a.5.5 0 0 1 0 1h-15a.5.5 0 0 1-.5-.5"/></symbol><symbol id="i-password" viewBox="0 0 20 20"><path d="M7.85 8.15a.5.5 0 0 0-.7 0l-.65.64-.65-.64a.5.5 0 1 0-.7.7l.64.65-.64.65a.5.5 0 0 0 .7.7l.65-.64.65.64a.5.5 0 0 0 .7-.7l-.64-.65.64-.65a.5.5 0 0 0 0-.7m3.3 0a.5.5 0 0 1 .7.7l-.64.65.64.65a.5.5 0 0 1-.7.7l-.65-.64-.65.64a.5.5 0 0 1-.7-.7l.64-.65-.64-.65a.5.5 0 1 1 .7-.7l.65.64zM13.5 10a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1zM4.75 4A2.75 2.75 0 0 0 2 6.75v5.5A2.75 2.75 0 0 0 4.75 15h10.5A2.75 2.75 0 0 0 18 12.25v-5.5A2.75 2.75 0 0 0 15.25 4zM3 6.75C3 5.78 3.78 5 4.75 5h10.5c.97 0 1.75.78 1.75 1.75v5.5c0 .97-.78 1.75-1.75 1.75H4.75C3.78 14 3 13.22 3 12.25z"/></symbol><symbol id="i-note_edit" viewBox="0 0 20 20"><path d="M3 14.18A3 3 0 0 0 6 17h2l.06-.35.16-.65H5.85A2 2 0 0 1 4 14v-4h3.18A3 3 0 0 0 10 7V4h4.15A2 2 0 0 1 16 6v2q.52-.02 1 .13V5.82A3 3 0 0 0 14 3H9.45a2 2 0 0 0-1.24.59L3.59 8.2l-.12.13A2 2 0 0 0 3 9.62v4.56M7 9H4.22l.07-.09L8.91 4.3 9 4.22v2.93A2 2 0 0 1 7 9m2.98 5.38 4.83-4.83a1.87 1.87 0 1 1 2.64 2.64l-4.83 4.83a2 2 0 0 1-1.02.58l-1.5.37a.9.9 0 0 1-1.07-1.07l.37-1.5q.15-.6.58-1.02"/></symbol><symbol id="i-copy" viewBox="0 0 20 20"><path d="M7 7H5a2 2 0 0 0-2 2v6c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2h1a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V9a3 3 0 0 1 3-3h2zm8-5a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3h-4a3 3 0 0 1-3-3V5a3 3 0 0 1 3-3zm-4 1a2 2 0 0 0-2 2v6c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2z"/></symbol><symbol id="i-checkmark_circle" viewBox="0 0 20 20"><path d="M10 2a8 8 0 1 1 0 16 8 8 0 0 1 0-16m0 1a7 7 0 1 0 0 14 7 7 0 0 0 0-14m3.36 4.65c.17.17.2.44.06.63l-.06.07-4 4a.5.5 0 0 1-.64.07l-.07-.06-2-2a.5.5 0 0 1 .63-.77l.07.06L9 11.3l3.65-3.65c.2-.2.51-.2.7 0"/></symbol><symbol id="i-save" viewBox="0 0 20 20"><path d="M3 5c0-1.1.9-2 2-2h8.38a2 2 0 0 1 1.41.59l1.62 1.62A2 2 0 0 1 17 6.62V15a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1v-4.5c0-.83.67-1.5 1.5-1.5h7c.83 0 1.5.67 1.5 1.5V16a1 1 0 0 0 1-1V6.62a1 1 0 0 0-.3-.7L14.1 4.28a1 1 0 0 0-.71-.29H13v2.5c0 .83-.67 1.5-1.5 1.5h-4A1.5 1.5 0 0 1 6 6.5V4zm2 0v2.5c0 .28.22.5.5.5h4a.5.5 0 0 0 .5-.5V4zm7 12v-4.5a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 0-.5.5V16z"/></symbol><symbol id="i-dismiss_circle" viewBox="0 0 20 20"><path d="M10 2a8 8 0 1 1 0 16 8 8 0 0 1 0-16m0 1a7 7 0 1 0 0 14 7 7 0 0 0 0-14M7.8 7.11l.08.06L10 9.3l2.12-2.12a.5.5 0 0 1 .64-.06l.07.06c.17.18.2.44.06.64l-.06.07L10.7 10l2.12 2.12c.17.17.2.44.06.64l-.06.07a.5.5 0 0 1-.64.06l-.07-.06L10 10.7l-2.12 2.12a.5.5 0 0 1-.64.06l-.07-.06a.5.5 0 0 1-.06-.64l.06-.07L9.3 10 7.17 7.88a.5.5 0 0 1-.06-.64l.06-.07a.5.5 0 0 1 .64-.06"/></symbol><symbol id="i-lock_closed" viewBox="0 0 20 20"><path d="M10 1a4 4 0 0 1 4 4v2.05a2.5 2.5 0 0 1 2 2.45v6a2.5 2.5 0 0 1-2.5 2.5h-7A2.5 2.5 0 0 1 4 15.5v-6c0-1.2.86-2.22 2-2.45V5a4 4 0 0 1 4-4M6.5 8C5.67 8 5 8.67 5 9.5v6c0 .83.67 1.5 1.5 1.5h7c.83 0 1.5-.67 1.5-1.5v-6c0-.83-.67-1.5-1.5-1.5zm3.5 3.5a1 1 0 1 1 0 2 1 1 0 0 1 0-2M10 2a3 3 0 0 0-3 3v2h6V5a3 3 0 0 0-3-3"/></symbol><symbol id="i-timer" viewBox="0 0 20 20"><path d="M7.5 2a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1zm7.66 1.93a.5.5 0 1 0-.71.7l1.41 1.42a.5.5 0 1 0 .71-.7zM9.5 6a.5.5 0 0 0-.5.5v5a.5.5 0 0 0 1 0v-5a.5.5 0 0 0-.5-.5m0 12a7 7 0 1 0 0-14 7 7 0 0 0 0 14m0-1a6 6 0 1 1 0-12 6 6 0 0 1 0 12"/></symbol><symbol id="i-laptop_shield" viewBox="0 0 20 20"><path d="M15.12 9.96c.2-.19.56-.19.76 0 .5.49 1.48 1.26 2.68 1.41.24.04.44.22.44.44v2.11c0 2.84-2.78 3.87-3.39 4.06a.4.4 0 0 1-.22 0c-.6-.19-3.39-1.22-3.39-4.06v-2.1c0-.23.2-.41.44-.45a5 5 0 0 0 2.68-1.4m-4 5.04q.13.54.34 1H2.5a.5.5 0 0 1 0-1zM15 5a2 2 0 0 1 2 2v2.6l-.24-.19-.19-.17-.11-.1q-.21-.16-.46-.24V7a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h6v1H5a2 2 0 0 1-2-2V7c0-1.1.9-2 2-2z"/></symbol><symbol id="i-money" viewBox="0 0 20 20"><path d="M7 9a2 2 0 1 1 4 0 2 2 0 0 1-4 0m2-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2M3.5 4C2.67 4 2 4.67 2 5.5v7c0 .83.67 1.5 1.5 1.5h11c.83 0 1.5-.67 1.5-1.5v-7c0-.83-.67-1.5-1.5-1.5zM3 5.5c0-.28.22-.5.5-.5H5v1a1 1 0 0 1-1 1H3zM3 8h1a2 2 0 0 0 2-2V5h6v1c0 1.1.9 2 2 2h1v2h-1a2 2 0 0 0-2 2v1H6v-1a2 2 0 0 0-2-2H3zm10-3h1.5c.28 0 .5.22.5.5V7h-1a1 1 0 0 1-1-1zm2 6v1.5a.5.5 0 0 1-.5.5H13v-1a1 1 0 0 1 1-1zM5 13H3.5a.5.5 0 0 1-.5-.5V11h1a1 1 0 0 1 1 1zm12-.5a2.5 2.5 0 0 1-2.5 2.5H4.09c.2.58.76 1 1.41 1h9a3.5 3.5 0 0 0 3.5-3.5v-5c0-.65-.42-1.2-1-1.41z"/></symbol><symbol id="i-clipboard_paste" viewBox="0 0 20 20"><path d="M4.5 4h1.59c.2.58.76 1 1.41 1h3c.65 0 1.2-.42 1.41-1h1.59c.28 0 .5.22.5.5v1a.5.5 0 0 0 1 0v-1c0-.83-.67-1.5-1.5-1.5h-1.59c-.2-.58-.76-1-1.41-1h-3c-.65 0-1.2.42-1.41 1H4.5C3.67 3 3 3.67 3 4.5v12c0 .83.67 1.5 1.5 1.5h3a.5.5 0 0 0 0-1h-3a.5.5 0 0 1-.5-.5v-12c0-.28.22-.5.5-.5m3 0a.5.5 0 0 1 0-1h3a.5.5 0 0 1 0 1zm3 3C9.67 7 9 7.67 9 8.5v8c0 .83.67 1.5 1.5 1.5h5c.83 0 1.5-.67 1.5-1.5v-8c0-.83-.67-1.5-1.5-1.5zM10 8.5c0-.28.22-.5.5-.5h5c.28 0 .5.22.5.5v8a.5.5 0 0 1-.5.5h-5a.5.5 0 0 1-.5-.5z"/></symbol><symbol id="i-person_add" viewBox="0 0 20 20"><path d="M9 2a4 4 0 1 0 0 8 4 4 0 0 0 0-8M6 6a3 3 0 1 1 6 0 3 3 0 0 1-6 0m-2 5a2 2 0 0 0-2 2c0 1.7.83 2.97 2.13 3.8A9 9 0 0 0 9 18q.62 0 1.21-.06A6 6 0 0 1 9.6 17L9 17a8 8 0 0 1-4.33-1.05A3.4 3.4 0 0 1 3 13a1 1 0 0 1 1-1h5.6q.27-.54.66-1zm10.5 8a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9m0-7c.28 0 .5.22.5.5V14h1.5a.5.5 0 0 1 0 1H15v1.5a.5.5 0 0 1-1 0V15h-1.5a.5.5 0 0 1 0-1H14v-1.5c0-.28.22-.5.5-.5"/></symbol><symbol id="i-hourglass" viewBox="0 0 20 20"><path d="M5.92 18q-.38 0-.72-.16-.35-.15-.62-.42A2 2 0 0 1 4 16.08a6 6 0 0 1 .5-2.3 5 5 0 0 1 1.44-1.88l1.82-1.52q.18-.15.18-.38a.5.5 0 0 0-.18-.38L5.94 8.09A5.3 5.3 0 0 1 4 3.92q0-.38.16-.72.15-.35.42-.62A2 2 0 0 1 5.92 2h8.16q.38 0 .72.16.35.15.62.42A2 2 0 0 1 16 3.92q0 1.24-.5 2.3a5 5 0 0 1-1.44 1.87l-1.82 1.53a.5.5 0 0 0 0 .77l1.82 1.5A5.4 5.4 0 0 1 16 16.09q0 .38-.16.72-.15.35-.42.62a2 2 0 0 1-1.34.58zm8.12-1a1 1 0 0 0 .68-.28q.15-.15.2-.3.06-.18.08-.38a4.3 4.3 0 0 0-1.58-3.37l-1.82-1.52a1.5 1.5 0 0 1-.54-1.15 1.5 1.5 0 0 1 .54-1.16l1.82-1.51A4.3 4.3 0 0 0 15 3.96a1 1 0 0 0-.28-.68 1 1 0 0 0-.3-.2q-.17-.06-.38-.08H5.96a1 1 0 0 0-.37.07 1 1 0 0 0-.3.21q-.15.15-.21.3-.07.18-.08.38a4.5 4.5 0 0 0 .9 2.67q.3.37.68.7L8.4 8.84q.25.21.4.52a1.5 1.5 0 0 1-.4 1.79l-1.82 1.52A4.3 4.3 0 0 0 5 16.04q0 .2.07.37.08.18.21.3.15.14.3.21.18.07.38.08z"/></symbol><symbol id="i-fingerprint" viewBox="0 0 20 20"><path d="M6.72 3.95c1.53-.74 4.81-1.44 8.5.97a.5.5 0 1 0 .55-.84c-4.03-2.63-7.7-1.9-9.49-1.03a.5.5 0 1 0 .44.9m-1.81.64a.5.5 0 0 1-.14.7 5 5 0 0 0-1.34 1.46.5.5 0 0 1-.86-.5c.27-.46.95-1.34 1.65-1.8a.5.5 0 0 1 .69.14m5.59-.05a.5.5 0 1 0 0 1c1.66 0 5.51 1.38 6.5 6.55a.5.5 0 0 0 1-.18c-1.1-5.72-5.43-7.37-7.5-7.37M9.34 10.8c-.87.7-1.52 2.69.56 6.46a.5.5 0 0 1-.87.48c-2.15-3.88-1.78-6.52-.32-7.71A2.68 2.68 0 0 1 13 11.35q.11.4.2.9l.04.15q.11.57.3 1.18c.26.79.67 1.57 1.48 2.16a.5.5 0 1 1-.6.8 5 5 0 0 1-1.83-2.65q-.22-.7-.33-1.29l-.03-.16-.19-.8a1.68 1.68 0 0 0-2.7-.84m6.16 1.17a.5.5 0 1 0-1 .06c.1 1.8 1.22 2.74 1.85 2.95a.5.5 0 0 0 .3-.96c-.22-.07-1.07-.64-1.15-2.05m-4.5.53a.5.5 0 1 0-1 0c0 1.04.13 1.85.44 2.64.3.77.77 1.5 1.4 2.4a.5.5 0 1 0 .82-.58 11 11 0 0 1-1.3-2.19A6 6 0 0 1 11 12.5M7.97 8.79c-1.72 1.33-2.7 4.14-1.02 7.49a.5.5 0 0 1-.9.44C4.18 13 5.22 9.65 7.35 8a4.8 4.8 0 0 1 3.73-1 5.5 5.5 0 0 1 3.65 2.56.5.5 0 1 1-.84.55 4.5 4.5 0 0 0-2.97-2.12 3.8 3.8 0 0 0-2.95.8m.49-3a.5.5 0 0 0-.35-.94c-4.68 1.7-5.79 6.19-5.35 9.22a.5.5 0 0 0 .99-.14c-.4-2.74.62-6.65 4.7-8.14"/></symbol><symbol id="i-eye_off" viewBox="0 0 20 20"><path d="M2.85 2.15a.5.5 0 1 0-.7.7l3.5 3.5a8 8 0 0 0-3.37 5.05.5.5 0 1 0 .98.2 7 7 0 0 1 3.1-4.53l1.6 1.59a3.5 3.5 0 1 0 4.88 4.89l4.3 4.3a.5.5 0 0 0 .71-.7zm9.27 10.68a2.5 2.5 0 1 1-3.45-3.45zm-2-4.83 3.38 3.38A3.5 3.5 0 0 0 10.12 8M10 6q-.86 0-1.67.21l-.8-.8A8 8 0 0 1 10 5c3.7 0 6.94 2.67 7.72 6.4a.5.5 0 0 1-.98.2A7 7 0 0 0 10 6"/></symbol><symbol id="i-shield" viewBox="0 0 20 20"><path d="M9.72 2.08a.5.5 0 0 1 .56 0q2.9 1.94 6.3 2.43A.5.5 0 0 1 17 5v4.5c0 3.9-2.3 6.73-6.82 8.47a.5.5 0 0 1-.36 0C5.31 16.23 3 13.39 3 9.5V5a.5.5 0 0 1 .43-.5 15 15 0 0 0 6.3-2.42M9.6 3.35A16 16 0 0 1 4 5.43V9.5c0 3.4 1.97 5.86 6 7.46 4.03-1.6 6-4.07 6-7.46V5.43a16 16 0 0 1-5.6-2.08L10 3.1z"/></symbol><symbol id="i-people" viewBox="0 0 20 20"><path d="M4.5 6.75a2.25 2.25 0 1 1 4.5 0 2.25 2.25 0 0 1-4.5 0M6.75 3.5a3.25 3.25 0 1 0 0 6.5 3.25 3.25 0 0 0 0-6.5m5.69 11.65q.79.33 2.06.35c1.88 0 2.92-.67 3.47-1.43a3 3 0 0 0 .53-1.5v-.07c0-.83-.67-1.5-1.5-1.5h-4.63q.36.44.53 1H17c.28 0 .5.22.5.5v.1l-.04.22q-.05.29-.3.66c-.33.46-1.04 1.02-2.66 1.02q-1.08-.01-1.69-.28-.12.43-.37.93M1.5 13c0-1.1.9-2 2-2H10a2 2 0 0 1 2 2v.08l-.01.18q-.01.17-.08.45c-.08.37-.25.86-.6 1.36-.7 1.01-2.05 1.93-4.56 1.93s-3.87-.92-4.57-1.93a4 4 0 0 1-.68-1.99V13m1 .06v.1l.06.33c.07.27.2.64.45 1C3.49 15.2 4.5 16 6.75 16s3.26-.8 3.74-1.5a3 3 0 0 0 .5-1.42l.01-.02V13a1 1 0 0 0-1-1H3.5a1 1 0 0 0-1 1zM13 7.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0M14.5 5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5"/></symbol><symbol id="i-alert" viewBox="0 0 20 20"><path d="M10 2a5.9 5.9 0 0 1 5.98 5.36l.02.22v3.82l.92 2.22.06.17.01.08.01.13a1 1 0 0 1-.75.97l-.11.02L16 15h-3.5v.17a2.5 2.5 0 0 1-5 0V15H4l-.26-.03-.13-.04a1 1 0 0 1-.6-1.05l.02-.13.05-.13L4 11.4V7.57A5.9 5.9 0 0 1 10 2m1.5 13h-3v.15a1.5 1.5 0 0 0 1.36 1.34l.14.01c.78 0 1.42-.6 1.5-1.36zM10 3a4.9 4.9 0 0 0-4.98 4.38L5 7.6v3.9l-.04.2L4 14h12l-.96-2.3-.04-.2V7.61A4.9 4.9 0 0 0 10 3"/></symbol><symbol id="i-shield_checkmark" viewBox="0 0 20 20"><path d="M9.72 2.08a.5.5 0 0 1 .56 0q2.9 1.94 6.3 2.43A.5.5 0 0 1 17 5v4.6q-.48-.25-1-.4V5.44a16 16 0 0 1-5.6-2.08L10 3.1l-.4.25A16 16 0 0 1 4 5.43V9.5c0 3.24 1.8 5.64 5.48 7.25q.3.65.74 1.2l-.04.02a.5.5 0 0 1-.36 0C5.31 16.23 3 13.39 3 9.5V5a.5.5 0 0 1 .43-.5 15 15 0 0 0 6.3-2.42M19 14.5a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0m-2.15-1.85a.5.5 0 0 0-.7 0l-2.65 2.64-.65-.64a.5.5 0 0 0-.7.7l1 1c.2.2.5.2.7 0l3-3a.5.5 0 0 0 0-.7"/></symbol><symbol id="i-eye" viewBox="0 0 20 20"><path d="M3.26 11.6A7 7 0 0 1 10 6c3.2 0 6.06 2.33 6.74 5.6a.5.5 0 0 0 .98-.2A8 8 0 0 0 10 5a8 8 0 0 0-7.72 6.4.5.5 0 0 0 .98.2M10 8a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7m-2.5 3.5a2.5 2.5 0 1 1 5 0 2.5 2.5 0 0 1-5 0"/></symbol><symbol id="i-send" viewBox="0 0 20 20"><path d="M2.18 2.11a.5.5 0 0 1 .54-.06l15 7.5a.5.5 0 0 1 0 .9l-15 7.5a.5.5 0 0 1-.7-.58L3.98 10 2.02 2.63a.5.5 0 0 1 .16-.52m2.7 8.39-1.61 6.06L16.38 10 3.27 3.44 4.88 9.5h6.62a.5.5 0 1 1 0 1z"/></symbol><symbol id="i-globe" viewBox="0 0 20 20"><path d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16m0-15c.66 0 1.4.59 2.02 1.9q.33.71.56 1.6H7.42q.23-.89.56-1.6C8.59 3.6 9.34 3 10 3M7.07 4.49q-.4.9-.68 2.01H3.94A7 7 0 0 1 7.7 3.38q-.36.5-.64 1.1M6.2 7.5a16 16 0 0 0 0 5H3.46a7 7 0 0 1 0-5zm.2 6q.26 1.12.68 2.01.28.61.64 1.1a7 7 0 0 1-3.77-3.11zm1.03 0h5.16a9 9 0 0 1-.56 1.6C11.41 16.4 10.66 17 10 17s-1.4-.59-2.02-1.9q-.33-.71-.56-1.6m5.37-1H7.21a15 15 0 0 1 0-5h5.58a15 15 0 0 1 0 5m.82 1h2.45a7 7 0 0 1-3.77 3.12q.36-.5.64-1.1.4-.9.68-2.02m2.93-1h-2.73a16 16 0 0 0 0-5h2.73a7 7 0 0 1 0 5m-4.25-9.12a7 7 0 0 1 3.77 3.12h-2.45a11 11 0 0 0-.68-2.01q-.28-.61-.64-1.1"/></symbol><symbol id="i-receipt" viewBox="0 0 20 20"><path d="M3 5c0-1.1.9-2 2-2h7a2 2 0 0 1 2 2v7h3v2a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3zm11 8v3a2 2 0 0 0 2-2v-1zm-1 3V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v9c0 1.1.9 2 2 2zM6 6.5c0-.28.22-.5.5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5m0 3c0-.28.22-.5.5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5m0 3c0-.28.22-.5.5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5"/></symbol><symbol id="i-arrow_sync" viewBox="0 0 20 20"><path d="M11.41 3.64a.5.5 0 0 0 0-.71L9.3.8a.5.5 0 0 0-.7.7l1 1a7.5 7.5 0 0 0-4.08 13.5.5.5 0 0 0 .6-.8A6.5 6.5 0 0 1 10.14 3.5L8.59 5.04a.5.5 0 0 0 .7.7zM8.6 16.36a.5.5 0 0 0 0 .71l2.12 2.12a.5.5 0 0 0 .7-.7l-1-1a7.5 7.5 0 0 0 4.07-13.5.5.5 0 1 0-.59.8q.37.28.7.61a6.5 6.5 0 0 1-4.73 11.1l1.55-1.55a.5.5 0 1 0-.7-.7z"/></symbol><symbol id="i-clock" viewBox="0 0 20 20"><path d="M10 2a8 8 0 1 1 0 16 8 8 0 0 1 0-16m0 1a7 7 0 1 0 0 14 7 7 0 0 0 0-14m-.5 2a.5.5 0 0 1 .5.41V10h2.5a.5.5 0 0 1 .09 1H9.5a.5.5 0 0 1-.5-.41V5.5c0-.28.22-.5.5-.5"/></symbol><symbol id="i-wallet" viewBox="0 0 20 20"><path d="M13.5 11a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1zM3 4.5C3 3.67 3.67 3 4.5 3H14a2 2 0 0 1 2 2v.27c.6.34 1 .99 1 1.73v8a2 2 0 0 1-2 2H5.5A2.5 2.5 0 0 1 3 14.5zM14 4H4.5a.5.5 0 0 0 0 1H15a1 1 0 0 0-1-1M4.5 6a2 2 0 0 1-.5-.09v8.59c0 .83.67 1.5 1.5 1.5H15a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1z"/></symbol><symbol id="i-gauge" viewBox="0 0 20 20"><path d="M12.47 5.06a.5.5 0 0 1-.65.28 5 5 0 0 0-5.36 8.2.5.5 0 1 1-.7.7 6 6 0 0 1 6.42-9.83c.26.1.39.39.29.65m2.47 2.47a.5.5 0 0 1 .65.29 6 6 0 0 1-1.35 6.42.5.5 0 1 1-.7-.7 5 5 0 0 0 1.12-5.36.5.5 0 0 1 .28-.65m-.85-1.71a.5.5 0 0 0-.64-.01l-.18.14L9.3 9.2q-.22.19-.34.33a1.5 1.5 0 1 0 2.28 1.95l.27-.4.38-.62a124 124 0 0 0 2.2-3.82l.12-.2a.5.5 0 0 0-.11-.62M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16m0-1a7 7 0 1 1 0-14 7 7 0 0 1 0 14"/></symbol><symbol id="i-phone" viewBox="0 0 20 20"><path d="M9 14a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1zM7 2a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h6a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zM6 4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1z"/></symbol><symbol id="i-alert_urgent" viewBox="0 0 20 20"><path d="M13.26 2.08a.5.5 0 1 0-.52.85C15 4.31 16.86 6.34 17 10.02a.5.5 0 0 0 1-.04c-.16-4.1-2.28-6.4-4.74-7.9M12.1 4.73a.5.5 0 0 1 .69-.14 6.2 6.2 0 0 1 2.91 4.91.5.5 0 0 1-1 0q0-.2-.02-.39a5.2 5.2 0 0 0-2.45-3.69.5.5 0 0 1-.13-.7m-7.01.7a5.16 5.16 0 0 0-2.61 6.82L3.69 15l.09 2.32c.02.53.57.87 1.05.65l9.73-4.33c.49-.21.6-.85.22-1.22L13.1 10.8 11.9 8.05a5.16 5.16 0 0 0-6.81-2.61m-1.7 6.41a4.16 4.16 0 0 1 7.6-3.38l1.3 2.92 1.54 1.5-9.06 4.03-.08-2.14zm7.3 6.04c-.68.3-1.46.05-1.85-.54l2.68-1.2c.19.7-.16 1.44-.83 1.74"/></symbol><symbol id="i-key" viewBox="0 0 20 20"><path d="M15 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0m-2.5-4a5.45 5.45 0 0 0-5.38 6.67q.08.42-.14.64l-4.54 4.54A1.5 1.5 0 0 0 2 14.91v1.59c0 .83.67 1.5 1.5 1.5h2c.83 0 1.5-.67 1.5-1.5V16h1a1 1 0 0 0 1-1v-1h1a1 1 0 0 0 1-1v-.18q.75.19 1.5.18c3.08 0 5.5-2.42 5.5-5.5S15.58 2 12.5 2M8 7.5C8 4.98 9.98 3 12.5 3S17 4.98 17 7.5 15.02 12 12.5 12q-1 .01-1.78-.35a.5.5 0 0 0-.72.45v.9H9a1 1 0 0 0-1 1v1H7a1 1 0 0 0-1 1v.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.59a.5.5 0 0 1 .15-.35l4.54-4.54c.43-.43.52-1.04.4-1.56Q8 8 8 7.5"/></symbol></defs></svg>
+
 <header class="nav" id="nav">
   <div class="nav-bar">
-    <a class="brand" href="/wallet" aria-label="Sillet Wallet"><img src="/wallet/silleticon.png" alt=""><span>illet</span></a>
+    <a class="brand" href="/wallet" aria-label="Sillet Wallet"><img class="brand-icon" id="brandIcon" src="/wallet/silleticon.png" alt="" title="Psst, click me"><span>illet</span></a>
     <ul class="links">
       <li><a href="/wallet">Home</a></li>
-      <li><a href="/wallet/download">Download</a></li>
-      <li><a href="/wallet/secure" class="active">Secure</a></li>
+      <li><a href="/wallet/download" class="active">Download</a></li>
+      <li><a href="/wallet/secure">Secure</a></li>
       <li><a href="https://github.com/sillycs/Sillet-Wallet" target="_blank" rel="noopener">GitHub</a></li>
       <li><a href="https://raton.fun">Raton</a></li>
     </ul>
     <button class="nav-toggle" aria-label="Menu" onclick="document.getElementById('nav').classList.toggle('open')"><svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
   </div>
-  <div class="progress" id="progress"></div>
 </header>
+
 <main>
-  <div class="wrap">
-    <section class="hero">
-      <img class="logo" src="/wallet/silleticon.png" alt="Sillet">
-      <h1>Keep your crypto safe</h1>
-      <p class="sub">What to set up in Sillet, what to do every day, and what Sillet does with your data</p>
-      <div class="truth">
-        <div><b><svg class="ic" aria-hidden="true"><use href="#i-key"/></svg>Your keys, your risk</b><span>Sillet never holds your funds. That is the point, and it is also on you</span></div>
-        <div><b><svg class="ic" aria-hidden="true"><use href="#i-lock_closed"/></svg>No reset button</b><span>Nobody at Raton can recover a lost password or recovery phrase</span></div>
-        <div><b><svg class="ic" aria-hidden="true"><use href="#i-warning"/></svg>Scams beat bugs</b><span>Fake sites and shared phrases cause most of the losses</span></div>
+  <div class="page">
+    <img class="logo rise" src="/wallet/silleticon.png" alt="Sillet">
+    <h1 class="rise r1">Download Sillet</h1>
+    <p class="sub rise r2">Pick your platform. Free, private and ready in under a minute</p>
+
+    <div class="cards">
+      <a class="card rise r3" href="https://github.com/sillycs/Sillet-Wallet/releases/latest/download/Sillet.exe" rel="noopener" data-done="Enjoy Sillet on Windows">
+        <span class="os">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 88 88" aria-hidden="true"><path d="M0 12.402l35.687-4.86.016 34.423-35.67.203zm35.67 33.529l.028 34.453L.028 75.48.026 45.7zm4.326-39.025L87.314 0v41.527l-47.318.376zm47.329 39.349l-.011 41.34-47.318-6.678-.066-34.739z" fill="#00adef"/></svg>
+        </span>
+        <h2>Windows</h2>
+        <span class="req">Windows 10 or 11, 64-bit</span>
+        <span class="get"><svg viewBox="0 0 24 24"><path d="M12 4v11"/><path d="m7 10 5 5 5-5"/><path d="M5 20h14"/></svg>Download</span>
+      </a>
+
+      <a class="card rise r4" href="https://github.com/sillycs/Sillet-Wallet/releases/latest/download/Sillet-Linux-x64.tar.gz" rel="noopener" data-done="Enjoy Sillet on Linux">
+        <span class="os">
+          <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"> <path d="M30 16C30 23.728 23.735 30 16 30C8.265 30 2 23.728 2 16C2 8.265 8.265 2 16 2C23.735 2 30 8.265 30 16Z" fill="white"/> <path d="M11.3063 21.91C11.181 21.7232 11.0714 21.4713 10.9824 21.1699C9.37571 19.358 10.6169 16.6916 11.8446 14.881C11.9623 14.6874 12.0905 14.5004 12.2299 14.3215C13.1666 13.1577 13.4089 12.3478 13.481 11.2521C13.4896 11.0481 13.4727 10.7781 13.4533 10.4678C13.3542 8.8837 13.1895 6.25174 16.0159 6.0184C19.5489 5.72669 19.2611 8.97105 19.235 10.8732C19.2339 10.9519 19.2328 11.0285 19.2321 11.1024C19.2225 12.249 19.8209 13.0341 20.4455 13.8535C20.6736 14.1528 20.9052 14.4566 21.112 14.7843C21.1181 14.794 21.1242 14.8038 21.1303 14.8135C22.2218 16.3877 23.2994 18.737 21.7995 20.9653C21.5887 21.7259 21.2695 22.424 20.8434 22.9921C19.3136 25.0052 17.9539 24.8008 16.892 24.6412C16.5717 24.5931 16.2785 24.549 16.0159 24.5711C15.5797 24.5977 15.2301 24.6682 14.9281 24.7292C13.7608 24.9648 13.3046 25.0569 11.3063 21.91Z" fill="#000000"/> <path d="M18.0139 7.79452C17.9811 8.72691 16.9921 9.53681 15.8065 9.61167C14.6209 9.68654 13.6907 8.97873 13.7235 8.04633C13.7562 7.11393 14.7453 6.30404 15.9309 6.22917C17.1165 6.16112 18.0466 6.86212 18.0139 7.79452Z" fill="#E68C3F"/> <path fill-rule="evenodd" clip-rule="evenodd" d="M15.8656 10.0609C15.8751 10.5679 16.1073 11.0002 16.4334 11.1955C15.3695 11.1002 14.0512 11.4891 14.0512 12.2252C14.0348 13.4703 13.3418 15.0195 12.8429 16.1346C12.7447 16.3543 12.654 16.5571 12.5774 16.7374C12.2686 17.5021 12.0833 18.32 12.0614 19.1221C11.2435 17.9947 11.8378 16.5484 12.1582 15.9207C12.5846 15.0947 12.5764 14.9916 12.4108 15.1852C11.7759 16.2648 10.5803 18.4333 12.0775 19.736C12.125 20.3177 12.2667 20.8813 12.5185 21.3994C14.5228 25.4421 18.2761 23.7815 19.5141 21.6853C19.6788 21.3872 19.812 21.0989 19.9177 20.8203C19.9797 20.8593 20.0461 20.8895 20.1167 20.9094C20.739 21.0932 21.6691 20.3922 21.8918 19.9566C22.1604 19.3781 21.8853 18.9833 20.9683 18.5137C20.9215 18.4906 20.8753 18.4688 20.8297 18.4485C21.1814 16.9676 20.2122 15.4276 19.52 14.7743C19.3909 14.7424 19.3727 14.8156 19.5731 15.0155C20.009 15.4333 20.9572 16.9228 20.4442 18.3091C20.3597 18.2864 20.2784 18.2704 20.2009 18.2616C20.0433 17.3158 19.6231 16.58 19.3294 16.0658C19.2629 15.9493 19.2029 15.8442 19.1538 15.7506C19.055 15.5617 18.9368 15.3661 18.8114 15.1587C18.3283 14.3594 17.739 13.3843 17.739 11.9393C17.6651 11.6214 17.3651 11.4094 16.9658 11.2923C17.4293 11.1988 17.7772 10.6573 17.7652 10.0065C17.7521 9.30545 17.3132 8.74737 16.7892 8.76099C16.2652 8.7746 15.846 9.3599 15.8656 10.0609ZM16.2979 10.2174C16.2914 10.6054 16.4748 10.9184 16.7172 10.9184C16.953 10.9184 17.156 10.6054 17.1626 10.2242C17.1691 9.83631 16.9857 9.52324 16.7434 9.52324C16.501 9.52324 16.3045 9.83631 16.2979 10.2174Z" fill="#BDBFC2"/> <path fill-rule="evenodd" clip-rule="evenodd" d="M14.5556 11.1498C14.9355 11.1294 15.2106 10.619 15.1779 10.0133C15.1451 9.40754 14.8111 8.93794 14.4311 8.95835C14.0512 8.97877 13.7761 9.48921 13.8089 10.0949C13.8416 10.7006 14.1757 11.1702 14.5556 11.1498ZM14.7848 10.2242C14.8176 10.5441 14.6997 10.8163 14.5294 10.8436C14.3591 10.864 14.1953 10.6258 14.1626 10.3059C14.1298 9.98604 14.2477 9.7138 14.418 9.68658C14.5883 9.66616 14.7521 9.90436 14.7848 10.2242Z" fill="#BDBFC2"/> <path d="M18.669 17.1525C18.669 18.3503 17.562 19.9021 15.6625 19.8885C13.7039 19.9021 12.8721 18.3503 12.8721 17.1525C12.8721 15.9547 14.169 14.9814 15.7673 14.9814C17.3721 14.9883 18.669 15.9547 18.669 17.1525Z" fill="white"/> <path d="M17.6346 13.3892C17.615 14.6279 16.8355 14.9205 15.8529 14.9205C14.8704 14.9205 14.1564 14.7367 14.0713 13.3892C14.0713 12.5453 14.8704 12.0552 15.8529 12.0552C16.8355 12.0484 17.6346 12.5385 17.6346 13.3892Z" fill="white"/> <path d="M11.6936 15.2947C12.3356 14.2807 13.6914 12.7221 11.9491 15.5125C10.5342 17.8129 11.4251 19.2898 11.8836 19.6981C13.2067 20.9232 13.1543 21.7467 12.1128 21.1001C9.87922 19.7185 10.3443 17.3909 11.6936 15.2947Z" fill="white"/> <path d="M20.9881 15.71C20.4314 14.519 18.6628 11.4972 21.0733 15.009C23.2676 18.1873 21.7283 20.3992 21.4532 20.617C21.1781 20.8348 20.2545 21.2771 20.5231 20.5081C20.7982 19.739 22.1606 18.2826 20.9881 15.71Z" fill="white"/> <path d="M11.2089 25.1021C9.74165 24.2922 7.61283 25.2586 8.38575 23.0671C8.54296 22.5703 8.15649 21.8217 8.4054 21.3384C8.70016 20.7463 9.33553 20.8756 9.71544 20.4809C10.0888 20.0726 10.3246 19.3648 11.0255 19.4736C11.7198 19.5825 12.1849 20.4673 12.6696 21.5562C13.0299 22.3321 14.3006 23.4278 14.2154 24.299C14.1106 25.6329 12.6499 25.8847 11.2089 25.1021Z" fill="#FFA63F"/> <path d="M21.3814 24.7278C22.4556 23.3735 24.8464 23.6525 23.2351 21.7945C22.8945 21.393 22.9993 20.5354 22.5801 20.1679C22.0888 19.7187 21.5451 20.0862 21.0473 19.8548C20.5495 19.603 20.0255 19.1198 19.4163 19.4601C18.8071 19.8072 18.7416 20.7056 18.6827 21.8898C18.6303 22.7405 17.8836 24.1629 18.2831 24.9456C18.8596 26.157 20.3596 25.9937 21.3814 24.7278Z" fill="#FFA63F"/> <path d="M20.9156 22.9174C22.5793 20.3652 21.3413 20.3856 20.9221 20.1882C20.5029 19.9841 20.0641 19.5825 19.5728 19.8616C19.0815 20.1474 19.0553 20.8824 19.0422 21.8489C19.0226 22.5431 18.4658 23.7069 18.7999 24.3534C19.206 25.1089 20.1885 24.0131 20.9156 22.9174Z" fill="white"/> <path d="M10.8682 23.2847C8.37909 21.6105 9.54502 21.0388 9.91839 20.7733C10.3704 20.433 10.3769 19.7797 10.9337 19.8409C11.4904 19.9022 11.8179 20.6168 12.1913 21.5016C12.4664 22.1345 13.4228 22.9784 13.3507 23.7066C13.259 24.5642 11.9424 23.9993 10.8682 23.2847Z" fill="white"/> <path d="M21.7481 19.9362C21.5516 20.2901 20.7525 20.8481 20.2219 20.6984C19.6783 20.5555 19.4294 19.7592 19.5407 19.1603C19.639 18.4797 20.2219 18.4457 20.9556 18.786C21.735 19.1535 21.9774 19.4666 21.7481 19.9362Z" fill="#000000"/> <path d="M14.4374 10.8576C14.6994 10.6057 15.3348 9.83668 16.54 10.6398C16.7627 10.7895 16.9461 10.8031 17.3719 10.9937C18.23 11.3612 17.8238 12.2459 16.9068 12.5454C16.5138 12.6747 16.1601 13.1715 15.4527 13.1239C14.8435 13.0899 14.6863 12.6747 14.3129 12.4501C13.6514 12.0622 13.5531 11.5381 13.9134 11.2591C14.2736 10.9801 14.4112 10.878 14.4374 10.8576Z" fill="#FFA63F"/> </svg>
+        </span>
+        <h2>Linux</h2>
+        <span class="req">64-bit Intel or AMD (x64)</span>
+        <span class="get"><svg viewBox="0 0 24 24"><path d="M12 4v11"/><path d="m7 10 5 5 5-5"/><path d="M5 20h14"/></svg>Download</span>
+      </a>
+
+      <a class="card rise r5" href="https://github.com/sillycs/Sillet-Wallet/releases/latest/download/Sillet.apk" rel="noopener" data-done="Enjoy Sillet on Android">
+        <span class="os">
+          <svg viewBox="-147 -70 294 345" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false">
+            <g fill="#a4c639">
+              <use stroke-width="14.4" xlink:href="#and-b" stroke="#111113"/>
+              <use xlink:href="#and-a" transform="scale(-1,1)"/>
+              <g id="and-a" stroke="#111113" stroke-width="7.2">
+                <rect rx="6.5" transform="rotate(29)" height="86" width="13" y="-86" x="14"/>
+                <rect id="and-c" rx="24" height="133" width="48" y="41" x="-143"/>
+                <use y="97" x="85" xlink:href="#and-c"/>
+              </g>
+              <g id="and-b">
+                <ellipse cy="41" rx="91" ry="84"/>
+                <rect rx="22" height="182" width="182" y="20" x="-91"/>
+              </g>
+            </g>
+            <g stroke="#111113" stroke-width="7.2" fill="#111113">
+              <path d="m-95 44.5h190"/>
+              <circle cx="-42" r="4"/>
+              <circle cx="42" r="4"/>
+            </g>
+          </svg>
+        </span>
+        <h2>Android</h2>
+        <span class="req">Android 7 or later</span>
+        <span class="get"><svg viewBox="0 0 24 24"><path d="M12 4v11"/><path d="m7 10 5 5 5-5"/><path d="M5 20h14"/></svg>Download</span>
+      </a>
+    </div>
+
+    <p class="status" id="status"></p>
+    <p class="perks">Free forever<i></i>No ads<i></i>No tracking</p>
+    <p class="potato rise r5">Is your PC a potato? No worries, you can also download the <a href="https://github.com/sillycs/Sillet-Wallet/releases/latest/download/Sillet-CLI.exe" rel="noopener">CLI version</a></p>
+
+    <div class="steps">
+      <div class="step rise r3"><h3>Windows</h3><p>Open <code>Sillet.exe</code>. If SmartScreen appears, choose More info, then Run anyway</p></div>
+      <div class="step rise r4"><h3>Linux</h3><p>Extract it, then run <code>./install.sh</code> in the folder. Open Sillet from your app menu</p></div>
+      <div class="step rise r5"><h3>Android</h3><p>Open the APK and allow installs from your browser when asked</p></div>
+    </div>
+
+    <section class="ext" id="extension">
+      <h2 class="rise r3">Browser extension</h2>
+      <p class="sub rise r3">Use Sillet on websites, like MetaMask. Ethereum and EVM networks</p>
+      <div class="extcards">
+        <a class="ec rise r3" id="ec-chromium" href="https://github.com/sillycs/Sillet-Wallet/releases/latest/download/Sillet-Extension-Chromium.zip" rel="noopener">
+          <h3>Chrome and Brave</h3>
+          <p data-store="Add it from the Chrome Web Store" data-zip="Download the ZIP and load it in developer mode">Download the ZIP and load it in developer mode</p>
+          <span class="get"><svg viewBox="0 0 24 24"><path d="M12 4v11"/><path d="m7 10 5 5 5-5"/><path d="M5 20h14"/></svg><b>Download</b></span>
+        </a>
+        <a class="ec rise r4" id="ec-edge" href="https://github.com/sillycs/Sillet-Wallet/releases/latest/download/Sillet-Extension-Chromium.zip" rel="noopener">
+          <h3>Microsoft Edge</h3>
+          <p data-store="Add it from Edge Add-ons" data-zip="Download the ZIP and load it in developer mode">Download the ZIP and load it in developer mode</p>
+          <span class="get"><svg viewBox="0 0 24 24"><path d="M12 4v11"/><path d="m7 10 5 5 5-5"/><path d="M5 20h14"/></svg><b>Download</b></span>
+        </a>
+        <a class="ec rise r5" id="ec-firefox" href="https://github.com/sillycs/Sillet-Wallet/releases/latest/download/Sillet-Extension-Firefox.zip" rel="noopener">
+          <h3>Firefox</h3>
+          <p data-store="Add it from Firefox Add-ons" data-zip="Firefox only installs it from Add-ons. The ZIP is for developers">Firefox only installs it from Add-ons. The ZIP is for developers</p>
+          <span class="get"><svg viewBox="0 0 24 24"><path d="M12 4v11"/><path d="m7 10 5 5 5-5"/><path d="M5 20h14"/></svg><b>Download</b></span>
+        </a>
       </div>
+      <p class="extnote" id="extnote">Manual install on Chrome, Brave and Edge: extract the ZIP, open <code>chrome://extensions</code>, turn on Developer mode, choose Load unpacked and pick the folder</p>
     </section>
-    <section class="phase reveal" id="s1">
-      <div class="num">1</div>
-      <h2>Get the real Sillet</h2>
-      <p class="lead">Fake wallets look identical. Make sure yours is not one</p>
-      <div class="items">
-        <div class="item">
-          <div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-arrow_download"/></svg>Download from the official page only</h3><span class="path">raton.fun/wallet/download</span></div><p>Type the address or use a bookmark. Ignore ads, DMs and files from friends</p>
-        </div>
-        <div class="item">
-          <div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-laptop_shield"/></svg>Check what you downloaded</h3><span class="path">github.com/sillycs/Sillet-Wallet</span></div><p>Every file is built by GitHub Actions and carries a build attestation. If you use the command line, run gh attestation verify on the file and make sure it names sillycs/Sillet-Wallet</p>
-        </div>
-        <div class="item">
-          <div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-alert"/></svg>Browser extension: official sources only</h3></div><p>Install it from the store links on our download page or from our GitHub release. Search results often show fake wallets with the same name. The publisher must be Raton</p>
-        </div>
-        <div class="item">
-          <div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-laptop"/></svg>Keep your device clean</h3></div><p>Update your system and skip cracked software and game cheats. Stealers love them</p>
-        </div>
-      </div>
-    </section>
-    <section class="phase reveal" id="s2">
-      <div class="num">2</div>
-      <h2>Create your wallet</h2>
-      <p class="lead">Two secrets: a password and a recovery phrase. They do different jobs</p>
-      <div class="items">
-        <div class="item">
-          <div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-password"/></svg>A long, unique password</h3></div><p>4 or more random words, or 16+ characters from a manager. Never reuse one</p>
-        </div>
-        <div class="item">
-          <div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-note_edit"/></svg>Recovery phrase on paper</h3><span class="path">Settings › Security › Recovery phrase</span></div><p>Write it by hand, check every word, and do it somewhere private</p>
-        </div>
-        <div class="item">
-          <div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-copy"/></svg>Two copies, two places</h3></div><p>Fires and moves happen. A steel plate survives both</p>
-        </div>
-        <div class="item">
-          <div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-checkmark_circle"/></svg>Test your backup</h3></div><p>Restore with a tiny amount before you move real money in</p>
-        </div>
-        <div class="item">
-          <div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-key"/></svg>Passphrase? Back it up too</h3></div><p>If you add the optional 25th word, it is part of your wallet. Without it the same phrase opens a different, empty wallet, and it cannot be recovered. Keep it apart from the phrase</p>
-        </div>
-        <div class="item">
-          <div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-save"/></svg>Encrypted backup file</h3><span class="path">Settings › Backup and export</span></div><p>A handy extra that needs your password. It doesn't replace the paper</p>
-        </div>
-      </div>
-      <div class="dont">
-        <div class="col yes"><h3><svg class="ic" aria-hidden="true"><use href="#i-checkmark_circle"/></svg>Do</h3><ul><li>Write it on paper, by hand</li><li>Keep it where only you can reach it</li><li>Tell someone you trust where it is, not what it is</li></ul></div>
-        <div class="col no"><h3><svg class="ic" aria-hidden="true"><use href="#i-dismiss_circle"/></svg>Never</h3><ul><li>Photograph it or save it in notes, email or cloud</li><li>Type it into a website, form or support chat</li><li>Share it with anyone, including "support"</li></ul></div>
-      </div>
-      <div class="callout"><svg class="ic" aria-hidden="true"><use href="#i-warning"/></svg><span><b>Sillet and Raton will never ask for your phrase.</b> Anyone who does is scamming you</span></div>
-    </section>
-    <section class="phase reveal" id="s3">
-      <div class="num">3</div>
-      <h2>Turn on the protections</h2>
-      <p class="lead">Open Settings, then Security and Privacy. Most are on already, check them anyway</p>
-      <div class="items">
-        <div class="item">
-          <div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-lock_closed"/></svg>Password to send</h3><span class="path">Security › Sending</span></div><p>Asks for it on every send, even when the wallet is already unlocked</p>
-        </div>
-        <div class="item">
-          <div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-timer"/></svg>Auto-lock</h3><span class="path">Security › Locking</span></div><p>Set 5 minutes or less. Also lock on sleep and when minimized</p>
-        </div>
-        <div class="item">
-          <div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-laptop_shield"/></svg>Lock the file to this device</h3></div><p>A stolen copy of the wallet file is useless on another computer</p>
-        </div>
-        <div class="item">
-          <div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-money"/></svg>Extra check for large sends</h3><span class="path">Security › Large sends</span></div><p>Over your limit, you type the last 4 characters of the address</p>
-        </div>
-        <div class="item">
-          <div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-clipboard_paste"/></svg>Clipboard protection</h3><span class="path">Privacy</span></div><p>Clears copied addresses and keeps them out of clipboard history</p>
-        </div>
-        <div class="item">
-          <div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-person_add"/></svg>New address warning</h3></div><p>The first send to an address you've never used gets flagged</p>
-        </div>
-        <div class="item">
-          <div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-hourglass"/></svg>Slow down wrong passwords</h3></div><p>After 3 misses each try waits longer, and you see how many happened</p>
-        </div>
-        <div class="item">
-          <div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-wallet"/></svg>Rotating receive addresses</h3><span class="path">Settings</span></div><p>A fresh Bitcoin, Litecoin or Dogecoin address after each payment, so people can't follow your history from one address. Old ones keep working</p>
-        </div>
-        <div class="item">
-          <div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-globe"/></svg>Hide your IP with Tor or a proxy</h3><span class="path">Settings › Network privacy</span></div><p>Public nodes see your IP and which addresses you check. Add a SOCKS5 proxy such as Tor, or your own node</p>
-        </div>
-        <div class="item">
-          <div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-fingerprint"/></svg>Windows Hello or fingerprint</h3><span class="path">Security › Passkey</span></div><p>Quick unlock. Your password is still the real key</p>
-        </div>
-        <div class="item">
-          <div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-eye_off"/></svg>Hide from screenshots</h3><span class="path">Privacy</span></div><p>Blocks screen capture and blurs Sillet when you switch apps</p>
-        </div>
-        <div class="item">
-          <div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-shield"/></svg>Harden the Sillet process</h3></div><p>Makes it harder for other programs to read Sillet's memory</p>
-        </div>
-        <div class="item">
-          <div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-people"/></svg>Only send to contacts</h3></div><p>The strictest mode. Blocks any address you have not saved</p>
-        </div>
-        <div class="item">
-          <div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-alert"/></svg>Payment notifications</h3></div><p>An alert you didn't expect is often the first warning</p>
-        </div>
-      </div>
-      <div class="callout"><svg class="ic" aria-hidden="true"><use href="#i-shield_checkmark"/></svg><span>Run the <b>Security checkup</b> in Settings to see what is on and what is missing</span></div>
-    </section>
-    <section class="phase reveal" id="s4">
-      <div class="num">4</div>
-      <h2>Everyday habits</h2>
-      <p class="lead">Settings help. Habits stop most attacks</p>
-      <div class="items">
-        <div class="item">
-          <div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-eye"/></svg>Check the address</h3></div><p>Compare the first and last characters with the source. Malware swaps copies</p>
-        </div>
-        <div class="item">
-          <div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-send"/></svg>Send a test first</h3></div><p>New address or a big amount? Send a little, wait, then send the rest</p>
-        </div>
-        <div class="item">
-          <div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-globe"/></svg>Check the network</h3></div><p>USDT sent on the wrong network can be lost for good</p>
-        </div>
-        <div class="item">
-          <div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-receipt"/></svg>Read the review screen</h3></div><p>It shows what they get, the fee and your total. The fee goes on top</p>
-        </div>
-        <div class="item">
-          <div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-lock_closed"/></svg>Lock when you leave</h3></div><p>Auto-lock is the safety net, not the plan</p>
-        </div>
-        <div class="item">
-          <div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-arrow_sync"/></svg>Keep it updated</h3></div><p>On Windows you can turn on automatic updates in Settings. Elsewhere, update only from the official page, same as the first install</p>
-        </div>
-        <div class="item">
-          <div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>Slow down</h3></div><p>Urgency is how scams work. Real support never needs your phrase</p>
-        </div>
-      </div>
-      <div class="dont">
-        <div class="col yes"><h3><svg class="ic" aria-hidden="true"><use href="#i-checkmark_circle"/></svg>Fine</h3><ul><li>Typing addresses of sites you use</li><li>Saving trusted contacts by name</li><li>Your own network or mobile data</li></ul></div>
-        <div class="col no"><h3><svg class="ic" aria-hidden="true"><use href="#i-dismiss_circle"/></svg>Red flags</h3><ul><li>Anyone offering to "fix" your wallet</li><li>Links from DMs, ads or surprise emails</li><li>Giveaways and guaranteed returns</li></ul></div>
-      </div>
-    </section>
-    <section class="phase reveal" id="s5">
-      <div class="num">5</div>
-      <h2>Split your funds</h2>
-      <p class="lead">Carry what you would carry in your pocket. Keep the rest harder to reach</p>
-      <div class="split">
-        <div class="tier">
-          <small>Everyday wallet</small>
-          <h3><svg class="ic" aria-hidden="true"><use href="#i-wallet"/></svg>Sillet on your phone or PC</h3>
-          <p>For spending and trading. Only what you can afford to lose</p>
-          <div class="bar"><span style="width:20%"></span></div>
-        </div>
-        <div class="tier">
-          <small>Savings</small>
-          <h3><svg class="ic" aria-hidden="true"><use href="#i-shield"/></svg>A separate wallet</h3>
-          <p>Rarely connected, its own phrase, never used for experiments</p>
-          <div class="bar"><span style="width:80%"></span></div>
-        </div>
-      </div>
-      <div class="items">
-        <div class="item">
-          <div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-wallet"/></svg>Separate wallets</h3></div><p>Each one has its own password and phrase, so one mistake stays small</p>
-        </div>
-        <div class="item">
-          <div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-people"/></svg>Accounts in one wallet</h3><span class="path">Settings › Accounts</span></div><p>Several accounts from one phrase help you organize funds, but they share the same phrase. Anyone who gets it gets them all</p>
-        </div>
-        <div class="item">
-          <div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-eye"/></svg>Watch-only for savings</h3><span class="path">Settings › Addresses</span></div><p>Public addresses only. See balances on your phone, nothing can be spent</p>
-        </div>
-        <div class="item">
-          <div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-gauge"/></svg>Set a limit</h3></div><p>Decide what lives in the daily wallet and move the extra out</p>
-        </div>
-      </div>
-    </section>
-    <section class="phase reveal" id="s6">
-      <div class="num">6</div>
-      <h2>If something goes wrong</h2>
-      <p class="lead">Act in this order</p>
-      <div class="items">
-        <div class="item">
-          <div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg>Lost or broken device</h3></div><p>Funds are fine. Install Sillet, choose Restore and enter your phrase</p>
-        </div>
-        <div class="item">
-          <div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-alert_urgent"/></svg>Phrase or wallet exposed</h3></div><p>New wallet on a clean device, move everything now. A new password won't help</p>
-        </div>
-        <div class="item">
-          <div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-warning"/></svg>Sent to a scammer</h3></div><p>It can't be undone. Save the tx id, report it, and ignore anyone offering recovery</p>
-        </div>
-        <div class="item">
-          <div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-key"/></svg>Forgot your password</h3></div><p>Restore with your phrase and set a new one. Without both, nobody can help</p>
-        </div>
-      </div>
-    </section>
-    <section class="phase reveal" id="security"><div class="num">7</div><h2>How Sillet protects you</h2><p class="lead">What we built to keep your keys safe, and one honest caveat</p><div class="items"><div class="item"><div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-lock_closed"/></svg>Your recovery phrase is encrypted</h3><span class="status st-now">Built</span></div><p>The phrase is encrypted with AES-256-GCM. The key comes from your password through scrypt with a random salt, which makes guessing slow. Nothing readable is written to disk</p></div><div class="item"><div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-laptop_shield"/></svg>Device lock on Windows</h3><span class="status st-now">Built</span></div><p>By default the vault file is also wrapped with Windows DPAPI for your user account, so a copied file is useless on another user or PC. You can turn this off in Settings</p></div><div class="item"><div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-fingerprint"/></svg>Biometric unlock</h3><span class="status st-now">Built</span></div><p>Windows Hello on desktop and the Android Keystore on phones. Your password is never sent anywhere. Only a secret protected by the system is used to unlock it locally</p></div><div class="item"><div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-key"/></svg>Keys stay on your device</h3><span class="status st-now">Built</span></div><p>Private keys are derived and used to sign on your device only. A signed transaction is the only thing sent to the network</p></div><div class="item"><div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-eye_off"/></svg>Screen and clipboard protection</h3><span class="status st-now">Built</span></div><p>You can hide balances, block screenshots and screen capture, blur the window when inactive and clear the clipboard after copying</p></div><div class="item"><div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-timer"/></svg>Auto lock and unlock slowdown</h3><span class="status st-now">Built</span></div><p>The wallet locks after the time you choose, on minimize or when the system locks. Repeated wrong passwords make each attempt wait longer</p></div><div class="item"><div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-alert"/></svg>Not independently audited</h3><span class="status st-no">Open</span></div><p>All of the above is our own work and has not been reviewed by an outside firm. Until it is, treat it as unaudited</p></div></div></section><section class="phase reveal" id="services"><div class="num">8</div><h2>Services Sillet uses</h2><p class="lead">Sillet has no server of its own for your data, so every feature that needs the internet talks to one of these. Each sees your IP address when you connect, unless you use Tor or a proxy</p><div class="tbl"><div class="row"><b>Blockchain nodes and APIs</b><span>publicnode, dRPC, LlamaRPC, official network endpoints, mempool.space, Blockstream, litecoinspace.org, BlockCypher, TronGrid, Solana RPC. <i>Sent:</i> Your addresses and the transactions you send. <i>When:</i> Required to show balances and send</span></div><div class="row"><b>CoinGecko</b><span>Prices, charts and market data. <i>Sent:</i> The coin list and your chosen currency. No address. <i>When:</i> Used by Market and fiat values</span></div><div class="row"><b>open.er-api.com</b><span>Fiat exchange rates. <i>Sent:</i> A request for USD rates. No wallet data. <i>When:</i> Used for currency conversion</span></div><div class="row"><b>alternative.me</b><span>Fear and Greed index. <i>Sent:</i> A plain request. No wallet data. <i>When:</i> Used by Market</span></div><div class="row"><b>Exolix</b><span>Swaps. <i>Sent:</i> The coins, amounts and destination address you enter for a swap. <i>When:</i> Only if you swap. Governed by Exolix terms</span></div><div class="row"><b>MoonPay, Ramp, Transak, Buda, Orionx</b><span>Buying and selling. <i>Sent:</i> Opened in your browser. Sillet only shows your address to copy. <i>When:</i> Only if you use them. Governed by their terms</span></div><div class="row"><b>raton.fun</b><span>News feed and update check. <i>Sent:</i> A request for a small file. No wallet data. <i>When:</i> Used for news and version checks</span></div><div class="row"><b>Blockscout</b><span>NFT view on Ethereum, Base, Optimism, Arbitrum, Polygon and Gnosis. <i>Sent:</i> Your EVM address. <i>When:</i> Only if you turn the NFT view on. Images, if you allow them, load directly from the host that serves each one</span></div></div></section><section class="phase reveal" id="clarify"><div class="num">9</div><h2>Things worth knowing</h2><p class="lead">Plain facts that are easy to miss and that you should know before you rely on any wallet</p><div class="items"><div class="item"><div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-eye"/></svg>A public blockchain is public</h3><span class="status st-next">Know this</span></div><p>Anyone can see the balance and history of any address. Sillet cannot hide that. Change addresses and separate accounts help, but they do not make you anonymous</p></div><div class="item"><div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-globe"/></svg>Nodes see what you ask</h3><span class="status st-next">Know this</span></div><p>A public node learns your IP and which addresses you query. Use Tor or a proxy in Settings, or your own node, if that matters to you</p></div><div class="item"><div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-person_add"/></svg>Services you open are not ours</h3><span class="status st-next">Know this</span></div><p>Swaps and buying run through Exolix, MoonPay, Ramp, Transak, Buda or Orionx. Their terms, fees and identity checks apply, not ours</p></div><div class="item"><div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-wallet"/></svg>Rotating receive addresses are optional</h3><span class="status st-next">Know this</span></div><p>Turn them on in Settings. Bitcoin, Litecoin and Dogecoin then show a fresh address each time the last one receives a payment. Old addresses keep working and their funds count in your balance. To find them Sillet asks the explorer about each address of your wallet in order, so it makes a few more requests. EVM networks, TRON and Solana use one address per account, so use another account if you want a different one</p></div><div class="item"><div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-money"/></svg>The NFT view talks to Blockscout</h3><span class="status st-next">Know this</span></div><p>It is off until you turn it on. When on, your EVM address is sent to Blockscout to list your ERC-721 and ERC-1155 items on Ethereum, Base, Optimism, Arbitrum, Polygon and Gnosis. Images are a separate switch, and they load straight from the host that serves each one, so they do not go through your proxy or Tor. It is read-only: you cannot send NFTs from Sillet</p></div><div class="item"><div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-money"/></svg>Prices and values are estimates</h3><span class="status st-next">Know this</span></div><p>Fiat values come from third parties and can be late or wrong. Custom tokens show no price on purpose</p></div><div class="item"><div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-shield"/></svg>No analytics and no accounts</h3><span class="status st-now">Good to know</span></div><p>Sillet has no sign up, no analytics, no advertising identifiers and no crash reporting. Because we hold no account data, there is nothing for us to export or delete for you</p></div></div></section><section class="phase reveal" id="storage"><div class="num">10</div><h2>Storage and updates</h2><p class="lead">What is kept, where, and how new versions arrive</p><div class="tbl"><div class="row"><b>On your device</b><span>The encrypted vault, settings, contacts, activity history, price alerts, notification history and cached news</span></div><div class="row"><b>Your password</b><span>It is not kept in readable form. If you turn on biometric unlock, a protected copy is held by Windows Hello or the Android Keystore</span></div><div class="row"><b>Removing it</b><span>Delete the wallet inside Sillet to remove its vault from that device. Uninstalling the app alone can leave files behind, so delete the wallet first</span></div><div class="row"><b>Notifications</b><span>Created on your device. On Android a background service checks the same public sources so alerts work when the app is closed. We run no push server</span></div><div class="row"><b>Updates</b><span>Windows downloads a new version from raton.fun and checks its SHA-256 before using it. Android and Linux only tell you a new one exists</span></div><div class="row"><b>Changes</b><span>If we add a service or change what is sent, this page is updated before the release that does it</span></div></div></section><section class="phase reveal" id="roadmap"><div class="num">11</div><h2>Roadmap</h2><p class="lead">What we plan to build, in rough priority order. No dates, because promising dates we may miss is worse than saying nothing</p><div class="items"><div class="item"><div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-shield_checkmark"/></svg>Independent security audit</h3><span class="status st-next">Planned</span></div><p>Our top priority. Until a third party reviews the code and publishes the report, treat Sillet as unaudited and keep the amounts you hold in it proportionate</p></div><div class="item"><div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-laptop_shield"/></svg>Hardware wallet signing</h3><span class="status st-later">Researching</span></div><p>Sign on the device instead of watch-only. Ledger first, then others. It needs testing with real devices before we ship it</p></div><div class="item"><div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-arrow_sync"/></svg>WalletConnect and dApp connection</h3><span class="status st-later">Researching</span></div><p>Connect to apps like Uniswap without leaving Sillet. Not a full browser</p></div><div class="item"><div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-globe"/></svg>Chains beyond EVM, Bitcoin, TRON and Solana</h3><span class="status st-later">Researching</span></div><p>TON, Sui and Cosmos based chains</p></div><div class="item"><div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-globe"/></svg>Built-in Tor</h3><span class="status st-next">Planned</span></div><p>Tor without installing anything else. Today you can use any SOCKS5 proxy, including a Tor you run yourself</p></div><div class="item"><div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-send"/></svg>Alerts for every account in the background</h3><span class="status st-next">Planned</span></div><p>Background payment alerts on Android watch your main account only</p></div><div class="item"><div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-globe"/></svg>NFT images through your proxy</h3><span class="status st-next">Planned</span></div><p>Load NFT images through the same proxy as everything else, instead of straight from the host</p></div></div><div class="callout"><svg class="ic" aria-hidden="true"><use href="#i-alert"/></svg><div><b>Status words:</b> Planned means decided, not started. Researching means we are still working out if and how</div></div></section><section class="phase reveal" id="issues"><div class="num">12</div><h2>Known issues and limits</h2><p class="lead">Things that are not as good as they should be, listed so you can decide with full information</p><div class="items"><div class="item"><div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-alert"/></svg>No independent audit yet</h3><span class="status st-no">Open</span></div><p>The code has not been reviewed by an outside security firm</p></div><div class="item"><div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-send"/></svg>Some incoming payments have no transaction id</h3><span class="status st-no">Open</span></div><p>Detection still starts from a balance change. The id and sender are then looked up, but native coin payments on EVM networks and combined payments have none. Background alerts watch your main account only</p></div><div class="item"><div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-laptop"/></svg>Hardware wallets are watch-only</h3><span class="status st-no">Open</span></div><p>You can view balances and receive, but not sign with the device</p></div><div class="item"><div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-eye"/></svg>Your IP is visible unless you use Tor or a proxy</h3><span class="status st-no">Open</span></div><p>Nodes and APIs can see your IP and which addresses you ask about. Turn on Proxy or Tor in Settings to hide it</p></div><div class="item"><div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-money"/></svg>Custom tokens have no price</h3><span class="status st-later">By design</span></div><p>Custom tokens are added by contract address and show no price. Tokens with unusual behavior, such as fees on transfer, may show wrong amounts. The NFT view is read-only and covers six EVM networks. NFT images load straight from the host that serves them, not through your proxy</p></div><div class="item"><div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-arrow_download"/></svg>Android updates are manual</h3><span class="status st-later">By design</span></div><p>Android only notifies you about a new version and you install it yourself. Linux works the same way. Only Windows can update itself</p></div><div class="item"><div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>Public nodes can be slow or rate limited</h3><span class="status st-no">Open</span></div><p>Because we use free public nodes by default, balances may occasionally load slowly or fail. Pull to refresh to retry or point a network to your own node</p></div><div class="item"><div class="item-head"><h3><svg class="ic" aria-hidden="true"><use href="#i-globe"/></svg>Dogecoin depends on one free service</h3><span class="status st-no">Open</span></div><p>Dogecoin uses BlockCypher, which limits free requests. When the limit is hit, Dogecoin may not load for a while</p></div></div></section><section class="phase reveal" id="nodes"><div class="num">13</div><h2>How nodes are chosen</h2><p class="lead">Where your balances and transactions come from and what happens when one is down</p><div class="tbl"><div class="row"><b>Public by default</b><span>Sillet does not run its own servers for blockchain data. It talks to public nodes and open APIs, so there is no Raton backend that sees your wallet</span></div><div class="row"><b>Ordered list</b><span>Every EVM network has three endpoints in a fixed order. For example Ethereum uses publicnode, then dRPC, then LlamaRPC. Solana uses the official endpoint and publicnode. Bitcoin uses mempool.space then Blockstream</span></div><div class="row"><b>Failover</b><span>A request goes to the last endpoint that worked. If it times out or the connection fails, the next one is tried automatically, and the one that answers becomes the new first choice</span></div><div class="row"><b>What does not fail over</b><span>If a node answers but rejects a request, for example a transfer simulation that fails, that answer is shown to you instead of silently asking another node</span></div><div class="row"><b>Single provider networks</b><span>TRON uses TronGrid, Litecoin uses litecoinspace.org and Dogecoin uses BlockCypher. If these are down, those networks cannot load until they recover</span></div><div class="row"><b>Why these</b><span>They are free, well known, work without an account or API key, and follow the standard JSON-RPC or Esplora formats. We prefer a mix of independent operators so one outage does not stop a whole network</span></div><div class="row"><b>Checks before signing</b><span>Tokens: the contract decimals are read on-chain and the send is cancelled if they differ. TRON: the node built transaction is checked against what you asked for and its hash is recomputed locally. Signing always happens on your device</span></div><div class="row"><b>Using your own node</b><span>In Settings, Network privacy, you can set one or more endpoints per network. When you do, that network uses only your node and never falls back to ours. Plain http is accepted only for localhost and private addresses</span></div><div class="row"><b>Proxy and Tor</b><span>You can route all connections through a SOCKS5 proxy such as Tor or an HTTP proxy. Sillet asks the proxy to resolve names, so your DNS requests are not leaked. If the proxy is down, requests fail instead of going out directly</span></div></div></section>
-    <section class="finish reveal">
-      <h2>That covers it</h2>
-      <p>Most losses come from the mistakes on this page. Come back when you set up a new device</p>
-      <div class="btns">
-        <a class="btn solid" href="/wallet/download">Download Sillet</a>
-        <button class="btn" id="again" type="button">Celebrate again</button>
-      </div>
-      <a class="back" href="/wallet">Back to Sillet</a>
-    </section>
-    <div id="end"></div>
+
+    <p class="verify">Every file is built by GitHub Actions and has a build attestation. Check one with <code>gh attestation verify Sillet.exe --repo sillycs/Sillet-Wallet</code></p>
+
+    <a class="back" href="/wallet"><svg viewBox="0 0 24 24"><path d="M19 12H5"/><path d="m11 6-6 6 6 6"/></svg>Back to Sillet</a>
   </div>
 </main>
+
 <canvas id="confetti"></canvas>
+
 <footer>
   <p class="copy">© <span id="year">2026</span> <a href="https://raton.fun">Raton</a>. All rights reserved. Made by the Raton team</p>
 </footer>
+
 <script>
 (function(){
   document.getElementById('year').textContent=new Date().getFullYear();
-  var bar=document.getElementById('progress');
-  function onScroll(){
-    var h=document.documentElement.scrollHeight-window.innerHeight;
-    bar.style.transform='scaleX('+(h>0?Math.min(1,window.scrollY/h):0)+')';
-  }
-  window.addEventListener('scroll',onScroll,{passive:true});
-  onScroll();
-  var reveals=document.querySelectorAll('.reveal');
-  if('IntersectionObserver' in window){
-    var io=new IntersectionObserver(function(entries){
-      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
-    },{threshold:.08,rootMargin:'0px 0px -6% 0px'});
-    reveals.forEach(function(el){ io.observe(el); });
-  } else reveals.forEach(function(el){ el.classList.add('in'); });
+
+  // Paste the store address here once the listing is approved. Empty means the GitHub ZIP is used
+  var STORES={chromium:'',edge:'',firefox:''};
+  Object.keys(STORES).forEach(function(k){
+    var url=STORES[k]; if(!url) return;
+    var a=document.getElementById('ec-'+k); if(!a) return;
+    a.href=url; a.target='_blank';
+    var p=a.querySelector('p'); p.textContent=p.dataset.store;
+    a.querySelector('b').textContent='Install';
+  });
+  if(STORES.chromium||STORES.edge){ var n=document.getElementById('extnote'); if(n&&STORES.chromium&&STORES.edge) n.style.display='none'; }
+
   var canvas=document.getElementById('confetti');
   var cx=canvas.getContext('2d');
   var bits=[], raf=null;
@@ -388,21 +261,14 @@ footer{border-top:1px solid var(--border);padding:28px 24px}
   }
   fit();
   window.addEventListener('resize',fit);
-  var COLS=['#ffffff','#f4f4f5','#d4d4d8','#a1a1aa','#71717a','#3DD68C'];
-  function burst(x,y,n,spread){
-    for(var i=0;i<n;i++){
-      var a=-Math.PI/2+(Math.random()-.5)*spread;
+  var COLS=['#ffffff','#f4f4f5','#d4d4d8','#a1a1aa','#71717a','#3f3f46'];
+  function pop(x,y){
+    for(var i=0;i<110;i++){
+      var a=-Math.PI/2+(Math.random()-.5)*2;
       var sp=7+Math.random()*13;
       bits.push({x:x,y:y,vx:Math.cos(a)*sp+(Math.random()-.5)*3,vy:Math.sin(a)*sp,w:7+Math.random()*9,h:5+Math.random()*8,rot:Math.random()*Math.PI,vr:(Math.random()-.5)*.4,color:COLS[(Math.random()*COLS.length)|0],life:1});
     }
     if(!raf) raf=requestAnimationFrame(step);
-  }
-  function celebrate(){
-    var w=window.innerWidth,h=window.innerHeight;
-    burst(w*.2,h*.95,90,1.5);
-    burst(w*.5,h*.95,110,2);
-    burst(w*.8,h*.95,90,1.5);
-    setTimeout(function(){ burst(w*.35,h*.9,70,1.8); burst(w*.65,h*.9,70,1.8); },320);
   }
   function step(){
     cx.clearRect(0,0,canvas.width,canvas.height);
@@ -422,17 +288,107 @@ footer{border-top:1px solid var(--border);padding:28px 24px}
     if(bits.length) raf=requestAnimationFrame(step);
     else { cx.clearRect(0,0,canvas.width,canvas.height); raf=null; }
   }
-  var fired=false;
-  var end=document.getElementById('end');
-  if('IntersectionObserver' in window){
-    new IntersectionObserver(function(entries){
-      entries.forEach(function(e){
-        if(e.isIntersecting){ if(!fired){ fired=true; celebrate(); } }
-        else if(e.boundingClientRect.top>0){ fired=false; } 
-      });
-    },{threshold:0}).observe(end);
+  function icons(x,y){
+    for(var j=0;j<5;j++){
+      var im=document.createElement('img');
+      var size=16+Math.random()*6;
+      var ang=(-150+j*30+(Math.random()*14-7))*Math.PI/180;
+      var dist=70+Math.random()*40;
+      var dx=Math.cos(ang)*dist, dy=Math.sin(ang)*dist;
+      var rot=(Math.random()>.5?1:-1)*(180+Math.random()*200);
+      im.src='/wallet/silleticon.png';
+      im.alt='';
+      im.draggable=false;
+      im.style.cssText='position:fixed;left:'+(x-size/2)+'px;top:'+(y-size/2)+'px;width:'+size+'px;height:'+size+'px;pointer-events:none;z-index:60';
+      document.body.appendChild(im);
+      im.animate([
+        {transform:'translate(0,0) scale(.3) rotate(0deg)',opacity:0},
+        {transform:'translate('+dx*.55+'px,'+dy*.55+'px) scale(1.1) rotate('+rot*.35+'deg)',opacity:1,offset:.25},
+        {transform:'translate('+dx+'px,'+dy+'px) scale(1) rotate('+rot*.7+'deg)',opacity:1,offset:.55},
+        {transform:'translate('+dx*1.15+'px,'+(dy+70)+'px) scale(.8) rotate('+rot+'deg)',opacity:0}
+      ],{duration:1100+Math.random()*250,easing:'cubic-bezier(.2,.7,.3,1)',fill:'forwards'}).onfinish=(function(el){ return function(){ el.remove(); }; })(im);
+    }
   }
-  document.getElementById('again').addEventListener('click',celebrate);
+  var status=document.getElementById('status');
+  var statusTimer=null;
+  document.querySelectorAll('.card').forEach(function(card){
+    card.addEventListener('click',function(){
+      var r=card.getBoundingClientRect();
+      card.classList.remove('go'); void card.offsetWidth; card.classList.add('go');
+      pop(r.left+r.width/2,r.top+r.height/2);
+      var g=card.querySelector('.get').getBoundingClientRect();
+      icons(g.left+g.width/2,g.top+g.height/2);
+      status.textContent=(card.dataset.done||'Thank you')+'. Your download is starting';
+      status.classList.add('on');
+      clearTimeout(statusTimer);
+      statusTimer=setTimeout(function(){ status.classList.remove('on'); },6000);
+    });
+  });
+
+  (function(){
+    var icon=document.getElementById('brandIcon');
+    if(!icon) return;
+    var fairy=null, fx=0, fy=0, tx=0, ty=0, facingRight=true, locked=null, leaving=false, wander=null, lastSpark=0, running=false;
+    function iconCenter(){ var r=icon.getBoundingClientRect(); return {x:r.left+r.width/2,y:r.top+r.height/2}; }
+    function pickWander(){
+      if(locked||leaving) return;
+      tx=40+Math.random()*Math.max(120,window.innerWidth-80);
+      ty=90+Math.random()*Math.max(120,window.innerHeight-140);
+    }
+    function aimAt(el){ var r=el.getBoundingClientRect(); tx=r.left+r.width*.5; ty=r.top+r.height*.32; }
+    function sparkle(x,y){
+      var s=document.createElement('span');
+      s.className='sparkle';
+      s.style.left=(x+(Math.random()-.5)*20)+'px';
+      s.style.top=(y+(Math.random()-.5)*20)+'px';
+      s.style.setProperty('--sc',(.5+Math.random()*.7).toFixed(2));
+      document.body.appendChild(s);
+      setTimeout(function(){ s.remove(); },900);
+    }
+    function loop(ts){
+      if(!fairy){ running=false; return; }
+      if(leaving){ var c=iconCenter(); tx=c.x; ty=c.y; }
+      else if(locked) aimAt(locked);
+      var dx=tx-fx, dy=ty-fy;
+      var k=leaving?.09:.045;
+      fx+=dx*k; fy+=dy*k;
+      if(Math.abs(dx)>2) facingRight=dx>0;
+      var bob=Math.sin(ts/380)*5;
+      fairy.style.transform='translate('+(fx-26)+'px,'+(fy-26+bob)+'px)'+(facingRight?'':' scaleX(-1)');
+      if(ts-lastSpark>95 && (Math.abs(dx)+Math.abs(dy)>6||locked)){ sparkle(fx,fy+10); lastSpark=ts; }
+      if(leaving && Math.abs(dx)+Math.abs(dy)<10){
+        fairy.classList.remove('on');
+        var f=fairy; fairy=null; leaving=false; clearInterval(wander);
+        setTimeout(function(){ f.remove(); },400);
+        jump();
+      }
+      requestAnimationFrame(loop);
+    }
+    function jump(){ icon.classList.remove('jump'); void icon.offsetWidth; icon.classList.add('jump'); }
+    document.querySelectorAll('.card,.step,.logo,.ec').forEach(function(el){
+      el.addEventListener('mouseenter',function(){ if(fairy&&!leaving){ locked=el; } });
+      el.addEventListener('mouseleave',function(){ if(locked===el){ locked=null; pickWander(); } });
+    });
+    icon.addEventListener('click',function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      jump();
+      if(fairy){ leaving=true; locked=null; return; }
+      var c=iconCenter();
+      fx=c.x; fy=c.y;
+      fairy=document.createElement('img');
+      fairy.src='/img/fairy.gif';
+      fairy.className='fairy';
+      fairy.alt='';
+      fairy.draggable=false;
+      document.body.appendChild(fairy);
+      requestAnimationFrame(function(){ fairy&&fairy.classList.add('on'); });
+      tx=c.x+120; ty=c.y+160;
+      setTimeout(pickWander,700);
+      wander=setInterval(pickWander,1900);
+      if(!running){ running=true; requestAnimationFrame(loop); }
+    });
+  })();
 })();
 </script>
 </body>
