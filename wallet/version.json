@@ -1,8 +1,8 @@
 {
   "url": "https://raton.fun/wallet/download",
   "exe": "https://raton.fun/wallet/download/Sillet.exe",
-  "version": "1.1.4",
-  "sha256": "1b183262bdbb5312574f0b7374562af737ddb95132743662267c288502d3e9b7",
+  "version": "1.1.5",
+  "sha256": "2dd95065f884239c6787f5a9e972b66054eb39440b0c7e478a5a8176988a4a0f",
   "notes": "New: Bitcoin Cash, XRP, TON, Sui and Cosmos (ATOM)\nNew: speed up or cancel a pending payment, retry a failed one\nNew: Android widgets (Market, quick actions, address QR) and Lite mode in General\nNew: Litecoin theme replaces Horror\nSecurity: updates are signed and install only when you press Install\nSecurity: automatic updates off by default, optional connections can be turned off\nSecurity: swaps show where your funds go before you confirm\nSecurity: releases are built by GitHub Actions with a verifiable attestation",
-  "sig": "D5Ba5oLQ/2pyh3dsD8opvS4AONEeqAG6qasVPXJ/GC3FG5g5ewhDdbD8zHyqgjsxdarZf/pmITQbQjcW3VI0BQ=="
+  "sig": "0/hhunMbSqE/VP9oMMlNJyxhRH6z7XIdOHxdKdTrgodMRxhJ7hQp2PnTnKjdaR9WJH/GWuuayf7szGh/63aBAw=="
 }
