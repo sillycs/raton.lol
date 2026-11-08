@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Open in Sillet Wallet</title>
+<meta name="description" content="Connect an app to your Sillet Wallet">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#09090B">
+<link rel="icon" type="image/png" href="/wallet/silleticon.png">
+<style>
+:root{--bg:#09090B;--surface:#111113;--border:#1C1C20;--border-strong:#2E2E34;--text:#F4F4F5;--text-2:#8C8C96;--accent:#F4F4F5;--accent-text:#09090B}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:Inter,"Segoe UI",system-ui,sans-serif;font-size:15px;line-height:1.6;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:32px 28px;max-width:420px;width:100%;text-align:center}
+img{width:56px;height:56px;border-radius:14px;margin-bottom:16px}
+h1{font-size:22px;font-weight:700;margin-bottom:8px}
+p{color:var(--text-2);margin-bottom:20px}
+.btn{display:block;background:var(--accent);color:var(--accent-text);font-weight:600;border-radius:12px;padding:13px 18px;text-decoration:none;margin-bottom:10px}
+.ghost{background:transparent;color:var(--text);border:1px solid var(--border-strong)}
+.hide{display:none}
+</style>
+</head>
+<body>
+<main class="card">
+  <img src="/wallet/silleticon.png" alt="Sillet">
+  <h1 id="title">Open in Sillet</h1>
+  <p id="text">Tap the button to connect this app to your Sillet Wallet</p>
+  <a id="open" class="btn" href="sillet://wc">Open in Sillet</a>
+  <a class="btn ghost" href="/wallet/download/">Get Sillet</a>
+</main>
+<script>
+(function () {
+  var q = new URLSearchParams(location.search).get('uri') || '';
+  var ok = /^wc:[0-9a-fA-F]{64}@2\?[^\s]{0,1500}$/.test(q);
+  var open = document.getElementById('open');
+  if (!ok) {
+    document.getElementById('title').textContent = 'This link is not valid';
+    document.getElementById('text').textContent = 'Go back to the app and copy the WalletConnect link again';
+    open.className = 'hide';
+    return;
+  }
+  var target = 'sillet://wc?uri=' + encodeURIComponent(q);
+  open.href = target;
+  // try to open the app straight away, the button is there in case the browser asks first
+  setTimeout(function () { location.href = target; }, 300);
+})();
+</script>
+</body>
+</html>
